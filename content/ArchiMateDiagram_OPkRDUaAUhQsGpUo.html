@@ -1,0 +1,829 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - AMS ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Buisness Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<span class="PageParentTitle">TOGAF : Enterprise Architecture</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">Phase C: Information Systems Architectures : Phase</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">L1 : Lane</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">Develop Baseline Application 
+Architecture Description : Activity</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">S1 : Step</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">C4.S1.W1 : Work Item</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">Working : Revision</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">Baseline Application Architecture : Diagram Artifact</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="ArchiMateDiagram_3augojqAUhQsEgmz.html" class="PageParentTitle">AMS : Application Component</a> (in <a href="ArchiMateDiagram_3augojqAUhQsEgmz.html" class="PageParentTitle">NCI Baseline Application Architecture</a> / <a href="ArchiMateDiagram_OPkRDUaAUhQsGpUo.html" class="PageParentTitle">AMS ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - AMS ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/OPkRDUaAUhQsGpUo', 'AMS ArchiMate Diagram\nNCI Buisness Architecture.vpp://diagram/OPkRDUaAUhQsGpUo', 'AMS ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|541.0|915.0|112.0|40.0|ArchiMateApplicationComponent_pnF2wTqAUhQsLA4S.html|ArchiMateApplicationComponent_pnF2wTqAUhQsLA4S.html|oYyRDUaAUhQsGpVN" id="optionoYyRDUaAUhQsGpVN">eRA commons : Application Component</option>
+<option value="shape|733.0|915.0|96.0|40.0|ArchiMateApplicationComponent_AKFuwTqAUhQsLA7a.html|ArchiMateApplicationComponent_AKFuwTqAUhQsLA7a.html|B4yRDUaAUhQsGpVX" id="optionB4yRDUaAUhQsGpVX">ASSIST : Application Component</option>
+<option value="shape|910.0|915.0|96.0|40.0|ArchiMateApplicationComponent_FdCD4TqAUhQsLBAu.html|ArchiMateApplicationComponent_FdCD4TqAUhQsLBAu.html|r4yRDUaAUhQsGpVh" id="optionr4yRDUaAUhQsGpVh">iEdison : Application Component</option>
+<option value="shape|495.0|869.0|574.0|130.0|ArchiMateSystemSoftware_x3zMwTqAUhQsLA3l.html|ArchiMateSystemSoftware_x3zMwTqAUhQsLA3l.html|EkyRDUaAUhQsGpWe" id="optionEkyRDUaAUhQsGpWe">eRA : System Software</option>
+<option value="shape|2.0|683.0|1560.0|502.0|ArchiMateGrouping_UdsjrUaAUhQsMQBM.html|ArchiMateGrouping_UdsjrUaAUhQsMQBM.html|UdsjrUaAUhQsMQBL" id="optionUdsjrUaAUhQsMQBL">Grouping2 : Grouping</option>
+<option value="shape|1132.0|60.0|96.0|40.0|ArchiMateApplicationComponent__oKQ2UaAUhQsGnmq.html|ArchiMateApplicationComponent__oKQ2UaAUhQsGnmq.html|BkyRDUaAUhQsGpW5" id="optionBkyRDUaAUhQsGpW5">SCMS : Application Component</option>
+<option value="shape|324.0|60.0|96.0|40.0|ArchiMateApplicationComponent_cmKMETqAUhQsLBHR.html|ArchiMateApplicationComponent_cmKMETqAUhQsLBHR.html|fEyRDUaAUhQsGpWU" id="optionfEyRDUaAUhQsGpWU">BIIS : Application Component</option>
+<option value="shape|930.0|60.0|96.0|40.0|ArchiMateApplicationComponent_cDpGnjqAUhQsEh0Q.html|ArchiMateApplicationComponent_cDpGnjqAUhQsEh0Q.html|NEyRDUaAUhQsGpWK" id="optionNEyRDUaAUhQsGpWK">CAPHR : Application Component</option>
+<option value="shape|122.0|60.0|96.0|40.0|ArchiMateApplicationComponent_x5wOnjqAUhQsEh20.html|ArchiMateApplicationComponent_x5wOnjqAUhQsEh20.html|xEyRDUaAUhQsGpWA" id="optionxEyRDUaAUhQsGpWA">LMS : Application Component</option>
+<option value="shape|526.0|60.0|96.0|40.0|ArchiMateApplicationComponent_fdyPaUaAUhQsGjsR.html|ArchiMateApplicationComponent_fdyPaUaAUhQsGjsR.html|mEyRDUaAUhQsGpV2" id="optionmEyRDUaAUhQsGpV2">USAS : Application Component</option>
+<option value="shape|1334.0|60.0|96.0|40.0|ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html|ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html|AEyRDUaAUhQsGpVs" id="optionAEyRDUaAUhQsGpVs">eOPF : Application Component</option>
+<option value="shape|727.0|347.0|96.0|40.0|ArchiMateApplicationComponent_lFAz4TqAUhQsLBC7.html|ArchiMateApplicationComponent_lFAz4TqAUhQsLBC7.html|oJCRDUaAUhQsGpVE" id="optionoJCRDUaAUhQsGpVE">AMS : Application Component</option>
+<option value="shape|2.0|2.0|1560.0|628.0|ArchiMateGrouping_L8VDrUaAUhQsMei7.html|ArchiMateGrouping_L8VDrUaAUhQsMei7.html|L8VDrUaAUhQsMei6" id="optionL8VDrUaAUhQsMei6">HHS : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/AMS_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="1566" height="1189"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="768.0, 387.0, 768.0, 426.0, 616.0, 426.0, 616.0, 423.0, 602.0, 423.0, 602.0, 426.0, 599.0, 426.0, 599.0, 440.0, 602.0, 440.0, 602.0, 915.0, 616.0, 915.0, 616.0, 440.0, 768.0, 440.0, 768.0, 443.0, 782.0, 443.0, 782.0, 440.0, 785.0, 440.0, 785.0, 426.0, 782.0, 426.0, 782.0, 387.0" coords2="768.0, 387.0, 768.0, 426.0, 616.0, 426.0, 616.0, 423.0, 602.0, 423.0, 602.0, 426.0, 599.0, 426.0, 599.0, 440.0, 602.0, 440.0, 602.0, 915.0, 616.0, 915.0, 616.0, 440.0, 768.0, 440.0, 768.0, 443.0, 782.0, 443.0, 782.0, 440.0, 785.0, 440.0, 785.0, 426.0, 782.0, 426.0, 782.0, 387.0" shape="poly" alt="AMS-&gt;eRACommons:Flow" id="areadiagram_map_oYyRDUaAUhQsGpVL" href="ArchiMateFlow__Dn34TqAUhQsLBDl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="768.0, 387.0, 768.0, 915.0, 782.0, 915.0, 782.0, 387.0" coords2="768.0, 387.0, 768.0, 915.0, 782.0, 915.0, 782.0, 387.0" shape="poly" alt="AMS-&gt;ASSIST:Flow" id="areadiagram_map_B4yRDUaAUhQsGpVV" href="ArchiMateFlow_3ouv4TqAUhQsLBEX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="768.0, 387.0, 768.0, 458.0, 765.0, 458.0, 765.0, 472.0, 768.0, 472.0, 768.0, 475.0, 782.0, 475.0, 782.0, 472.0, 966.0, 472.0, 966.0, 915.0, 980.0, 915.0, 980.0, 472.0, 983.0, 472.0, 983.0, 458.0, 980.0, 458.0, 980.0, 455.0, 966.0, 455.0, 966.0, 458.0, 782.0, 458.0, 782.0, 387.0" coords2="768.0, 387.0, 768.0, 458.0, 765.0, 458.0, 765.0, 472.0, 768.0, 472.0, 768.0, 475.0, 782.0, 475.0, 782.0, 472.0, 966.0, 472.0, 966.0, 915.0, 980.0, 915.0, 980.0, 472.0, 983.0, 472.0, 983.0, 458.0, 980.0, 458.0, 980.0, 455.0, 966.0, 455.0, 966.0, 458.0, 782.0, 458.0, 782.0, 387.0" shape="poly" alt="AMS-&gt;iEdison:Flow" id="areadiagram_map_r4yRDUaAUhQsGpVf" href="ArchiMateFlow_T2vv4TqAUhQsLBEz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1375.0, 100.0, 1375.0, 198.0, 769.0, 198.0, 769.0, 195.0, 755.0, 195.0, 755.0, 198.0, 752.0, 198.0, 752.0, 212.0, 755.0, 212.0, 755.0, 347.0, 769.0, 347.0, 769.0, 212.0, 1375.0, 212.0, 1375.0, 215.0, 1389.0, 215.0, 1389.0, 212.0, 1392.0, 212.0, 1392.0, 198.0, 1389.0, 198.0, 1389.0, 100.0" coords2="1375.0, 100.0, 1375.0, 198.0, 769.0, 198.0, 769.0, 195.0, 755.0, 195.0, 755.0, 198.0, 752.0, 198.0, 752.0, 212.0, 755.0, 212.0, 755.0, 347.0, 769.0, 347.0, 769.0, 212.0, 1375.0, 212.0, 1375.0, 215.0, 1389.0, 215.0, 1389.0, 212.0, 1392.0, 212.0, 1392.0, 198.0, 1389.0, 198.0, 1389.0, 100.0" shape="poly" alt="AMS-&gt;eOPF:Flow" id="areadiagram_map_AEyRDUaAUhQsGpVq" href="ArchiMateFlow_zGOKrgaAUhQsNh95.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="567.0, 100.0, 567.0, 108.0, 564.0, 108.0, 564.0, 122.0, 567.0, 122.0, 567.0, 125.0, 581.0, 125.0, 581.0, 122.0, 781.0, 122.0, 781.0, 347.0, 795.0, 347.0, 795.0, 122.0, 798.0, 122.0, 798.0, 108.0, 795.0, 108.0, 795.0, 105.0, 781.0, 105.0, 781.0, 108.0, 581.0, 108.0, 581.0, 100.0" coords2="567.0, 100.0, 567.0, 108.0, 564.0, 108.0, 564.0, 122.0, 567.0, 122.0, 567.0, 125.0, 581.0, 125.0, 581.0, 122.0, 781.0, 122.0, 781.0, 347.0, 795.0, 347.0, 795.0, 122.0, 798.0, 122.0, 798.0, 108.0, 795.0, 108.0, 795.0, 105.0, 781.0, 105.0, 781.0, 108.0, 581.0, 108.0, 581.0, 100.0" shape="poly" alt="AMS-&gt;USAS:Flow" id="areadiagram_map_mEyRDUaAUhQsGpV0" href="ArchiMateFlow_1oDA2UaAUhQsGiiP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="163.0, 100.0, 163.0, 221.0, 160.0, 221.0, 160.0, 235.0, 163.0, 235.0, 163.0, 238.0, 177.0, 238.0, 177.0, 235.0, 781.0, 235.0, 781.0, 347.0, 795.0, 347.0, 795.0, 235.0, 798.0, 235.0, 798.0, 221.0, 795.0, 221.0, 795.0, 218.0, 781.0, 218.0, 781.0, 221.0, 177.0, 221.0, 177.0, 100.0" coords2="163.0, 100.0, 163.0, 221.0, 160.0, 221.0, 160.0, 235.0, 163.0, 235.0, 163.0, 238.0, 177.0, 238.0, 177.0, 235.0, 781.0, 235.0, 781.0, 347.0, 795.0, 347.0, 795.0, 235.0, 798.0, 235.0, 798.0, 221.0, 795.0, 221.0, 795.0, 218.0, 781.0, 218.0, 781.0, 221.0, 177.0, 221.0, 177.0, 100.0" shape="poly" alt="AMS-&gt;LMS:Flow" id="areadiagram_map_xEyRDUaAUhQsGpV." href="ArchiMateFlow_bmmw2UaAUhQsGnvA.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="971.0, 100.0, 971.0, 108.0, 795.0, 108.0, 795.0, 105.0, 781.0, 105.0, 781.0, 108.0, 778.0, 108.0, 778.0, 122.0, 781.0, 122.0, 781.0, 347.0, 795.0, 347.0, 795.0, 122.0, 971.0, 122.0, 971.0, 125.0, 985.0, 125.0, 985.0, 122.0, 988.0, 122.0, 988.0, 108.0, 985.0, 108.0, 985.0, 100.0" coords2="971.0, 100.0, 971.0, 108.0, 795.0, 108.0, 795.0, 105.0, 781.0, 105.0, 781.0, 108.0, 778.0, 108.0, 778.0, 122.0, 781.0, 122.0, 781.0, 347.0, 795.0, 347.0, 795.0, 122.0, 971.0, 122.0, 971.0, 125.0, 985.0, 125.0, 985.0, 122.0, 988.0, 122.0, 988.0, 108.0, 985.0, 108.0, 985.0, 100.0" shape="poly" alt="AMS-&gt;CAPHR:Flow" id="areadiagram_map_NEyRDUaAUhQsGpWI" href="ArchiMateFlow_Hrbw2UaAUhQsGnvS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="365.0, 100.0, 365.0, 144.0, 362.0, 144.0, 362.0, 158.0, 365.0, 158.0, 365.0, 161.0, 379.0, 161.0, 379.0, 158.0, 781.0, 158.0, 781.0, 347.0, 795.0, 347.0, 795.0, 158.0, 798.0, 158.0, 798.0, 144.0, 795.0, 144.0, 795.0, 141.0, 781.0, 141.0, 781.0, 144.0, 379.0, 144.0, 379.0, 100.0" coords2="365.0, 100.0, 365.0, 144.0, 362.0, 144.0, 362.0, 158.0, 365.0, 158.0, 365.0, 161.0, 379.0, 161.0, 379.0, 158.0, 781.0, 158.0, 781.0, 347.0, 795.0, 347.0, 795.0, 158.0, 798.0, 158.0, 798.0, 144.0, 795.0, 144.0, 795.0, 141.0, 781.0, 141.0, 781.0, 144.0, 379.0, 144.0, 379.0, 100.0" shape="poly" alt="AMS-&gt;BIIS:Flow" id="areadiagram_map_fEyRDUaAUhQsGpWS" href="ArchiMateFlow_NOVI2UaAUhQsGnvi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="781.0, 387.0, 781.0, 445.0, 604.0, 445.0, 604.0, 442.0, 590.0, 442.0, 590.0, 445.0, 587.0, 445.0, 587.0, 459.0, 590.0, 459.0, 590.0, 915.0, 604.0, 915.0, 604.0, 459.0, 781.0, 459.0, 781.0, 462.0, 795.0, 462.0, 795.0, 459.0, 798.0, 459.0, 798.0, 445.0, 795.0, 445.0, 795.0, 387.0" coords2="781.0, 387.0, 781.0, 445.0, 604.0, 445.0, 604.0, 442.0, 590.0, 442.0, 590.0, 445.0, 587.0, 445.0, 587.0, 459.0, 590.0, 459.0, 590.0, 915.0, 604.0, 915.0, 604.0, 459.0, 781.0, 459.0, 781.0, 462.0, 795.0, 462.0, 795.0, 459.0, 798.0, 459.0, 798.0, 445.0, 795.0, 445.0, 795.0, 387.0" shape="poly" alt="eRACommons-&gt;AMS:Flow" id="areadiagram_map_mkyRDUaAUhQsGpWo" href="ArchiMateFlow_Rgcv4TqAUhQsLBEI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="781.0, 387.0, 781.0, 915.0, 795.0, 915.0, 795.0, 387.0" coords2="781.0, 387.0, 781.0, 915.0, 795.0, 915.0, 795.0, 387.0" shape="poly" alt="ASSIST-&gt;AMS:Flow" id="areadiagram_map_2kyRDUaAUhQsGpWr" href="ArchiMateFlow_Y7Nv4TqAUhQsLBEf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="781.0, 387.0, 781.0, 472.0, 778.0, 472.0, 778.0, 486.0, 781.0, 486.0, 781.0, 489.0, 795.0, 489.0, 795.0, 486.0, 951.0, 486.0, 951.0, 915.0, 965.0, 915.0, 965.0, 486.0, 968.0, 486.0, 968.0, 472.0, 965.0, 472.0, 965.0, 469.0, 951.0, 469.0, 951.0, 472.0, 795.0, 472.0, 795.0, 387.0" coords2="781.0, 387.0, 781.0, 472.0, 778.0, 472.0, 778.0, 486.0, 781.0, 486.0, 781.0, 489.0, 795.0, 489.0, 795.0, 486.0, 951.0, 486.0, 951.0, 915.0, 965.0, 915.0, 965.0, 486.0, 968.0, 486.0, 968.0, 472.0, 965.0, 472.0, 965.0, 469.0, 951.0, 469.0, 951.0, 472.0, 795.0, 472.0, 795.0, 387.0" shape="poly" alt="iEdison-&gt;AMS:Flow" id="areadiagram_map_OkyRDUaAUhQsGpWu" href="ArchiMateFlow_m3sf4TqAUhQsLBFH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1375.0, 100.0, 1375.0, 221.0, 769.0, 221.0, 769.0, 218.0, 755.0, 218.0, 755.0, 221.0, 752.0, 221.0, 752.0, 235.0, 755.0, 235.0, 755.0, 347.0, 769.0, 347.0, 769.0, 235.0, 1375.0, 235.0, 1375.0, 238.0, 1389.0, 238.0, 1389.0, 235.0, 1392.0, 235.0, 1392.0, 221.0, 1389.0, 221.0, 1389.0, 100.0" coords2="1375.0, 100.0, 1375.0, 221.0, 769.0, 221.0, 769.0, 218.0, 755.0, 218.0, 755.0, 221.0, 752.0, 221.0, 752.0, 235.0, 755.0, 235.0, 755.0, 347.0, 769.0, 347.0, 769.0, 235.0, 1375.0, 235.0, 1375.0, 238.0, 1389.0, 238.0, 1389.0, 235.0, 1392.0, 235.0, 1392.0, 221.0, 1389.0, 221.0, 1389.0, 100.0" shape="poly" alt="eOPF-&gt;AMS:Flow" id="areadiagram_map_ekyRDUaAUhQsGpWx" href="ArchiMateFlow_fBRKrgaAUhQsNh_F.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="971.0, 100.0, 971.0, 126.0, 769.0, 126.0, 769.0, 123.0, 755.0, 123.0, 755.0, 126.0, 752.0, 126.0, 752.0, 140.0, 755.0, 140.0, 755.0, 347.0, 769.0, 347.0, 769.0, 140.0, 971.0, 140.0, 971.0, 143.0, 985.0, 143.0, 985.0, 140.0, 988.0, 140.0, 988.0, 126.0, 985.0, 126.0, 985.0, 100.0" coords2="971.0, 100.0, 971.0, 126.0, 769.0, 126.0, 769.0, 123.0, 755.0, 123.0, 755.0, 126.0, 752.0, 126.0, 752.0, 140.0, 755.0, 140.0, 755.0, 347.0, 769.0, 347.0, 769.0, 140.0, 971.0, 140.0, 971.0, 143.0, 985.0, 143.0, 985.0, 140.0, 988.0, 140.0, 988.0, 126.0, 985.0, 126.0, 985.0, 100.0" shape="poly" alt="CAPHR-&gt;AMS:Flow" id="areadiagram_map_.kyRDUaAUhQsGpW0" href="ArchiMateFlow__j5qngaAUhQsNjDN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1173.0, 100.0, 1173.0, 165.0, 769.0, 165.0, 769.0, 162.0, 755.0, 162.0, 755.0, 165.0, 752.0, 165.0, 752.0, 179.0, 755.0, 179.0, 755.0, 347.0, 769.0, 347.0, 769.0, 179.0, 1173.0, 179.0, 1173.0, 182.0, 1187.0, 182.0, 1187.0, 179.0, 1190.0, 179.0, 1190.0, 165.0, 1187.0, 165.0, 1187.0, 100.0" coords2="1173.0, 100.0, 1173.0, 165.0, 769.0, 165.0, 769.0, 162.0, 755.0, 162.0, 755.0, 165.0, 752.0, 165.0, 752.0, 179.0, 755.0, 179.0, 755.0, 347.0, 769.0, 347.0, 769.0, 179.0, 1173.0, 179.0, 1173.0, 182.0, 1187.0, 182.0, 1187.0, 179.0, 1190.0, 179.0, 1190.0, 165.0, 1187.0, 165.0, 1187.0, 100.0" shape="poly" alt="AMS-&gt;SCMS:Flow" id="areadiagram_map_BkyRDUaAUhQsGpW3" href="ArchiMateFlow_H9eQ2UaAUhQsGnqf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="181.0, 100.0, 181.0, 198.0, 178.0, 198.0, 178.0, 212.0, 181.0, 212.0, 181.0, 215.0, 195.0, 215.0, 195.0, 212.0, 755.0, 212.0, 755.0, 347.0, 769.0, 347.0, 769.0, 212.0, 772.0, 212.0, 772.0, 198.0, 769.0, 198.0, 769.0, 195.0, 755.0, 195.0, 755.0, 198.0, 195.0, 198.0, 195.0, 100.0" coords2="181.0, 100.0, 181.0, 198.0, 178.0, 198.0, 178.0, 212.0, 181.0, 212.0, 181.0, 215.0, 195.0, 215.0, 195.0, 212.0, 755.0, 212.0, 755.0, 347.0, 769.0, 347.0, 769.0, 212.0, 772.0, 212.0, 772.0, 198.0, 769.0, 198.0, 769.0, 195.0, 755.0, 195.0, 755.0, 198.0, 195.0, 198.0, 195.0, 100.0" shape="poly" alt="LMS-&gt;AMS:Flow" id="areadiagram_map_lkyRDUaAUhQsGpXB" href="ArchiMateFlow_SCew2UaAUhQsGnvI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="384.0, 100.0, 384.0, 165.0, 381.0, 165.0, 381.0, 179.0, 384.0, 179.0, 384.0, 182.0, 398.0, 182.0, 398.0, 179.0, 755.0, 179.0, 755.0, 347.0, 769.0, 347.0, 769.0, 179.0, 772.0, 179.0, 772.0, 165.0, 769.0, 165.0, 769.0, 162.0, 755.0, 162.0, 755.0, 165.0, 398.0, 165.0, 398.0, 100.0" coords2="384.0, 100.0, 384.0, 165.0, 381.0, 165.0, 381.0, 179.0, 384.0, 179.0, 384.0, 182.0, 398.0, 182.0, 398.0, 179.0, 755.0, 179.0, 755.0, 347.0, 769.0, 347.0, 769.0, 179.0, 772.0, 179.0, 772.0, 165.0, 769.0, 165.0, 769.0, 162.0, 755.0, 162.0, 755.0, 165.0, 398.0, 165.0, 398.0, 100.0" shape="poly" alt="BIIS-&gt;AMS:Flow" id="areadiagram_map_VkyRDUaAUhQsGpXE" href="ArchiMateFlow_KRDI2UaAUhQsGnvo.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;eRA Commons&amp;lt;/b&amp;gt; - is an online interface where signing officials, 
+      principal investigators, trainees and post-docs at institutes 
+      /organizations can access and share administrative information relating 
+      to research grants. Can track the status of gran applications through 
+      submission process, view summary statement anscore letters, view notice 
+      oof award, submit just in time information requested by the grantor 
+      agency, Submit the required docs, financial ect, Submit a no cost 
+      extension notification , submit annual progress report electronically, 
+      Look for no cometing grant progress report instructions
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="541, 915, 653, 955" coords2="541, 915, 653, 955" shape="rect" alt="eRA commons:Application Component" id="areadiagram_map_oYyRDUaAUhQsGpVN" href="ArchiMateApplicationComponent_pnF2wTqAUhQsLA4S.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;Application Submission System &amp;amp; Interface for Submission 
+      Tracking(ASSIST)&amp;lt;/b&amp;gt; - NIH&amp;#8217;s online system for the preparation, 
+      submission and tracking of rant applications through Grants.gov to 
+      NIH.Not required may just use Grants.gov. Allows for collaboration, 
+      Pre-submission validation, Pre-population of data from eRA Commons, 
+      Pre-submission preview of application in NIH format, Submission status 
+      checking for both Grants. Gov and eRA Commons, ability to import sub 
+      award budget data from external sources, Ability to copy application 
+      data from one announcement to another. Profiles
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Owned by NIH
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      SBIR and STTR use is for small business submissions
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Feeds - grants.gov
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Sources - eRA Commons, Grants.Gov
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      User Guides - https://era.nih.gov/files/ASSIST_user_guide.pdf
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="733, 915, 829, 955" coords2="733, 915, 829, 955" shape="rect" alt="ASSIST:Application Component" id="areadiagram_map_B4yRDUaAUhQsGpVX" href="ArchiMateApplicationComponent_AKFuwTqAUhQsLA7a.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;Interagency Edison (iEdison)&amp;lt;/b&amp;gt; &amp;#8211; allows government grantees and 
+      contractors to report government-funded subject inventions patents, and 
+      utilization data via the web to the government agency that issued the 
+      funding award. More than 30 U.S. federal funding agency offices use 
+      iEdison consistent wit the Bayh-Dole Act, its implementing regulations, 
+      and agency policies.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      System link - https://era.nih.gov/iedison/about.htm
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="910, 915, 1006, 955" coords2="910, 915, 1006, 955" shape="rect" alt="iEdison:Application Component" id="areadiagram_map_r4yRDUaAUhQsGpVh" href="ArchiMateApplicationComponent_FdCD4TqAUhQsLBAu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;Electronic Research Administration&amp;lt;/b&amp;gt;(ERA) &amp;#8211; Serves applications and 
+      the extramural research community. IT infrastructure to manage the 
+      receipt, processing ,review award and monitoring of research and 
+      non-research grants. Supports the full life cycle of grants 
+      administration. Also support other gov agency. eRA systems, including 
+      eRA Commons, ASSIST and IMPAC II modules. eRA integrates systems, 
+      including eRA Commons, ASSIST and IMPAC II modules
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      User guides docs - 
+      https://era.nih.gov/modules_user-guides_documentation.cfm
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Frequently asked question - 
+      https://era.nih.gov/commons/faq_commons.cfm#I1
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="495, 869, 1069, 999" coords2="495, 869, 1069, 999" shape="rect" alt="eRA:System Software" id="areadiagram_map_EkyRDUaAUhQsGpWe" href="ArchiMateSystemSoftware_x3zMwTqAUhQsLA3l.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="2, 683, 1562, 1185" coords2="2, 683, 1562, 1185" shape="rect" alt="Grouping2:Grouping" id="areadiagram_map_UdsjrUaAUhQsMQBL" href="ArchiMateGrouping_UdsjrUaAUhQsMQBM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1132, 60, 1228, 100" coords2="1132, 60, 1228, 100" shape="rect" alt="SCMS:Application Component" id="areadiagram_map_BkyRDUaAUhQsGpW5" href="ArchiMateApplicationComponent__oKQ2UaAUhQsGnmq.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="324, 60, 420, 100" coords2="324, 60, 420, 100" shape="rect" alt="BIIS:Application Component" id="areadiagram_map_fEyRDUaAUhQsGpWU" href="ArchiMateApplicationComponent_cmKMETqAUhQsLBHR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;CAPHR &amp;lt;/b&amp;gt;&amp;#8211; PeopleSoft based Human Resource (HR) information system 
+      used throughout the Department of Health and Human Services (HHS) to 
+      process personnel actions and administer benefits. The web-based Capital 
+      HR version 8.9 system replaced the legacy HR information system, IMPACT, 
+      in September of 2002. Capital HR contains &amp;quot;core&amp;quot; functionality common to 
+      the DHHS and its Agencies and is continually being reviewed for 
+      enhancements by the DHHS Program Support Center (PSC).
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Link https://hr.od.nih.gov/HRSystems/staffing/caphr/
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Feeds &amp;#8211; Central Pay System
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;table border-spacing=&amp;quot;0px&amp;quot; style=&amp;quot;border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;border-left-style:solid;border-right-width:1px;border-left-color:#888888;border-bottom-width:1px;border-top-color:#888888;border-bottom-style:solid;border-right-color:#888888;border-left-width:1px;border-top-style:solid;&amp;quot;&amp;gt;
+      &amp;lt;tr style=&amp;quot;text-align:left;&amp;quot;&amp;gt;
+        &amp;lt;td class=&amp;quot;xl66&amp;quot; height=&amp;quot;32.0pt&amp;quot; style=&amp;quot;border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;padding-left:3;border-right-width:1px;border-left-color:#888888;border-right-color:#888888;border-left-width:1px;padding-top:3;border-top-style:solid;padding-right:3;border-left-style:solid;border-bottom-width:1px;border-top-color:#888888;border-bottom-style:solid;padding-bottom:3;&amp;quot; width=&amp;quot;415pt&amp;quot;&amp;gt;
+          May be retired in 3 years of 12/17 and replaced with Enterprise 
+          Huaman Capital Management(EHCM) which will have HR data and Time 
+          keeping.&amp;lt;span&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;
+        &amp;lt;/td&amp;gt;
+      &amp;lt;/tr&amp;gt;
+    &amp;lt;/table&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="930, 60, 1026, 100" coords2="930, 60, 1026, 100" shape="rect" alt="CAPHR:Application Component" id="areadiagram_map_NEyRDUaAUhQsGpWK" href="ArchiMateApplicationComponent_cDpGnjqAUhQsEh0Q.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;HHS Learning Portal (LMS)&amp;lt;/b&amp;gt; &amp;#8211; Place to search for HHS instructional 
+      class.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#at5EojqAUhQsEgsL&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('at5EojqAUhQsEgsL');&amp;quot;&amp;gt;Owner&amp;lt;/a&amp;gt; 
+      - HHS
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="122, 60, 218, 100" coords2="122, 60, 218, 100" shape="rect" alt="LMS:Application Component" id="areadiagram_map_xEyRDUaAUhQsGpWA" href="ArchiMateApplicationComponent_x5wOnjqAUhQsEh20.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','122, 60, 218, 100',new Array(),new Array(),new Array(new Array('https://nciconnect.nci.nih.gov/sites/Collaboration/NCIAdminSysMappingProject/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BE50D6C4E-DF04-4D34-A53E-69EC56B346D8%7D&file=Copy%20of%20HHS%20Training%20Completion%20Details%20-%20Wildcard.xls&action=default','https://nciconnect.nci.nih.gov/sites/Collaboration/NCIAdminSysMappingProject/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BE50D6C4E-DF04-4D34-A53E-69EC56B346D8%7D&file=Copy%20of%20HHS%20Training%20Completion%20Details%20-%20Wildcard.xls&action=default')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '122, 60, 218, 100'),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      HHS Careers USA staffing
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="526, 60, 622, 100" coords2="526, 60, 622, 100" shape="rect" alt="USAS:Application Component" id="areadiagram_map_mEyRDUaAUhQsGpV2" href="ArchiMateApplicationComponent_fdyPaUaAUhQsGjsR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;Office of Personnel Management (eOPF)&amp;lt;/b&amp;gt; - The eOPF is an electronic 
+      version of the paper OPF and a system for accessing the electronic 
+      folder online. The eOPF system combines document management with 
+      workflow capabilities. The eOPF allows each employee to have an 
+      electronic personnel folder instead of a paper folder. Benefits of eOPF 
+      include: * Immediate access to personnel forms and information for a 
+      geographically dispersed workforce. * E-mail notification to employee 
+      when documents are added to their eOPF. * Multi-level secure environment 
+      with security rules for sensitive information. * No loss of official 
+      personnel documents due to filing and routing errors. * Reduced costs 
+      associated with storage, maintenance, and retrieval of records. * 
+      Electronic transfer of human resources (HR) data. * Integration with 
+      agency&amp;#8217;s human resources information systems (HRIS). * Compliance with 
+      OPM and federally mandated HR employee record management regulations.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1334, 60, 1430, 100" coords2="1334, 60, 1430, 100" shape="rect" alt="eOPF:Application Component" id="areadiagram_map_AEyRDUaAUhQsGpVs" href="ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;Account Management System(AMS)&amp;lt;/b&amp;gt; &amp;#8211; User-friendly module to create, 
+      manage and search existing accounts in eRA Common, iEdison, And ASSIST 
+      as well as eRA modules used by agency staff. Depending on role, users 
+      from Organizations., Universities, Federal Agencies, Institute/Center 
+      Coordinators, the State department (for FACTS) and the eRA service desk 
+      staff are able to access and use the functionality.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="727, 347, 823, 387" coords2="727, 347, 823, 387" shape="rect" alt="AMS:Application Component" id="areadiagram_map_oJCRDUaAUhQsGpVE" href="ArchiMateApplicationComponent_lFAz4TqAUhQsLBC7.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','727, 347, 823, 387',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_OPkRDUaAUhQsGpUo.html/AMS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '727, 347, 823, 387'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="2, 2, 1562, 630" coords2="2, 2, 1562, 630" shape="rect" alt="HHS:Grouping" id="areadiagram_map_L8VDrUaAUhQsMei6" href="ArchiMateGrouping_L8VDrUaAUhQsMei7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_pnF2wTqAUhQsLA4S.html" class="ItemLink">eRA commons : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>eRA Commons</b> - is an online interface where signing officials, 
+      principal investigators, trainees and post-docs at institutes 
+      /organizations can access and share administrative information relating 
+      to research grants. Can track the status of gran applications through 
+      submission process, view summary statement anscore letters, view notice 
+      oof award, submit just in time information requested by the grantor 
+      agency, Submit the required docs, financial ect, Submit a no cost 
+      extension notification , submit annual progress report electronically, 
+      Look for no cometing grant progress report instructions
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_AKFuwTqAUhQsLA7a.html" class="ItemLink">ASSIST : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>Application Submission System &amp; Interface for Submission 
+      Tracking(ASSIST)</b> - NIH&#8217;s online system for the preparation, 
+      submission and tracking of rant applications through Grants.gov to 
+      NIH.Not required may just use Grants.gov. Allows for collaboration, 
+      Pre-submission validation, Pre-population of data from eRA Commons, 
+      Pre-submission preview of application in NIH format, Submission status 
+      checking for both Grants. Gov and eRA Commons, ability to import sub 
+      award budget data from external sources, Ability to copy application 
+      data from one announcement to another. Profiles
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      Owned by NIH
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      SBIR and STTR use is for small business submissions
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      Feeds - grants.gov
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      Sources - eRA Commons, Grants.Gov
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      User Guides - https://era.nih.gov/files/ASSIST_user_guide.pdf
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_FdCD4TqAUhQsLBAu.html" class="ItemLink">iEdison : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>Interagency Edison (iEdison)</b> &#8211; allows government grantees and 
+      contractors to report government-funded subject inventions patents, and 
+      utilization data via the web to the government agency that issued the 
+      funding award. More than 30 U.S. federal funding agency offices use 
+      iEdison consistent wit the Bayh-Dole Act, its implementing regulations, 
+      and agency policies.
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      System link - https://era.nih.gov/iedison/about.htm
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SystemSoftware.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SystemSoftware.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateSystemSoftware_x3zMwTqAUhQsLA3l.html" class="ItemLink">eRA : System Software</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>Electronic Research Administration</b>(ERA) &#8211; Serves applications and 
+      the extramural research community. IT infrastructure to manage the 
+      receipt, processing ,review award and monitoring of research and 
+      non-research grants. Supports the full life cycle of grants 
+      administration. Also support other gov agency. eRA systems, including 
+      eRA Commons, ASSIST and IMPAC II modules. eRA integrates systems, 
+      including eRA Commons, ASSIST and IMPAC II modules
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      User guides docs - 
+      https://era.nih.gov/modules_user-guides_documentation.cfm
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      Frequently asked question - 
+      https://era.nih.gov/commons/faq_commons.cfm#I1
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_UdsjrUaAUhQsMQBM.html" class="ItemLink">Grouping2 : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent__oKQ2UaAUhQsGnmq.html" class="ItemLink">SCMS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_cmKMETqAUhQsLBHR.html" class="ItemLink">BIIS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_cDpGnjqAUhQsEh0Q.html" class="ItemLink">CAPHR : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>CAPHR </b>&#8211; PeopleSoft based Human Resource (HR) information system 
+      used throughout the Department of Health and Human Services (HHS) to 
+      process personnel actions and administer benefits. The web-based Capital 
+      HR version 8.9 system replaced the legacy HR information system, IMPACT, 
+      in September of 2002. Capital HR contains &quot;core&quot; functionality common to 
+      the DHHS and its Agencies and is continually being reviewed for 
+      enhancements by the DHHS Program Support Center (PSC).
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      Link https://hr.od.nih.gov/HRSystems/staffing/caphr/
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      Feeds &#8211; Central Pay System
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <table border-spacing="0px" style="border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;border-left-style:solid;border-right-width:1px;border-left-color:#888888;border-bottom-width:1px;border-top-color:#888888;border-bottom-style:solid;border-right-color:#888888;border-left-width:1px;border-top-style:solid;">
+      <tr style="text-align:left;">
+        <td class="xl66" height="32.0pt" style="border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;padding-left:3;border-right-width:1px;border-left-color:#888888;border-right-color:#888888;border-left-width:1px;padding-top:3;border-top-style:solid;padding-right:3;border-left-style:solid;border-bottom-width:1px;border-top-color:#888888;border-bottom-style:solid;padding-bottom:3;" width="415pt">
+          May be retired in 3 years of 12/17 and replaced with Enterprise 
+          Huaman Capital Management(EHCM) which will have HR data and Time 
+          keeping.<span>&nbsp;</span>
+        </td>
+      </tr>
+    </table>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_x5wOnjqAUhQsEh20.html" class="ItemLink">LMS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>HHS Learning Portal (LMS)</b> &#8211; Place to search for HHS instructional 
+      class.
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#at5EojqAUhQsEgsL" name="" onclick="javascript: highlightGridModelSelection('at5EojqAUhQsEgsL');">Owner</a> 
+      - HHS
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_fdyPaUaAUhQsGjsR.html" class="ItemLink">USAS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      HHS Careers USA staffing
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html" class="ItemLink">eOPF : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>Office of Personnel Management (eOPF)</b> - The eOPF is an electronic 
+      version of the paper OPF and a system for accessing the electronic 
+      folder online. The eOPF system combines document management with 
+      workflow capabilities. The eOPF allows each employee to have an 
+      electronic personnel folder instead of a paper folder. Benefits of eOPF 
+      include: * Immediate access to personnel forms and information for a 
+      geographically dispersed workforce. * E-mail notification to employee 
+      when documents are added to their eOPF. * Multi-level secure environment 
+      with security rules for sensitive information. * No loss of official 
+      personnel documents due to filing and routing errors. * Reduced costs 
+      associated with storage, maintenance, and retrieval of records. * 
+      Electronic transfer of human resources (HR) data. * Integration with 
+      agency&#8217;s human resources information systems (HRIS). * Compliance with 
+      OPM and federally mandated HR employee record management regulations.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_lFAz4TqAUhQsLBC7.html" class="ItemLink">AMS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>Account Management System(AMS)</b> &#8211; User-friendly module to create, 
+      manage and search existing accounts in eRA Common, iEdison, And ASSIST 
+      as well as eRA modules used by agency staff. Depending on role, users 
+      from Organizations., Universities, Federal Agencies, Institute/Center 
+      Coordinators, the State department (for FACTS) and the eRA service desk 
+      staff are able to access and use the functionality.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_L8VDrUaAUhQsMei7.html" class="ItemLink">HHS : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Buisness Architecture	</div>
+</body>
+</html>
