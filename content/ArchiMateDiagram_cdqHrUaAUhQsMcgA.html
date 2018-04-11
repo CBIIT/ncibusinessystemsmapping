@@ -1,0 +1,828 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - CAPHR ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Buisness Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<span class="PageParentTitle">TOGAF : Enterprise Architecture</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">Phase C: Information Systems Architectures : Phase</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">L1 : Lane</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">Develop Baseline Application 
+Architecture Description : Activity</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">S1 : Step</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">C4.S1.W1 : Work Item</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">Working : Revision</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><span class="PageParentTitle">Baseline Application Architecture : Diagram Artifact</span><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="ArchiMateDiagram_3augojqAUhQsEgmz.html" class="PageParentTitle">CAPHR : Application Component</a> (in <a href="ArchiMateDiagram_3augojqAUhQsEgmz.html" class="PageParentTitle">NCI Baseline Application Architecture</a> / <a href="ArchiMateDiagram_IN4IjoaAUhQsPklM.html" class="PageParentTitle">HR Systems diagram</a> / <a href="ArchiMateDiagram_OPkRDUaAUhQsGpUo.html" class="PageParentTitle">AMS ArchiMate Diagram</a> / <a href="ArchiMateDiagram_ENbrrUaAUhQsMVXN.html" class="PageParentTitle">DFAS (aka mypay) ArchiMate Diagram</a> / <a href="ArchiMateDiagram_cdqHrUaAUhQsMcgA.html" class="PageParentTitle">CAPHR ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - CAPHR ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/cdqHrUaAUhQsMcgA', 'CAPHR ArchiMate Diagram\nNCI Buisness Architecture.vpp://diagram/cdqHrUaAUhQsMcgA', 'CAPHR ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|61.0|1131.0|96.0|40.0|ArchiMateApplicationComponent_JSSRnjqAUhQsLAju.html|ArchiMateApplicationComponent_JSSRnjqAUhQsLAju.html|E_.HrUaAUhQsMcmr" id="optionE_.HrUaAUhQsMcmr">SMART HR : Application Component</option>
+<option value="shape|246.0|1131.0|96.0|40.0|ArchiMateApplicationComponent_fmaxnjqAUhQsLAk7.html|ArchiMateApplicationComponent_fmaxnjqAUhQsLAk7.html|ygBHrUaAUhQsMcn0" id="optionygBHrUaAUhQsMcn0">WiTS : Application Component</option>
+<option value="shape|431.0|1131.0|96.0|40.0|ArchiMateApplicationComponent_aJjenjqAUhQsLAhW.html|ArchiMateApplicationComponent_aJjenjqAUhQsLAhW.html|NABHrUaAUhQsMcnW" id="optionNABHrUaAUhQsMcnW">ITAS : Application Component</option>
+<option value="shape|18.0|1084.0|763.0|122.0|ArchiMateGrouping_hUHHrUaAUhQsMcpP.html|ArchiMateGrouping_hUHHrUaAUhQsMcpP.html|hUHHrUaAUhQsMcpO" id="optionhUHHrUaAUhQsMcpO">NIH : Grouping</option>
+<option value="shape|147.0|618.0|96.0|40.0|ArchiMateApplicationComponent_cDpGnjqAUhQsEh0Q.html|ArchiMateApplicationComponent_cDpGnjqAUhQsEh0Q.html|HDuHrUaAUhQsMcmi" id="optionHDuHrUaAUhQsMcmi">CAPHR : Application Component</option>
+<option value="shape|529.0|457.0|96.0|40.0|ArchiMateApplicationComponent_cmKMETqAUhQsLBHR.html|ArchiMateApplicationComponent_cmKMETqAUhQsLBHR.html|vABHrUaAUhQsMcng" id="optionvABHrUaAUhQsMcng">BIIS : Application Component</option>
+<option value="shape|529.0|779.0|96.0|40.0|ArchiMateApplicationComponent_x5wOnjqAUhQsEh20.html|ArchiMateApplicationComponent_x5wOnjqAUhQsEh20.html|0gBHrUaAUhQsMcnq" id="option0gBHrUaAUhQsMcnq">LMS : Application Component</option>
+<option value="shape|529.0|679.0|96.0|40.0|ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html|ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html|9_.HrUaAUhQsMcm4" id="option9_.HrUaAUhQsMcm4">eOPF : Application Component</option>
+<option value="shape|529.0|568.0|96.0|40.0|ArchiMateApplicationComponent_lFAz4TqAUhQsLBC7.html|ArchiMateApplicationComponent_lFAz4TqAUhQsLBC7.html|mABHrUaAUhQsMcnM" id="optionmABHrUaAUhQsMcnM">AMS : Application Component</option>
+<option value="shape|18.0|401.0|763.0|606.0|ArchiMateGrouping_zLbHrUaAUhQsMcpD.html|ArchiMateGrouping_zLbHrUaAUhQsMcpD.html|zLbHrUaAUhQsMcpC" id="optionzLbHrUaAUhQsMcpC">HHS : Grouping</option>
+<option value="shape|157.0|127.0|96.0|40.0|ArchiMateApplicationComponent_k2J_fjqAUhQsLAqc.html|ArchiMateApplicationComponent_k2J_fjqAUhQsLAqc.html|kABHrUaAUhQsMcnC" id="optionkABHrUaAUhQsMcnC">DFAS (aka mypay) : Application Component</option>
+<option value="shape|2.0|2.0|779.0|303.0|ArchiMateGrouping_r7dHrUaAUhQsMcoc.html|ArchiMateGrouping_r7dHrUaAUhQsMcoc.html|r7dHrUaAUhQsMcob" id="optionr7dHrUaAUhQsMcob">Grouping3 : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/CAPHR_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="785" height="1210"/>
+					<map name="diagram_map">
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Manual Interface
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="182.0, 658.0, 182.0, 947.0, 116.0, 947.0, 116.0, 944.0, 102.0, 944.0, 102.0, 947.0, 99.0, 947.0, 99.0, 961.0, 102.0, 961.0, 102.0, 1131.0, 116.0, 1131.0, 116.0, 961.0, 182.0, 961.0, 182.0, 964.0, 196.0, 964.0, 196.0, 961.0, 199.0, 961.0, 199.0, 947.0, 196.0, 947.0, 196.0, 658.0" coords2="182.0, 658.0, 182.0, 947.0, 116.0, 947.0, 116.0, 944.0, 102.0, 944.0, 102.0, 947.0, 99.0, 947.0, 99.0, 961.0, 102.0, 961.0, 102.0, 1131.0, 116.0, 1131.0, 116.0, 961.0, 182.0, 961.0, 182.0, 964.0, 196.0, 964.0, 196.0, 961.0, 199.0, 961.0, 199.0, 947.0, 196.0, 947.0, 196.0, 658.0" shape="poly" alt="CAPHR_TO_SMARTHR:Flow" id="areadiagram_map_E_.HrUaAUhQsMcmp" href="ArchiMateFlow_Nt70ETqAUhQsLBHB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="430.0, 639.0, 430.0, 642.0, 243.0, 642.0, 243.0, 656.0, 430.0, 656.0, 430.0, 701.0, 427.0, 701.0, 427.0, 715.0, 430.0, 715.0, 430.0, 718.0, 444.0, 718.0, 444.0, 715.0, 529.0, 715.0, 529.0, 701.0, 444.0, 701.0, 444.0, 656.0, 447.0, 656.0, 447.0, 642.0, 444.0, 642.0, 444.0, 639.0" coords2="430.0, 639.0, 430.0, 642.0, 243.0, 642.0, 243.0, 656.0, 430.0, 656.0, 430.0, 701.0, 427.0, 701.0, 427.0, 715.0, 430.0, 715.0, 430.0, 718.0, 444.0, 718.0, 444.0, 715.0, 529.0, 715.0, 529.0, 701.0, 444.0, 701.0, 444.0, 656.0, 447.0, 656.0, 447.0, 642.0, 444.0, 642.0, 444.0, 639.0" shape="poly" alt="CAPHR-&gt;eOPF:Flow" id="areadiagram_map_9_.HrUaAUhQsMcm2" href="ArchiMateFlow_mn5qrgaAUhQsNh_X.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="189.0, 167.0, 189.0, 618.0, 203.0, 618.0, 203.0, 167.0" coords2="189.0, 167.0, 189.0, 618.0, 203.0, 618.0, 203.0, 167.0" shape="poly" alt="CAPHR-&gt;DFAS:Flow" id="areadiagram_map_kABHrUaAUhQsMcnA" href="ArchiMateFlow_7JnKngaAUhQsNjCn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="492.0, 584.0, 492.0, 587.0, 489.0, 587.0, 489.0, 601.0, 492.0, 601.0, 492.0, 642.0, 243.0, 642.0, 243.0, 656.0, 492.0, 656.0, 492.0, 659.0, 506.0, 659.0, 506.0, 656.0, 509.0, 656.0, 509.0, 642.0, 506.0, 642.0, 506.0, 601.0, 529.0, 601.0, 529.0, 587.0, 506.0, 587.0, 506.0, 584.0" coords2="492.0, 584.0, 492.0, 587.0, 489.0, 587.0, 489.0, 601.0, 492.0, 601.0, 492.0, 642.0, 243.0, 642.0, 243.0, 656.0, 492.0, 656.0, 492.0, 659.0, 506.0, 659.0, 506.0, 656.0, 509.0, 656.0, 509.0, 642.0, 506.0, 642.0, 506.0, 601.0, 529.0, 601.0, 529.0, 587.0, 506.0, 587.0, 506.0, 584.0" shape="poly" alt="CAPHR-&gt;AMS:Flow" id="areadiagram_map_mABHrUaAUhQsMcnK" href="ArchiMateFlow__j5qngaAUhQsNjDN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="182.0, 658.0, 182.0, 881.0, 179.0, 881.0, 179.0, 895.0, 182.0, 895.0, 182.0, 898.0, 196.0, 898.0, 196.0, 895.0, 491.0, 895.0, 491.0, 1131.0, 505.0, 1131.0, 505.0, 895.0, 508.0, 895.0, 508.0, 881.0, 505.0, 881.0, 505.0, 878.0, 491.0, 878.0, 491.0, 881.0, 196.0, 881.0, 196.0, 658.0" coords2="182.0, 658.0, 182.0, 881.0, 179.0, 881.0, 179.0, 895.0, 182.0, 895.0, 182.0, 898.0, 196.0, 898.0, 196.0, 895.0, 491.0, 895.0, 491.0, 1131.0, 505.0, 1131.0, 505.0, 895.0, 508.0, 895.0, 508.0, 881.0, 505.0, 881.0, 505.0, 878.0, 491.0, 878.0, 491.0, 881.0, 196.0, 881.0, 196.0, 658.0" shape="poly" alt="CAPHR-&gt;ITAS:Flow" id="areadiagram_map_NABHrUaAUhQsMcnU" href="ArchiMateFlow_nnnangaAUhQsNjDv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="430.0, 456.0, 430.0, 459.0, 427.0, 459.0, 427.0, 473.0, 430.0, 473.0, 430.0, 642.0, 243.0, 642.0, 243.0, 656.0, 430.0, 656.0, 430.0, 659.0, 444.0, 659.0, 444.0, 656.0, 447.0, 656.0, 447.0, 642.0, 444.0, 642.0, 444.0, 473.0, 529.0, 473.0, 529.0, 459.0, 444.0, 459.0, 444.0, 456.0" coords2="430.0, 456.0, 430.0, 459.0, 427.0, 459.0, 427.0, 473.0, 430.0, 473.0, 430.0, 642.0, 243.0, 642.0, 243.0, 656.0, 430.0, 656.0, 430.0, 659.0, 444.0, 659.0, 444.0, 656.0, 447.0, 656.0, 447.0, 642.0, 444.0, 642.0, 444.0, 473.0, 529.0, 473.0, 529.0, 459.0, 444.0, 459.0, 444.0, 456.0" shape="poly" alt="CAPHR-&gt;BIIS:Flow" id="areadiagram_map_PABHrUaAUhQsMcne" href="ArchiMateFlow_zpEungaAUhQsNjEe.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="397.0, 639.0, 397.0, 642.0, 243.0, 642.0, 243.0, 656.0, 397.0, 656.0, 397.0, 792.0, 394.0, 792.0, 394.0, 806.0, 397.0, 806.0, 397.0, 809.0, 411.0, 809.0, 411.0, 806.0, 529.0, 806.0, 529.0, 792.0, 411.0, 792.0, 411.0, 656.0, 414.0, 656.0, 414.0, 642.0, 411.0, 642.0, 411.0, 639.0" coords2="397.0, 639.0, 397.0, 642.0, 243.0, 642.0, 243.0, 656.0, 397.0, 656.0, 397.0, 792.0, 394.0, 792.0, 394.0, 806.0, 397.0, 806.0, 397.0, 809.0, 411.0, 809.0, 411.0, 806.0, 529.0, 806.0, 529.0, 792.0, 411.0, 792.0, 411.0, 656.0, 414.0, 656.0, 414.0, 642.0, 411.0, 642.0, 411.0, 639.0" shape="poly" alt="CAPHR-&gt;LMS:Flow" id="areadiagram_map_UgBHrUaAUhQsMcno" href="ArchiMateFlow_L6RKHQaAUhQsVB5L.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Electronic interface
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="182.0, 658.0, 182.0, 947.0, 179.0, 947.0, 179.0, 961.0, 182.0, 961.0, 182.0, 964.0, 196.0, 964.0, 196.0, 961.0, 287.0, 961.0, 287.0, 1131.0, 301.0, 1131.0, 301.0, 961.0, 304.0, 961.0, 304.0, 947.0, 301.0, 947.0, 301.0, 944.0, 287.0, 944.0, 287.0, 947.0, 196.0, 947.0, 196.0, 658.0" coords2="182.0, 658.0, 182.0, 947.0, 179.0, 947.0, 179.0, 961.0, 182.0, 961.0, 182.0, 964.0, 196.0, 964.0, 196.0, 961.0, 287.0, 961.0, 287.0, 1131.0, 301.0, 1131.0, 301.0, 961.0, 304.0, 961.0, 304.0, 947.0, 301.0, 947.0, 301.0, 944.0, 287.0, 944.0, 287.0, 947.0, 196.0, 947.0, 196.0, 658.0" shape="poly" alt="CAPHR-&gt;WiTS:Flow" id="areadiagram_map_ygBHrUaAUhQsMcny" href="ArchiMateFlow_gLDKHQaAUhQsVB5c.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="458.0, 617.0, 458.0, 620.0, 243.0, 620.0, 243.0, 634.0, 458.0, 634.0, 458.0, 684.0, 455.0, 684.0, 455.0, 698.0, 458.0, 698.0, 458.0, 701.0, 472.0, 701.0, 472.0, 698.0, 529.0, 698.0, 529.0, 684.0, 472.0, 684.0, 472.0, 634.0, 475.0, 634.0, 475.0, 620.0, 472.0, 620.0, 472.0, 617.0" coords2="458.0, 617.0, 458.0, 620.0, 243.0, 620.0, 243.0, 634.0, 458.0, 634.0, 458.0, 684.0, 455.0, 684.0, 455.0, 698.0, 458.0, 698.0, 458.0, 701.0, 472.0, 701.0, 472.0, 698.0, 529.0, 698.0, 529.0, 684.0, 472.0, 684.0, 472.0, 634.0, 475.0, 634.0, 475.0, 620.0, 472.0, 620.0, 472.0, 617.0" shape="poly" alt="eOPF-&gt;CAPHR:Flow" id="areadiagram_map_.gBHrUaAUhQsMcn_" href="ArchiMateFlow_nrqqrgaAUhQsNh_1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="212.0, 167.0, 212.0, 618.0, 226.0, 618.0, 226.0, 167.0" coords2="212.0, 167.0, 212.0, 618.0, 226.0, 618.0, 226.0, 167.0" shape="poly" alt="DFAS-&gt;CAPHR:Flow" id="areadiagram_map_hgBHrUaAUhQsMcoC" href="ArchiMateFlow_8ZQqngaAUhQsNjCv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="212.0, 658.0, 212.0, 907.0, 209.0, 907.0, 209.0, 921.0, 212.0, 921.0, 212.0, 924.0, 226.0, 924.0, 226.0, 921.0, 466.0, 921.0, 466.0, 1131.0, 480.0, 1131.0, 480.0, 921.0, 483.0, 921.0, 483.0, 907.0, 480.0, 907.0, 480.0, 904.0, 466.0, 904.0, 466.0, 907.0, 226.0, 907.0, 226.0, 658.0" coords2="212.0, 658.0, 212.0, 907.0, 209.0, 907.0, 209.0, 921.0, 212.0, 921.0, 212.0, 924.0, 226.0, 924.0, 226.0, 921.0, 466.0, 921.0, 466.0, 1131.0, 480.0, 1131.0, 480.0, 921.0, 483.0, 921.0, 483.0, 907.0, 480.0, 907.0, 480.0, 904.0, 466.0, 904.0, 466.0, 907.0, 226.0, 907.0, 226.0, 658.0" shape="poly" alt="ITAS-&gt;CAPHR:Flow" id="areadiagram_map_RgBHrUaAUhQsMcoF" href="ArchiMateFlow_e95angaAUhQsNjDl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="458.0, 473.0, 458.0, 476.0, 455.0, 476.0, 455.0, 490.0, 458.0, 490.0, 458.0, 620.0, 243.0, 620.0, 243.0, 634.0, 458.0, 634.0, 458.0, 637.0, 472.0, 637.0, 472.0, 634.0, 475.0, 634.0, 475.0, 620.0, 472.0, 620.0, 472.0, 490.0, 529.0, 490.0, 529.0, 476.0, 472.0, 476.0, 472.0, 473.0" coords2="458.0, 473.0, 458.0, 476.0, 455.0, 476.0, 455.0, 490.0, 458.0, 490.0, 458.0, 620.0, 243.0, 620.0, 243.0, 634.0, 458.0, 634.0, 458.0, 637.0, 472.0, 637.0, 472.0, 634.0, 475.0, 634.0, 475.0, 620.0, 472.0, 620.0, 472.0, 490.0, 529.0, 490.0, 529.0, 476.0, 472.0, 476.0, 472.0, 473.0" shape="poly" alt="BIIS-&gt;CAPHR:Flow" id="areadiagram_map_xgBHrUaAUhQsMcoI" href="ArchiMateFlow_3egengaAUhQsNjEu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="483.0, 569.0, 483.0, 572.0, 480.0, 572.0, 480.0, 586.0, 483.0, 586.0, 483.0, 620.0, 243.0, 620.0, 243.0, 634.0, 483.0, 634.0, 483.0, 637.0, 497.0, 637.0, 497.0, 634.0, 500.0, 634.0, 500.0, 620.0, 497.0, 620.0, 497.0, 586.0, 529.0, 586.0, 529.0, 572.0, 497.0, 572.0, 497.0, 569.0" coords2="483.0, 569.0, 483.0, 572.0, 480.0, 572.0, 480.0, 586.0, 483.0, 586.0, 483.0, 620.0, 243.0, 620.0, 243.0, 634.0, 483.0, 634.0, 483.0, 637.0, 497.0, 637.0, 497.0, 634.0, 500.0, 634.0, 500.0, 620.0, 497.0, 620.0, 497.0, 586.0, 529.0, 586.0, 529.0, 572.0, 497.0, 572.0, 497.0, 569.0" shape="poly" alt="AMS-&gt;CAPHR:Flow" id="areadiagram_map_JgBHrUaAUhQsMcoL" href="ArchiMateFlow_Hrbw2UaAUhQsGnvS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;SMARTHR&amp;lt;/b&amp;gt; &amp;#8211; increases efficiency in the use of NIH resources and 
+      automates specialized reporting tasks performed by OHR. SMARTHR also 
+      provides the unique ability to bridge reporting gaps across multiple 
+      Human Resource (HR) and non-HR systems. By linking disparate 
+      data-sources, SMARTHR promotes a more complete assessment of the 
+      organization and human capital topics, while facilitating on-demand 
+      business intelligence to OHR and IC customers alike. managed by OHR HR 
+      Systems Support Helpdesk
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Sources
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ol class=&amp;quot;decimal&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;margin-bottom:0px;list-style-type:none;margin-top:0px;margin-left:40pt;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-bottom:0;margin-right:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        nVision &amp;#8211; 3Rs Dashboard. Biweekly refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-bottom:0;margin-right:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        NIH CapHR, NVision, BIIS &amp;#8211; Awards Dashboard. Biweekly refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-bottom:0;margin-right:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        Survey Gizmo, nVision &amp;#8211; Exit Survey. Biweekly refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-bottom:0;margin-right:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        Survey Gizmo &amp;#8211; HRSS Survey. Quarterly refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-bottom:0;margin-right:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        nVision &amp;#8211; PMAP data call. Annually refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-bottom:0;margin-right:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        nVision &amp;#8211; Workforce Analytics planning. Biweekly refreash
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ol&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="61, 1131, 157, 1171" coords2="61, 1131, 157, 1171" shape="rect" alt="SMART HR:Application Component" id="areadiagram_map_E_.HrUaAUhQsMcmr" href="ArchiMateApplicationComponent_JSSRnjqAUhQsLAju.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;Workflow Information Tracking System(WiTS)&amp;lt;/b&amp;gt; &amp;#8211; Standard way to 
+      submit, track and report on HR and Hr-realted activites via optimized 
+      business processes via automated workflows
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Variety of Processes, reports, dashboards and interfaces. 
+      https://hr.od.nih.gov/hrsystems/staffing/wits/default.htm
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#at5EojqAUhQsEgsL&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('at5EojqAUhQsEgsL');&amp;quot;&amp;gt;Owner&amp;lt;/a&amp;gt; 
+      - NIH
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="246, 1131, 342, 1171" coords2="246, 1131, 342, 1171" shape="rect" alt="WiTS:Application Component" id="areadiagram_map_ygBHrUaAUhQsMcn0" href="ArchiMateApplicationComponent_fmaxnjqAUhQsLAk7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;The Integrated Time and Attendance System (ITAS)&amp;lt;/b&amp;gt; - is an 
+      automated timekeeping by exception system. ITAS records employees&amp;#8217; work 
+      schedules, Voluntary Leave/Voluntary Leave Transfer Program hours, 
+      Telework requests and all leave requests for NIH staff. As an employee, 
+      you can Sign In and Out (if required,) Verify your timecard (if 
+      required) at the end of each pay period, and request all leave 
+      categories. If you are eligible for Telework, you can request a 
+      non-scheduled Telework day, or change your regular Telework schedule. As 
+      a Timekeeper or Administrative Officer in ITAS, you can act on behalf of 
+      an employee and create leave requests, update profiles, add premium pay 
+      to timecards, process other actions and download reports, appropriate to 
+      your access.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Link - https://hr.od.nih.gov/hrsystems/benefits/itas/default.htm
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#at5EojqAUhQsEgsL&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('at5EojqAUhQsEgsL');&amp;quot;&amp;gt;Owner&amp;lt;/a&amp;gt; 
+      - NIH
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="431, 1131, 527, 1171" coords2="431, 1131, 527, 1171" shape="rect" alt="ITAS:Application Component" id="areadiagram_map_NABHrUaAUhQsMcnW" href="ArchiMateApplicationComponent_aJjenjqAUhQsLAhW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="18, 1084, 781, 1206" coords2="18, 1084, 781, 1206" shape="rect" alt="NIH:Grouping" id="areadiagram_map_hUHHrUaAUhQsMcpO" href="ArchiMateGrouping_hUHHrUaAUhQsMcpP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;CAPHR &amp;lt;/b&amp;gt;&amp;#8211; PeopleSoft based Human Resource (HR) information system 
+      used throughout the Department of Health and Human Services (HHS) to 
+      process personnel actions and administer benefits. The web-based Capital 
+      HR version 8.9 system replaced the legacy HR information system, IMPACT, 
+      in September of 2002. Capital HR contains &amp;quot;core&amp;quot; functionality common to 
+      the DHHS and its Agencies and is continually being reviewed for 
+      enhancements by the DHHS Program Support Center (PSC).
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Link https://hr.od.nih.gov/HRSystems/staffing/caphr/
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Feeds &amp;#8211; Central Pay System
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;table border-spacing=&amp;quot;0px&amp;quot; style=&amp;quot;border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;border-left-style:solid;border-right-width:1px;border-left-color:#888888;border-bottom-width:1px;border-top-color:#888888;border-bottom-style:solid;border-right-color:#888888;border-left-width:1px;border-top-style:solid;&amp;quot;&amp;gt;
+      &amp;lt;tr style=&amp;quot;text-align:left;&amp;quot;&amp;gt;
+        &amp;lt;td class=&amp;quot;xl66&amp;quot; height=&amp;quot;32.0pt&amp;quot; style=&amp;quot;border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;padding-left:3;border-right-width:1px;border-left-color:#888888;border-right-color:#888888;border-left-width:1px;padding-top:3;border-top-style:solid;padding-right:3;border-left-style:solid;border-bottom-width:1px;border-top-color:#888888;border-bottom-style:solid;padding-bottom:3;&amp;quot; width=&amp;quot;415pt&amp;quot;&amp;gt;
+          May be retired in 3 years of 12/17 and replaced with Enterprise 
+          Huaman Capital Management(EHCM) which will have HR data and Time 
+          keeping.&amp;lt;span&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;
+        &amp;lt;/td&amp;gt;
+      &amp;lt;/tr&amp;gt;
+    &amp;lt;/table&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="147, 618, 243, 658" coords2="147, 618, 243, 658" shape="rect" alt="CAPHR:Application Component" id="areadiagram_map_HDuHrUaAUhQsMcmi" href="ArchiMateApplicationComponent_cDpGnjqAUhQsEh0Q.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','147, 618, 243, 658',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_cdqHrUaAUhQsMcgA.html/CAPHR ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '147, 618, 243, 658'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="529, 457, 625, 497" coords2="529, 457, 625, 497" shape="rect" alt="BIIS:Application Component" id="areadiagram_map_vABHrUaAUhQsMcng" href="ArchiMateApplicationComponent_cmKMETqAUhQsLBHR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;HHS Learning Portal (LMS)&amp;lt;/b&amp;gt; &amp;#8211; Place to search for HHS instructional 
+      class.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#at5EojqAUhQsEgsL&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('at5EojqAUhQsEgsL');&amp;quot;&amp;gt;Owner&amp;lt;/a&amp;gt; 
+      - HHS
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="529, 779, 625, 819" coords2="529, 779, 625, 819" shape="rect" alt="LMS:Application Component" id="areadiagram_map_0gBHrUaAUhQsMcnq" href="ArchiMateApplicationComponent_x5wOnjqAUhQsEh20.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','529, 779, 625, 819',new Array(),new Array(),new Array(new Array('https://nciconnect.nci.nih.gov/sites/Collaboration/NCIAdminSysMappingProject/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BE50D6C4E-DF04-4D34-A53E-69EC56B346D8%7D&file=Copy%20of%20HHS%20Training%20Completion%20Details%20-%20Wildcard.xls&action=default','https://nciconnect.nci.nih.gov/sites/Collaboration/NCIAdminSysMappingProject/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BE50D6C4E-DF04-4D34-A53E-69EC56B346D8%7D&file=Copy%20of%20HHS%20Training%20Completion%20Details%20-%20Wildcard.xls&action=default')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '529, 779, 625, 819'),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;Office of Personnel Management (eOPF)&amp;lt;/b&amp;gt; - The eOPF is an electronic 
+      version of the paper OPF and a system for accessing the electronic 
+      folder online. The eOPF system combines document management with 
+      workflow capabilities. The eOPF allows each employee to have an 
+      electronic personnel folder instead of a paper folder. Benefits of eOPF 
+      include: * Immediate access to personnel forms and information for a 
+      geographically dispersed workforce. * E-mail notification to employee 
+      when documents are added to their eOPF. * Multi-level secure environment 
+      with security rules for sensitive information. * No loss of official 
+      personnel documents due to filing and routing errors. * Reduced costs 
+      associated with storage, maintenance, and retrieval of records. * 
+      Electronic transfer of human resources (HR) data. * Integration with 
+      agency&amp;#8217;s human resources information systems (HRIS). * Compliance with 
+      OPM and federally mandated HR employee record management regulations.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="529, 679, 625, 719" coords2="529, 679, 625, 719" shape="rect" alt="eOPF:Application Component" id="areadiagram_map_9_.HrUaAUhQsMcm4" href="ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;Account Management System(AMS)&amp;lt;/b&amp;gt; &amp;#8211; User-friendly module to create, 
+      manage and search existing accounts in eRA Common, iEdison, And ASSIST 
+      as well as eRA modules used by agency staff. Depending on role, users 
+      from Organizations., Universities, Federal Agencies, Institute/Center 
+      Coordinators, the State department (for FACTS) and the eRA service desk 
+      staff are able to access and use the functionality.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="529, 568, 625, 608" coords2="529, 568, 625, 608" shape="rect" alt="AMS:Application Component" id="areadiagram_map_mABHrUaAUhQsMcnM" href="ArchiMateApplicationComponent_lFAz4TqAUhQsLBC7.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','529, 568, 625, 608',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_OPkRDUaAUhQsGpUo.html/AMS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '529, 568, 625, 608'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="18, 401, 781, 1007" coords2="18, 401, 781, 1007" shape="rect" alt="HHS:Grouping" id="areadiagram_map_zLbHrUaAUhQsMcpC" href="ArchiMateGrouping_zLbHrUaAUhQsMcpD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;Defense Finance and Accounting Services(DFAS)&amp;lt;/b&amp;gt; - Department of 
+      Defense system housing civilian and Commission Corps personnel payroll 
+      information; DFAS includes payroll information for regular, supplemental 
+      and corrections. Sourced via the HHS Accounting for Pay System(AFPS). 
+      Update every two weeks.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="157, 127, 253, 167" coords2="157, 127, 253, 167" shape="rect" alt="DFAS (aka mypay):Application Component" id="areadiagram_map_kABHrUaAUhQsMcnC" href="ArchiMateApplicationComponent_k2J_fjqAUhQsLAqc.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','157, 127, 253, 167',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_ENbrrUaAUhQsMVXN.html/DFAS (aka mypay) ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '157, 127, 253, 167'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="2, 2, 781, 305" coords2="2, 2, 781, 305" shape="rect" alt="Grouping3:Grouping" id="areadiagram_map_r7dHrUaAUhQsMcob" href="ArchiMateGrouping_r7dHrUaAUhQsMcoc.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_JSSRnjqAUhQsLAju.html" class="ItemLink">SMART HR : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>SMARTHR</b> &#8211; increases efficiency in the use of NIH resources and 
+      automates specialized reporting tasks performed by OHR. SMARTHR also 
+      provides the unique ability to bridge reporting gaps across multiple 
+      Human Resource (HR) and non-HR systems. By linking disparate 
+      data-sources, SMARTHR promotes a more complete assessment of the 
+      organization and human capital topics, while facilitating on-demand 
+      business intelligence to OHR and IC customers alike. managed by OHR HR 
+      Systems Support Helpdesk
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      Sources
+    </p>
+    <ol class="decimal" margin-left-ltr="50" margin-right-rtl="50" style="margin-bottom:0px;list-style-type:none;margin-top:0px;margin-left:40pt;">
+      <li style="margin-bottom:0;margin-right:0;margin-top:0;margin-left:0;">
+        nVision &#8211; 3Rs Dashboard. Biweekly refreash
+      </li>
+      <li style="margin-bottom:0;margin-right:0;margin-top:0;margin-left:0;">
+        NIH CapHR, NVision, BIIS &#8211; Awards Dashboard. Biweekly refreash
+      </li>
+      <li style="margin-bottom:0;margin-right:0;margin-top:0;margin-left:0;">
+        Survey Gizmo, nVision &#8211; Exit Survey. Biweekly refreash
+      </li>
+      <li style="margin-bottom:0;margin-right:0;margin-top:0;margin-left:0;">
+        Survey Gizmo &#8211; HRSS Survey. Quarterly refreash
+      </li>
+      <li style="margin-bottom:0;margin-right:0;margin-top:0;margin-left:0;">
+        nVision &#8211; PMAP data call. Annually refreash
+      </li>
+      <li style="margin-bottom:0;margin-right:0;margin-top:0;margin-left:0;">
+        nVision &#8211; Workforce Analytics planning. Biweekly refreash
+      </li>
+    </ol>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0;margin-left:0pt;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_fmaxnjqAUhQsLAk7.html" class="ItemLink">WiTS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>Workflow Information Tracking System(WiTS)</b> &#8211; Standard way to 
+      submit, track and report on HR and Hr-realted activites via optimized 
+      business processes via automated workflows
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      Variety of Processes, reports, dashboards and interfaces. 
+      https://hr.od.nih.gov/hrsystems/staffing/wits/default.htm
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#at5EojqAUhQsEgsL" name="" onclick="javascript: highlightGridModelSelection('at5EojqAUhQsEgsL');">Owner</a> 
+      - NIH
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_aJjenjqAUhQsLAhW.html" class="ItemLink">ITAS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>The Integrated Time and Attendance System (ITAS)</b> - is an 
+      automated timekeeping by exception system. ITAS records employees&#8217; work 
+      schedules, Voluntary Leave/Voluntary Leave Transfer Program hours, 
+      Telework requests and all leave requests for NIH staff. As an employee, 
+      you can Sign In and Out (if required,) Verify your timecard (if 
+      required) at the end of each pay period, and request all leave 
+      categories. If you are eligible for Telework, you can request a 
+      non-scheduled Telework day, or change your regular Telework schedule. As 
+      a Timekeeper or Administrative Officer in ITAS, you can act on behalf of 
+      an employee and create leave requests, update profiles, add premium pay 
+      to timecards, process other actions and download reports, appropriate to 
+      your access.
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      Link - https://hr.od.nih.gov/hrsystems/benefits/itas/default.htm
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#at5EojqAUhQsEgsL" name="" onclick="javascript: highlightGridModelSelection('at5EojqAUhQsEgsL');">Owner</a> 
+      - NIH
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_hUHHrUaAUhQsMcpP.html" class="ItemLink">NIH : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_cDpGnjqAUhQsEh0Q.html" class="ItemLink">CAPHR : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>CAPHR </b>&#8211; PeopleSoft based Human Resource (HR) information system 
+      used throughout the Department of Health and Human Services (HHS) to 
+      process personnel actions and administer benefits. The web-based Capital 
+      HR version 8.9 system replaced the legacy HR information system, IMPACT, 
+      in September of 2002. Capital HR contains &quot;core&quot; functionality common to 
+      the DHHS and its Agencies and is continually being reviewed for 
+      enhancements by the DHHS Program Support Center (PSC).
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      Link https://hr.od.nih.gov/HRSystems/staffing/caphr/
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      Feeds &#8211; Central Pay System
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <table border-spacing="0px" style="border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;border-left-style:solid;border-right-width:1px;border-left-color:#888888;border-bottom-width:1px;border-top-color:#888888;border-bottom-style:solid;border-right-color:#888888;border-left-width:1px;border-top-style:solid;">
+      <tr style="text-align:left;">
+        <td class="xl66" height="32.0pt" style="border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;padding-left:3;border-right-width:1px;border-left-color:#888888;border-right-color:#888888;border-left-width:1px;padding-top:3;border-top-style:solid;padding-right:3;border-left-style:solid;border-bottom-width:1px;border-top-color:#888888;border-bottom-style:solid;padding-bottom:3;" width="415pt">
+          May be retired in 3 years of 12/17 and replaced with Enterprise 
+          Huaman Capital Management(EHCM) which will have HR data and Time 
+          keeping.<span>&nbsp;</span>
+        </td>
+      </tr>
+    </table>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_cmKMETqAUhQsLBHR.html" class="ItemLink">BIIS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_x5wOnjqAUhQsEh20.html" class="ItemLink">LMS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>HHS Learning Portal (LMS)</b> &#8211; Place to search for HHS instructional 
+      class.
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#at5EojqAUhQsEgsL" name="" onclick="javascript: highlightGridModelSelection('at5EojqAUhQsEgsL');">Owner</a> 
+      - HHS
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html" class="ItemLink">eOPF : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>Office of Personnel Management (eOPF)</b> - The eOPF is an electronic 
+      version of the paper OPF and a system for accessing the electronic 
+      folder online. The eOPF system combines document management with 
+      workflow capabilities. The eOPF allows each employee to have an 
+      electronic personnel folder instead of a paper folder. Benefits of eOPF 
+      include: * Immediate access to personnel forms and information for a 
+      geographically dispersed workforce. * E-mail notification to employee 
+      when documents are added to their eOPF. * Multi-level secure environment 
+      with security rules for sensitive information. * No loss of official 
+      personnel documents due to filing and routing errors. * Reduced costs 
+      associated with storage, maintenance, and retrieval of records. * 
+      Electronic transfer of human resources (HR) data. * Integration with 
+      agency&#8217;s human resources information systems (HRIS). * Compliance with 
+      OPM and federally mandated HR employee record management regulations.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_lFAz4TqAUhQsLBC7.html" class="ItemLink">AMS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>Account Management System(AMS)</b> &#8211; User-friendly module to create, 
+      manage and search existing accounts in eRA Common, iEdison, And ASSIST 
+      as well as eRA modules used by agency staff. Depending on role, users 
+      from Organizations., Universities, Federal Agencies, Institute/Center 
+      Coordinators, the State department (for FACTS) and the eRA service desk 
+      staff are able to access and use the functionality.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_zLbHrUaAUhQsMcpD.html" class="ItemLink">HHS : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_k2J_fjqAUhQsLAqc.html" class="ItemLink">DFAS (aka mypay) : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-top:0pt;margin-left:0pt;">
+      <b>Defense Finance and Accounting Services(DFAS)</b> - Department of 
+      Defense system housing civilian and Commission Corps personnel payroll 
+      information; DFAS includes payroll information for regular, supplemental 
+      and corrections. Sourced via the HHS Accounting for Pay System(AFPS). 
+      Update every two weeks.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_r7dHrUaAUhQsMcoc.html" class="ItemLink">Grouping3 : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Buisness Architecture	</div>
+</body>
+</html>
