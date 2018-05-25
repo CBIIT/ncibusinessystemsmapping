@@ -1127,3 +1127,7 @@ function getCookie(c_name) {
 	}
 	return c_value;
 }
+
+function popupTerm(href) {
+	window.open(href, '_blank', 'width=700,height=450');
+}

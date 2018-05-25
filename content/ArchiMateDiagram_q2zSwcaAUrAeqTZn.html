@@ -1,0 +1,581 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - ITRC Buisness Intelligence ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Buisness Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_IN4IjoaAUhQsPklM.html" class="PageParentTitle">NCIConnnect : Application Component</a> (in <a href="ArchiMateDiagram_IN4IjoaAUhQsPklM.html" class="PageParentTitle">HR Systems diagram</a> / <a href="ArchiMateDiagram__mJ_fUaAUhQsMaqL.html" class="PageParentTitle">Beacon ArchiMate Diagram</a> / <a href="ArchiMateDiagram_2w854MaAUrAy_BJ2.html" class="PageParentTitle">NCI Business Applications ArchiMate Diagram</a> / <a href="ArchiMateDiagram_KCte8saAUrCskEtq.html" class="PageParentTitle">ITRC</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - ITRC Buisness Intelligence ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/q2zSwcaAUrAeqTZn', 'ITRC Buisness Intelligence ArchiMate Diagram\nNCI Buisness Architecture.vpp://diagram/q2zSwcaAUrAeqTZn', 'ITRC Buisness Intelligence ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|733.0|122.0|162.0|40.0|ArchiMateApplicationComponent_tmVxLsaAUrAeqa5A.html|ArchiMateApplicationComponent_tmVxLsaAUrAeqa5A.html|hNAywcaAUrAeqTvc" id="optionhNAywcaAUrAeqTvc">Qlikview Workforce Analytics Dashboard : Application Component</option>
+<option value="shape|733.0|62.0|162.0|40.0|ArchiMateApplicationComponent_YRZxLsaAUrAeqa4D.html|ArchiMateApplicationComponent_YRZxLsaAUrAeqa4D.html|eNAywcaAUrAeqTvZ" id="optioneNAywcaAUrAeqTvZ">QlikView NCiConnect Help Desk Dashboard : Application Component</option>
+<option value="shape|733.0|2.0|162.0|40.0|ArchiMateApplicationComponent_cGexLsaAUrAeqa26.html|ArchiMateApplicationComponent_cGexLsaAUrAeqa26.html|WNAywcaAUrAeqTvW" id="optionWNAywcaAUrAeqTvW">Qlikview HRt Data Model : Application Component</option>
+<option value="shape|550.0|242.0|162.0|40.0|ArchiMateApplicationComponent_BHmxLsaAUrAeqa2B.html|ArchiMateApplicationComponent_BHmxLsaAUrAeqa2B.html|aNAywcaAUrAeqTvT" id="optionaNAywcaAUrAeqTvT">QlikView Error Reports : Application Component</option>
+<option value="shape|550.0|182.0|163.0|40.0|ArchiMateApplicationComponent_VRixLsaAUrAeqa1A.html|ArchiMateApplicationComponent_VRixLsaAUrAeqa1A.html|yNAywcaAUrAeqTvQ" id="optionyNAywcaAUrAeqTvQ">QlikView Email Distribution List Generato : Application Component</option>
+<option value="shape|550.0|122.0|162.0|40.0|ArchiMateApplicationComponent_yqsxLsaAUrAeqa0H.html|ArchiMateApplicationComponent_yqsxLsaAUrAeqa0H.html|CNAywcaAUrAeqTvN" id="optionCNAywcaAUrAeqTvN">Qlikview Budget data Model : Application Component</option>
+<option value="shape|550.0|62.0|162.0|40.0|ArchiMateApplicationComponent_tSkxLsaAUrAeqazO.html|ArchiMateApplicationComponent_tSkxLsaAUrAeqazO.html|sNAywcaAUrAeqTvK" id="optionsNAywcaAUrAeqTvK">QlikView Actions Dashboard : Application Component</option>
+<option value="shape|550.0|2.0|162.0|40.0|ArchiMateApplicationComponent_9JQxLsaAUrAeqayN.html|ArchiMateApplicationComponent_9JQxLsaAUrAeqayN.html|UNAywcaAUrAeqTvH" id="optionUNAywcaAUrAeqTvH">OMPC QlikView Reports : Application Component</option>
+<option value="shape|367.0|242.0|162.0|40.0|ArchiMateApplicationComponent_8jPRLsaAUrAeqaxM.html|ArchiMateApplicationComponent_8jPRLsaAUrAeqaxM.html|4NAywcaAUrAeqTvE" id="option4NAywcaAUrAeqTvE">OBF Closeout Summary : Application Component</option>
+<option value="shape|366.0|182.0|163.0|40.0|ArchiMateApplicationComponent_EabRLsaAUrAeqawT.html|ArchiMateApplicationComponent_EabRLsaAUrAeqawT.html|INAywcaAUrAeqTvB" id="optionINAywcaAUrAeqTvB">OBF Closeout Dashboard : Application Component</option>
+<option value="shape|367.0|122.0|162.0|40.0|ArchiMateApplicationComponent_H5TRLsaAUrAeqasZ.html|ArchiMateApplicationComponent_H5TRLsaAUrAeqasZ.html|gNAywcaAUrAeqTu." id="optiongNAywcaAUrAeqTu.">NED Data Reporting in QlikView : Application Component</option>
+<option value="shape|367.0|62.0|162.0|40.0|ArchiMateApplicationComponent_gEjzzsaAUrAeqTrR.html|ArchiMateApplicationComponent_gEjzzsaAUrAeqTrR.html|v1AywcaAUrAeqTu7" id="optionv1AywcaAUrAeqTu7">NED AO validation Report : Application Component</option>
+<option value="shape|367.0|2.0|162.0|40.0|ArchiMateApplicationComponent_UeZzzsaAUrAeqTqC.html|ArchiMateApplicationComponent_UeZzzsaAUrAeqTqC.html|n1AywcaAUrAeqTu4" id="optionn1AywcaAUrAeqTu4">NCiConnect Reports Page : Application Component</option>
+<option value="shape|184.0|242.0|162.0|40.0|ArchiMateApplicationComponent_2NuzzsaAUrAeqTpD.html|ArchiMateApplicationComponent_2NuzzsaAUrAeqTpD.html|b1AywcaAUrAeqTu1" id="optionb1AywcaAUrAeqTu1">NCiConnect Reprting Hub : Application Component</option>
+<option value="shape|186.0|2.0|162.0|40.0|ArchiMateApplicationComponent_K_6zzsaAUrAeqToA.html|ArchiMateApplicationComponent_K_6zzsaAUrAeqToA.html|z1AywcaAUrAeqTuy" id="optionz1AywcaAUrAeqTuy">NCiConnect Reporting Hub : Application Component</option>
+<option value="shape|184.0|182.0|162.0|40.0|ArchiMateApplicationComponent_PS8zzsaAUrAeqTnF.html|ArchiMateApplicationComponent_PS8zzsaAUrAeqTnF.html|D1AywcaAUrAeqTuv" id="optionD1AywcaAUrAeqTuv">NCiConnect My Actions Dashboard : Application Component</option>
+<option value="shape|184.0|122.0|162.0|40.0|ArchiMateApplicationComponent_6skzzsaAUrAeqTmO.html|ArchiMateApplicationComponent_6skzzsaAUrAeqTmO.html|t1AywcaAUrAeqTus" id="optiont1AywcaAUrAeqTus">NCI Staff by Location : Application Component</option>
+<option value="shape|184.0|62.0|162.0|40.0|ArchiMateApplicationComponent_9lgzzsaAUrAeqTlT.html|ArchiMateApplicationComponent_9lgzzsaAUrAeqTlT.html|l1AywcaAUrAeqTup" id="optionl1AywcaAUrAeqTup">Emergency tier Coding Dashboard : Application Component</option>
+<option value="shape|2.0|242.0|162.0|40.0|ArchiMateApplicationComponent_2xnTzsaAUrAeqTkU.html|ArchiMateApplicationComponent_2xnTzsaAUrAeqTkU.html|p1AywcaAUrAeqTum" id="optionp1AywcaAUrAeqTum">DCTD QlikView Budget Report For Next : Application Component</option>
+<option value="shape|2.0|182.0|162.0|40.0|ArchiMateApplicationComponent_Mz9TzsaAUrAeqTjZ.html|ArchiMateApplicationComponent_Mz9TzsaAUrAeqTjZ.html|h1AywcaAUrAeqTuj" id="optionh1AywcaAUrAeqTuj">CCR Closeout Dashboard : Application Component</option>
+<option value="shape|2.0|122.0|162.0|40.0|ArchiMateApplicationComponent_qepTzsaAUrAeqTiO.html|ArchiMateApplicationComponent_qepTzsaAUrAeqTiO.html|u1AywcaAUrAeqTug" id="optionu1AywcaAUrAeqTug">CBIIT Report Builder : Application Component</option>
+<option value="shape|2.0|62.0|162.0|40.0|ArchiMateApplicationComponent__5_TzsaAUrAeqThP.html|ArchiMateApplicationComponent__5_TzsaAUrAeqThP.html|m1AywcaAUrAeqTud" id="optionm1AywcaAUrAeqTud">CBIIT Receiveing Dashboard : Application Component</option>
+<option value="shape|3.0|2.0|161.0|40.0|ArchiMateApplicationComponent_AjWTzsaAUrAeqTgQ.html|ArchiMateApplicationComponent_AjWTzsaAUrAeqTgQ.html|K1AywcaAUrAeqTua" id="optionK1AywcaAUrAeqTua">Budget Analytical Dashboard : Application Component</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/ITRC_Buisness_Intelligence_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="899" height="286"/>
+					<map name="diagram_map">
+<area coords="217,190,280,204" coords2="217,190,280,204" shape="rect" alt="NCiConnect" href="GridDiagram_5GBJ6waAUJUCAjP0.html#5QUXiUaAUhQCoQs." onclick="javascript: highlightGridModelSelection('5QUXiUaAUhQCoQs.');"/>
+<area coords="222,10,285,24" coords2="222,10,285,24" shape="rect" alt="NCiConnect" href="GridDiagram_5GBJ6waAUJUCAjP0.html#5QUXiUaAUhQCoQs." onclick="javascript: highlightGridModelSelection('5QUXiUaAUhQCoQs.');"/>
+<area coords="223,250,286,264" coords2="223,250,286,264" shape="rect" alt="NCiConnect" href="GridDiagram_5GBJ6waAUJUCAjP0.html#5QUXiUaAUhQCoQs." onclick="javascript: highlightGridModelSelection('5QUXiUaAUhQCoQs.');"/>
+<area coords="408,10,471,24" coords2="408,10,471,24" shape="rect" alt="NCiConnect" href="GridDiagram_5GBJ6waAUJUCAjP0.html#5QUXiUaAUhQCoQs." onclick="javascript: highlightGridModelSelection('5QUXiUaAUhQCoQs.');"/>
+<area coords="413,70,435,84" coords2="413,70,435,84" shape="rect" alt="NED" href="GridDiagram_5GBJ6waAUJUCAjP0.html#0wOEWEaAUhQCoQ3N" onclick="javascript: highlightGridModelSelection('0wOEWEaAUhQCoQ3N');"/>
+<area coords="402,130,424,144" coords2="402,130,424,144" shape="rect" alt="NED" href="GridDiagram_5GBJ6waAUJUCAjP0.html#0wOEWEaAUhQCoQ3N" onclick="javascript: highlightGridModelSelection('0wOEWEaAUhQCoQ3N');"/>
+<area coords="822,70,885,84" coords2="822,70,885,84" shape="rect" alt="NCiConnect" href="GridDiagram_5GBJ6waAUJUCAjP0.html#5QUXiUaAUhQCoQs." onclick="javascript: highlightGridModelSelection('5QUXiUaAUhQCoQs.');"/>
+<area imageId="diagram" coords="733, 122, 895, 162" coords2="733, 122, 895, 162" shape="rect" alt="Qlikview Workforce Analytics Dashboard:Application Component" id="areadiagram_map_hNAywcaAUrAeqTvc_default" href="ArchiMateApplicationComponent_tmVxLsaAUrAeqa5A.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="733, 62, 895, 102" coords2="733, 62, 895, 102" shape="rect" alt="QlikView NCiConnect Help Desk Dashboard:Application Component" id="areadiagram_map_eNAywcaAUrAeqTvZ_default" href="ArchiMateApplicationComponent_YRZxLsaAUrAeqa4D.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="733, 2, 895, 42" coords2="733, 2, 895, 42" shape="rect" alt="Qlikview HRt Data Model:Application Component" id="areadiagram_map_WNAywcaAUrAeqTvW_default" href="ArchiMateApplicationComponent_cGexLsaAUrAeqa26.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="550, 242, 712, 282" coords2="550, 242, 712, 282" shape="rect" alt="QlikView Error Reports:Application Component" id="areadiagram_map_aNAywcaAUrAeqTvT_default" href="ArchiMateApplicationComponent_BHmxLsaAUrAeqa2B.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="550, 182, 713, 222" coords2="550, 182, 713, 222" shape="rect" alt="QlikView Email Distribution List Generato:Application Component" id="areadiagram_map_yNAywcaAUrAeqTvQ_default" href="ArchiMateApplicationComponent_VRixLsaAUrAeqa1A.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="550, 122, 712, 162" coords2="550, 122, 712, 162" shape="rect" alt="Qlikview Budget data Model:Application Component" id="areadiagram_map_CNAywcaAUrAeqTvN_default" href="ArchiMateApplicationComponent_yqsxLsaAUrAeqa0H.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="550, 62, 712, 102" coords2="550, 62, 712, 102" shape="rect" alt="QlikView Actions Dashboard:Application Component" id="areadiagram_map_sNAywcaAUrAeqTvK_default" href="ArchiMateApplicationComponent_tSkxLsaAUrAeqazO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="550, 2, 712, 42" coords2="550, 2, 712, 42" shape="rect" alt="OMPC QlikView Reports:Application Component" id="areadiagram_map_UNAywcaAUrAeqTvH_default" href="ArchiMateApplicationComponent_9JQxLsaAUrAeqayN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="367, 242, 529, 282" coords2="367, 242, 529, 282" shape="rect" alt="OBF Closeout Summary:Application Component" id="areadiagram_map_4NAywcaAUrAeqTvE_default" href="ArchiMateApplicationComponent_8jPRLsaAUrAeqaxM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="366, 182, 529, 222" coords2="366, 182, 529, 222" shape="rect" alt="OBF Closeout Dashboard:Application Component" id="areadiagram_map_INAywcaAUrAeqTvB_default" href="ArchiMateApplicationComponent_EabRLsaAUrAeqawT.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="367, 122, 529, 162" coords2="367, 122, 529, 162" shape="rect" alt="NED Data Reporting in QlikView:Application Component" id="areadiagram_map_gNAywcaAUrAeqTu._default" href="ArchiMateApplicationComponent_H5TRLsaAUrAeqasZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="367, 62, 529, 102" coords2="367, 62, 529, 102" shape="rect" alt="NED AO validation Report:Application Component" id="areadiagram_map_v1AywcaAUrAeqTu7_default" href="ArchiMateApplicationComponent_gEjzzsaAUrAeqTrR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="367, 2, 529, 42" coords2="367, 2, 529, 42" shape="rect" alt="NCiConnect Reports Page:Application Component" id="areadiagram_map_n1AywcaAUrAeqTu4_default" href="ArchiMateApplicationComponent_UeZzzsaAUrAeqTqC.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="184, 242, 346, 282" coords2="184, 242, 346, 282" shape="rect" alt="NCiConnect Reprting Hub:Application Component" id="areadiagram_map_b1AywcaAUrAeqTu1_default" href="ArchiMateApplicationComponent_2NuzzsaAUrAeqTpD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="186, 2, 348, 42" coords2="186, 2, 348, 42" shape="rect" alt="NCiConnect Reporting Hub:Application Component" id="areadiagram_map_z1AywcaAUrAeqTuy_default" href="ArchiMateApplicationComponent_K_6zzsaAUrAeqToA.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="184, 182, 346, 222" coords2="184, 182, 346, 222" shape="rect" alt="NCiConnect My Actions Dashboard:Application Component" id="areadiagram_map_D1AywcaAUrAeqTuv_default" href="ArchiMateApplicationComponent_PS8zzsaAUrAeqTnF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="184, 122, 346, 162" coords2="184, 122, 346, 162" shape="rect" alt="NCI Staff by Location:Application Component" id="areadiagram_map_t1AywcaAUrAeqTus_default" href="ArchiMateApplicationComponent_6skzzsaAUrAeqTmO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="184, 62, 346, 102" coords2="184, 62, 346, 102" shape="rect" alt="Emergency tier Coding Dashboard:Application Component" id="areadiagram_map_l1AywcaAUrAeqTup_default" href="ArchiMateApplicationComponent_9lgzzsaAUrAeqTlT.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 242, 164, 282" coords2="2, 242, 164, 282" shape="rect" alt="DCTD QlikView Budget Report For Next:Application Component" id="areadiagram_map_p1AywcaAUrAeqTum_default" href="ArchiMateApplicationComponent_2xnTzsaAUrAeqTkU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 182, 164, 222" coords2="2, 182, 164, 222" shape="rect" alt="CCR Closeout Dashboard:Application Component" id="areadiagram_map_h1AywcaAUrAeqTuj_default" href="ArchiMateApplicationComponent_Mz9TzsaAUrAeqTjZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 122, 164, 162" coords2="2, 122, 164, 162" shape="rect" alt="CBIIT Report Builder:Application Component" id="areadiagram_map_u1AywcaAUrAeqTug_default" href="ArchiMateApplicationComponent_qepTzsaAUrAeqTiO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 62, 164, 102" coords2="2, 62, 164, 102" shape="rect" alt="CBIIT Receiveing Dashboard:Application Component" id="areadiagram_map_m1AywcaAUrAeqTud_default" href="ArchiMateApplicationComponent__5_TzsaAUrAeqThP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3, 2, 164, 42" coords2="3, 2, 164, 42" shape="rect" alt="Budget Analytical Dashboard:Application Component" id="areadiagram_map_K1AywcaAUrAeqTua_default" href="ArchiMateApplicationComponent_AjWTzsaAUrAeqTgQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_tmVxLsaAUrAeqa5A.html" class="ItemLink">Qlikview Workforce Analytics Dashboard : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_YRZxLsaAUrAeqa4D.html" class="ItemLink">QlikView NCiConnect Help Desk Dashboard : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_cGexLsaAUrAeqa26.html" class="ItemLink">Qlikview HRt Data Model : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_BHmxLsaAUrAeqa2B.html" class="ItemLink">QlikView Error Reports : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_VRixLsaAUrAeqa1A.html" class="ItemLink">QlikView Email Distribution List Generato : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_yqsxLsaAUrAeqa0H.html" class="ItemLink">Qlikview Budget data Model : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_tSkxLsaAUrAeqazO.html" class="ItemLink">QlikView Actions Dashboard : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_9JQxLsaAUrAeqayN.html" class="ItemLink">OMPC QlikView Reports : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_8jPRLsaAUrAeqaxM.html" class="ItemLink">OBF Closeout Summary : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_EabRLsaAUrAeqawT.html" class="ItemLink">OBF Closeout Dashboard : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_H5TRLsaAUrAeqasZ.html" class="ItemLink">NED Data Reporting in QlikView : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_gEjzzsaAUrAeqTrR.html" class="ItemLink">NED AO validation Report : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_UeZzzsaAUrAeqTqC.html" class="ItemLink">NCiConnect Reports Page : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_2NuzzsaAUrAeqTpD.html" class="ItemLink">NCiConnect Reprting Hub : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_K_6zzsaAUrAeqToA.html" class="ItemLink">NCiConnect Reporting Hub : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_PS8zzsaAUrAeqTnF.html" class="ItemLink">NCiConnect My Actions Dashboard : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_6skzzsaAUrAeqTmO.html" class="ItemLink">NCI Staff by Location : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_9lgzzsaAUrAeqTlT.html" class="ItemLink">Emergency tier Coding Dashboard : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_2xnTzsaAUrAeqTkU.html" class="ItemLink">DCTD QlikView Budget Report For Next : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_Mz9TzsaAUrAeqTjZ.html" class="ItemLink">CCR Closeout Dashboard : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_qepTzsaAUrAeqTiO.html" class="ItemLink">CBIIT Report Builder : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent__5_TzsaAUrAeqThP.html" class="ItemLink">CBIIT Receiveing Dashboard : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_AjWTzsaAUrAeqTgQ.html" class="ItemLink">Budget Analytical Dashboard : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Buisness Architecture	</div>
+</body>
+</html>
