@@ -1,0 +1,544 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - Create Solicitation ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_ut7BARaAUhQuHwZI.html" class="PageParentTitle">Create Solicitation : Grouping</a> (in <a href="ArchiMateDiagram_ut7BARaAUhQuHwZI.html" class="PageParentTitle">Enterprise Reference Architecture ArchiMate </a> / <a href="ArchiMateDiagram_qN63KRaAUrBKwhKl.html" class="PageParentTitle">Planning Phase ArchiMate Diagram</a> / <a href="ArchiMateDiagram_bEXPKRaAUrBKwhQ2.html" class="PageParentTitle">Create Solicitation ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - Create Solicitation ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('Office Of Acquisitions.vpp://diagram/bEXPKRaAUrBKwhQ2', 'Create Solicitation ArchiMate Diagram\nOffice Of Acquisitions.vpp://diagram/bEXPKRaAUrBKwhQ2', 'Create Solicitation ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|781.0|365.0|160.0|40.0|ArchiMateBusinessActor_J0wxARaAUhQuHwlZ.html|ArchiMateBusinessActor_J0wxARaAUhQuHwlZ.html|_uUvKRaAUrBKwhUa" id="option_uUvKRaAUrBKwhUa">Finance/Budget Officer : Business Actor</option>
+<option value="shape|781.0|299.0|153.0|40.0|ArchiMateBusinessActor_W9CxARaAUhQuHwl1.html|ArchiMateBusinessActor_W9CxARaAUhQuHwl1.html|FfQvKRaAUrBKwhTq" id="optionFfQvKRaAUrBKwhTq">Market Research Lead : Business Actor</option>
+<option value="shape|781.0|207.0|151.0|40.0|ArchiMateBusinessActor_iTjxARaAUhQuHwm7.html|ArchiMateBusinessActor_iTjxARaAUhQuHwm7.html|faAvKRaAUrBKwhTc" id="optionfaAvKRaAUrBKwhTc">Subject Matter Expert : Business Actor</option>
+<option value="shape|470.0|51.0|96.0|40.0|ArchiMateBusinessActor_lPxxARaAUhQuHwmf.html|ArchiMateBusinessActor_lPxxARaAUhQuHwmf.html|zaAvKRaAUrBKwhTS" id="optionzaAvKRaAUrBKwhTS">RFP Author : Business Actor</option>
+<option value="shape|85.0|325.0|173.0|40.0|ArchiMateBusinessActor_c3rRARaAUhQuHwk6.html|ArchiMateBusinessActor_c3rRARaAUhQuHwk6.html|ZaAvKRaAUrBKwhTI" id="optionZaAvKRaAUrBKwhTI">Federal Program Manager : Business Actor</option>
+<option value="shape|85.0|193.0|140.0|40.0|ArchiMateBusinessActor_LYoRARaAUhQuHwjk.html|ArchiMateBusinessActor_LYoRARaAUhQuHwjk.html|QaAvKRaAUrBKwhS." id="optionQaAvKRaAUrBKwhS.">Contract Requestor : Business Actor</option>
+<option value="shape|438.0|358.0|146.0|40.0|ArchiMateBusinessRole_pf8pYRaAUrBmJlfI.html|ArchiMateBusinessRole_pf8pYRaAUrBmJlfI.html|Lh3PKRaAUrBKwhSR" id="optionLh3PKRaAUrBKwhSR">Obtain Funding : Business Role</option>
+<option value="shape|438.0|292.0|154.0|40.0|ArchiMateBusinessRole_5EwpYRaAUrBmJlea.html|ArchiMateBusinessRole_5EwpYRaAUrBmJlea.html|Dh3PKRaAUrBKwhSO" id="optionDh3PKRaAUrBKwhSO">Conduct Market Research : Business Role</option>
+<option value="shape|438.0|226.0|154.0|40.0|ArchiMateBusinessRole_CfBJYRaAUrBmJlbJ.html|ArchiMateBusinessRole_CfBJYRaAUrBmJlbJ.html|Nh3PKRaAUrBKwhSL" id="optionNh3PKRaAUrBKwhSL">Define Requirements : Business Role</option>
+<option value="shape|412.0|183.0|244.0|244.0|ArchiMateGrouping_YSqJYRaAUrBmJlbB.html|ArchiMateGrouping_YSqJYRaAUrBmJlbB.html|5h3PKRaAUrBKwhSI" id="option5h3PKRaAUrBKwhSI">Create Solicitation : Grouping</option>
+<option value="shape|2.0|2.0|999.0|471.0|ArchiMateGrouping_1GCJYRaAUrBmJlaz.html|ArchiMateGrouping_1GCJYRaAUrBmJlaz.html|uFTvKRaAUrBKwh9O" id="optionuFTvKRaAUrBKwh9O">Planning Phase : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Create_Solicitation_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="1005" height="477"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="225.0, 232.0, 225.0, 233.0, 145.0, 233.0, 145.0, 246.0, 148.0, 246.0, 148.0, 249.0, 162.0, 249.0, 162.0, 246.0, 438.0, 246.0, 438.0, 232.0" coords2="225.0, 232.0, 225.0, 233.0, 145.0, 233.0, 145.0, 246.0, 148.0, 246.0, 148.0, 249.0, 162.0, 249.0, 162.0, 246.0, 438.0, 246.0, 438.0, 232.0" shape="poly" alt=":Assignment" id="areadiagram_map_gaAvKRaAUrBKwhS8_default" href="ArchiMateAssignment_371JYRaAUrBmJlb3.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="148.0, 245.0, 148.0, 248.0, 145.0, 248.0, 145.0, 262.0, 148.0, 262.0, 148.0, 325.0, 162.0, 325.0, 162.0, 262.0, 438.0, 262.0, 438.0, 248.0, 162.0, 248.0, 162.0, 245.0" coords2="148.0, 245.0, 148.0, 248.0, 145.0, 248.0, 145.0, 262.0, 148.0, 262.0, 148.0, 325.0, 162.0, 325.0, 162.0, 262.0, 438.0, 262.0, 438.0, 248.0, 162.0, 248.0, 162.0, 245.0" shape="poly" alt=":Assignment" id="areadiagram_map_ZaAvKRaAUrBKwhTG_default" href="ArchiMateAssignment_p3dJYRaAUrBmJlcK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="508.0, 91.0, 508.0, 226.0, 522.0, 226.0, 522.0, 91.0" coords2="508.0, 91.0, 508.0, 226.0, 522.0, 226.0, 522.0, 91.0" shape="poly" alt=":Assignment" id="areadiagram_map_TaAvKRaAUrBKwhTQ_default" href="ArchiMateAssignment_Z1nJYRaAUrBmJldl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="592.0, 230.0, 592.0, 244.0, 781.0, 244.0, 781.0, 230.0" coords2="592.0, 230.0, 592.0, 244.0, 781.0, 244.0, 781.0, 230.0" shape="poly" alt=":Assignment" id="areadiagram_map_faAvKRaAUrBKwhTa_default" href="ArchiMateAssignment_4s_JYRaAUrBmJleI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="592.0, 312.0, 592.0, 326.0, 781.0, 326.0, 781.0, 312.0" coords2="592.0, 312.0, 592.0, 326.0, 781.0, 326.0, 781.0, 312.0" shape="poly" alt=":Assignment" id="areadiagram_map_FfQvKRaAUrBKwhTo_default" href="ArchiMateAssignment_yvkpYRaAUrBmJler.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="849.0, 247.0, 849.0, 268.0, 522.0, 268.0, 522.0, 265.0, 508.0, 265.0, 508.0, 268.0, 505.0, 268.0, 505.0, 282.0, 508.0, 282.0, 508.0, 292.0, 522.0, 292.0, 522.0, 282.0, 849.0, 282.0, 849.0, 285.0, 863.0, 285.0, 863.0, 282.0, 866.0, 282.0, 866.0, 268.0, 863.0, 268.0, 863.0, 247.0" coords2="849.0, 247.0, 849.0, 268.0, 522.0, 268.0, 522.0, 265.0, 508.0, 265.0, 508.0, 268.0, 505.0, 268.0, 505.0, 282.0, 508.0, 282.0, 508.0, 292.0, 522.0, 292.0, 522.0, 282.0, 849.0, 282.0, 849.0, 285.0, 863.0, 285.0, 863.0, 282.0, 866.0, 282.0, 866.0, 268.0, 863.0, 268.0, 863.0, 247.0" shape="poly" alt=":Assignment" id="areadiagram_map_k_QvKRaAUrBKwhTy_default" href="ArchiMateAssignment_AuspYRaAUrBmJle_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="148.0, 365.0, 148.0, 371.0, 145.0, 371.0, 145.0, 385.0, 148.0, 385.0, 148.0, 388.0, 162.0, 388.0, 162.0, 385.0, 438.0, 385.0, 438.0, 371.0, 162.0, 371.0, 162.0, 365.0" coords2="148.0, 365.0, 148.0, 371.0, 145.0, 371.0, 145.0, 385.0, 148.0, 385.0, 148.0, 388.0, 162.0, 388.0, 162.0, 385.0, 438.0, 385.0, 438.0, 371.0, 162.0, 371.0, 162.0, 365.0" shape="poly" alt=":Assignment" id="areadiagram_map_juUvKRaAUrBKwhUV_default" href="ArchiMateAssignment_GORpYRaAUrBmJlf4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="584.0, 378.0, 584.0, 392.0, 781.0, 392.0, 781.0, 378.0" coords2="584.0, 378.0, 584.0, 392.0, 781.0, 392.0, 781.0, 378.0" shape="poly" alt=":Assignment" id="areadiagram_map_fuUvKRaAUrBKwhUY_default" href="ArchiMateAssignment_vWZpYRaAUrBmJlgL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;span display=&amp;quot;inline !important&amp;quot; float=&amp;quot;none&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;background-color:rgb(222, 234, 246);color:rgb(0, 0, 0);font-weight:normal;font-size:14.666666984558105px;font-family:Calibri, Calibri_MSFontService, sans-serif;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;14.666666984558105px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:14.666666984558105px;&amp;quot;&amp;gt;Reviews 
+      and provides approval of the use of fund for a procurement/contract&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="781, 365, 941, 405" coords2="781, 365, 941, 405" shape="rect" alt="Finance/Budget Officer:Business Actor" id="areadiagram_map__uUvKRaAUrBKwhUa_default" href="ArchiMateBusinessActor_J0wxARaAUhQuHwlZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;span display=&amp;quot;inline !important&amp;quot; float=&amp;quot;none&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;background-color:rgb(255, 255, 255);color:rgb(0, 0, 0);font-weight:normal;font-size:14.666666984558105px;font-family:Calibri, Calibri_MSFontService, sans-serif;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;14.666666984558105px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:14.666666984558105px;&amp;quot;&amp;gt;The 
+      person conducting the market research to determine what 
+      products/services are available, and potential sources&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="781, 299, 934, 339" coords2="781, 299, 934, 339" shape="rect" alt="Market Research Lead:Business Actor" id="areadiagram_map_FfQvKRaAUrBKwhTq_default" href="ArchiMateBusinessActor_W9CxARaAUhQuHwl1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;span display=&amp;quot;inline !important&amp;quot; float=&amp;quot;none&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;background-color:rgb(222, 234, 246);color:rgb(0, 0, 0);font-weight:normal;font-size:14.666666984558105px;font-family:Calibri, Calibri_MSFontService, sans-serif;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;14.666666984558105px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:14.666666984558105px;&amp;quot;&amp;gt;Person 
+      who has the expertise in the specific area(s) included in the contract&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="781, 207, 932, 247" coords2="781, 207, 932, 247" shape="rect" alt="Subject Matter Expert:Business Actor" id="areadiagram_map_faAvKRaAUrBKwhTc_default" href="ArchiMateBusinessActor_iTjxARaAUhQuHwm7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;span display=&amp;quot;inline !important&amp;quot; float=&amp;quot;none&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;background-color:rgb(222, 234, 246);color:rgb(0, 0, 0);font-weight:normal;font-size:14.666666984558105px;font-family:Calibri, Calibri_MSFontService, sans-serif;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;14.666666984558105px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:14.666666984558105px;&amp;quot;&amp;gt;The 
+      person(s) writing the statement of work or performance work statement&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="470, 51, 566, 91" coords2="470, 51, 566, 91" shape="rect" alt="RFP Author:Business Actor" id="areadiagram_map_zaAvKRaAUrBKwhTS_default" href="ArchiMateBusinessActor_lPxxARaAUhQuHwmf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;span display=&amp;quot;inline !important&amp;quot; float=&amp;quot;none&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;background-color:rgb(222, 234, 246);color:rgb(0, 0, 0);font-weight:normal;font-size:14.666666984558105px;font-family:Calibri, Calibri_MSFontService, sans-serif;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;14.666666984558105px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:14.666666984558105px;&amp;quot;&amp;gt;The 
+      Federal employee responsible for all aspects of a program. A program can 
+      consist of one or multiple projects&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="85, 325, 258, 365" coords2="85, 325, 258, 365" shape="rect" alt="Federal Program Manager:Business Actor" id="areadiagram_map_ZaAvKRaAUrBKwhTI_default" href="ArchiMateBusinessActor_c3rRARaAUhQuHwk6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;span class=&amp;quot;NormalTextRun SCXW60712933&amp;quot; style=&amp;quot;padding-bottom:0px;padding-top:0px;padding-left:0px;margin-right:0px;margin-bottom:0px;margin-top:0px;margin-left:0px;padding-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:11pt;&amp;quot;&amp;gt;Leads 
+      the work to&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:11pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW60712933&amp;quot; style=&amp;quot;padding-bottom:0px;padding-top:0px;padding-left:0px;margin-right:0px;margin-bottom:0px;margin-top:0px;margin-left:0px;padding-right:0px;&amp;quot;&amp;gt;ensure 
+      that the organization is meeting regulatory obligations such as safety 
+      and governance concerns&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="85, 193, 225, 233" coords2="85, 193, 225, 233" shape="rect" alt="Contract Requestor:Business Actor" id="areadiagram_map_QaAvKRaAUrBKwhS._default" href="ArchiMateBusinessActor_LYoRARaAUhQuHwjk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Obtaining the necessary funds to pay for the services/products included 
+      in the RFP over the full lifetime of the contract
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="438, 358, 584, 398" coords2="438, 358, 584, 398" shape="rect" alt="Obtain Funding:Business Role" id="areadiagram_map_Lh3PKRaAUrBKwhSR_default" href="ArchiMateBusinessRole_pf8pYRaAUrBmJlfI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Researching the market for similar services or products, different ways 
+      of meeting the requirements, what companies can deliver these, etc.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="438, 292, 592, 332" coords2="438, 292, 592, 332" shape="rect" alt="Conduct Market Research:Business Role" id="areadiagram_map_Dh3PKRaAUrBKwhSO_default" href="ArchiMateBusinessRole_5EwpYRaAUrBmJlea.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Define the requirements to be included in a Request for Proposal (RFP) 
+      and which a vendor will need to deliver and adhere to. This could 
+      include detailed services, products, etc.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="438, 226, 592, 266" coords2="438, 226, 592, 266" shape="rect" alt="Define Requirements:Business Role" id="areadiagram_map_Nh3PKRaAUrBKwhSL_default" href="ArchiMateBusinessRole_CfBJYRaAUrBmJlbJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="412, 183, 656, 427" coords2="412, 183, 656, 427" shape="rect" alt="Create Solicitation:Grouping" id="areadiagram_map_5h3PKRaAUrBKwhSI_default" href="ArchiMateGrouping_YSqJYRaAUrBmJlbB.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','412, 183, 656, 427',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_bEXPKRaAUrBKwhQ2.html/Create Solicitation ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '412, 183, 656, 427'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 1001, 473" coords2="2, 2, 1001, 473" shape="rect" alt="Planning Phase:Grouping" id="areadiagram_map_uFTvKRaAUrBKwh9O_default" href="ArchiMateGrouping_1GCJYRaAUrBmJlaz.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','2, 2, 1001, 473',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_qN63KRaAUrBKwhKl.html/Planning Phase ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '2, 2, 1001, 473'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_J0wxARaAUhQuHwlZ.html" class="ItemLink">Finance/Budget Officer : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      <span display="inline !important" float="none" font-style="normal" letter-spacing="normal" style="background-color:rgb(222, 234, 246);color:rgb(0, 0, 0);font-weight:normal;font-size:14.666666984558105px;font-family:Calibri, Calibri_MSFontService, sans-serif;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px"><font face="Calibri, Calibri_MSFontService, sans-serif" size="14.666666984558105px" style="color:rgb(0, 0, 0);font-size:14.666666984558105px;">Reviews 
+      and provides approval of the use of fund for a procurement/contract</font></span>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_W9CxARaAUhQuHwl1.html" class="ItemLink">Market Research Lead : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      <span display="inline !important" float="none" font-style="normal" letter-spacing="normal" style="background-color:rgb(255, 255, 255);color:rgb(0, 0, 0);font-weight:normal;font-size:14.666666984558105px;font-family:Calibri, Calibri_MSFontService, sans-serif;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px"><font face="Calibri, Calibri_MSFontService, sans-serif" size="14.666666984558105px" style="color:rgb(0, 0, 0);font-size:14.666666984558105px;">The 
+      person conducting the market research to determine what 
+      products/services are available, and potential sources</font></span>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_iTjxARaAUhQuHwm7.html" class="ItemLink">Subject Matter Expert : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      <span display="inline !important" float="none" font-style="normal" letter-spacing="normal" style="background-color:rgb(222, 234, 246);color:rgb(0, 0, 0);font-weight:normal;font-size:14.666666984558105px;font-family:Calibri, Calibri_MSFontService, sans-serif;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px"><font face="Calibri, Calibri_MSFontService, sans-serif" size="14.666666984558105px" style="color:rgb(0, 0, 0);font-size:14.666666984558105px;">Person 
+      who has the expertise in the specific area(s) included in the contract</font></span>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_lPxxARaAUhQuHwmf.html" class="ItemLink">RFP Author : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      <span display="inline !important" float="none" font-style="normal" letter-spacing="normal" style="background-color:rgb(222, 234, 246);color:rgb(0, 0, 0);font-weight:normal;font-size:14.666666984558105px;font-family:Calibri, Calibri_MSFontService, sans-serif;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px"><font face="Calibri, Calibri_MSFontService, sans-serif" size="14.666666984558105px" style="color:rgb(0, 0, 0);font-size:14.666666984558105px;">The 
+      person(s) writing the statement of work or performance work statement</font></span>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_c3rRARaAUhQuHwk6.html" class="ItemLink">Federal Program Manager : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      <span display="inline !important" float="none" font-style="normal" letter-spacing="normal" style="background-color:rgb(222, 234, 246);color:rgb(0, 0, 0);font-weight:normal;font-size:14.666666984558105px;font-family:Calibri, Calibri_MSFontService, sans-serif;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px"><font face="Calibri, Calibri_MSFontService, sans-serif" size="14.666666984558105px" style="color:rgb(0, 0, 0);font-size:14.666666984558105px;">The 
+      Federal employee responsible for all aspects of a program. A program can 
+      consist of one or multiple projects</font></span>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_LYoRARaAUhQuHwjk.html" class="ItemLink">Contract Requestor : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      <span class="NormalTextRun SCXW60712933" style="padding-bottom:0px;padding-top:0px;padding-left:0px;margin-right:0px;margin-bottom:0px;margin-top:0px;margin-left:0px;padding-right:0px;"><font face="Calibri, Calibri_MSFontService, sans-serif" size="11pt" style="color:rgb(0, 0, 0);font-size:11pt;">Leads 
+      the work to</font></span><font face="Calibri, Calibri_MSFontService, sans-serif" size="11pt" style="color:rgb(0, 0, 0);font-size:11pt;"><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW60712933" style="padding-bottom:0px;padding-top:0px;padding-left:0px;margin-right:0px;margin-bottom:0px;margin-top:0px;margin-left:0px;padding-right:0px;">ensure 
+      that the organization is meeting regulatory obligations such as safety 
+      and governance concerns</span></font>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessRole.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessRole.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessRole_pf8pYRaAUrBmJlfI.html" class="ItemLink">Obtain Funding : Business Role</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      Obtaining the necessary funds to pay for the services/products included 
+      in the RFP over the full lifetime of the contract
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessRole.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessRole.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessRole_5EwpYRaAUrBmJlea.html" class="ItemLink">Conduct Market Research : Business Role</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      Researching the market for similar services or products, different ways 
+      of meeting the requirements, what companies can deliver these, etc.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessRole.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessRole.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessRole_CfBJYRaAUrBmJlbJ.html" class="ItemLink">Define Requirements : Business Role</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      Define the requirements to be included in a Request for Proposal (RFP) 
+      and which a vendor will need to deliver and adhere to. This could 
+      include detailed services, products, etc.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_YSqJYRaAUrBmJlbB.html" class="ItemLink">Create Solicitation : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_1GCJYRaAUrBmJlaz.html" class="ItemLink">Planning Phase : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+</body>
+</html>

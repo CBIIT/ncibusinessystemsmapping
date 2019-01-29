@@ -1,0 +1,873 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - OBF Closeout Dashboard ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_IN4IjoaAUhQsPklM.html" class="PageParentTitle">NCIConnnect : Application Component</a> (in <a href="ArchiMateDiagram_IN4IjoaAUhQsPklM.html" class="PageParentTitle">HR Systems diagram</a> / <a href="ArchiMateDiagram__mJ_fUaAUhQsMaqL.html" class="PageParentTitle">Beacon ArchiMate Diagram</a> / <a href="ArchiMateDiagram_2w854MaAUrAy_BJ2.html" class="PageParentTitle">NCI Business Applications ArchiMate Diagram</a> / <a href="ArchiMateDiagram_KCte8saAUrCskEtq.html" class="PageParentTitle">ITRC</a> / <a href="ArchiMateDiagram_meSSf8aAUhQsGDTU.html" class="PageParentTitle">Business Systems Archimate Diagram</a> / <a href="ArchiMateDiagram_5vI0PCaAUrCsxzV8.html" class="PageParentTitle">Beacon Finance(Sofie) ArchiMate Diagram</a>)<span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="ArchiMateDiagram_q2zSwcaAUrAeqTZn.html" class="PageParentTitle">OBF Closeout Dashboard : Application Component</a> (in <a href="ArchiMateDiagram_q2zSwcaAUrAeqTZn.html" class="PageParentTitle">ITRC Buisness Intelligence ArchiMate Diagram</a> / <a href="ArchiMateDiagram_uSOROhaAUhQELk04.html" class="PageParentTitle">OBF Closeout Dashboard ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - <a onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" class="ItemLink">OBF</a> <a onclick="javascript: highlightGridModelSelection('9ZtvsgaC48kYAjE2');" href="GridDiagram_5GBJ6waAUJUCAjP0.html#9ZtvsgaC48kYAjE2" class="ItemLink">Closeout</a> Dashboard ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/uSOROhaAUhQELk04', 'OBF Closeout Dashboard ArchiMate Diagram\nNCI Buisness Architecture.vpp://diagram/uSOROhaAUhQELk04', 'OBF Closeout Dashboard ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|1510.0|481.0|155.0|40.0|ArchiMateBusinessActor_mmy5OhaAUhQELlCS.html|ArchiMateBusinessActor_mmy5OhaAUhQELlCS.html|mmy5OhaAUhQELlCR" id="optionmmy5OhaAUhQELlCR">Arc Budget Manual Entry : Business Actor</option>
+<option value="shape|1178.0|481.0|96.0|40.0|ArchiMateApplicationComponent_xXvQ_EaAUhQsFAOs.html|ArchiMateApplicationComponent_xXvQ_EaAUhQsFAOs.html|k1s5OhaAUhQELlCB" id="optionk1s5OhaAUhQELlCB">SharePoint : Application Component</option>
+<option value="shape|840.0|481.0|140.0|40.0|ArchiMateSystemSoftware_3hOJOhaAUhQELk6Y.html|ArchiMateSystemSoftware_3hOJOhaAUhQELk6Y.html|3hOJOhaAUhQELk6X" id="option3hOJOhaAUhQELk6X">QlikView Extractor : System Software</option>
+<option value="shape|879.0|657.0|169.0|40.0|ArchiMateApplicationComponent__tPkojqAUhQsEguv.html|ArchiMateApplicationComponent__tPkojqAUhQsEguv.html|xgXxOhaAUhQELk5M" id="optionxgXxOhaAUhQELk5M">Beacon Finance(Sofie) : Application Component</option>
+<option value="shape|1060.0|64.0|96.0|40.0|ArchiMateApplicationComponent_YzY8AmaAUhQuH7ke.html|ArchiMateApplicationComponent_YzY8AmaAUhQuH7ke.html|YHjxOhaAUhQELk4i" id="optionYHjxOhaAUhQELk4i">NBS : Application Component</option>
+<option value="shape|931.0|366.0|116.0|40.0|ArchiMateSystemSoftware_24JsnjqAUhQsEhqe.html|ArchiMateSystemSoftware_24JsnjqAUhQsEhqe.html|qQzROhaAUhQELk4T" id="optionqQzROhaAUhQELk4T">nVision : System Software</option>
+<option value="shape|836.0|608.0|267.0|126.0|ArchiMateGrouping_Y463I2aAUrD2QqKu.html|ArchiMateGrouping_Y463I2aAUrD2QqKu.html|dvgJOhaAUhQELk5b" id="optiondvgJOhaAUhQELk5b">Beacon : Grouping</option>
+<option value="shape|0.0|2.0|1769.0|138.0|ArchiMateGrouping_Pjem2UaAUhQsGoBP.html|ArchiMateGrouping_Pjem2UaAUhQsGoBP.html|3fA0uhaAUhQELlNw" id="option3fA0uhaAUhQELlNw">NIH : Grouping</option>
+<option value="shape|484.0|481.0|96.0|40.0|ArchiMateApplicationComponent_BdXkwTqAUhQsLA1Q.html|ArchiMateApplicationComponent_BdXkwTqAUhQsLA1Q.html|H.tROhaAUhQELk3." id="optionH.tROhaAUhQELk3.">QlikView : Application Component</option>
+<option value="shape|60.0|481.0|175.0|40.0|ArchiMateApplicationComponent_EabRLsaAUrAeqawT.html|ArchiMateApplicationComponent_EabRLsaAUrAeqawT.html|WLJROhaAUhQELk1J" id="optionWLJROhaAUhQELk1J">OBF Closeout Dashboard : Application Component</option>
+<option value="shape|29.0|281.0|1680.0|508.0|ArchiMateGrouping_Xp0kojqAUhQsEgtP.html|ArchiMateGrouping_Xp0kojqAUhQsEgtP.html|3r9UuhaAUhQELlLM" id="option3r9UuhaAUhQELlLM">ITRC : Grouping</option>
+<option value="shape|0.0|140.0|1769.0|746.0|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|85HUuhaAUhQELlLr" id="option85HUuhaAUhQELlLr">NCI : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/OBF_Closeout_Dashboard_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="1932" height="890"/>
+					<map name="diagram_map">
+<area coords="1006,672,1032,686" coords2="1006,672,1032,686" shape="rect" alt="Sofie" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ" onclick="javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');"/>
+<area coords="1208,496,1264,510" coords2="1208,496,1264,510" shape="rect" alt="SharePoint" href="GridDiagram_5GBJ6waAUJUCAjP0.html#6DGXiUaAUhQCoQtn" onclick="javascript: highlightGridModelSelection('6DGXiUaAUhQCoQtn');"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      nVision-&amp;​gt;QlikView. nVision sends to Qlikview (for &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#nfvxmwaAU82ImBQu&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('nfvxmwaAU82ImBQu');&amp;quot;&amp;gt;CCR&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#9ZtvsgaC48kYAjE2&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('9ZtvsgaC48kYAjE2');&amp;quot;&amp;gt;Closeout&amp;lt;/a&amp;gt; 
+      Dashboard)
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ul class=&amp;quot;disc&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;list-style-type:none;margin-bottom:0px;margin-top:0px;margin-left:40pt;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+        Data from NBS (via nVision (oracle db)
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ul&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      nVision-&amp;​gt;QlikView. nVision sends to QlikView (for QlikView &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      Data Model)
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ul class=&amp;quot;disc&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;list-style-type:none;margin-bottom:0px;margin-top:0px;margin-left:40pt;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        Personnel Data
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ul&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      All data received by QlikView is acquired by an Extractor process
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;nbsp;
+
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      All data received by QlikView is acquired by an Extractor process
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="788.0, 376.0, 788.0, 379.0, 785.0, 379.0, 785.0, 393.0, 788.0, 393.0, 788.0, 494.0, 580.0, 494.0, 580.0, 508.0, 788.0, 508.0, 788.0, 511.0, 802.0, 511.0, 802.0, 508.0, 805.0, 508.0, 805.0, 494.0, 802.0, 494.0, 802.0, 393.0, 931.0, 393.0, 931.0, 379.0, 802.0, 379.0, 802.0, 376.0" coords2="788.0, 376.0, 788.0, 379.0, 785.0, 379.0, 785.0, 393.0, 788.0, 393.0, 788.0, 494.0, 580.0, 494.0, 580.0, 508.0, 788.0, 508.0, 788.0, 511.0, 802.0, 511.0, 802.0, 508.0, 805.0, 508.0, 805.0, 494.0, 802.0, 494.0, 802.0, 393.0, 931.0, 393.0, 931.0, 379.0, 802.0, 379.0, 802.0, 376.0" shape="poly" alt="nVision-&gt;QlikView:Flow" id="areadiagram_map_dQzROhaAUhQELk4V_default" href="ArchiMateFlow_4u00wTqAUhQsLA2A.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      NBS delivers &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');&amp;quot;&amp;gt;budget&amp;lt;/a&amp;gt; 
+      data to nVision (oracle db).
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      For &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mYeIGgaC48kYAilB&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mYeIGgaC48kYAilB');&amp;quot;&amp;gt;CBIIT&amp;lt;/a&amp;gt; 
+      Receiving Dashboard, NBS gives nVision purchase order data which is 
+      collected by QlikView and sent to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mYeIGgaC48kYAilB&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mYeIGgaC48kYAilB');&amp;quot;&amp;gt;CBIIT&amp;lt;/a&amp;gt; 
+      Receiving Dashboard.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1101.0, 104.0, 1101.0, 379.0, 1047.0, 379.0, 1047.0, 393.0, 1101.0, 393.0, 1101.0, 396.0, 1115.0, 396.0, 1115.0, 393.0, 1118.0, 393.0, 1118.0, 379.0, 1115.0, 379.0, 1115.0, 104.0" coords2="1101.0, 104.0, 1101.0, 379.0, 1047.0, 379.0, 1047.0, 393.0, 1101.0, 393.0, 1101.0, 396.0, 1115.0, 396.0, 1115.0, 393.0, 1118.0, 393.0, 1118.0, 379.0, 1115.0, 379.0, 1115.0, 104.0" shape="poly" alt="NBS to nVision:Flow" id="areadiagram_map_YHjxOhaAUhQELk4k_default" href="ArchiMateFlow__dwOdBaAUhQELpJt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');&amp;quot;&amp;gt;SOFIE&amp;lt;/a&amp;gt; 
+      dumps to a SQL Server extractor for pickup by QlikView. The data 
+      contains HR Data and SAC codes.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      For &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#nfvxmwaAU82ImBQu&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('nfvxmwaAU82ImBQu');&amp;quot;&amp;gt;CCR&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#9ZtvsgaC48kYAjE2&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('9ZtvsgaC48kYAjE2');&amp;quot;&amp;gt;Closeout&amp;lt;/a&amp;gt; 
+      Dashboard, QlikView is receiving &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      Categories to give to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#nfvxmwaAU82ImBQu&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('nfvxmwaAU82ImBQu');&amp;quot;&amp;gt;CCR&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#9ZtvsgaC48kYAjE2&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('9ZtvsgaC48kYAjE2');&amp;quot;&amp;gt;Closeout&amp;lt;/a&amp;gt; 
+      Dashboard.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      For &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');&amp;quot;&amp;gt;OBF&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#9ZtvsgaC48kYAjE2&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('9ZtvsgaC48kYAjE2');&amp;quot;&amp;gt;Closeout&amp;lt;/a&amp;gt; 
+      Dashboard, QlikView is receiving projections, commitments, obligations, 
+      SAC codes, and HR Data.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="788.0, 491.0, 788.0, 494.0, 580.0, 494.0, 580.0, 508.0, 788.0, 508.0, 788.0, 658.0, 785.0, 658.0, 785.0, 672.0, 788.0, 672.0, 788.0, 675.0, 802.0, 675.0, 802.0, 672.0, 879.0, 672.0, 879.0, 658.0, 802.0, 658.0, 802.0, 508.0, 805.0, 508.0, 805.0, 494.0, 802.0, 494.0, 802.0, 491.0" coords2="788.0, 491.0, 788.0, 494.0, 580.0, 494.0, 580.0, 508.0, 788.0, 508.0, 788.0, 658.0, 785.0, 658.0, 785.0, 672.0, 788.0, 672.0, 788.0, 675.0, 802.0, 675.0, 802.0, 672.0, 879.0, 672.0, 879.0, 658.0, 802.0, 658.0, 802.0, 508.0, 805.0, 508.0, 805.0, 494.0, 802.0, 494.0, 802.0, 491.0" shape="poly" alt="Beacon (Sofie)-&gt;QlickView:Flow" id="areadiagram_map_dgXxOhaAUhQELk5O_default" href="ArchiMateFlow_kWvUwTqAUhQsLA10.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="980.0, 494.0, 980.0, 508.0, 1178.0, 508.0, 1178.0, 494.0" coords2="980.0, 494.0, 980.0, 508.0, 1178.0, 508.0, 1178.0, 494.0" shape="poly" alt="SharePoint to QlikView Extractor:Flow" id="areadiagram_map_wNd5OhaAUhQELlC__default" href="ArchiMateFlow__1d5OhaAUhQELlC_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      QlikView to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');&amp;quot;&amp;gt;OBF&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#9ZtvsgaC48kYAjE2&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('9ZtvsgaC48kYAjE2');&amp;quot;&amp;gt;Closeout&amp;lt;/a&amp;gt; 
+      Dashboard data contains:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ul class=&amp;quot;disc&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;list-style-type:none;margin-bottom:0px;margin-top:0px;margin-left:40pt;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        commitments
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        projections
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        obligations
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        SAC codes
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        HR Data
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ul&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="235.0, 494.0, 235.0, 508.0, 484.0, 508.0, 484.0, 494.0" coords2="235.0, 494.0, 235.0, 508.0, 484.0, 508.0, 484.0, 494.0" shape="poly" alt="QlikView to OBF Closeout Dashboard:Flow" id="areadiagram_map_aIX5OhaAUhQELlJl_default" href="ArchiMateFlow_cIX5OhaAUhQELlJk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="580.0, 494.0, 580.0, 508.0, 840.0, 508.0, 840.0, 494.0" coords2="580.0, 494.0, 580.0, 508.0, 840.0, 508.0, 840.0, 494.0" shape="poly" alt="QlikView Extractor to QlikView:Flow" id="areadiagram_map_8EMUuhaAUhQELlJ0_default" href="ArchiMateFlow_kEMUuhaAUhQELlJz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Manual entry of &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');&amp;quot;&amp;gt;budget&amp;lt;/a&amp;gt; 
+      data and ARC spenddown using Excel form by an Arc &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      person.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1274.0, 494.0, 1274.0, 508.0, 1510.0, 508.0, 1510.0, 494.0" coords2="1274.0, 494.0, 1274.0, 508.0, 1510.0, 508.0, 1510.0, 494.0" shape="poly" alt="Arc Budget Manual Entry to SharePoint:Flow" id="areadiagram_map_3B6UuhaAUhQELlKC_default" href="ArchiMateFlow_bB6UuhaAUhQELlKB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="1510, 481, 1665, 521" coords2="1510, 481, 1665, 521" shape="rect" alt="Arc Budget Manual Entry:Business Actor" id="areadiagram_map_mmy5OhaAUhQELlCR_default" href="ArchiMateBusinessActor_mmy5OhaAUhQELlCS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1178, 481, 1274, 521" coords2="1178, 481, 1274, 521" shape="rect" alt="SharePoint:Application Component" id="areadiagram_map_k1s5OhaAUhQELlCB_default" href="ArchiMateApplicationComponent_xXvQ_EaAUhQsFAOs.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      The QlikView Extractor is an automated daily process that reads data 
+      from nVision, Beacon, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');&amp;quot;&amp;gt;Sofie&amp;lt;/a&amp;gt;, 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#ryuEWEaAUhQCoQ3V&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('ryuEWEaAUhQCoQ3V');&amp;quot;&amp;gt;Edie&amp;lt;/a&amp;gt;, 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#6DGXiUaAUhQCoQtn&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('6DGXiUaAUhQCoQtn');&amp;quot;&amp;gt;SharePoint&amp;lt;/a&amp;gt; 
+      shared Directory), and builds tables in QlikView to store the data. The 
+      data can range from HR data, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');&amp;quot;&amp;gt;budget&amp;lt;/a&amp;gt;, 
+      projections, commitments, obligations, SAC codes, ARC spendown, and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#9mOhagaC48kYAg7L&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('9mOhagaC48kYAg7L');&amp;quot;&amp;gt;so&amp;lt;/a&amp;gt; 
+      forth. The Extractor has three parts in a shared drive:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      1) ODBC/Excel extractor
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      2) Data Models
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      3) App Layer
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="840, 481, 980, 521" coords2="840, 481, 980, 521" shape="rect" alt="QlikView Extractor:System Software" id="areadiagram_map_3hOJOhaAUhQELk6X_default" href="ArchiMateSystemSoftware_3hOJOhaAUhQELk6Y.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;Status of Funds Internet Edition&amp;lt;/b&amp;gt; - known as &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');&amp;quot;&amp;gt;SOFiE&amp;lt;/a&amp;gt;, 
+      is a web-based tool for providing advanced financial reporting and 
+      analysis functionality to government clients. It is the favored tool 
+      among administrative staff for financial reporting and tracking. &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');&amp;quot;&amp;gt;SOFiE&amp;lt;/a&amp;gt; 
+      gives organizations distributed budgeting and planning tools, custom &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');&amp;quot;&amp;gt;budget&amp;lt;/a&amp;gt; 
+      category views, drill-downs for detailed spending analysis, and a 
+      powerful Excel interface. &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');&amp;quot;&amp;gt;SOFiE&amp;lt;/a&amp;gt;'s 
+      Excel interface allows for the development of spreadsheets using custom 
+      functions that extract real-time expenditure, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');&amp;quot;&amp;gt;budget&amp;lt;/a&amp;gt;, 
+      and planning data from the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');&amp;quot;&amp;gt;SOFiE&amp;lt;/a&amp;gt; 
+      databases.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Excel interfaces 
+      -https://ccrod.cancer.gov/confluence/display/OMIT/Shared+&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');&amp;quot;&amp;gt;SoFie&amp;lt;/a&amp;gt;+Excel+Spreadsheets
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#at5EojqAUhQsEgsL&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('at5EojqAUhQsEgsL');&amp;quot;&amp;gt;Owner&amp;lt;/a&amp;gt; 
+      - &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      HR Data
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="879, 657, 1048, 697" coords2="879, 657, 1048, 697" shape="rect" alt="Beacon Finance(Sofie):Application Component" id="areadiagram_map_xgXxOhaAUhQELk5M_default" href="ArchiMateApplicationComponent__tPkojqAUhQsEguv.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','879, 657, 1048, 697',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_5vI0PCaAUrCsxzV8.html/Beacon Finance(Sofie) ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '879, 657, 1048, 697'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      NBS is an integrated acquisition, logistics, travel and core financial 
+      management system that combines &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      administrative processes and financial information under one centralized 
+      component. The scope of the NBS includes the following business or 
+      &amp;quot;functional&amp;quot; areas: Financial Management, Property Management, Accounts 
+      Payable, Acquisition, Service and Supply Funds Operations, Supply 
+      Management, and Travel Management.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1060, 64, 1156, 116.0" coords2="1060, 64, 1156, 116.0" shape="rect" alt="NBS:Application Component" id="areadiagram_map_YHjxOhaAUhQELk4i_default" href="ArchiMateApplicationComponent_YzY8AmaAUhQuH7ke.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1060, 64, 1156, 104',new Array(),new Array(),new Array(new Array('https://nciconnect.nci.nih.gov/sites/Collaboration/NCIAdminSysMappingProject/_layouts/15/WopiFrame2.aspx?sourcedoc=%7B9ED05A4B-91CB-47AC-9849-F4759E09FC23%7D&file=NBS-connections%20(1).pdf&action=default','NBS-connections')),new Array('ArchiMateDiagram_q5C5gaaAUrDYD4kV.html/NBS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_q5C5gaaAUrDYD4kV.html?shapeid=A.iFgaaAUrDYD4w1/NBS/Grouping')),showReferenceIcon('diagram', '1060, 64, 1156, 104'),hideSubdiagramIcon(),showTransitorIcon('diagram', '1060, 64, 1156, 104'),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      https://nvision.&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');&amp;quot;&amp;gt;nih&amp;lt;/a&amp;gt;.gov/nvision_registration/registration_guide.html#IntroductiontonVision
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      HR Data
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="931, 366, 1047, 406" coords2="931, 366, 1047, 406" shape="rect" alt="nVision:System Software" id="areadiagram_map_qQzROhaAUhQELk4T_default" href="ArchiMateSystemSoftware_24JsnjqAUhQsEhqe.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','931, 366, 1047, 406',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ERDiagram_lAI3AzqAUrAYHw6m.html/nVision Entity Relationship Diagram/ERDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '931, 366, 1047, 406'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="836, 608, 1103, 734" coords2="836, 608, 1103, 734" shape="rect" alt="Beacon:Grouping" id="areadiagram_map_dvgJOhaAUhQELk5b_default" href="ArchiMateGrouping_Y463I2aAUrD2QqKu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="0, 2, 1769, 140" coords2="0, 2, 1769, 140" shape="rect" alt="NIH:Grouping" id="areadiagram_map_3fA0uhaAUhQELlNw_default" href="ArchiMateGrouping_Pjem2UaAUhQsGoBP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;QlikView &amp;lt;/b&amp;gt;&amp;#8211; COTs &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#MEn3sgaC48kYAjBT&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('MEn3sgaC48kYAjBT');&amp;quot;&amp;gt;application&amp;lt;/a&amp;gt; 
+      for business intelligence, data discovery and dashboards. &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#cvKYigaC48kYAjPI&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('cvKYigaC48kYAjPI');&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt;-led 
+      effort to provide dynamic reporting of enterprise and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#cvKYigaC48kYAjPI&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('cvKYigaC48kYAjPI');&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt;-owned 
+      data that complements the suite of reporting tools already provided by 
+      nVision Data Warehouse and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#ohutsgaC48kYAij9&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('ohutsgaC48kYAij9');&amp;quot;&amp;gt;QVR&amp;lt;/a&amp;gt;. 
+      Can use data from ODBC(oracle,db2 sql server, access), QVDS,Excel, 
+      ACCESS, XML
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;&amp;quot;&amp;gt;
+      Sources
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ol class=&amp;quot;decimal&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;list-style-type:none;margin-bottom:0px;margin-top:0px;margin-left:40pt;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        IRDB &amp;#8211; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');&amp;quot;&amp;gt;grants&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        nVision - HR Data
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#fL0EWEaAUhQCoQ2g&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('fL0EWEaAUhQCoQ2g');&amp;quot;&amp;gt;nSight 
+        HR&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#ryuEWEaAUhQCoQ3V&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('ryuEWEaAUhQCoQ3V');&amp;quot;&amp;gt;Edie&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');&amp;quot;&amp;gt;SOFie&amp;lt;/a&amp;gt; 
+        - HR Data
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#0wOEWEaAUhQCoQ3N&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('0wOEWEaAUhQCoQ3N');&amp;quot;&amp;gt;NED&amp;lt;/a&amp;gt; 
+        -
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;&amp;quot;&amp;gt;
+        K2 - HR Data
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ol&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="484, 481, 580, 521" coords2="484, 481, 580, 521" shape="rect" alt="QlikView:Application Component" id="areadiagram_map_H.tROhaAUhQELk3._default" href="ArchiMateApplicationComponent_BdXkwTqAUhQsLA1Q.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','484, 481, 580, 521',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_GTPgXUaAUhQsMcX2.html/QlikView ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '484, 481, 580, 521'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="60, 481, 235, 521" coords2="60, 481, 235, 521" shape="rect" alt="OBF Closeout Dashboard:Application Component" id="areadiagram_map_WLJROhaAUhQELk1J_default" href="ArchiMateApplicationComponent_EabRLsaAUrAeqawT.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','60, 481, 235, 521',new Array('OBF Closeout Dashboard 1of3.jpeg*file:////Users/woodpm/Desktop/ITRC deep dive 12122018/OBF Closeout Dashboard 1of3.jpeg','OBF Closeout Dashboard 2of3.jpeg*file:////Users/woodpm/Desktop/ITRC deep dive 12122018/OBF Closeout Dashboard 2of3.jpeg','OBF Closeout Dashboard 3of3.jpeg*file:////Users/woodpm/Desktop/ITRC deep dive 12122018/OBF Closeout Dashboard 3of3.jpeg'),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_uSOROhaAUhQELk04.html/OBF Closeout Dashboard ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '60, 481, 235, 521'),showSubdiagramIcon('diagram', '60, 481, 235, 521'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="29, 281, 1709, 789" coords2="29, 281, 1709, 789" shape="rect" alt="ITRC:Grouping" id="areadiagram_map_3r9UuhaAUhQELlLM_default" href="ArchiMateGrouping_Xp0kojqAUhQsEgtP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="0, 140, 1769, 886" coords2="0, 140, 1769, 886" shape="rect" alt="NCI:Grouping" id="areadiagram_map_85HUuhaAUhQELlLr_default" href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_mmy5OhaAUhQELlCS.html" class="ItemLink">Arc Budget Manual Entry : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_xXvQ_EaAUhQsFAOs.html" class="ItemLink">SharePoint : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SystemSoftware.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SystemSoftware.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateSystemSoftware_3hOJOhaAUhQELk6Y.html" class="ItemLink">QlikView Extractor : System Software</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      The QlikView Extractor is an automated daily process that reads data 
+      from nVision, Beacon, <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ" name="" onclick="javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');">Sofie</a>, 
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#ryuEWEaAUhQCoQ3V" name="" onclick="javascript: highlightGridModelSelection('ryuEWEaAUhQCoQ3V');">Edie</a>, 
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#6DGXiUaAUhQCoQtn" name="" onclick="javascript: highlightGridModelSelection('6DGXiUaAUhQCoQtn');">SharePoint</a> 
+      shared Directory), and builds tables in QlikView to store the data. The 
+      data can range from HR data, <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp" name="" onclick="javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');">budget</a>, 
+      projections, commitments, obligations, SAC codes, ARC spendown, and <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#9mOhagaC48kYAg7L" name="" onclick="javascript: highlightGridModelSelection('9mOhagaC48kYAg7L');">so</a> 
+      forth. The Extractor has three parts in a shared drive:
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      1) ODBC/Excel extractor
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      2) Data Models
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      3) App Layer
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent__tPkojqAUhQsEguv.html" class="ItemLink">Beacon Finance(Sofie) : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      <b>Status of Funds Internet Edition</b> - known as <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ" name="" onclick="javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');">SOFiE</a>, 
+      is a web-based tool for providing advanced financial reporting and 
+      analysis functionality to government clients. It is the favored tool 
+      among administrative staff for financial reporting and tracking. <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ" name="" onclick="javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');">SOFiE</a> 
+      gives organizations distributed budgeting and planning tools, custom <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp" name="" onclick="javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');">budget</a> 
+      category views, drill-downs for detailed spending analysis, and a 
+      powerful Excel interface. <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ" name="" onclick="javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');">SOFiE</a>'s 
+      Excel interface allows for the development of spreadsheets using custom 
+      functions that extract real-time expenditure, <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp" name="" onclick="javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');">budget</a>, 
+      and planning data from the <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ" name="" onclick="javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');">SOFiE</a> 
+      databases.
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      Excel interfaces 
+      -https://ccrod.cancer.gov/confluence/display/OMIT/Shared+<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ" name="" onclick="javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');">SoFie</a>+Excel+Spreadsheets
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#at5EojqAUhQsEgsL" name="" onclick="javascript: highlightGridModelSelection('at5EojqAUhQsEgsL');">Owner</a> 
+      - <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" name="" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');">NCI</a>
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      HR Data
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_YzY8AmaAUhQuH7ke.html" class="ItemLink">NBS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      NBS is an integrated acquisition, logistics, travel and core financial 
+      management system that combines <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW" name="" onclick="javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');">NIH</a> 
+      administrative processes and financial information under one centralized 
+      component. The scope of the NBS includes the following business or 
+      &quot;functional&quot; areas: Financial Management, Property Management, Accounts 
+      Payable, Acquisition, Service and Supply Funds Operations, Supply 
+      Management, and Travel Management.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SystemSoftware.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SystemSoftware.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateSystemSoftware_24JsnjqAUhQsEhqe.html" class="ItemLink">nVision : System Software</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      https://nvision.<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW" name="" onclick="javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');">nih</a>.gov/nvision_registration/registration_guide.html#IntroductiontonVision
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      HR Data
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_Y463I2aAUrD2QqKu.html" class="ItemLink">Beacon : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_Pjem2UaAUhQsGoBP.html" class="ItemLink">NIH : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_BdXkwTqAUhQsLA1Q.html" class="ItemLink">QlikView : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      <b>QlikView </b>&#8211; COTs <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#MEn3sgaC48kYAjBT" name="" onclick="javascript: highlightGridModelSelection('MEn3sgaC48kYAjBT');">application</a> 
+      for business intelligence, data discovery and dashboards. <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#cvKYigaC48kYAjPI" name="" onclick="javascript: highlightGridModelSelection('cvKYigaC48kYAjPI');">IC</a>-led 
+      effort to provide dynamic reporting of enterprise and <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#cvKYigaC48kYAjPI" name="" onclick="javascript: highlightGridModelSelection('cvKYigaC48kYAjPI');">IC</a>-owned 
+      data that complements the suite of reporting tools already provided by 
+      nVision Data Warehouse and <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#ohutsgaC48kYAij9" name="" onclick="javascript: highlightGridModelSelection('ohutsgaC48kYAij9');">QVR</a>. 
+      Can use data from ODBC(oracle,db2 sql server, access), QVDS,Excel, 
+      ACCESS, XML
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-left:0pt;">
+      Sources
+    </p>
+    <ol class="decimal" margin-left-ltr="50" margin-right-rtl="50" style="list-style-type:none;margin-bottom:0px;margin-top:0px;margin-left:40pt;">
+      <li style="margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;">
+        IRDB &#8211; <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH" name="" onclick="javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');">grants</a>
+      </li>
+      <li style="margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;">
+        nVision - HR Data
+      </li>
+      <li style="margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;">
+        <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#fL0EWEaAUhQCoQ2g" name="" onclick="javascript: highlightGridModelSelection('fL0EWEaAUhQCoQ2g');">nSight 
+        HR</a>
+      </li>
+      <li style="margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;">
+        <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#ryuEWEaAUhQCoQ3V" name="" onclick="javascript: highlightGridModelSelection('ryuEWEaAUhQCoQ3V');">Edie</a>
+      </li>
+      <li style="margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;">
+        <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ" name="" onclick="javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');">SOFie</a> 
+        - HR Data
+      </li>
+      <li style="margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;">
+        <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#0wOEWEaAUhQCoQ3N" name="" onclick="javascript: highlightGridModelSelection('0wOEWEaAUhQCoQ3N');">NED</a> 
+        -
+      </li>
+      <li style="margin-right:0;margin-bottom:0;margin-top:0;margin-left:0;">
+        K2 - HR Data
+      </li>
+    </ol>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-top:0;margin-left:0pt;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_EabRLsaAUrAeqawT.html" class="ItemLink">OBF Closeout Dashboard : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_Xp0kojqAUhQsEgtP.html" class="ItemLink">ITRC : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" class="ItemLink">NCI : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+</body>
+</html>
