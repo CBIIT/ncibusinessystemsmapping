@@ -1,0 +1,461 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - Portfolio Expert ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_2w854MaAUrAy_BJ2.html" class="PageParentTitle">Portfolio Expert : Application Component</a> (in <a href="ArchiMateDiagram_nl2YXUaAUhQsMZRn.html" class="PageParentTitle">NED ArchiMate Diagram</a> / <a href="ArchiMateDiagram_2w854MaAUrAy_BJ2.html" class="PageParentTitle">NCI Business Applications ArchiMate Diagram</a> / <a href="ArchiMateDiagram_okVQ4JaAUhQELi8s.html" class="PageParentTitle">CBIIT DOC-centric ArchiMate Diagram</a> / <a href="ArchiMateDiagram_vGXN0JaAUhQELoRr.html" class="PageParentTitle">EPC ArchiMate Diagram</a> / <a href="ArchiMateDiagram_SC1L0JaAUhQELrGX.html" class="PageParentTitle">Portfolio Expert ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - Portfolio Expert ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/SC1L0JaAUhQELrGX', 'Portfolio Expert ArchiMate Diagram\nNCI Buisness Architecture.vpp://diagram/SC1L0JaAUhQELrGX', 'Portfolio Expert ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|89.0|408.0|162.0|40.0|ArchiMateBusinessActor_3D8JuhaAUhQELlQT.html|ArchiMateBusinessActor_3D8JuhaAUhQELlQT.html|7Z970JaAUhQELrPX" id="option7Z970JaAUhQELrPX">Manual Entry Budget Data : Business Actor</option>
+<option value="shape|576.0|408.0|85.0|40.0|ArchiMateDataObject_PZwN0JaAUhQELoO0.html|ArchiMateDataObject_PZwN0JaAUhQELoO0.html|JRIb0JaAUhQELrLb" id="optionJRIb0JaAUhQELrLb">EPC DB Server : Data Object</option>
+<option value="shape|516.0|363.0|185.0|115.0|ArchiMateApplicationComponent_P1KluTqAUhQsUA5V.html|ArchiMateApplicationComponent_P1KluTqAUhQsUA5V.html|_eJr0JaAUhQELrJt" id="option_eJr0JaAUhQELrJt">EPC : Application Component</option>
+<option value="shape|300.0|408.0|135.0|40.0|ArchiMateApplicationComponent_pVTluTqAUhQsUA5x.html|ArchiMateApplicationComponent_pVTluTqAUhQsUA5x.html|HCkr0JaAUhQELrIk" id="optionHCkr0JaAUhQELrIk">Portfolio Expert : Application Component</option>
+<option value="shape|347.0|66.0|116.0|40.0|ArchiMateSystemSoftware_tM4hnjqAUhQsLAiF.html|ArchiMateSystemSoftware_tM4hnjqAUhQsLAiF.html|_for0JaAUhQELrIV" id="option_for0JaAUhQELrIV">NED : System Software</option>
+<option value="shape|90.0|66.0|96.0|40.0|ArchiMateApplicationComponent_9jRkDPqAUhQsFiok.html|ArchiMateApplicationComponent_9jRkDPqAUhQsFiok.html|swXL0JaAUhQELrHp" id="optionswXL0JaAUhQELrHp">iTrust : Application Component</option>
+<option value="shape|2.0|2.0|856.0|149.0|ArchiMateGrouping_Pjem2UaAUhQsGoBP.html|ArchiMateGrouping_Pjem2UaAUhQsGoBP.html|EUzL0JaAUhQELrHT" id="optionEUzL0JaAUhQELrHT">NIH : Grouping</option>
+<option value="shape|35.0|297.0|788.0|219.0|ArchiMateGrouping_GpLgojqAUhQsEgn8.html|ArchiMateGrouping_GpLgojqAUhQsEgn8.html|w1dL0JaAUhQELrGi" id="optionw1dL0JaAUhQELrGi">CBIIT : Grouping</option>
+<option value="shape|2.0|183.0|856.0|363.0|ArchiMateGrouping_qVgA_UaAUhQsMazG.html|ArchiMateGrouping_qVgA_UaAUhQsMazG.html|AJ9L0JaAUhQELrGx" id="optionAJ9L0JaAUhQELrGx">NCI : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Portfolio_Expert_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="1021" height="550"/>
+					<map name="diagram_map">
+<area coords="380,86,402,100" coords2="380,86,402,100" shape="rect" alt="NED" href="GridDiagram_5GBJ6waAUJUCAjP0.html#0wOEWEaAUhQCoQ3N" onclick="javascript: highlightGridModelSelection('0wOEWEaAUhQCoQ3N');"/>
+<area imageId="diagram" coords="398.0, 106.0, 398.0, 408.0, 412.0, 408.0, 412.0, 106.0" coords2="398.0, 106.0, 398.0, 408.0, 412.0, 408.0, 412.0, 106.0" shape="poly" alt="NED to Portfolio Expert:Flow" id="areadiagram_map_HCkr0JaAUhQELrIm_default" href="ArchiMateFlow_xrV84JaAUhQELj_f.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="384.0, 106.0, 384.0, 408.0, 398.0, 408.0, 398.0, 106.0" coords2="384.0, 106.0, 384.0, 408.0, 398.0, 408.0, 398.0, 106.0" shape="poly" alt="Portfolio Expert to NED:Flow" id="areadiagram_map_nCkr0JaAUhQELrIq_default" href="ArchiMateFlow_qDs84JaAUhQELj3G.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="506.0, 410.0, 506.0, 424.0, 516.0, 424.0, 516.0, 410.0" coords2="506.0, 410.0, 506.0, 424.0, 516.0, 424.0, 516.0, 410.0" shape="poly" alt=":Access" id="areadiagram_map_JRIb0JaAUhQELrLd_default" href="ArchiMateAccess_r5wN0JaAUhQELoO7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="630.0, 76.0, 630.0, 79.0, 463.0, 79.0, 463.0, 93.0, 630.0, 93.0, 630.0, 408.0, 644.0, 408.0, 644.0, 93.0, 647.0, 93.0, 647.0, 79.0, 644.0, 79.0, 644.0, 76.0" coords2="630.0, 76.0, 630.0, 79.0, 463.0, 79.0, 463.0, 93.0, 630.0, 93.0, 630.0, 408.0, 644.0, 408.0, 644.0, 93.0, 647.0, 93.0, 647.0, 79.0, 644.0, 79.0, 644.0, 76.0" shape="poly" alt="NED to EPC DB Server:Access" id="areadiagram_map_JRIb0JaAUhQELrLf_default" href="ArchiMateAccess_GXBN0JaAUhQELoQw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="415.0, 341.0, 415.0, 344.0, 412.0, 344.0, 412.0, 358.0, 415.0, 358.0, 415.0, 408.0, 429.0, 408.0, 429.0, 358.0, 600.0, 358.0, 600.0, 408.0, 614.0, 408.0, 614.0, 358.0, 617.0, 358.0, 617.0, 344.0, 614.0, 344.0, 614.0, 341.0, 600.0, 341.0, 600.0, 344.0, 429.0, 344.0, 429.0, 341.0" coords2="415.0, 341.0, 415.0, 344.0, 412.0, 344.0, 412.0, 358.0, 415.0, 358.0, 415.0, 408.0, 429.0, 408.0, 429.0, 358.0, 600.0, 358.0, 600.0, 408.0, 614.0, 408.0, 614.0, 358.0, 617.0, 358.0, 617.0, 344.0, 614.0, 344.0, 614.0, 341.0, 600.0, 341.0, 600.0, 344.0, 429.0, 344.0, 429.0, 341.0" shape="poly" alt="EPC DB Server to Portfolio Expert:Access" id="areadiagram_map_JRIb0JaAUhQELrLh_default" href="ArchiMateAccess_6FFN0JaAUhQELoRJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="163.0, 341.0, 163.0, 344.0, 160.0, 344.0, 160.0, 358.0, 163.0, 358.0, 163.0, 408.0, 177.0, 408.0, 177.0, 358.0, 311.0, 358.0, 311.0, 408.0, 325.0, 408.0, 325.0, 358.0, 328.0, 358.0, 328.0, 344.0, 325.0, 344.0, 325.0, 341.0, 311.0, 341.0, 311.0, 344.0, 177.0, 344.0, 177.0, 341.0" coords2="163.0, 341.0, 163.0, 344.0, 160.0, 344.0, 160.0, 358.0, 163.0, 358.0, 163.0, 408.0, 177.0, 408.0, 177.0, 358.0, 311.0, 358.0, 311.0, 408.0, 325.0, 408.0, 325.0, 358.0, 328.0, 358.0, 328.0, 344.0, 325.0, 344.0, 325.0, 341.0, 311.0, 341.0, 311.0, 344.0, 177.0, 344.0, 177.0, 341.0" shape="poly" alt="Manual Entry Budget Data to Portfolio Expert:Flow" id="areadiagram_map_rzT70JaAUhQELrPm_default" href="ArchiMateFlow_DzT70JaAUhQELrPl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="144.0, 106.0, 144.0, 246.0, 141.0, 246.0, 141.0, 260.0, 144.0, 260.0, 144.0, 263.0, 158.0, 263.0, 158.0, 260.0, 344.0, 260.0, 344.0, 408.0, 358.0, 408.0, 358.0, 260.0, 361.0, 260.0, 361.0, 246.0, 358.0, 246.0, 358.0, 243.0, 344.0, 243.0, 344.0, 246.0, 158.0, 246.0, 158.0, 106.0" coords2="144.0, 106.0, 144.0, 246.0, 141.0, 246.0, 141.0, 260.0, 144.0, 260.0, 144.0, 263.0, 158.0, 263.0, 158.0, 260.0, 344.0, 260.0, 344.0, 408.0, 358.0, 408.0, 358.0, 260.0, 361.0, 260.0, 361.0, 246.0, 358.0, 246.0, 358.0, 243.0, 344.0, 243.0, 344.0, 246.0, 158.0, 246.0, 158.0, 106.0" shape="poly" alt="Portfolio Expert to iTrust:Flow" id="areadiagram_map_Dd3H0JaAUhQELrQK_default" href="ArchiMateFlow_1d3H0JaAUhQELrQJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="120.0, 106.0, 120.0, 270.0, 117.0, 270.0, 117.0, 284.0, 120.0, 284.0, 120.0, 287.0, 134.0, 287.0, 134.0, 284.0, 330.0, 284.0, 330.0, 408.0, 344.0, 408.0, 344.0, 284.0, 347.0, 284.0, 347.0, 270.0, 344.0, 270.0, 344.0, 267.0, 330.0, 267.0, 330.0, 270.0, 134.0, 270.0, 134.0, 106.0" coords2="120.0, 106.0, 120.0, 270.0, 117.0, 270.0, 117.0, 284.0, 120.0, 284.0, 120.0, 287.0, 134.0, 287.0, 134.0, 284.0, 330.0, 284.0, 330.0, 408.0, 344.0, 408.0, 344.0, 284.0, 347.0, 284.0, 347.0, 270.0, 344.0, 270.0, 344.0, 267.0, 330.0, 267.0, 330.0, 270.0, 134.0, 270.0, 134.0, 106.0" shape="poly" alt="iTrust to Portfolio Expert:Flow" id="areadiagram_map_sdPH0JaAUhQELrQZ_default" href="ArchiMateFlow_kdPH0JaAUhQELrQY.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="89, 408, 251, 448" coords2="89, 408, 251, 448" shape="rect" alt="Manual Entry Budget Data:Business Actor" id="areadiagram_map_7Z970JaAUhQELrPX_default" href="ArchiMateBusinessActor_3D8JuhaAUhQELlQT.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="576, 408, 661, 448" coords2="576, 408, 661, 448" shape="rect" alt="EPC DB Server:Data Object" id="areadiagram_map_JRIb0JaAUhQELrLb_default" href="ArchiMateDataObject_PZwN0JaAUhQELoO0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;margin-right:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;lt;span display=&amp;quot;inline !important&amp;quot; float=&amp;quot;none&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-weight:normal;font-size:14.666666984558105px;font-family:Calibri, sans-serif;text-align:start;&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, sans-serif&amp;quot; size=&amp;quot;14.666666984558105px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:14.666666984558105px;&amp;quot;&amp;gt;Ecosys 
+      EPC is a web browser based Financial management system used by &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mYeIGgaC48kYAilB&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mYeIGgaC48kYAilB');&amp;quot;&amp;gt;CBIIT&amp;lt;/a&amp;gt;. 
+      Specifically it performs contracts and obligations management as well as 
+      invoices distribution . It also facilitates tracking of money via 
+      Transfer funds to appropriate portfolio items within &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mYeIGgaC48kYAilB&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mYeIGgaC48kYAilB');&amp;quot;&amp;gt;CBIIT&amp;lt;/a&amp;gt;.&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="516, 363, 701, 478" coords2="516, 363, 701, 478" shape="rect" alt="EPC:Application Component" id="areadiagram_map__eJr0JaAUhQELrJt_default" href="ArchiMateApplicationComponent_P1KluTqAUhQsUA5V.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','516, 363, 701, 478',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_vGXN0JaAUhQELoRr.html/EPC ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '516, 363, 701, 478'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;margin-right:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p class=&amp;quot;MsoNormal&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; line-height=&amp;quot;15.399999618530273px&amp;quot; style=&amp;quot;margin-bottom:8pt;color:rgb(0, 0, 0);font-weight:normal;font-size:11pt;font-family:Calibri, sans-serif;margin-left:0in;margin-top:0in;margin-right:0in;text-align:start;&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      Portfolio Expert is web browser based state of the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#GWqgYIaC48kYAlh2&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('GWqgYIaC48kYAlh2');&amp;quot;&amp;gt;art&amp;lt;/a&amp;gt; 
+      Portfolio and Project management software as a service (SaaS) solution 
+      that helps &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mYeIGgaC48kYAilB&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mYeIGgaC48kYAilB');&amp;quot;&amp;gt;CBIIT&amp;lt;/a&amp;gt;:&amp;lt;o p=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;lt;/o&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ul class=&amp;quot;disc&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;margin-bottom:0in;color:rgb(0, 0, 0);list-style-type:disc;font-weight:normal;font-family:-webkit-standard;margin-left:40pt;margin-top:0in;text-align:start;&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; type=&amp;quot;disc&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;li class=&amp;quot;MsoListParagraphCxSpFirst&amp;quot; line-height=&amp;quot;15.546667098999023px&amp;quot; style=&amp;quot;margin-bottom:0.0001pt;font-size:11pt;font-family:Calibri, sans-serif;margin-left:0in;margin-top:0in;margin-right:0in;&amp;quot;&amp;gt;
+        Govern its portfolio while complying with Federal mandates by 
+        implementing specific processes as it relates to performance (EPLC) 
+        and capital planning (FITARA, CPIC) across entire &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;lt;o p=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;lt;/o&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li class=&amp;quot;MsoListParagraphCxSpMiddle&amp;quot; line-height=&amp;quot;15.546667098999023px&amp;quot; style=&amp;quot;margin-bottom:0.0001pt;font-size:11pt;font-family:Calibri, sans-serif;margin-left:0in;margin-top:0in;margin-right:0in;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#B31tsgaC48kYAikc&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('B31tsgaC48kYAikc');&amp;quot;&amp;gt;Report&amp;lt;/a&amp;gt; 
+        and communicate multi-level dashboards to manage goals and performance 
+        of the portfolio as well as &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Z3GPCgaC48kYAjHp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Z3GPCgaC48kYAjHp');&amp;quot;&amp;gt;HHS&amp;lt;/a&amp;gt; 
+        data calls&amp;lt;o p=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;lt;/o&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li class=&amp;quot;MsoListParagraphCxSpMiddle&amp;quot; line-height=&amp;quot;15.546667098999023px&amp;quot; style=&amp;quot;margin-bottom:0.0001pt;font-size:11pt;font-family:Calibri, sans-serif;margin-left:0in;margin-top:0in;margin-right:0in;&amp;quot;&amp;gt;
+        Evaluate progress of its work, manage dependencies, financials, risks, 
+        schedules, cost and changes effectively&amp;lt;o p=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;lt;/o&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li class=&amp;quot;MsoListParagraphCxSpMiddle&amp;quot; line-height=&amp;quot;15.546667098999023px&amp;quot; style=&amp;quot;margin-bottom:0.0001pt;font-size:11pt;font-family:Calibri, sans-serif;margin-left:0in;margin-top:0in;margin-right:0in;&amp;quot;&amp;gt;
+        Maintain alignment between portfolio of work and strategic objectives&amp;lt;o p=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;lt;/o&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li class=&amp;quot;MsoListParagraphCxSpLast&amp;quot; line-height=&amp;quot;15.546667098999023px&amp;quot; style=&amp;quot;margin-bottom:0.0001pt;font-size:11pt;font-family:Calibri, sans-serif;margin-left:0in;margin-top:0in;margin-right:0in;&amp;quot;&amp;gt;
+        Facilitate prioritization of portfolio based on various factors using 
+        &amp;#8220;what if&amp;#8221; analysis that identifies impacts across the portfolio by 
+        resources, time and money
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ul&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="300, 408, 435, 448" coords2="300, 408, 435, 448" shape="rect" alt="Portfolio Expert:Application Component" id="areadiagram_map_HCkr0JaAUhQELrIk_default" href="ArchiMateApplicationComponent_pVTluTqAUhQsUA5x.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','300, 408, 435, 448',new Array(),new Array(),new Array(new Array('https://nih.sharepoint.com/:x:/r/sites/nci/CBIIT/IITOB/ssawg/_layouts/15/Doc.aspx?sourcedoc=%7B2056E00D-EC54-4E14-95C2-71AF26888C2A%7D&file=PX.xlsx&action=default&mobileredirect=true','Permissions Test URL')),new Array(),new Array(),new Array('ArchiMateDiagram_SC1L0JaAUhQELrGX.html/Portfolio Expert ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '300, 408, 435, 448'),showSubdiagramIcon('diagram', '300, 408, 435, 448'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="347, 66, 463, 106" coords2="347, 66, 463, 106" shape="rect" alt="NED:System Software" id="areadiagram_map__for0JaAUhQELrIV_default" href="ArchiMateSystemSoftware_tM4hnjqAUhQsLAiF.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','347, 66, 463, 106',new Array(),new Array(),new Array(),new Array('ClassDiagram_mvPE2EaAUhQsFCI2.html/NEDPersonWSDL/ClassDiagram'),new Array(),new Array('ClassDiagram_mvPE2EaAUhQsFCI2.html/NEDPersonWSDL/ClassDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '347, 66, 463, 106'),showSubdiagramIcon('diagram', '347, 66, 463, 106'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="90, 66, 186, 106" coords2="90, 66, 186, 106" shape="rect" alt="iTrust:Application Component" id="areadiagram_map_swXL0JaAUhQELrHp_default" href="ArchiMateApplicationComponent_9jRkDPqAUhQsFiok.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 858, 151" coords2="2, 2, 858, 151" shape="rect" alt="NIH:Grouping" id="areadiagram_map_EUzL0JaAUhQELrHT_default" href="ArchiMateGrouping_Pjem2UaAUhQsGoBP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="35, 297, 823, 516" coords2="35, 297, 823, 516" shape="rect" alt="CBIIT:Grouping" id="areadiagram_map_w1dL0JaAUhQELrGi_default" href="ArchiMateGrouping_GpLgojqAUhQsEgn8.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','35, 297, 823, 516',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_okVQ4JaAUhQELi8s.html/CBIIT DOC-centric ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '35, 297, 823, 516'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 183, 858, 546" coords2="2, 183, 858, 546" shape="rect" alt="NCI:Grouping" id="areadiagram_map_AJ9L0JaAUhQELrGx_default" href="ArchiMateGrouping_qVgA_UaAUhQsMazG.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_3D8JuhaAUhQELlQT.html" class="ItemLink">Manual Entry Budget Data : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/DataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/DataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateDataObject_PZwN0JaAUhQELoO0.html" class="ItemLink">EPC DB Server : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_P1KluTqAUhQsUA5V.html" class="ItemLink">EPC : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;margin-right:0;">
+    <p style="margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;margin-right:0pt;">
+      <span display="inline !important" float="none" font-style="normal" letter-spacing="normal" style="color:rgb(0, 0, 0);font-weight:normal;font-size:14.666666984558105px;font-family:Calibri, sans-serif;text-align:start;" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px"><font face="Calibri, sans-serif" size="14.666666984558105px" style="color:rgb(0, 0, 0);font-size:14.666666984558105px;">Ecosys 
+      EPC is a web browser based Financial management system used by <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mYeIGgaC48kYAilB" name="" onclick="javascript: highlightGridModelSelection('mYeIGgaC48kYAilB');">CBIIT</a>. 
+      Specifically it performs contracts and obligations management as well as 
+      invoices distribution . It also facilitates tracking of money via 
+      Transfer funds to appropriate portfolio items within <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mYeIGgaC48kYAilB" name="" onclick="javascript: highlightGridModelSelection('mYeIGgaC48kYAilB');">CBIIT</a>.</font></span>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_pVTluTqAUhQsUA5x.html" class="ItemLink">Portfolio Expert : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:11px;font-family:Courier New;margin-left:0;margin-right:0;">
+    <p style="margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;margin-right:0pt;">
+      &nbsp;
+    </p>
+    <p class="MsoNormal" font-style="normal" letter-spacing="normal" line-height="15.399999618530273px" style="margin-bottom:8pt;color:rgb(0, 0, 0);font-weight:normal;font-size:11pt;font-family:Calibri, sans-serif;margin-left:0in;margin-top:0in;margin-right:0in;text-align:start;" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      Portfolio Expert is web browser based state of the <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#GWqgYIaC48kYAlh2" name="" onclick="javascript: highlightGridModelSelection('GWqgYIaC48kYAlh2');">art</a> 
+      Portfolio and Project management software as a service (SaaS) solution 
+      that helps <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mYeIGgaC48kYAilB" name="" onclick="javascript: highlightGridModelSelection('mYeIGgaC48kYAilB');">CBIIT</a>:<o p="#DEFAULT"></o>
+    </p>
+    <ul class="disc" font-style="normal" letter-spacing="normal" margin-left-ltr="50" margin-right-rtl="50" style="margin-bottom:0in;color:rgb(0, 0, 0);list-style-type:disc;font-weight:normal;font-family:-webkit-standard;margin-left:40pt;margin-top:0in;text-align:start;" text-indent="0px" text-transform="none" type="disc" white-space="normal" word-spacing="0px">
+      <li class="MsoListParagraphCxSpFirst" line-height="15.546667098999023px" style="margin-bottom:0.0001pt;font-size:11pt;font-family:Calibri, sans-serif;margin-left:0in;margin-top:0in;margin-right:0in;">
+        Govern its portfolio while complying with Federal mandates by 
+        implementing specific processes as it relates to performance (EPLC) 
+        and capital planning (FITARA, CPIC) across entire <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" name="" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');">NCI</a><o p="#DEFAULT"></o>
+      </li>
+      <li class="MsoListParagraphCxSpMiddle" line-height="15.546667098999023px" style="margin-bottom:0.0001pt;font-size:11pt;font-family:Calibri, sans-serif;margin-left:0in;margin-top:0in;margin-right:0in;">
+        <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#B31tsgaC48kYAikc" name="" onclick="javascript: highlightGridModelSelection('B31tsgaC48kYAikc');">Report</a> 
+        and communicate multi-level dashboards to manage goals and performance 
+        of the portfolio as well as <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Z3GPCgaC48kYAjHp" name="" onclick="javascript: highlightGridModelSelection('Z3GPCgaC48kYAjHp');">HHS</a> 
+        data calls<o p="#DEFAULT"></o>
+      </li>
+      <li class="MsoListParagraphCxSpMiddle" line-height="15.546667098999023px" style="margin-bottom:0.0001pt;font-size:11pt;font-family:Calibri, sans-serif;margin-left:0in;margin-top:0in;margin-right:0in;">
+        Evaluate progress of its work, manage dependencies, financials, risks, 
+        schedules, cost and changes effectively<o p="#DEFAULT"></o>
+      </li>
+      <li class="MsoListParagraphCxSpMiddle" line-height="15.546667098999023px" style="margin-bottom:0.0001pt;font-size:11pt;font-family:Calibri, sans-serif;margin-left:0in;margin-top:0in;margin-right:0in;">
+        Maintain alignment between portfolio of work and strategic objectives<o p="#DEFAULT"></o>
+      </li>
+      <li class="MsoListParagraphCxSpLast" line-height="15.546667098999023px" style="margin-bottom:0.0001pt;font-size:11pt;font-family:Calibri, sans-serif;margin-left:0in;margin-top:0in;margin-right:0in;">
+        Facilitate prioritization of portfolio based on various factors using 
+        &#8220;what if&#8221; analysis that identifies impacts across the portfolio by 
+        resources, time and money
+      </li>
+    </ul>
+    <p style="margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;margin-right:0pt;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SystemSoftware.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SystemSoftware.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateSystemSoftware_tM4hnjqAUhQsLAiF.html" class="ItemLink">NED : System Software</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_9jRkDPqAUhQsFiok.html" class="ItemLink">iTrust : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_Pjem2UaAUhQsGoBP.html" class="ItemLink">NIH : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_GpLgojqAUhQsEgn8.html" class="ItemLink">CBIIT : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_qVgA_UaAUhQsMazG.html" class="ItemLink">NCI : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+</body>
+</html>
