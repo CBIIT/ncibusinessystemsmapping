@@ -1,0 +1,296 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - DEA Blog ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_EnnmauaAUrCsulL3.html" class="PageParentTitle">DEA Blog : Application Component</a> (in <a href="ArchiMateDiagram_EnnmauaAUrCsulL3.html" class="PageParentTitle">RF ArchiMate Diagram</a> / <a href="ArchiMateDiagram_S2msTpaAUrD8SD_0.html" class="PageParentTitle">DEA ArchiMate Diagram</a> / <a href="ArchiMateDiagram_jzoZTpaAUrD8SB6J.html" class="PageParentTitle">FOA Report ArchiMate Diagram</a> / <a href="ArchiMateDiagram_P7rZTpaAUrD8SI_6.html" class="PageParentTitle">DEA Blog ArchiMate Diagram</a> / <a href="ArchiMateDiagram_j655TpaAUrD8SDRf.html" class="PageParentTitle">DEA Reporting System ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - <a onclick="javascript: highlightGridModelSelection('dU9_5gaFKcBauwwQ');" href="GridDiagram_5GBJ6waAUJUCAjP0.html#dU9_5gaFKcBauwwQ" class="ItemLink">DEA Blog</a> ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('Research Funding Management Archtecture.vpp://diagram/P7rZTpaAUrD8SI_6', 'DEA Blog ArchiMate Diagram\nResearch Funding Management Archtecture.vpp://diagram/P7rZTpaAUrD8SI_6', 'DEA Blog ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|408.0|166.0|148.0|40.0|ArchiMateApplicationComponent_omFC2uaAUrCsug8t.html|ArchiMateApplicationComponent_omFC2uaAUrCsug8t.html|.PHZTpaAUrD8SJAt" id="option.PHZTpaAUrD8SJAt">DEA Reporting System : Application Component</option>
+<option value="shape|434.0|316.0|96.0|40.0|ArchiMateApplicationComponent_Ddm82uaAUrCsug5e.html|ArchiMateApplicationComponent_Ddm82uaAUrCsug5e.html|_3HZTpaAUrD8SJAj" id="option_3HZTpaAUrD8SJAj">FOA Report : Application Component</option>
+<option value="shape|109.0|241.0|96.0|40.0|ArchiMateApplicationComponent_O3iC2uaAUrCsug7H.html|ArchiMateApplicationComponent_O3iC2uaAUrCsug7H.html|eQ7ZTpaAUrD8SJAH" id="optioneQ7ZTpaAUrD8SJAH">DEA Blog : Application Component</option>
+<option value="shape|43.0|45.0|649.0|398.0|ArchiMateGrouping_kBdCojqAUhQsEg44.html|ArchiMateGrouping_kBdCojqAUhQsEg44.html|rdE5TpaAUrD8SMZB" id="optionrdE5TpaAUrD8SMZB">DEA : Grouping</option>
+<option value="shape|2.0|2.0|714.0|477.0|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|CIM5TpaAUrD8SMZZ" id="optionCIM5TpaAUrD8SMZZ">NCI : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/DEA_Blog_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="720" height="483"/>
+					<map name="diagram_map">
+<area coords="11,4,30,18" coords2="11,4,30,18" shape="rect" alt="NCI" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');"/>
+<area coords="52,47,74,61" coords2="52,47,74,61" shape="rect" alt="DEA" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bZtbsgaC48kYAisp" onclick="javascript: highlightGridModelSelection('bZtbsgaC48kYAisp');"/>
+<area coords="143,256,191,270" coords2="143,256,191,270" shape="rect" alt="DEA Blog" href="GridDiagram_5GBJ6waAUJUCAjP0.html#dU9_5gaFKcBauwwQ" onclick="javascript: highlightGridModelSelection('dU9_5gaFKcBauwwQ');"/>
+<area coords="463,331,485,345" coords2="463,331,485,345" shape="rect" alt="FOA" href="GridDiagram_5GBJ6waAUJUCAjP0.html#7y19sgaC48kYAinf" onclick="javascript: highlightGridModelSelection('7y19sgaC48kYAinf');"/>
+<area coords="488,331,523,345" coords2="488,331,523,345" shape="rect" alt="RePORT" href="GridDiagram_5GBJ6waAUJUCAjP0.html#B31tsgaC48kYAikc" onclick="javascript: highlightGridModelSelection('B31tsgaC48kYAikc');"/>
+<area coords="457,174,535,188" coords2="457,174,535,188" shape="rect" alt="DEA Reporting" href="GridDiagram_5GBJ6waAUJUCAjP0.html#I72ZlwaC48kYAi3N" onclick="javascript: highlightGridModelSelection('I72ZlwaC48kYAi3N');"/>
+<area imageId="diagram" coords="350.0, 240.0, 350.0, 243.0, 205.0, 243.0, 205.0, 257.0, 350.0, 257.0, 350.0, 329.0, 347.0, 329.0, 347.0, 343.0, 350.0, 343.0, 350.0, 346.0, 364.0, 346.0, 364.0, 343.0, 434.0, 343.0, 434.0, 329.0, 364.0, 329.0, 364.0, 257.0, 367.0, 257.0, 367.0, 243.0, 364.0, 243.0, 364.0, 240.0" coords2="350.0, 240.0, 350.0, 243.0, 205.0, 243.0, 205.0, 257.0, 350.0, 257.0, 350.0, 329.0, 347.0, 329.0, 347.0, 343.0, 350.0, 343.0, 350.0, 346.0, 364.0, 346.0, 364.0, 343.0, 434.0, 343.0, 434.0, 329.0, 364.0, 329.0, 364.0, 257.0, 367.0, 257.0, 367.0, 243.0, 364.0, 243.0, 364.0, 240.0" shape="poly" alt=":Flow" id="areadiagram_map_v3HZTpaAUrD8SJAc_default" href="ArchiMateFlow_Uu6C2uaAUrCsug7s.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="323.0, 176.0, 323.0, 179.0, 320.0, 179.0, 320.0, 193.0, 323.0, 193.0, 323.0, 243.0, 205.0, 243.0, 205.0, 257.0, 323.0, 257.0, 323.0, 260.0, 337.0, 260.0, 337.0, 257.0, 340.0, 257.0, 340.0, 243.0, 337.0, 243.0, 337.0, 193.0, 408.0, 193.0, 408.0, 179.0, 337.0, 179.0, 337.0, 176.0" coords2="323.0, 176.0, 323.0, 179.0, 320.0, 179.0, 320.0, 193.0, 323.0, 193.0, 323.0, 243.0, 205.0, 243.0, 205.0, 257.0, 323.0, 257.0, 323.0, 260.0, 337.0, 260.0, 337.0, 257.0, 340.0, 257.0, 340.0, 243.0, 337.0, 243.0, 337.0, 193.0, 408.0, 193.0, 408.0, 179.0, 337.0, 179.0, 337.0, 176.0" shape="poly" alt=":Flow" id="areadiagram_map_.PHZTpaAUrD8SJAr_default" href="ArchiMateFlow_XUOO2uaAUrCsug9g.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="337.0, 251.0, 337.0, 254.0, 205.0, 254.0, 205.0, 268.0, 337.0, 268.0, 337.0, 339.0, 334.0, 339.0, 334.0, 353.0, 337.0, 353.0, 337.0, 356.0, 351.0, 356.0, 351.0, 353.0, 434.0, 353.0, 434.0, 339.0, 351.0, 339.0, 351.0, 268.0, 354.0, 268.0, 354.0, 254.0, 351.0, 254.0, 351.0, 251.0" coords2="337.0, 251.0, 337.0, 254.0, 205.0, 254.0, 205.0, 268.0, 337.0, 268.0, 337.0, 339.0, 334.0, 339.0, 334.0, 353.0, 337.0, 353.0, 337.0, 356.0, 351.0, 356.0, 351.0, 353.0, 434.0, 353.0, 434.0, 339.0, 351.0, 339.0, 351.0, 268.0, 354.0, 268.0, 354.0, 254.0, 351.0, 254.0, 351.0, 251.0" shape="poly" alt=":Flow" id="areadiagram_map_LPHZTpaAUrD8SJA1_default" href="ArchiMateFlow_2A2C2uaAUrCsug7_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="337.0, 188.0, 337.0, 191.0, 334.0, 191.0, 334.0, 205.0, 337.0, 205.0, 337.0, 254.0, 205.0, 254.0, 205.0, 268.0, 337.0, 268.0, 337.0, 271.0, 351.0, 271.0, 351.0, 268.0, 354.0, 268.0, 354.0, 254.0, 351.0, 254.0, 351.0, 205.0, 408.0, 205.0, 408.0, 191.0, 351.0, 191.0, 351.0, 188.0" coords2="337.0, 188.0, 337.0, 191.0, 334.0, 191.0, 334.0, 205.0, 337.0, 205.0, 337.0, 254.0, 205.0, 254.0, 205.0, 268.0, 337.0, 268.0, 337.0, 271.0, 351.0, 271.0, 351.0, 268.0, 354.0, 268.0, 354.0, 254.0, 351.0, 254.0, 351.0, 205.0, 408.0, 205.0, 408.0, 191.0, 351.0, 191.0, 351.0, 188.0" shape="poly" alt=":Flow" id="areadiagram_map_rPHZTpaAUrD8SJA4_default" href="ArchiMateFlow_luBO2uaAUrCsug93.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="408, 166, 556, 206" coords2="408, 166, 556, 206" shape="rect" alt="DEA Reporting System:Application Component" id="areadiagram_map_.PHZTpaAUrD8SJAt_default" href="ArchiMateApplicationComponent_omFC2uaAUrCsug8t.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','408, 166, 556, 206',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_j655TpaAUrD8SDRf.html/DEA Reporting System ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '408, 166, 556, 206'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="434, 316, 530, 356" coords2="434, 316, 530, 356" shape="rect" alt="FOA Report:Application Component" id="areadiagram_map__3HZTpaAUrD8SJAj_default" href="ArchiMateApplicationComponent_Ddm82uaAUrCsug5e.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','434, 316, 530, 356',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_jzoZTpaAUrD8SB6J.html/FOA Report ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '434, 316, 530, 356'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="109, 241, 205, 281" coords2="109, 241, 205, 281" shape="rect" alt="DEA Blog:Application Component" id="areadiagram_map_eQ7ZTpaAUrD8SJAH_default" href="ArchiMateApplicationComponent_O3iC2uaAUrCsug7H.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','109, 241, 205, 281',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_P7rZTpaAUrD8SI_6.html/DEA Blog ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '109, 241, 205, 281'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="43, 45, 692, 443" coords2="43, 45, 692, 443" shape="rect" alt="DEA:Grouping" id="areadiagram_map_rdE5TpaAUrD8SMZB_default" href="ArchiMateGrouping_kBdCojqAUhQsEg44.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','43, 45, 692, 443',new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_S2msTpaAUrD8SD_0.html/DEA ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '43, 45, 692, 443'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 716, 479" coords2="2, 2, 716, 479" shape="rect" alt="NCI:Grouping" id="areadiagram_map_CIM5TpaAUrD8SMZZ_default" href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_omFC2uaAUrCsug8t.html" class="ItemLink">DEA Reporting System : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_Ddm82uaAUrCsug5e.html" class="ItemLink">FOA Report : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_O3iC2uaAUrCsug7H.html" class="ItemLink">DEA Blog : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_kBdCojqAUhQsEg44.html" class="ItemLink">DEA : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" class="ItemLink">NCI : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+</body>
+</html>
