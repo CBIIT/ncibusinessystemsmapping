@@ -1,0 +1,816 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - CSSI ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_EnnmauaAUrCsulL3.html" class="PageParentTitle">CSSI : Grouping</a> (in <a href="ArchiMateDiagram_EnnmauaAUrCsulL3.html" class="PageParentTitle">RF ArchiMate Diagram</a> / <a href="ArchiMateDiagram_2EjauxaAUhQuH1ZG.html" class="PageParentTitle">RCDC ArchiMate Diagram</a> / <a href="ArchiMateDiagram_QqQ5uxaAUhQuH6gu.html" class="PageParentTitle">IRDB Reporting ArchiMate Diagram</a> / <a href="ArchiMateDiagram_JSOyaZaAUhQuHycY.html" class="PageParentTitle">CBIIT Grants ArchMate Diagram</a> / <a href="ArchiMateDiagram_tWljI5aFS_l_E7_S.html" class="PageParentTitle">I2E DataMart Reporting ArchiMate Diagram</a> / <a href="ArchiMateDiagram_B532J5aAUrDKU6F8.html" class="PageParentTitle">OBF ArchiMate Diagram</a> / <a href="ArchiMateDiagram_WI9_J5aAUrDKU1Ae.html" class="PageParentTitle">OBF R&amp;D Contracts and Budget  ArchiMate Diagram</a> / <a href="ArchiMateDiagram_sYPhJ5aAUrDKUxEz.html" class="PageParentTitle">CSSI ArchiMate Diagram</a> / <a href="ArchiMateDiagram_YmiJJ5aAUrDKU3OJ.html" class="PageParentTitle">KMSPB RCDC ArchiMate Diagram</a> / <a href="ArchiMateDiagram_s_HJJ5aAUrDKUxYM.html" class="PageParentTitle">Intramural Coding, RMS, Ledios ArchiMate Diagram</a> / <a href="ArchiMateDiagram_lRJpJ5aAUrDKU5Ay.html" class="PageParentTitle">NFRP ArchiMate Diagram</a> / <a href="ArchiMateDiagram_XO6ZJ5aAUrDKUzLr.html" class="PageParentTitle">ncifundedresearch.cancer.gov ArchiMate Diagram</a> / <a href="ArchiMateDiagram_dk1FJ5aAUrDKU8Tm.html" class="PageParentTitle">CRS ArchiMate Diagram</a> / <a href="ArchiMateDiagram_rtOVJ5aAUrDKU9wP.html" class="PageParentTitle">ICRP ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - <a onclick="javascript: highlightGridModelSelection('bVqEGgaC48kYAj.K');" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bVqEGgaC48kYAj.K" class="ItemLink">CSSI</a> ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('Research Funding Management Archtecture.vpp://diagram/sYPhJ5aAUrDKUxEz', 'CSSI ArchiMate Diagram\nResearch Funding Management Archtecture.vpp://diagram/sYPhJ5aAUrDKUxEz', 'CSSI ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|1578.0|922.0|96.0|40.0|ArchiMateApplicationComponent_4iznGeaAUrAmX6o0.html|ArchiMateApplicationComponent_4iznGeaAUrAmX6o0.html|KvgRJ5aAUrDKUxGT" id="optionKvgRJ5aAUrDKUxGT">ICRP : Application Component</option>
+<option value="shape|941.0|924.0|134.0|40.0|ArchiMateDataObject_ln8p2uaAUrCsuhU4.html|ArchiMateDataObject_ln8p2uaAUrCsuhU4.html|bPgRJ5aAUrDKUxGJ" id="optionbPgRJ5aAUrDKUxGJ">I2E DataMart Reporting : Data Object</option>
+<option value="shape|494.0|163.0|91.0|40.0|ArchiMateDataObject_qUepWuaAUrCsuhmR.html|ArchiMateDataObject_qUepWuaAUrCsuhmR.html|sPgRJ5aAUrDKUxF_" id="optionsPgRJ5aAUrDKUxF_">IRDB Reporting : Data Object</option>
+<option value="shape|1522.0|719.0|208.0|278.0|ArchiMateGrouping_vVHHGeaAUrAmX6k3.html|ArchiMateGrouping_vVHHGeaAUrAmX6k3.html|_rCxJ5aAUrDKUxIP" id="option_rCxJ5aAUrDKUxIP">CRS : Grouping</option>
+<option value="shape|877.0|719.0|280.0|278.0|ArchiMateGrouping_GpLgojqAUhQsEgn8.html|ArchiMateGrouping_GpLgojqAUhQsEgn8.html|pAuxJ5aAUrDKUxJc" id="optionpAuxJ5aAUrDKUxJc">CBIIT : Grouping</option>
+<option value="shape|1225.0|924.0|218.0|40.0|ArchiMateBusinessActor_kDcmGeaAUrAmX1qO.html|ArchiMateBusinessActor_kDcmGeaAUrAmX1qO.html|I5ARJ5aAUrDKUxFn" id="optionI5ARJ5aAUrDKUxFn">OBF R&amp;D Contracts and Budget  : Business Actor</option>
+<option value="shape|81.0|163.0|96.0|40.0|ArchiMateApplicationComponent_RHHzWuaAUrCsuk2A.html|ArchiMateApplicationComponent_RHHzWuaAUrCsuk2A.html|Ya_hJ5aAUrDKUxFZ" id="optionYa_hJ5aAUrDKUxFZ">RCDCR : Application Component</option>
+<option value="shape|607.0|922.0|202.0|40.0|ArchiMateApplicationComponent_tVJLGeaAUrAmX1zo.html|ArchiMateApplicationComponent_tVJLGeaAUrAmX1zo.html|KFPhJ5aAUrDKUxFJ" id="optionKFPhJ5aAUrDKUxFJ">ncifundedresearch.cancer.gov : Application Component</option>
+<option value="shape|1189.0|719.0|298.0|278.0|ArchiMateGrouping_RYlGGeaAUrAmX1pM.html|ArchiMateGrouping_RYlGGeaAUrAmX1pM.html|jhqxJ5aAUrDKUxIt" id="optionjhqxJ5aAUrDKUxIt">OBF : Grouping</option>
+<option value="shape|57.0|45.0|675.0|183.0|ArchiMateGrouping_nD72auaAUrCsuubz.html|ArchiMateGrouping_nD72auaAUrCsuubz.html|0.WxJ5aAUrDKUxJA" id="option0.WxJ5aAUrDKUxJA">eRA/IIMPAC II : Grouping</option>
+<option value="shape|219.0|922.0|226.0|40.0|ArchiMateProduct_D6VTGeaAUrAmX1w_.html|ArchiMateProduct_D6VTGeaAUrAmX1w_.html|CFPhJ5aAUrDKUxFG" id="optionCFPhJ5aAUrDKUxFG">Intramural Coding, RMS, Ledios : Product</option>
+<option value="shape|2.0|0.0|1787.0|279.0|ArchiMateGrouping_Pjem2UaAUhQsGoBP.html|ArchiMateGrouping_Pjem2UaAUhQsGoBP.html|91JxJ5aAUrDKUxKK" id="option91JxJ5aAUrDKUxKK">NIH : Grouping</option>
+<option value="shape|478.0|922.0|96.0|40.0|ArchiMateApplicationComponent_TYGTGeaAUrAmX1wJ.html|ArchiMateApplicationComponent_TYGTGeaAUrAmX1wJ.html|0FPhJ5aAUrDKUxFD" id="option0FPhJ5aAUrDKUxFD">NFRP : Application Component</option>
+<option value="shape|96.0|924.0|80.0|40.0|ArchiMateBusinessActor_x8VjGeaAUrAmX1uu.html|ArchiMateBusinessActor_x8VjGeaAUrAmX1uu.html|oFPhJ5aAUrDKUxFA" id="optionoFPhJ5aAUrDKUxFA">KMSPB RCDC : Business Actor</option>
+<option value="shape|56.0|752.0|765.0|225.0|ArchiMateGrouping_5hBjGeaAUrAmX1uW.html|ArchiMateGrouping_5hBjGeaAUrAmX1uW.html|gFPhJ5aAUrDKUxE9" id="optiongFPhJ5aAUrDKUxE9">KMSPB : Grouping</option>
+<option value="shape|41.0|719.0|805.0|278.0|ArchiMateGrouping_X8ujGeaAUrAmX1uO.html|ArchiMateGrouping_X8ujGeaAUrAmX1uO.html|v5PhJ5aAUrDKUxE6" id="optionv5PhJ5aAUrDKUxE6">CSSI : Grouping</option>
+<option value="shape|9.0|359.0|1780.0|734.0|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|ZLhxJ5aAUrDKUxJ0" id="optionZLhxJ5aAUrDKUxJ0">NCI : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/CSSI_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="1793" height="1097"/>
+					<map name="diagram_map">
+<area coords="18,361,37,375" coords2="18,361,37,375" shape="rect" alt="NCI" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');"/>
+<area coords="46,721,69,735" coords2="46,721,69,735" shape="rect" alt="CSSI" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bVqEGgaC48kYAj.K" onclick="javascript: highlightGridModelSelection('bVqEGgaC48kYAj.K');"/>
+<area coords="61,754,96,768" coords2="61,754,96,768" shape="rect" alt="KMSP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mALEGgaC48kYAkEl" onclick="javascript: highlightGridModelSelection('mALEGgaC48kYAkEl');"/>
+<area coords="111,930,146,944" coords2="111,930,146,944" shape="rect" alt="KMSP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mALEGgaC48kYAkEl" onclick="javascript: highlightGridModelSelection('mALEGgaC48kYAkEl');"/>
+<area coords="113,944,143,958" coords2="113,944,143,958" shape="rect" alt="RCDC" href="GridDiagram_5GBJ6waAUJUCAjP0.html#A10tLgaAUsSyFwra" onclick="javascript: highlightGridModelSelection('A10tLgaAUsSyFwra');"/>
+<area coords="523,937,550,951" coords2="523,937,550,951" shape="rect" alt="NFRP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#UU8XiUaAUhQCoQtP" onclick="javascript: highlightGridModelSelection('UU8XiUaAUhQCoQtP');"/>
+<area coords="11,2,30,16" coords2="11,2,30,16" shape="rect" alt="NIH" href="GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW" onclick="javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');"/>
+<area coords="307,938,345,952" coords2="307,938,345,952" shape="rect" alt="Coding" href="GridDiagram_5GBJ6waAUJUCAjP0.html#6WhOlwaC48kYAiyj" onclick="javascript: highlightGridModelSelection('6WhOlwaC48kYAiyj');"/>
+<area coords="352,938,374,952" coords2="352,938,374,952" shape="rect" alt="RMS" href="GridDiagram_5GBJ6waAUJUCAjP0.html#ybLdmQaAUsSyF0ka" onclick="javascript: highlightGridModelSelection('ybLdmQaAUsSyF0ka');"/>
+<area coords="61,47,82,61" coords2="61,47,82,61" shape="rect" alt="eRA" href="GridDiagram_5GBJ6waAUJUCAjP0.html#r3zcMgaC48kYAidB" onclick="javascript: highlightGridModelSelection('r3zcMgaC48kYAidB');"/>
+<area coords="1194,721,1215,735" coords2="1194,721,1215,735" shape="rect" alt="OBF" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');"/>
+<area coords="1243,937,1264,951" coords2="1243,937,1264,951" shape="rect" alt="OBF" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');"/>
+<area coords="1372,937,1409,951" coords2="1372,937,1409,951" shape="rect" alt="Budget" href="GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp" onclick="javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');"/>
+<area coords="886,721,913,735" coords2="886,721,913,735" shape="rect" alt="CBIIT" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mYeIGgaC48kYAilB" onclick="javascript: highlightGridModelSelection('mYeIGgaC48kYAilB');"/>
+<area coords="1526,721,1546,735" coords2="1526,721,1546,735" shape="rect" alt="CRS" href="GridDiagram_5GBJ6waAUJUCAjP0.html#ZfykGgaC48kYAkG5" onclick="javascript: highlightGridModelSelection('ZfykGgaC48kYAkG5');"/>
+<area coords="946,942,962,956" coords2="946,942,962,956" shape="rect" alt="I2E" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn" onclick="javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');"/>
+<area coords="965,942,1014,956" coords2="965,942,1014,956" shape="rect" alt="Datamart" href="GridDiagram_5GBJ6waAUJUCAjP0.html#gsGoGgaC48kYAiwp" onclick="javascript: highlightGridModelSelection('gsGoGgaC48kYAiwp');"/>
+<area coords="1625,937,1649,951" coords2="1625,937,1649,951" shape="rect" alt="ICRP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#R8HJlwaC48kYAi2D" onclick="javascript: highlightGridModelSelection('R8HJlwaC48kYAi2D');"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Intramural &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#6WhOlwaC48kYAiyj&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('6WhOlwaC48kYAiyj');&amp;quot;&amp;gt;Coding&amp;lt;/a&amp;gt;, 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#ybLdmQaAUsSyF0ka&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('ybLdmQaAUsSyF0ka');&amp;quot;&amp;gt;RMS&amp;lt;/a&amp;gt;, 
+      Ledios
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="325.0, 887.0, 325.0, 890.0, 322.0, 890.0, 322.0, 904.0, 325.0, 904.0, 325.0, 922.0, 339.0, 922.0, 339.0, 904.0, 519.0, 904.0, 519.0, 922.0, 533.0, 922.0, 533.0, 904.0, 536.0, 904.0, 536.0, 890.0, 533.0, 890.0, 533.0, 887.0, 519.0, 887.0, 519.0, 890.0, 339.0, 890.0, 339.0, 887.0" coords2="325.0, 887.0, 325.0, 890.0, 322.0, 890.0, 322.0, 904.0, 325.0, 904.0, 325.0, 922.0, 339.0, 922.0, 339.0, 904.0, 519.0, 904.0, 519.0, 922.0, 533.0, 922.0, 533.0, 904.0, 536.0, 904.0, 536.0, 890.0, 533.0, 890.0, 533.0, 887.0, 519.0, 887.0, 519.0, 890.0, 339.0, 890.0, 339.0, 887.0" shape="poly" alt=":Flow" id="areadiagram_map_aFPhJ5aAUrDKUxFM_default" href="ArchiMateFlow_OVfTGeaAUrAmX1x4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');&amp;quot;&amp;gt;Grants&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Selected &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#EiTOGgaC48kYAgqI&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('EiTOGgaC48kYAgqI');&amp;quot;&amp;gt;CSO&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#d4pyagaC48kYAgzf&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('d4pyagaC48kYAgzf');&amp;quot;&amp;gt;CA&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#_upsJwaC48kYAg2D&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('_upsJwaC48kYAg2D');&amp;quot;&amp;gt;Activity 
+      Codes&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Intramural Codes
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="538.0, 873.0, 538.0, 876.0, 535.0, 876.0, 535.0, 890.0, 538.0, 890.0, 538.0, 922.0, 552.0, 922.0, 552.0, 890.0, 701.0, 890.0, 701.0, 922.0, 715.0, 922.0, 715.0, 890.0, 718.0, 890.0, 718.0, 876.0, 715.0, 876.0, 715.0, 873.0, 701.0, 873.0, 701.0, 876.0, 552.0, 876.0, 552.0, 873.0" coords2="538.0, 873.0, 538.0, 876.0, 535.0, 876.0, 535.0, 890.0, 538.0, 890.0, 538.0, 922.0, 552.0, 922.0, 552.0, 890.0, 701.0, 890.0, 701.0, 922.0, 715.0, 922.0, 715.0, 890.0, 718.0, 890.0, 718.0, 876.0, 715.0, 876.0, 715.0, 873.0, 701.0, 873.0, 701.0, 876.0, 552.0, 876.0, 552.0, 873.0" shape="poly" alt=":Flow" id="areadiagram_map_GFPhJ5aAUrDKUxFP_default" href="ArchiMateFlow__1tLGeaAUrAmX10J.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="129.0, 203.0, 129.0, 924.0, 143.0, 924.0, 143.0, 203.0" coords2="129.0, 203.0, 129.0, 924.0, 143.0, 924.0, 143.0, 203.0" shape="poly" alt=":Flow" id="areadiagram_map_Ya_hJ5aAUrDKUxFX_default" href="ArchiMateFlow_qiLjGeaAUrAmX1vD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="304.0, 700.0, 304.0, 703.0, 301.0, 703.0, 301.0, 717.0, 304.0, 717.0, 304.0, 922.0, 318.0, 922.0, 318.0, 717.0, 1327.0, 717.0, 1327.0, 924.0, 1341.0, 924.0, 1341.0, 717.0, 1344.0, 717.0, 1344.0, 703.0, 1341.0, 703.0, 1341.0, 700.0, 1327.0, 700.0, 1327.0, 703.0, 318.0, 703.0, 318.0, 700.0" coords2="304.0, 700.0, 304.0, 703.0, 301.0, 703.0, 301.0, 717.0, 304.0, 717.0, 304.0, 922.0, 318.0, 922.0, 318.0, 717.0, 1327.0, 717.0, 1327.0, 924.0, 1341.0, 924.0, 1341.0, 717.0, 1344.0, 717.0, 1344.0, 703.0, 1341.0, 703.0, 1341.0, 700.0, 1327.0, 700.0, 1327.0, 703.0, 318.0, 703.0, 318.0, 700.0" shape="poly" alt=":Flow" id="areadiagram_map_I5ARJ5aAUrDKUxFl_default" href="ArchiMateFlow_p1BTGeaAUrAmX1w1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="519.0, 203.0, 519.0, 922.0, 533.0, 922.0, 533.0, 203.0" coords2="519.0, 203.0, 519.0, 922.0, 533.0, 922.0, 533.0, 203.0" shape="poly" alt=":Access" id="areadiagram_map_sPgRJ5aAUrDKUxF9_default" href="ArchiMateAccess_V30zGeaAUrAmX1yZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');&amp;quot;&amp;gt;Grants&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');&amp;quot;&amp;gt;SITe&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#EiTOGgaC48kYAgqI&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('EiTOGgaC48kYAgqI');&amp;quot;&amp;gt;CSO&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#d4pyagaC48kYAgzf&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('d4pyagaC48kYAgzf');&amp;quot;&amp;gt;Ca&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#_upsJwaC48kYAg2D&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('_upsJwaC48kYAg2D');&amp;quot;&amp;gt;Activity 
+      Codes&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="519.0, 680.0, 519.0, 683.0, 516.0, 683.0, 516.0, 697.0, 519.0, 697.0, 519.0, 922.0, 533.0, 922.0, 533.0, 697.0, 1001.0, 697.0, 1001.0, 924.0, 1015.0, 924.0, 1015.0, 697.0, 1018.0, 697.0, 1018.0, 683.0, 1015.0, 683.0, 1015.0, 680.0, 1001.0, 680.0, 1001.0, 683.0, 533.0, 683.0, 533.0, 680.0" coords2="519.0, 680.0, 519.0, 683.0, 516.0, 683.0, 516.0, 697.0, 519.0, 697.0, 519.0, 922.0, 533.0, 922.0, 533.0, 697.0, 1001.0, 697.0, 1001.0, 924.0, 1015.0, 924.0, 1015.0, 697.0, 1018.0, 697.0, 1018.0, 683.0, 1015.0, 683.0, 1015.0, 680.0, 1001.0, 680.0, 1001.0, 683.0, 533.0, 683.0, 533.0, 680.0" shape="poly" alt=":Access" id="areadiagram_map_bPgRJ5aAUrDKUxGH_default" href="ArchiMateAccess_qf_zGeaAUrAmX1y6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="538.0, 667.0, 538.0, 670.0, 535.0, 670.0, 535.0, 684.0, 538.0, 684.0, 538.0, 922.0, 552.0, 922.0, 552.0, 684.0, 1619.0, 684.0, 1619.0, 922.0, 1633.0, 922.0, 1633.0, 684.0, 1636.0, 684.0, 1636.0, 670.0, 1633.0, 670.0, 1633.0, 667.0, 1619.0, 667.0, 1619.0, 670.0, 552.0, 670.0, 552.0, 667.0" coords2="538.0, 667.0, 538.0, 670.0, 535.0, 670.0, 535.0, 684.0, 538.0, 684.0, 538.0, 922.0, 552.0, 922.0, 552.0, 684.0, 1619.0, 684.0, 1619.0, 922.0, 1633.0, 922.0, 1633.0, 684.0, 1636.0, 684.0, 1636.0, 670.0, 1633.0, 670.0, 1633.0, 667.0, 1619.0, 667.0, 1619.0, 670.0, 552.0, 670.0, 552.0, 667.0" shape="poly" alt="future:Flow" id="areadiagram_map_KvgRJ5aAUrDKUxGR_default" href="ArchiMateFlow_yWyXGeaAUrAmX6qk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1179.0, 916.0, 1179.0, 930.0, 1189.0, 930.0, 1189.0, 916.0" coords2="1179.0, 916.0, 1179.0, 930.0, 1189.0, 930.0, 1189.0, 916.0" shape="poly" alt=":Aggregation" id="areadiagram_map_jhqxJ5aAUrDKUxIv_default" href="ArchiMateAggregation_rlSmuxaAUhQuH772.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1578, 922, 1674, 962" coords2="1578, 922, 1674, 962" shape="rect" alt="ICRP:Application Component" id="areadiagram_map_KvgRJ5aAUrDKUxGT_default" href="ArchiMateApplicationComponent_4iznGeaAUrAmX6o0.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1578, 922, 1674, 962',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_rtOVJ5aAUrDKU9wP.html/ICRP ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '1578, 922, 1674, 962'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');&amp;quot;&amp;gt;Grants&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#d4pyagaC48kYAgzf&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('d4pyagaC48kYAgzf');&amp;quot;&amp;gt;Ca&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#_upsJwaC48kYAg2D&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('_upsJwaC48kYAg2D');&amp;quot;&amp;gt;Activity 
+      Codes&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="941, 924, 1075, 964" coords2="941, 924, 1075, 964" shape="rect" alt="I2E DataMart Reporting:Data Object" id="areadiagram_map_bPgRJ5aAUrDKUxGJ_default" href="ArchiMateDataObject_ln8p2uaAUrCsuhU4.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','941, 924, 1075, 964',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_tWljI5aFS_l_E7_S.html/I2E DataMart Reporting ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '941, 924, 1075, 964'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="494, 163, 585, 203" coords2="494, 163, 585, 203" shape="rect" alt="IRDB Reporting:Data Object" id="areadiagram_map_sPgRJ5aAUrDKUxF__default" href="ArchiMateDataObject_qUepWuaAUrCsuhmR.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','494, 163, 585, 203',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_QqQ5uxaAUhQuH6gu.html/IRDB Reporting ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '494, 163, 585, 203'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1522, 719, 1730, 997" coords2="1522, 719, 1730, 997" shape="rect" alt="CRS:Grouping" id="areadiagram_map__rCxJ5aAUrDKUxIP_default" href="ArchiMateGrouping_vVHHGeaAUrAmX6k3.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1522, 719, 1730, 997',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_dk1FJ5aAUrDKU8Tm.html/CRS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '1522, 719, 1730, 997'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="877, 719, 1157, 997" coords2="877, 719, 1157, 997" shape="rect" alt="CBIIT:Grouping" id="areadiagram_map_pAuxJ5aAUrDKUxJc_default" href="ArchiMateGrouping_GpLgojqAUhQsEgn8.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','877, 719, 1157, 997',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_okVQ4JaAUhQELi8s.html/CBIIT DOC-centric ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '877, 719, 1157, 997'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      R&amp;amp;D Contracts
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      data
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1225, 924, 1443, 964" coords2="1225, 924, 1443, 964" shape="rect" alt="OBF R&amp;D Contracts and Budget :Business Actor" id="areadiagram_map_I5ARJ5aAUrDKUxFn_default" href="ArchiMateBusinessActor_kDcmGeaAUrAmX1qO.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1225, 924, 1443, 964',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_WI9_J5aAUrDKU1Ae.html/OBF R&amp;D Contracts and Budget  ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '1225, 924, 1443, 964'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="81, 163, 177, 203" coords2="81, 163, 177, 203" shape="rect" alt="RCDCR:Application Component" id="areadiagram_map_Ya_hJ5aAUrDKUxFZ_default" href="ArchiMateApplicationComponent_RHHzWuaAUrCsuk2A.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','81, 163, 177, 203',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_2EjauxaAUhQuH1ZG.html/RCDC ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '81, 163, 177, 203'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');&amp;quot;&amp;gt;Grants&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Selected &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#EiTOGgaC48kYAgqI&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('EiTOGgaC48kYAgqI');&amp;quot;&amp;gt;CSO&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#d4pyagaC48kYAgzf&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('d4pyagaC48kYAgzf');&amp;quot;&amp;gt;CA&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#_upsJwaC48kYAg2D&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('_upsJwaC48kYAg2D');&amp;quot;&amp;gt;Activity 
+      Codes&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Intramural Codes
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="607, 922, 809, 962" coords2="607, 922, 809, 962" shape="rect" alt="ncifundedresearch.cancer.gov:Application Component" id="areadiagram_map_KFPhJ5aAUrDKUxFJ_default" href="ArchiMateApplicationComponent_tVJLGeaAUrAmX1zo.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','607, 922, 809, 962',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_XO6ZJ5aAUrDKUzLr.html/ncifundedresearch.cancer.gov ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '607, 922, 809, 962'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="1189, 719, 1487, 997" coords2="1189, 719, 1487, 997" shape="rect" alt="OBF:Grouping" id="areadiagram_map_jhqxJ5aAUrDKUxIt_default" href="ArchiMateGrouping_RYlGGeaAUrAmX1pM.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1189, 719, 1487, 997',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_B532J5aAUrDKU6F8.html/OBF ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '1189, 719, 1487, 997'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="57, 45, 732, 228" coords2="57, 45, 732, 228" shape="rect" alt="eRA/IIMPAC II:Grouping" id="areadiagram_map_0.WxJ5aAUrDKUxJA_default" href="ArchiMateGrouping_nD72auaAUrCsuubz.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','57, 45, 732, 228',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_kie_sxaAUhQuH8OM.html/eRA/IIMPAC II ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '57, 45, 732, 228'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="219, 922, 445, 962" coords2="219, 922, 445, 962" shape="rect" alt="Intramural Coding, RMS, Ledios:Product" id="areadiagram_map_CFPhJ5aAUrDKUxFG_default" href="ArchiMateProduct_D6VTGeaAUrAmX1w_.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','219, 922, 445, 962',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_s_HJJ5aAUrDKUxYM.html/Intramural Coding, RMS, Ledios ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '219, 922, 445, 962'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 0, 1789, 279" coords2="2, 0, 1789, 279" shape="rect" alt="NIH:Grouping" id="areadiagram_map_91JxJ5aAUrDKUxKK_default" href="ArchiMateGrouping_Pjem2UaAUhQsGoBP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Intramural &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#6WhOlwaC48kYAiyj&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('6WhOlwaC48kYAiyj');&amp;quot;&amp;gt;Coding&amp;lt;/a&amp;gt;, 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#ybLdmQaAUsSyF0ka&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('ybLdmQaAUsSyF0ka');&amp;quot;&amp;gt;RMS&amp;lt;/a&amp;gt;, 
+      Ledios
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');&amp;quot;&amp;gt;Grants&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');&amp;quot;&amp;gt;SITe&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#EiTOGgaC48kYAgqI&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('EiTOGgaC48kYAgqI');&amp;quot;&amp;gt;CSO&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#d4pyagaC48kYAgzf&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('d4pyagaC48kYAgzf');&amp;quot;&amp;gt;Ca&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#_upsJwaC48kYAg2D&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('_upsJwaC48kYAg2D');&amp;quot;&amp;gt;Activity 
+      Codes&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="478, 922, 574, 962" coords2="478, 922, 574, 962" shape="rect" alt="NFRP:Application Component" id="areadiagram_map_0FPhJ5aAUrDKUxFD_default" href="ArchiMateApplicationComponent_TYGTGeaAUrAmX1wJ.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','478, 922, 574, 962',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_lRJpJ5aAUrDKU5Ay.html/NFRP ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '478, 922, 574, 962'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="96, 924, 176, 964" coords2="96, 924, 176, 964" shape="rect" alt="KMSPB RCDC:Business Actor" id="areadiagram_map_oFPhJ5aAUrDKUxFA_default" href="ArchiMateBusinessActor_x8VjGeaAUrAmX1uu.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','96, 924, 176, 964',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_YmiJJ5aAUrDKU3OJ.html/KMSPB RCDC ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '96, 924, 176, 964'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="56, 752, 821, 977" coords2="56, 752, 821, 977" shape="rect" alt="KMSPB:Grouping" id="areadiagram_map_gFPhJ5aAUrDKUxE9_default" href="ArchiMateGrouping_5hBjGeaAUrAmX1uW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="41, 719, 846, 997" coords2="41, 719, 846, 997" shape="rect" alt="CSSI:Grouping" id="areadiagram_map_v5PhJ5aAUrDKUxE6_default" href="ArchiMateGrouping_X8ujGeaAUrAmX1uO.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','41, 719, 846, 997',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_sYPhJ5aAUrDKUxEz.html/CSSI ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '41, 719, 846, 997'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="9, 359, 1789, 1093" coords2="9, 359, 1789, 1093" shape="rect" alt="NCI:Grouping" id="areadiagram_map_ZLhxJ5aAUrDKUxJ0_default" href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_4iznGeaAUrAmX6o0.html" class="ItemLink">ICRP : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/DataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/DataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateDataObject_ln8p2uaAUrCsuhU4.html" class="ItemLink">I2E DataMart Reporting : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH" name="" onclick="javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');">Grants</a>
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n" name="" onclick="javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');">SIC</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B" name="" onclick="javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');">SITE</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#d4pyagaC48kYAgzf" name="" onclick="javascript: highlightGridModelSelection('d4pyagaC48kYAgzf');">Ca</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#_upsJwaC48kYAg2D" name="" onclick="javascript: highlightGridModelSelection('_upsJwaC48kYAg2D');">Activity 
+      Codes</a>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/DataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/DataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateDataObject_qUepWuaAUrCsuhmR.html" class="ItemLink">IRDB Reporting : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_vVHHGeaAUrAmX6k3.html" class="ItemLink">CRS : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_GpLgojqAUhQsEgn8.html" class="ItemLink">CBIIT : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_kDcmGeaAUrAmX1qO.html" class="ItemLink">OBF R&amp;D Contracts and Budget  : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      R&amp;D Contracts
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp" name="" onclick="javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');">Budget</a> 
+      data
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_RHHzWuaAUrCsuk2A.html" class="ItemLink">RCDCR : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_tVJLGeaAUrAmX1zo.html" class="ItemLink">ncifundedresearch.cancer.gov : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH" name="" onclick="javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');">Grants</a>
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      Selected <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n" name="" onclick="javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');">SIC</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B" name="" onclick="javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');">SITE</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#EiTOGgaC48kYAgqI" name="" onclick="javascript: highlightGridModelSelection('EiTOGgaC48kYAgqI');">CSO</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#d4pyagaC48kYAgzf" name="" onclick="javascript: highlightGridModelSelection('d4pyagaC48kYAgzf');">CA</a>&nbsp;<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#_upsJwaC48kYAg2D" name="" onclick="javascript: highlightGridModelSelection('_upsJwaC48kYAg2D');">Activity 
+      Codes</a>
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      Intramural Codes
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_RYlGGeaAUrAmX1pM.html" class="ItemLink">OBF : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_nD72auaAUrCsuubz.html" class="ItemLink">eRA/IIMPAC II : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Product.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Product.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateProduct_D6VTGeaAUrAmX1w_.html" class="ItemLink">Intramural Coding, RMS, Ledios : Product</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_Pjem2UaAUhQsGoBP.html" class="ItemLink">NIH : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_TYGTGeaAUrAmX1wJ.html" class="ItemLink">NFRP : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      Intramural <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#6WhOlwaC48kYAiyj" name="" onclick="javascript: highlightGridModelSelection('6WhOlwaC48kYAiyj');">Coding</a>, 
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#ybLdmQaAUsSyF0ka" name="" onclick="javascript: highlightGridModelSelection('ybLdmQaAUsSyF0ka');">RMS</a>, 
+      Ledios
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH" name="" onclick="javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');">Grants</a>
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n" name="" onclick="javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');">SIC</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B" name="" onclick="javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');">SITe</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#EiTOGgaC48kYAgqI" name="" onclick="javascript: highlightGridModelSelection('EiTOGgaC48kYAgqI');">CSO</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#d4pyagaC48kYAgzf" name="" onclick="javascript: highlightGridModelSelection('d4pyagaC48kYAgzf');">Ca</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#_upsJwaC48kYAg2D" name="" onclick="javascript: highlightGridModelSelection('_upsJwaC48kYAg2D');">Activity 
+      Codes</a>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_x8VjGeaAUrAmX1uu.html" class="ItemLink">KMSPB RCDC : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_5hBjGeaAUrAmX1uW.html" class="ItemLink">KMSPB : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_X8ujGeaAUrAmX1uO.html" class="ItemLink">CSSI : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" class="ItemLink">NCI : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+</body>
+</html>
