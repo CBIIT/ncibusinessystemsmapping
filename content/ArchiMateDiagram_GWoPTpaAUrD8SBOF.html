@@ -1,0 +1,913 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - Program Coding Modue ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_EnnmauaAUrCsulL3.html" class="PageParentTitle">Program Coding Module : Application Component</a> (in <a href="ArchiMateDiagram_EnnmauaAUrCsulL3.html" class="PageParentTitle">RF ArchiMate Diagram</a> / <a href="ArchiMateDiagram_S2msTpaAUrD8SD_0.html" class="PageParentTitle">DEA ArchiMate Diagram</a> / <a href="ArchiMateDiagram_F_THTpaAUrD8SIfY.html" class="PageParentTitle">Flare ArchiMate Diagram</a> / <a href="ArchiMateDiagram_GWoPTpaAUrD8SBOF.html" class="PageParentTitle">Program Coding Modue ArchiMate Diagram</a> / <a href="ArchiMateDiagram_JSOyaZaAUhQuHycY.html" class="PageParentTitle">CBIIT Grants ArchMate Diagram</a> / <a href="ArchiMateDiagram_Ac69I5aFS_l_E2Sw.html" class="PageParentTitle">I2E OLTP transactional ArchiMate Diagram</a> / <a href="ArchiMateDiagram_DtHCx5aAUrDKUzuC.html" class="PageParentTitle">Programs ArchiMate Diagram</a> / <a href="ArchiMateDiagram_1fJZx5aAUrDKU6gL.html" class="PageParentTitle">Program Coding  ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - <a onclick="javascript: highlightGridModelSelection('coBrsgaC48kYAiq2');" href="GridDiagram_5GBJ6waAUJUCAjP0.html#coBrsgaC48kYAiq2" class="ItemLink">Program Coding</a> Modue ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('Research Funding Management Archtecture.vpp://diagram/GWoPTpaAUrD8SBOF', 'Program Coding Modue ArchiMate Diagram\nResearch Funding Management Archtecture.vpp://diagram/GWoPTpaAUrD8SBOF', 'Program Coding Modue ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|406.0|395.0|115.0|40.0|ArchiMateBusinessActor_F6YFLuaAUrCsujNq.html|ArchiMateBusinessActor_F6YFLuaAUrCsujNq.html|Ml4PTpaAUrD8SBOo" id="optionMl4PTpaAUrD8SBOo">Program Coding  : Business Actor</option>
+<option value="shape|256.0|123.0|96.0|40.0|ArchiMateApplicationComponent_OOmJ2uaAUrCsuhSh.html|ArchiMateApplicationComponent_OOmJ2uaAUrCsuhSh.html|HF4PTpaAUrD8SBOe" id="optionHF4PTpaAUrD8SBOe">Flare : Application Component</option>
+<option value="shape|81.0|395.0|130.0|40.0|ArchiMateDataObject_7Tgp2uaAUrCsuhUZ.html|ArchiMateDataObject_7Tgp2uaAUrCsuhUZ.html|sF4PTpaAUrD8SBOU" id="optionsF4PTpaAUrD8SBOU">I2E OLTP transactional : Data Object</option>
+<option value="shape|339.0|335.0|249.0|149.0|ArchiMateGrouping_RSbWpuaAUrCsujGg.html|ArchiMateGrouping_RSbWpuaAUrCsujGg.html|fVWPTpaAUrD8SBQA" id="optionfVWPTpaAUrD8SBQA">Programs : Grouping</option>
+<option value="shape|68.0|123.0|109.0|40.0|ArchiMateApplicationComponent_T0LJ2uaAUrCsuhTf.html|ArchiMateApplicationComponent_T0LJ2uaAUrCsuhTf.html|X6YPTpaAUrD8SBOO" id="optionX6YPTpaAUrD8SBOO">Program Coding Module : Application Component</option>
+<option value="shape|60.0|75.0|346.0|136.0|ArchiMateGrouping_z5SJ2uaAUrCsuhSZ.html|ArchiMateGrouping_z5SJ2uaAUrCsuhSZ.html|s5.PTpaAUrD8SBQf" id="options5.PTpaAUrD8SBQf">RAEB : Grouping</option>
+<option value="shape|32.0|335.0|243.0|149.0|ArchiMateGrouping_GpLgojqAUhQsEgn8.html|ArchiMateGrouping_GpLgojqAUhQsEgn8.html|TyJPTpaAUrD8SCoh" id="optionTyJPTpaAUrD8SCoh">CBIIT : Grouping</option>
+<option value="shape|32.0|30.0|556.0|219.0|ArchiMateGrouping_kBdCojqAUhQsEg44.html|ArchiMateGrouping_kBdCojqAUhQsEg44.html|iE1PTpaAUrD8SCo8" id="optioniE1PTpaAUrD8SCo8">DEA : Grouping</option>
+<option value="shape|2.0|2.0|625.0|511.0|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|g29PTpaAUrD8SCpR" id="optiong29PTpaAUrD8SCpR">NCI : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Program_Coding_Modue_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="631" height="517"/>
+					<map name="diagram_map">
+<area coords="11,4,30,18" coords2="11,4,30,18" shape="rect" alt="NCI" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');"/>
+<area coords="41,32,63,46" coords2="41,32,63,46" shape="rect" alt="DEA" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bZtbsgaC48kYAisp" onclick="javascript: highlightGridModelSelection('bZtbsgaC48kYAisp');"/>
+<area coords="41,337,68,351" coords2="41,337,68,351" shape="rect" alt="CBIIT" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mYeIGgaC48kYAilB" onclick="javascript: highlightGridModelSelection('mYeIGgaC48kYAilB');"/>
+<area coords="65,77,92,91" coords2="65,77,92,91" shape="rect" alt="RAEB" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0" onclick="javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');"/>
+<area coords="111,131,156,145" coords2="111,131,156,145" shape="rect" alt="Program Coding" href="GridDiagram_5GBJ6waAUJUCAjP0.html#coBrsgaC48kYAiq2" onclick="javascript: highlightGridModelSelection('coBrsgaC48kYAiq2');"/>
+<area coords="94,145,132,159" coords2="94,145,132,159" shape="rect" alt="Program Coding" href="GridDiagram_5GBJ6waAUJUCAjP0.html#coBrsgaC48kYAiq2" onclick="javascript: highlightGridModelSelection('coBrsgaC48kYAiq2');"/>
+<area coords="85,413,101,427" coords2="85,413,101,427" shape="rect" alt="I2E" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn" onclick="javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');"/>
+<area coords="104,413,131,427" coords2="104,413,131,427" shape="rect" alt="OLTP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#JFrIGgaC48kYAiqp" onclick="javascript: highlightGridModelSelection('JFrIGgaC48kYAiqp');"/>
+<area coords="302,138,328,152" coords2="302,138,328,152" shape="rect" alt="FLARE" href="GridDiagram_5GBJ6waAUJUCAjP0.html#GWX35gaFKcBauwui" onclick="javascript: highlightGridModelSelection('GWX35gaFKcBauwui');"/>
+<area coords="412,408,499,422" coords2="412,408,499,422" shape="rect" alt="Program Coding" href="GridDiagram_5GBJ6waAUJUCAjP0.html#coBrsgaC48kYAiq2" onclick="javascript: highlightGridModelSelection('coBrsgaC48kYAiq2');"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      SCO Codes
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="115.0, 163.0, 115.0, 395.0, 129.0, 395.0, 129.0, 163.0" coords2="115.0, 163.0, 115.0, 395.0, 129.0, 395.0, 129.0, 163.0" shape="poly" alt=":Access" id="areadiagram_map_sF4PTpaAUrD8SBOS_default" href="ArchiMateAccess_4sMp2uaAUrCsuhUu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      SCO Codes
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="177.0, 136.0, 177.0, 150.0, 256.0, 150.0, 256.0, 136.0" coords2="177.0, 136.0, 177.0, 150.0, 256.0, 150.0, 256.0, 136.0" shape="poly" alt=":Flow" id="areadiagram_map_HF4PTpaAUrD8SBOc_default" href="ArchiMateFlow_14_J2uaAUrCsuhUL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="133.0, 163.0, 133.0, 318.0, 130.0, 318.0, 130.0, 332.0, 133.0, 332.0, 133.0, 335.0, 147.0, 335.0, 147.0, 332.0, 456.0, 332.0, 456.0, 395.0, 470.0, 395.0, 470.0, 332.0, 473.0, 332.0, 473.0, 318.0, 470.0, 318.0, 470.0, 315.0, 456.0, 315.0, 456.0, 318.0, 147.0, 318.0, 147.0, 163.0" coords2="133.0, 163.0, 133.0, 318.0, 130.0, 318.0, 130.0, 332.0, 133.0, 332.0, 133.0, 335.0, 147.0, 335.0, 147.0, 332.0, 456.0, 332.0, 456.0, 395.0, 470.0, 395.0, 470.0, 332.0, 473.0, 332.0, 473.0, 318.0, 470.0, 318.0, 470.0, 315.0, 456.0, 315.0, 456.0, 318.0, 147.0, 318.0, 147.0, 163.0" shape="poly" alt=":Flow" id="areadiagram_map_Ml4PTpaAUrD8SBOm_default" href="ArchiMateFlow_4qaFLuaAUrCsujN_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="406, 395, 521, 435" coords2="406, 395, 521, 435" shape="rect" alt="Program Coding :Business Actor" id="areadiagram_map_Ml4PTpaAUrD8SBOo_default" href="ArchiMateBusinessActor_F6YFLuaAUrCsujNq.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','406, 395, 521, 435',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_1fJZx5aAUrDKU6gL.html/Program Coding  ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '406, 395, 521, 435'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#GWX35gaFKcBauwui&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('GWX35gaFKcBauwui');&amp;quot;&amp;gt;Fiscal 
+      Linked Analysis of Research Emphasis&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      https://&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');&amp;quot;&amp;gt;nci&amp;lt;/a&amp;gt;-&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#bZtbsgaC48kYAisp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('bZtbsgaC48kYAisp');&amp;quot;&amp;gt;dea&amp;lt;/a&amp;gt;-flarepr.&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');&amp;quot;&amp;gt;nci&amp;lt;/a&amp;gt;.&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');&amp;quot;&amp;gt;nih&amp;lt;/a&amp;gt;.gov/indexing
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');&amp;quot;&amp;gt;grants&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');&amp;quot;&amp;gt;Site&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      QC Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#MEn3sgaC48kYAjBT&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('MEn3sgaC48kYAjBT');&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#6WhOlwaC48kYAiyj&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('6WhOlwaC48kYAiyj');&amp;quot;&amp;gt;coding&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="256, 123, 352, 163" coords2="256, 123, 352, 163" shape="rect" alt="Flare:Application Component" id="areadiagram_map_HF4PTpaAUrD8SBOe_default" href="ArchiMateApplicationComponent_OOmJ2uaAUrCsuhSh.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','256, 123, 352, 163',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_F_THTpaAUrD8SIfY.html/Flare ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '256, 123, 352, 163'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#d4pyagaC48kYAgzf&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('d4pyagaC48kYAgzf');&amp;quot;&amp;gt;CA&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#_upsJwaC48kYAg2D&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('_upsJwaC48kYAg2D');&amp;quot;&amp;gt;activity 
+      code&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#nMTXsgaC48kYAi_a&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('nMTXsgaC48kYAi_a');&amp;quot;&amp;gt;PD&amp;lt;/a&amp;gt; 
+      code
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');&amp;quot;&amp;gt;grants&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');&amp;quot;&amp;gt;Site&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="81, 395, 211, 435" coords2="81, 395, 211, 435" shape="rect" alt="I2E OLTP transactional:Data Object" id="areadiagram_map_sF4PTpaAUrD8SBOU_default" href="ArchiMateDataObject_7Tgp2uaAUrCsuhUZ.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','81, 395, 211, 435',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_Ac69I5aFS_l_E2Sw.html/I2E OLTP transactional ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '81, 395, 211, 435'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="339, 335, 588, 484" coords2="339, 335, 588, 484" shape="rect" alt="Programs:Grouping" id="areadiagram_map_fVWPTpaAUrD8SBQA_default" href="ArchiMateGrouping_RSbWpuaAUrCsujGg.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','339, 335, 588, 484',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_DtHCx5aAUrDKUzuC.html/Programs ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '339, 335, 588, 484'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="68, 123, 177, 163" coords2="68, 123, 177, 163" shape="rect" alt="Program Coding Module:Application Component" id="areadiagram_map_X6YPTpaAUrD8SBOO_default" href="ArchiMateApplicationComponent_T0LJ2uaAUrCsuhTf.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','68, 123, 177, 163',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_GWoPTpaAUrD8SBOF.html/Program Coding Modue ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '68, 123, 177, 163'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;div class=&amp;quot;OutlineElement Ltr SCXP205983448&amp;quot; clear=&amp;quot;both&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:rgb(96, 96, 96);font-weight:normal;padding-top:0px;font-size:19.733333587646484px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:Arial;padding-bottom:0px;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;p class=&amp;quot;Paragraph SCXP205983448&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;335551550&amp;quot;:1,&amp;quot;335551620&amp;quot;:1,&amp;quot;335559683&amp;quot;:0,&amp;quot;335559685&amp;quot;:360,&amp;quot;335559731&amp;quot;:-360,&amp;quot;335559737&amp;quot;:0,&amp;quot;335562764&amp;quot;:2,&amp;quot;335562765&amp;quot;:1,&amp;quot;335562766&amp;quot;:2,&amp;quot;335562767&amp;quot;:0,&amp;quot;335562768&amp;quot;:4,&amp;quot;335562769&amp;quot;:10}&amp;quot; font-style=&amp;quot;normal&amp;quot; lang=&amp;quot;EN-US&amp;quot; paraeid=&amp;quot;{86406b26-14f8-4c95-86c6-83850d470519}{87}&amp;quot; paraid=&amp;quot;0&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;text-align:left;&amp;quot; text-indent=&amp;quot;-18.5px&amp;quot; xml=&amp;quot;#DEFAULT&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;NormalTextRun SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:12px;&amp;quot;&amp;gt;The 
+        Research Analysis and Evaluation Branch&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;font-size:12px;&amp;quot;&amp;gt;&amp;#8203;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+      &amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;OutlineElement Ltr SCXP205983448&amp;quot; clear=&amp;quot;both&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:rgb(96, 96, 96);font-weight:normal;padding-top:0px;font-size:19.733333587646484px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:Arial;padding-bottom:0px;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;p class=&amp;quot;Paragraph SCXP205983448&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;335551550&amp;quot;:1,&amp;quot;335551620&amp;quot;:1,&amp;quot;335559683&amp;quot;:0,&amp;quot;335559685&amp;quot;:360,&amp;quot;335559731&amp;quot;:-360,&amp;quot;335559737&amp;quot;:0,&amp;quot;335562764&amp;quot;:2,&amp;quot;335562765&amp;quot;:1,&amp;quot;335562766&amp;quot;:2,&amp;quot;335562767&amp;quot;:0,&amp;quot;335562768&amp;quot;:4,&amp;quot;335562769&amp;quot;:10}&amp;quot; font-style=&amp;quot;normal&amp;quot; lang=&amp;quot;EN-US&amp;quot; paraeid=&amp;quot;{86406b26-14f8-4c95-86c6-83850d470519}{90}&amp;quot; paraid=&amp;quot;0&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;text-align:left;&amp;quot; text-indent=&amp;quot;-18.5px&amp;quot; xml=&amp;quot;#DEFAULT&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;NormalTextRun SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:12px;&amp;quot;&amp;gt;Contact 
+        for scientific information on &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;-supported&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:12px;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;research&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;font-size:12px;&amp;quot;&amp;gt;&amp;#8203;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+      &amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;OutlineElement EmptyListItem Ltr SCXP205983448&amp;quot; clear=&amp;quot;both&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:rgb(96, 96, 96);font-weight:normal;padding-top:0px;font-size:19.733333587646484px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:Arial;padding-bottom:0px;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;p class=&amp;quot;Paragraph SCXP205983448&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;335551550&amp;quot;:1,&amp;quot;335551620&amp;quot;:1,&amp;quot;335559683&amp;quot;:0,&amp;quot;335559685&amp;quot;:360,&amp;quot;335559731&amp;quot;:-360,&amp;quot;335559737&amp;quot;:0,&amp;quot;335562764&amp;quot;:2,&amp;quot;335562765&amp;quot;:1,&amp;quot;335562766&amp;quot;:2,&amp;quot;335562767&amp;quot;:0,&amp;quot;335562768&amp;quot;:4,&amp;quot;335562769&amp;quot;:10}&amp;quot; font-style=&amp;quot;normal&amp;quot; lang=&amp;quot;EN-US&amp;quot; paraeid=&amp;quot;{86406b26-14f8-4c95-86c6-83850d470519}{93}&amp;quot; paraid=&amp;quot;0&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;text-align:left;&amp;quot; text-indent=&amp;quot;-18.5px&amp;quot; xml=&amp;quot;#DEFAULT&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;EOP SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;font-size:12px;&amp;quot;&amp;gt;&amp;#8203;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+      &amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;OutlineElement Ltr SCXP205983448&amp;quot; clear=&amp;quot;both&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:rgb(96, 96, 96);font-weight:normal;padding-top:0px;font-size:19.733333587646484px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:Arial;padding-bottom:0px;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;p class=&amp;quot;Paragraph SCXP205983448&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;335551550&amp;quot;:1,&amp;quot;335551620&amp;quot;:1,&amp;quot;335559683&amp;quot;:0,&amp;quot;335559685&amp;quot;:360,&amp;quot;335559731&amp;quot;:-360,&amp;quot;335559737&amp;quot;:0,&amp;quot;335562764&amp;quot;:2,&amp;quot;335562765&amp;quot;:1,&amp;quot;335562766&amp;quot;:2,&amp;quot;335562767&amp;quot;:0,&amp;quot;335562768&amp;quot;:4,&amp;quot;335562769&amp;quot;:10}&amp;quot; font-style=&amp;quot;normal&amp;quot; lang=&amp;quot;EN-US&amp;quot; paraeid=&amp;quot;{86406b26-14f8-4c95-86c6-83850d470519}{96}&amp;quot; paraid=&amp;quot;0&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;text-align:left;&amp;quot; text-indent=&amp;quot;-18.5px&amp;quot; xml=&amp;quot;#DEFAULT&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;NormalTextRun SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:12px;&amp;quot;&amp;gt;provide 
+        quick, accurate, reliable cancer research information&amp;nbsp;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;font-size:12px;&amp;quot;&amp;gt;&amp;#8203;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+      &amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;OutlineElement EmptyListItem Ltr SCXP205983448&amp;quot; clear=&amp;quot;both&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:rgb(96, 96, 96);font-weight:normal;padding-top:0px;font-size:19.733333587646484px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:Arial;padding-bottom:0px;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;p class=&amp;quot;Paragraph SCXP205983448&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;335551550&amp;quot;:1,&amp;quot;335551620&amp;quot;:1,&amp;quot;335559683&amp;quot;:0,&amp;quot;335559685&amp;quot;:360,&amp;quot;335559731&amp;quot;:-360,&amp;quot;335559737&amp;quot;:0,&amp;quot;335562764&amp;quot;:2,&amp;quot;335562765&amp;quot;:1,&amp;quot;335562766&amp;quot;:2,&amp;quot;335562767&amp;quot;:0,&amp;quot;335562768&amp;quot;:4,&amp;quot;335562769&amp;quot;:10}&amp;quot; font-style=&amp;quot;normal&amp;quot; lang=&amp;quot;EN-US&amp;quot; paraeid=&amp;quot;{86406b26-14f8-4c95-86c6-83850d470519}{99}&amp;quot; paraid=&amp;quot;0&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;text-align:left;&amp;quot; text-indent=&amp;quot;-18.5px&amp;quot; xml=&amp;quot;#DEFAULT&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;EOP SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;font-size:12px;&amp;quot;&amp;gt;&amp;#8203;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+      &amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;ul class=&amp;quot;BulletListStyle1 SCXP205983448&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; role=&amp;quot;list&amp;quot; style=&amp;quot;margin-bottom:0px;color:rgb(96, 96, 96);font-weight:normal;padding-top:0px;font-size:19.733333587646484px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:verdana;padding-bottom:0px;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;li class=&amp;quot;OutlineElement Ltr SCXP205983448&amp;quot; clear=&amp;quot;both&amp;quot; data-aria-level=&amp;quot;1&amp;quot; data-aria-posinset=&amp;quot;1&amp;quot; role=&amp;quot;listitem&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:baseline;font-size:12px;margin-right:0px;font-family:Arial;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;
+        &amp;lt;p class=&amp;quot;Paragraph SCXP205983448&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;335551550&amp;quot;:1,&amp;quot;335551620&amp;quot;:1,&amp;quot;335559683&amp;quot;:0,&amp;quot;335559685&amp;quot;:360,&amp;quot;335559731&amp;quot;:-360,&amp;quot;335559737&amp;quot;:0,&amp;quot;335562764&amp;quot;:2,&amp;quot;335562765&amp;quot;:1,&amp;quot;335562766&amp;quot;:2,&amp;quot;335562767&amp;quot;:0,&amp;quot;335562768&amp;quot;:4,&amp;quot;335562769&amp;quot;:10}&amp;quot; font-style=&amp;quot;normal&amp;quot; lang=&amp;quot;EN-US&amp;quot; paraeid=&amp;quot;{86406b26-14f8-4c95-86c6-83850d470519}{102}&amp;quot; paraid=&amp;quot;0&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot; xml=&amp;quot;#DEFAULT&amp;quot;&amp;gt;
+          &amp;lt;span class=&amp;quot;NormalTextRun SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:12px;&amp;quot;&amp;gt;review 
+          funded &amp;amp; unfunded &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#MEn3sgaC48kYAjBT&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('MEn3sgaC48kYAjBT');&amp;quot;&amp;gt;applications&amp;lt;/a&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;font-size:12px;&amp;quot;&amp;gt;&amp;#8203;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+        &amp;lt;/p&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li class=&amp;quot;OutlineElement Ltr SCXP205983448&amp;quot; clear=&amp;quot;both&amp;quot; data-aria-level=&amp;quot;1&amp;quot; data-aria-posinset=&amp;quot;2&amp;quot; role=&amp;quot;listitem&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:baseline;font-size:12px;margin-right:0px;font-family:Arial;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;
+        &amp;lt;p class=&amp;quot;Paragraph SCXP205983448&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;335551550&amp;quot;:1,&amp;quot;335551620&amp;quot;:1,&amp;quot;335559683&amp;quot;:0,&amp;quot;335559685&amp;quot;:360,&amp;quot;335559731&amp;quot;:-360,&amp;quot;335559737&amp;quot;:0,&amp;quot;335562764&amp;quot;:2,&amp;quot;335562765&amp;quot;:1,&amp;quot;335562766&amp;quot;:2,&amp;quot;335562767&amp;quot;:0,&amp;quot;335562768&amp;quot;:4,&amp;quot;335562769&amp;quot;:10}&amp;quot; font-style=&amp;quot;normal&amp;quot; lang=&amp;quot;EN-US&amp;quot; paraeid=&amp;quot;{86406b26-14f8-4c95-86c6-83850d470519}{105}&amp;quot; paraid=&amp;quot;0&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot; xml=&amp;quot;#DEFAULT&amp;quot;&amp;gt;
+          &amp;lt;span class=&amp;quot;NormalTextRun SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:12px;&amp;quot;&amp;gt;&amp;nbsp; 
+          assign a percent relevance to anatomic sites and special&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:12px;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;interest 
+          categories&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;font-size:12px;&amp;quot;&amp;gt;&amp;#8203;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+        &amp;lt;/p&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li class=&amp;quot;OutlineElement Ltr SCXP205983448&amp;quot; clear=&amp;quot;both&amp;quot; data-aria-level=&amp;quot;1&amp;quot; data-aria-posinset=&amp;quot;3&amp;quot; role=&amp;quot;listitem&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:baseline;font-size:12px;margin-right:0px;font-family:Arial;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;
+        &amp;lt;p class=&amp;quot;Paragraph SCXP205983448&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;335551550&amp;quot;:1,&amp;quot;335551620&amp;quot;:1,&amp;quot;335559683&amp;quot;:0,&amp;quot;335559685&amp;quot;:360,&amp;quot;335559731&amp;quot;:-360,&amp;quot;335559737&amp;quot;:0,&amp;quot;335562764&amp;quot;:2,&amp;quot;335562765&amp;quot;:1,&amp;quot;335562766&amp;quot;:2,&amp;quot;335562767&amp;quot;:0,&amp;quot;335562768&amp;quot;:4,&amp;quot;335562769&amp;quot;:10}&amp;quot; font-style=&amp;quot;normal&amp;quot; lang=&amp;quot;EN-US&amp;quot; paraeid=&amp;quot;{86406b26-14f8-4c95-86c6-83850d470519}{108}&amp;quot; paraid=&amp;quot;0&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot; xml=&amp;quot;#DEFAULT&amp;quot;&amp;gt;
+          &amp;lt;span class=&amp;quot;NormalTextRun SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:12px;&amp;quot;&amp;gt;provide 
+          scientific information to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+          staff the broader &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;color:rgb(0, 0, 0);font-size:12px;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;community 
+          and others&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXP205983448&amp;quot; line-height=&amp;quot;0px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;font-size:12px;&amp;quot;&amp;gt;&amp;#8203;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+        &amp;lt;/p&amp;gt;
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ul&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;font size=&amp;quot;12px&amp;quot; style=&amp;quot;font-size:12px;&amp;quot;&amp;gt;&amp;nbsp; &amp;lt;/font&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;div class=&amp;quot;SCXW76477771 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;font-size:14.666666984558105px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:Calibri, sans-serif;padding-bottom:0px;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;div class=&amp;quot;ListContainerWrapper SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;
+        &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+          &amp;nbsp;
+        &amp;lt;/p&amp;gt;
+        &amp;lt;p align=&amp;quot;left&amp;quot; class=&amp;quot;Paragraph SCXW76477771 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{2669dafa-2380-49eb-8131-b525ee15d25c}{129}&amp;quot; paraid=&amp;quot;1709211486&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+          &amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;The 
+          &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');&amp;quot;&amp;gt;RAEB&amp;lt;/a&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;reviews 
+          and analyzes funded and unfunded &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#MEn3sgaC48kYAjBT&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('MEn3sgaC48kYAjBT');&amp;quot;&amp;gt;applications&amp;lt;/a&amp;gt;, 
+          assigning&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;special 
+          interest categories&amp;lt;/a&amp;gt; (&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+          codes) and&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;a 
+          percent relevance to anatomic sites&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;(&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+          codes)&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;to&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;provide&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;scientific 
+          information to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+          staff and the broader &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+          community&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;.&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;Marilyn 
+          described &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');&amp;quot;&amp;gt;RAEB&amp;lt;/a&amp;gt;&amp;#8217;s&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;history 
+          of &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#6WhOlwaC48kYAiyj&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('6WhOlwaC48kYAiyj');&amp;quot;&amp;gt;coding&amp;lt;/a&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;since&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;1958 
+          and noted that data from &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#GWX35gaFKcBauwui&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('GWX35gaFKcBauwui');&amp;quot;&amp;gt;FLARE&amp;lt;/a&amp;gt;, 
+          the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#6WhOlwaC48kYAiyj&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('6WhOlwaC48kYAiyj');&amp;quot;&amp;gt;coding&amp;lt;/a&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;IT 
+          system&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;used&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;in 
+          &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');&amp;quot;&amp;gt;RAEB&amp;lt;/a&amp;gt; 
+          since 2000 and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#DB_plwaC48kYAi20&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('DB_plwaC48kYAi20');&amp;quot;&amp;gt;RAEB 
+          online&amp;lt;/a&amp;gt; since 2015 both provide&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;input&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;for&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;i&amp;gt;ad 
+          hoc&amp;lt;/i&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;and 
+          &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');&amp;quot;&amp;gt;OBF&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');&amp;quot;&amp;gt;budget&amp;lt;/a&amp;gt; 
+          reports, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;#8217;s 
+          &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');&amp;quot;&amp;gt;I2E&amp;lt;/a&amp;gt; 
+          database, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#coBrsgaC48kYAiq2&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('coBrsgaC48kYAiq2');&amp;quot;&amp;gt;program 
+          coding&amp;lt;/a&amp;gt; tables, and the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#bZtbsgaC48kYAisp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('bZtbsgaC48kYAisp');&amp;quot;&amp;gt;DEA&amp;lt;/a&amp;gt; 
+          Annual &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#B31tsgaC48kYAikc&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('B31tsgaC48kYAikc');&amp;quot;&amp;gt;Report&amp;lt;/a&amp;gt;.&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;Data 
+          are also provided to the&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span background-image=&amp;quot;url(data:image/gif;base64,R0lGODlhBQAEAJECAP////8AAAAAAAAAACH5BAEAAAIALAAAAAAFAAQAAAIIlGAXCCHrTCgAOw==)&amp;quot; background-position=&amp;quot;left bottom&amp;quot; class=&amp;quot;SpellingError SCXW76477771 BCX4&amp;quot; style=&amp;quot;background-repeat:repeat;margin-bottom:0px;padding-top:0px;padding-right:0px;border-bottom-width:1px;margin-right:0px;border-bottom-style:solid;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;InterAgency&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;Pain 
+          Research Portfolio.&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW76477771 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot; line-height=&amp;quot;20.504166666666666px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; true=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+        &amp;lt;/p&amp;gt;
+        &amp;lt;p align=&amp;quot;left&amp;quot; class=&amp;quot;Paragraph SCXW76477771 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{2669dafa-2380-49eb-8131-b525ee15d25c}{188}&amp;quot; paraid=&amp;quot;1065101068&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+          &amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');&amp;quot;&amp;gt;RAEB&amp;lt;/a&amp;gt; 
+          has retained records (e.g., summary statemen&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;t&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;s 
+          and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');&amp;quot;&amp;gt;grant&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#MEn3sgaC48kYAjBT&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('MEn3sgaC48kYAjBT');&amp;quot;&amp;gt;applications&amp;lt;/a&amp;gt;) 
+          in archives&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;since 
+          1958&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;.&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW76477771 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot; line-height=&amp;quot;20.504166666666666px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; true=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+        &amp;lt;/p&amp;gt;
+        &amp;lt;p align=&amp;quot;left&amp;quot; class=&amp;quot;Paragraph SCXW76477771 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{2669dafa-2380-49eb-8131-b525ee15d25c}{203}&amp;quot; paraid=&amp;quot;2054747682&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+          &amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');&amp;quot;&amp;gt;RAEB&amp;lt;/a&amp;gt; 
+          uses approximately 300&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;Special 
+          Interest&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;Codes 
+          (&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt;)&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;.&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW76477771 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot; line-height=&amp;quot;20.504166666666666px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; true=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+        &amp;lt;/p&amp;gt;
+        &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+          &amp;nbsp;
+        &amp;lt;/p&amp;gt;
+        &amp;lt;p align=&amp;quot;left&amp;quot; class=&amp;quot;Paragraph SCXW76477771 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{2669dafa-2380-49eb-8131-b525ee15d25c}{216}&amp;quot; paraid=&amp;quot;1939256052&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+          &amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;Some 
+          SICs&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;are 
+          driven by a need; the SICs&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;are 
+          developed&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;as 
+          items become prevalent.&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;Some 
+          are no longer used by &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+          (e.g., AIDS Mason codes)&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;but 
+          are still coded by &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');&amp;quot;&amp;gt;RAEB&amp;lt;/a&amp;gt;. 
+          &amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW76477771 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot; line-height=&amp;quot;20.504166666666666px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; true=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+        &amp;lt;/p&amp;gt;
+        &amp;lt;p align=&amp;quot;left&amp;quot; class=&amp;quot;Paragraph SCXW76477771 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{2669dafa-2380-49eb-8131-b525ee15d25c}{238}&amp;quot; paraid=&amp;quot;665029048&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+          &amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;Definitions 
+          exist&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;but&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;are 
+          not readily accessible as a comprehensive list.&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;[They 
+          can be aggregated and Marilyn will do that for Chelsea.]&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW76477771 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot; line-height=&amp;quot;20.504166666666666px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; true=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+        &amp;lt;/p&amp;gt;
+        &amp;lt;p align=&amp;quot;left&amp;quot; class=&amp;quot;Paragraph SCXW76477771 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{2669dafa-2380-49eb-8131-b525ee15d25c}{251}&amp;quot; paraid=&amp;quot;1827755686&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+          &amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;The 
+          date a &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+          was added can be determined. That information is not currently 
+          available in a full list. &amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW76477771 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot; line-height=&amp;quot;20.504166666666666px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; true=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+        &amp;lt;/p&amp;gt;
+        &amp;lt;p align=&amp;quot;left&amp;quot; class=&amp;quot;Paragraph SCXW76477771 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{6d86e775-ed20-4736-86db-6a95f5eedceb}{3}&amp;quot; paraid=&amp;quot;42386561&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+          &amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;The 
+          hope is to update the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+          list into a &amp;#8220;21st Century&amp;#8221; list&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;to 
+          accommodate&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;shifts 
+          in research&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;(e.g., 
+          -omics&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;, 
+          provocative questions, caregiver topics&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;)&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;and 
+          sub-set areas&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;.&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW76477771 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot; line-height=&amp;quot;20.504166666666666px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; true=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+        &amp;lt;/p&amp;gt;
+        &amp;lt;p align=&amp;quot;left&amp;quot; class=&amp;quot;Paragraph SCXW76477771 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{6d86e775-ed20-4736-86db-6a95f5eedceb}{26}&amp;quot; paraid=&amp;quot;2030097375&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+          &amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');&amp;quot;&amp;gt;RAEB&amp;lt;/a&amp;gt; 
+          code&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;s&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;all 
+          incoming &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');&amp;quot;&amp;gt;grant&amp;lt;/a&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#MEn3sgaC48kYAjBT&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('MEn3sgaC48kYAjBT');&amp;quot;&amp;gt;applications&amp;lt;/a&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;by&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;reviewing 
+          and&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;applying&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt;, 
+          &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+          codes (with % relevance for &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt;) 
+          and&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#EiTOGgaC48kYAgqI&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('EiTOGgaC48kYAgqI');&amp;quot;&amp;gt;Common 
+          Scientific Outline&amp;lt;/a&amp;gt; (&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#EiTOGgaC48kYAgqI&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('EiTOGgaC48kYAgqI');&amp;quot;&amp;gt;CSO&amp;lt;/a&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;)&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;codes&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;.&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#6WhOlwaC48kYAiyj&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('6WhOlwaC48kYAiyj');&amp;quot;&amp;gt;Coding&amp;lt;/a&amp;gt; 
+          unfunded&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span background-image=&amp;quot;url(data:image/gif;base64,R0lGODlhBQAEAJECAP////8AAAAAAAAAACH5BAEAAAIALAAAAAAFAAQAAAIIlGAXCCHrTCgAOw==)&amp;quot; background-position=&amp;quot;left bottom&amp;quot; class=&amp;quot;SpellingError SCXW76477771 BCX4&amp;quot; style=&amp;quot;background-repeat:repeat;margin-bottom:0px;padding-top:0px;padding-right:0px;border-bottom-width:1px;margin-right:0px;border-bottom-style:solid;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;applicaitons&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;helps 
+          &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Y_ei2gaFKcBauwqK&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Y_ei2gaFKcBauwqK');&amp;quot;&amp;gt;program&amp;lt;/a&amp;gt; 
+          staff to calculate success rates.&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW76477771 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot; line-height=&amp;quot;20.504166666666666px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; true=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+        &amp;lt;/p&amp;gt;
+        &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+          &amp;nbsp;
+        &amp;lt;/p&amp;gt;
+        &amp;lt;p align=&amp;quot;left&amp;quot; class=&amp;quot;Paragraph SCXW76477771 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{6d86e775-ed20-4736-86db-6a95f5eedceb}{63}&amp;quot; paraid=&amp;quot;1413795412&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+          &amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#GWX35gaFKcBauwui&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('GWX35gaFKcBauwui');&amp;quot;&amp;gt;FLARE&amp;lt;/a&amp;gt; 
+          data sources include &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;#8217;s 
+          &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');&amp;quot;&amp;gt;I2E&amp;lt;/a&amp;gt; 
+          and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Y_ei2gaFKcBauwqK&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Y_ei2gaFKcBauwqK');&amp;quot;&amp;gt;Program&amp;lt;/a&amp;gt; 
+          Directors for definitions, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#ta68MgaC48kYAidX&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('ta68MgaC48kYAidX');&amp;quot;&amp;gt;IMPAC 
+          II&amp;lt;/a&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Calibri, Calibri_MSFontService, sans-serif&amp;quot; size=&amp;quot;12pt&amp;quot; style=&amp;quot;font-size:12pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;, 
+          &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#VewfsgaC48kYAjFS&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('VewfsgaC48kYAjFS');&amp;quot;&amp;gt;contract&amp;lt;/a&amp;gt; 
+          data, and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');&amp;quot;&amp;gt;RAEB&amp;lt;/a&amp;gt; 
+          data (indexing, keywords, and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#b2YXsgaC48kYAi..&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('b2YXsgaC48kYAi..');&amp;quot;&amp;gt;PI&amp;lt;/a&amp;gt; 
+          degree)&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;.&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+          and&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW76477771 BCX4&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot;&amp;gt;information 
+          are released quarterly from &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#GWX35gaFKcBauwui&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('GWX35gaFKcBauwui');&amp;quot;&amp;gt;FLARE&amp;lt;/a&amp;gt;.&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW76477771 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot; line-height=&amp;quot;20.504166666666666px&amp;quot; style=&amp;quot;margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;&amp;quot; true=&amp;quot;#DEFAULT&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+        &amp;lt;/p&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;nbsp;
+
+    &amp;lt;p align=&amp;quot;left&amp;quot; style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;text-align:left;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="60, 75, 406, 211" coords2="60, 75, 406, 211" shape="rect" alt="RAEB:Grouping" id="areadiagram_map_s5.PTpaAUrD8SBQf_default" href="ArchiMateGrouping_z5SJ2uaAUrCsuhSZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="32, 335, 275, 484" coords2="32, 335, 275, 484" shape="rect" alt="CBIIT:Grouping" id="areadiagram_map_TyJPTpaAUrD8SCoh_default" href="ArchiMateGrouping_GpLgojqAUhQsEgn8.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','32, 335, 275, 484',new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_JSOyaZaAUhQuHycY.html/CBIIT Grants ArchMate Diagram/ArchiMateDiagram'),new Array(),new Array('ArchiMateDiagram_okVQ4JaAUhQELi8s.html/CBIIT DOC-centric ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '32, 335, 275, 484'),showSubdiagramIcon('diagram', '32, 335, 275, 484'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="32, 30, 588, 249" coords2="32, 30, 588, 249" shape="rect" alt="DEA:Grouping" id="areadiagram_map_iE1PTpaAUrD8SCo8_default" href="ArchiMateGrouping_kBdCojqAUhQsEg44.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','32, 30, 588, 249',new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_S2msTpaAUrD8SD_0.html/DEA ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array('ArchiMateDiagram_D0ytMFaAUhQELlbc.html/DEA DOC-centric ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '32, 30, 588, 249'),showSubdiagramIcon('diagram', '32, 30, 588, 249'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 627, 513" coords2="2, 2, 627, 513" shape="rect" alt="NCI:Grouping" id="areadiagram_map_g29PTpaAUrD8SCpR_default" href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_F6YFLuaAUrCsujNq.html" class="ItemLink">Program Coding  : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_OOmJ2uaAUrCsuhSh.html" class="ItemLink">Flare : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#GWX35gaFKcBauwui" name="" onclick="javascript: highlightGridModelSelection('GWX35gaFKcBauwui');">Fiscal 
+      Linked Analysis of Research Emphasis</a>
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      https://<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" name="" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');">nci</a>-<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bZtbsgaC48kYAisp" name="" onclick="javascript: highlightGridModelSelection('bZtbsgaC48kYAisp');">dea</a>-flarepr.<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" name="" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');">nci</a>.<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW" name="" onclick="javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');">nih</a>.gov/indexing
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Contains
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH" name="" onclick="javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');">grants</a>
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n" name="" onclick="javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');">SIC</a> 
+      Codes
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B" name="" onclick="javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');">Site</a> 
+      Codes
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      QC Codes
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#MEn3sgaC48kYAjBT" name="" onclick="javascript: highlightGridModelSelection('MEn3sgaC48kYAjBT');">Application</a>&nbsp;<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#6WhOlwaC48kYAiyj" name="" onclick="javascript: highlightGridModelSelection('6WhOlwaC48kYAiyj');">coding</a>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/DataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/DataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateDataObject_7Tgp2uaAUrCsuhUZ.html" class="ItemLink">I2E OLTP transactional : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Contains
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#d4pyagaC48kYAgzf" name="" onclick="javascript: highlightGridModelSelection('d4pyagaC48kYAgzf');">CA</a>&nbsp;<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#_upsJwaC48kYAg2D" name="" onclick="javascript: highlightGridModelSelection('_upsJwaC48kYAg2D');">activity 
+      code</a>
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#nMTXsgaC48kYAi_a" name="" onclick="javascript: highlightGridModelSelection('nMTXsgaC48kYAi_a');">PD</a> 
+      code
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH" name="" onclick="javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');">grants</a>
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n" name="" onclick="javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');">SIC</a> 
+      Codes
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B" name="" onclick="javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');">Site</a> 
+      Codes
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_RSbWpuaAUrCsujGg.html" class="ItemLink">Programs : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_T0LJ2uaAUrCsuhTf.html" class="ItemLink">Program Coding Module : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_z5SJ2uaAUrCsuhSZ.html" class="ItemLink">RAEB : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;">
+    <div class="OutlineElement Ltr SCXP205983448" clear="both" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:rgb(96, 96, 96);font-weight:normal;padding-top:0px;font-size:19.733333587646484px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:Arial;padding-bottom:0px;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <p class="Paragraph SCXP205983448" data-ccp-props="{&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559683&quot;:0,&quot;335559685&quot;:360,&quot;335559731&quot;:-360,&quot;335559737&quot;:0,&quot;335562764&quot;:2,&quot;335562765&quot;:1,&quot;335562766&quot;:2,&quot;335562767&quot;:0,&quot;335562768&quot;:4,&quot;335562769&quot;:10}" font-style="normal" lang="EN-US" paraeid="{86406b26-14f8-4c95-86c6-83850d470519}{87}" paraid="0" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;text-align:left;" text-indent="-18.5px" xml="#DEFAULT">
+        <span class="NormalTextRun SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="color:rgb(0, 0, 0);font-size:12px;">The 
+        Research Analysis and Evaluation Branch</font></span><span class="EOP SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="font-size:12px;">&#8203;</font></span>
+      </p>
+    </div>
+    <div class="OutlineElement Ltr SCXP205983448" clear="both" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:rgb(96, 96, 96);font-weight:normal;padding-top:0px;font-size:19.733333587646484px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:Arial;padding-bottom:0px;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <p class="Paragraph SCXP205983448" data-ccp-props="{&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559683&quot;:0,&quot;335559685&quot;:360,&quot;335559731&quot;:-360,&quot;335559737&quot;:0,&quot;335562764&quot;:2,&quot;335562765&quot;:1,&quot;335562766&quot;:2,&quot;335562767&quot;:0,&quot;335562768&quot;:4,&quot;335562769&quot;:10}" font-style="normal" lang="EN-US" paraeid="{86406b26-14f8-4c95-86c6-83850d470519}{90}" paraid="0" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;text-align:left;" text-indent="-18.5px" xml="#DEFAULT">
+        <span class="NormalTextRun SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="color:rgb(0, 0, 0);font-size:12px;">Contact 
+        for scientific information on <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" name="" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');">NCI</a>-supported</font></span><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="color:rgb(0, 0, 0);font-size:12px;"><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">research</span></font><span class="EOP SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="font-size:12px;">&#8203;</font></span>
+      </p>
+    </div>
+    <div class="OutlineElement EmptyListItem Ltr SCXP205983448" clear="both" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:rgb(96, 96, 96);font-weight:normal;padding-top:0px;font-size:19.733333587646484px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:Arial;padding-bottom:0px;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <p class="Paragraph SCXP205983448" data-ccp-props="{&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559683&quot;:0,&quot;335559685&quot;:360,&quot;335559731&quot;:-360,&quot;335559737&quot;:0,&quot;335562764&quot;:2,&quot;335562765&quot;:1,&quot;335562766&quot;:2,&quot;335562767&quot;:0,&quot;335562768&quot;:4,&quot;335562769&quot;:10}" font-style="normal" lang="EN-US" paraeid="{86406b26-14f8-4c95-86c6-83850d470519}{93}" paraid="0" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;text-align:left;" text-indent="-18.5px" xml="#DEFAULT">
+        <span class="EOP SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="font-size:12px;">&#8203;</font></span>
+      </p>
+    </div>
+    <div class="OutlineElement Ltr SCXP205983448" clear="both" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:rgb(96, 96, 96);font-weight:normal;padding-top:0px;font-size:19.733333587646484px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:Arial;padding-bottom:0px;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <p class="Paragraph SCXP205983448" data-ccp-props="{&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559683&quot;:0,&quot;335559685&quot;:360,&quot;335559731&quot;:-360,&quot;335559737&quot;:0,&quot;335562764&quot;:2,&quot;335562765&quot;:1,&quot;335562766&quot;:2,&quot;335562767&quot;:0,&quot;335562768&quot;:4,&quot;335562769&quot;:10}" font-style="normal" lang="EN-US" paraeid="{86406b26-14f8-4c95-86c6-83850d470519}{96}" paraid="0" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;text-align:left;" text-indent="-18.5px" xml="#DEFAULT">
+        <span class="NormalTextRun SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="color:rgb(0, 0, 0);font-size:12px;">provide 
+        quick, accurate, reliable cancer research information&nbsp;</font></span><span class="EOP SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="font-size:12px;">&#8203;</font></span>
+      </p>
+    </div>
+    <div class="OutlineElement EmptyListItem Ltr SCXP205983448" clear="both" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:rgb(96, 96, 96);font-weight:normal;padding-top:0px;font-size:19.733333587646484px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:Arial;padding-bottom:0px;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <p class="Paragraph SCXP205983448" data-ccp-props="{&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559683&quot;:0,&quot;335559685&quot;:360,&quot;335559731&quot;:-360,&quot;335559737&quot;:0,&quot;335562764&quot;:2,&quot;335562765&quot;:1,&quot;335562766&quot;:2,&quot;335562767&quot;:0,&quot;335562768&quot;:4,&quot;335562769&quot;:10}" font-style="normal" lang="EN-US" paraeid="{86406b26-14f8-4c95-86c6-83850d470519}{99}" paraid="0" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;text-align:left;" text-indent="-18.5px" xml="#DEFAULT">
+        <span class="EOP SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="font-size:12px;">&#8203;</font></span>
+      </p>
+    </div>
+    <ul class="BulletListStyle1 SCXP205983448" font-style="normal" letter-spacing="normal" role="list" style="margin-bottom:0px;color:rgb(96, 96, 96);font-weight:normal;padding-top:0px;font-size:19.733333587646484px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:verdana;padding-bottom:0px;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <li class="OutlineElement Ltr SCXP205983448" clear="both" data-aria-level="1" data-aria-posinset="1" role="listitem" style="margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:baseline;font-size:12px;margin-right:0px;font-family:Arial;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;">
+        <p class="Paragraph SCXP205983448" data-ccp-props="{&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559683&quot;:0,&quot;335559685&quot;:360,&quot;335559731&quot;:-360,&quot;335559737&quot;:0,&quot;335562764&quot;:2,&quot;335562765&quot;:1,&quot;335562766&quot;:2,&quot;335562767&quot;:0,&quot;335562768&quot;:4,&quot;335562769&quot;:10}" font-style="normal" lang="EN-US" paraeid="{86406b26-14f8-4c95-86c6-83850d470519}{102}" paraid="0" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;text-align:left;" text-indent="0px" xml="#DEFAULT">
+          <span class="NormalTextRun SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="color:rgb(0, 0, 0);font-size:12px;">review 
+          funded &amp; unfunded <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#MEn3sgaC48kYAjBT" name="" onclick="javascript: highlightGridModelSelection('MEn3sgaC48kYAjBT');">applications</a></font></span><span class="EOP SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="font-size:12px;">&#8203;</font></span>
+        </p>
+      </li>
+      <li class="OutlineElement Ltr SCXP205983448" clear="both" data-aria-level="1" data-aria-posinset="2" role="listitem" style="margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:baseline;font-size:12px;margin-right:0px;font-family:Arial;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;">
+        <p class="Paragraph SCXP205983448" data-ccp-props="{&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559683&quot;:0,&quot;335559685&quot;:360,&quot;335559731&quot;:-360,&quot;335559737&quot;:0,&quot;335562764&quot;:2,&quot;335562765&quot;:1,&quot;335562766&quot;:2,&quot;335562767&quot;:0,&quot;335562768&quot;:4,&quot;335562769&quot;:10}" font-style="normal" lang="EN-US" paraeid="{86406b26-14f8-4c95-86c6-83850d470519}{105}" paraid="0" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;text-align:left;" text-indent="0px" xml="#DEFAULT">
+          <span class="NormalTextRun SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="color:rgb(0, 0, 0);font-size:12px;">&nbsp; 
+          assign a percent relevance to anatomic sites and special</font></span><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="color:rgb(0, 0, 0);font-size:12px;"><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">interest 
+          categories</span></font><span class="EOP SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="font-size:12px;">&#8203;</font></span>
+        </p>
+      </li>
+      <li class="OutlineElement Ltr SCXP205983448" clear="both" data-aria-level="1" data-aria-posinset="3" role="listitem" style="margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:baseline;font-size:12px;margin-right:0px;font-family:Arial;padding-left:0px;margin-left:18.5px;margin-top:0px;padding-bottom:0px;">
+        <p class="Paragraph SCXP205983448" data-ccp-props="{&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559683&quot;:0,&quot;335559685&quot;:360,&quot;335559731&quot;:-360,&quot;335559737&quot;:0,&quot;335562764&quot;:2,&quot;335562765&quot;:1,&quot;335562766&quot;:2,&quot;335562767&quot;:0,&quot;335562768&quot;:4,&quot;335562769&quot;:10}" font-style="normal" lang="EN-US" paraeid="{86406b26-14f8-4c95-86c6-83850d470519}{108}" paraid="0" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;text-align:left;" text-indent="0px" xml="#DEFAULT">
+          <span class="NormalTextRun SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="color:rgb(0, 0, 0);font-size:12px;">provide 
+          scientific information to <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" name="" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');">NCI</a> 
+          staff the broader <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW" name="" onclick="javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');">NIH</a></font></span><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="color:rgb(0, 0, 0);font-size:12px;"><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;vertical-align:1.0833333333333357px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">community 
+          and others&nbsp;</span></font><span class="EOP SCXP205983448" line-height="0px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12px;margin-right:0px;font-family:Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Arial, Arial_MSFontService, ＭＳ Ｐゴシック, SapientCentroSlab-Light, sans-serif" size="12px" style="font-size:12px;">&#8203;</font></span>
+        </p>
+      </li>
+    </ul>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <font size="12px" style="font-size:12px;">&nbsp; </font>
+    </p>
+    <div class="SCXW76477771 BCX4" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;font-size:14.666666984558105px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-right:0px;font-family:Calibri, sans-serif;padding-bottom:0px;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <div class="ListContainerWrapper SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">
+        <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+          &nbsp;
+        </p>
+        <p align="left" class="Paragraph SCXW76477771 BCX4" font-style="normal" paraeid="{2669dafa-2380-49eb-8131-b525ee15d25c}{129}" paraid="1709211486" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" text-indent="0px">
+          <span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;">The 
+          <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0" name="" onclick="javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');">RAEB</a></font></span><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;"><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">reviews 
+          and analyzes funded and unfunded <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#MEn3sgaC48kYAjBT" name="" onclick="javascript: highlightGridModelSelection('MEn3sgaC48kYAjBT');">applications</a>, 
+          assigning</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n" name="" onclick="javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');">special 
+          interest categories</a> (<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n" name="" onclick="javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');">SIC</a> 
+          codes) and</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">a 
+          percent relevance to anatomic sites</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">(<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B" name="" onclick="javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');">SITE</a> 
+          codes)</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">to</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">provide</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">scientific 
+          information to <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" name="" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');">NCI</a> 
+          staff and the broader <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW" name="" onclick="javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');">NIH</a> 
+          community</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">.</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">Marilyn 
+          described <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0" name="" onclick="javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');">RAEB</a>&#8217;s</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">history 
+          of <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#6WhOlwaC48kYAiyj" name="" onclick="javascript: highlightGridModelSelection('6WhOlwaC48kYAiyj');">coding</a></span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">since</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">1958 
+          and noted that data from <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#GWX35gaFKcBauwui" name="" onclick="javascript: highlightGridModelSelection('GWX35gaFKcBauwui');">FLARE</a>, 
+          the <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#6WhOlwaC48kYAiyj" name="" onclick="javascript: highlightGridModelSelection('6WhOlwaC48kYAiyj');">coding</a></span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">IT 
+          system</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">used</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">in 
+          <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0" name="" onclick="javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');">RAEB</a> 
+          since 2000 and <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#DB_plwaC48kYAi20" name="" onclick="javascript: highlightGridModelSelection('DB_plwaC48kYAi20');">RAEB 
+          online</a> since 2015 both provide</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">input</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">for</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><i>ad 
+          hoc</i></span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">and 
+          <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" name="" onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');">OBF</a>&nbsp;<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp" name="" onclick="javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');">budget</a> 
+          reports, <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" name="" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');">NCI</a>&#8217;s 
+          <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn" name="" onclick="javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');">I2E</a> 
+          database, <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#coBrsgaC48kYAiq2" name="" onclick="javascript: highlightGridModelSelection('coBrsgaC48kYAiq2');">program 
+          coding</a> tables, and the <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bZtbsgaC48kYAisp" name="" onclick="javascript: highlightGridModelSelection('bZtbsgaC48kYAisp');">DEA</a> 
+          Annual <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#B31tsgaC48kYAikc" name="" onclick="javascript: highlightGridModelSelection('B31tsgaC48kYAikc');">Report</a>.</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">Data 
+          are also provided to the</span><span class="Apple-converted-space">&nbsp;</span><span background-image="url(data:image/gif;base64,R0lGODlhBQAEAJECAP////8AAAAAAAAAACH5BAEAAAIALAAAAAAFAAQAAAIIlGAXCCHrTCgAOw==)" background-position="left bottom" class="SpellingError SCXW76477771 BCX4" style="background-repeat:repeat;margin-bottom:0px;padding-top:0px;padding-right:0px;border-bottom-width:1px;margin-right:0px;border-bottom-style:solid;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">InterAgency</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">Pain 
+          Research Portfolio.</span><span class="EOP SCXW76477771 BCX4" data-ccp-props="{" line-height="20.504166666666666px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" true="#DEFAULT">&nbsp;</span></font>
+        </p>
+        <p align="left" class="Paragraph SCXW76477771 BCX4" font-style="normal" paraeid="{2669dafa-2380-49eb-8131-b525ee15d25c}{188}" paraid="1065101068" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" text-indent="0px">
+          <span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;"><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0" name="" onclick="javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');">RAEB</a> 
+          has retained records (e.g., summary statemen</font></span><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;"><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">t</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">s 
+          and <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH" name="" onclick="javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');">grant</a>&nbsp;<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#MEn3sgaC48kYAjBT" name="" onclick="javascript: highlightGridModelSelection('MEn3sgaC48kYAjBT');">applications</a>) 
+          in archives</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">since 
+          1958</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">.&nbsp;</span><span class="EOP SCXW76477771 BCX4" data-ccp-props="{" line-height="20.504166666666666px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" true="#DEFAULT">&nbsp;</span></font>
+        </p>
+        <p align="left" class="Paragraph SCXW76477771 BCX4" font-style="normal" paraeid="{2669dafa-2380-49eb-8131-b525ee15d25c}{203}" paraid="2054747682" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" text-indent="0px">
+          <span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;"><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0" name="" onclick="javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');">RAEB</a> 
+          uses approximately 300</font></span><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;"><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">Special 
+          Interest</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">Codes 
+          (<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n" name="" onclick="javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');">SIC</a>)</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">.&nbsp;</span><span class="EOP SCXW76477771 BCX4" data-ccp-props="{" line-height="20.504166666666666px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" true="#DEFAULT">&nbsp;</span></font>
+        </p>
+        <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+          &nbsp;
+        </p>
+        <p align="left" class="Paragraph SCXW76477771 BCX4" font-style="normal" paraeid="{2669dafa-2380-49eb-8131-b525ee15d25c}{216}" paraid="1939256052" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" text-indent="0px">
+          <span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;">Some 
+          SICs</font></span><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;"><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">are 
+          driven by a need; the SICs</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">are 
+          developed</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">as 
+          items become prevalent.</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">Some 
+          are no longer used by <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW" name="" onclick="javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');">NIH</a> 
+          (e.g., AIDS Mason codes)</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">but 
+          are still coded by <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0" name="" onclick="javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');">RAEB</a>. 
+          </span><span class="EOP SCXW76477771 BCX4" data-ccp-props="{" line-height="20.504166666666666px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" true="#DEFAULT">&nbsp;</span></font>
+        </p>
+        <p align="left" class="Paragraph SCXW76477771 BCX4" font-style="normal" paraeid="{2669dafa-2380-49eb-8131-b525ee15d25c}{238}" paraid="665029048" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" text-indent="0px">
+          <span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;">Definitions 
+          exist</font></span><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;"><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">but</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">are 
+          not readily accessible as a comprehensive list.</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">[They 
+          can be aggregated and Marilyn will do that for Chelsea.]</span><span class="EOP SCXW76477771 BCX4" data-ccp-props="{" line-height="20.504166666666666px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" true="#DEFAULT">&nbsp;</span></font>
+        </p>
+        <p align="left" class="Paragraph SCXW76477771 BCX4" font-style="normal" paraeid="{2669dafa-2380-49eb-8131-b525ee15d25c}{251}" paraid="1827755686" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" text-indent="0px">
+          <span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;">The 
+          date a <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n" name="" onclick="javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');">SIC</a> 
+          was added can be determined. That information is not currently 
+          available in a full list. </font></span><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;"><span class="EOP SCXW76477771 BCX4" data-ccp-props="{" line-height="20.504166666666666px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" true="#DEFAULT">&nbsp;</span></font>
+        </p>
+        <p align="left" class="Paragraph SCXW76477771 BCX4" font-style="normal" paraeid="{6d86e775-ed20-4736-86db-6a95f5eedceb}{3}" paraid="42386561" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" text-indent="0px">
+          <span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;">The 
+          hope is to update the <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n" name="" onclick="javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');">SIC</a> 
+          list into a &#8220;21st Century&#8221; list</font></span><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;"><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">to 
+          accommodate</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">shifts 
+          in research</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">(e.g., 
+          -omics</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">, 
+          provocative questions, caregiver topics</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">)</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">and 
+          sub-set areas</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">.</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">&nbsp;</span><span class="EOP SCXW76477771 BCX4" data-ccp-props="{" line-height="20.504166666666666px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" true="#DEFAULT">&nbsp;</span></font>
+        </p>
+        <p align="left" class="Paragraph SCXW76477771 BCX4" font-style="normal" paraeid="{6d86e775-ed20-4736-86db-6a95f5eedceb}{26}" paraid="2030097375" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" text-indent="0px">
+          <span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;"><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0" name="" onclick="javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');">RAEB</a> 
+          code</font></span><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;"><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">s</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">all 
+          incoming <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH" name="" onclick="javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');">grant</a></span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#MEn3sgaC48kYAjBT" name="" onclick="javascript: highlightGridModelSelection('MEn3sgaC48kYAjBT');">applications</a></span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">by</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">reviewing 
+          and</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">applying</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n" name="" onclick="javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');">SIC</a>, 
+          <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B" name="" onclick="javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');">SITE</a> 
+          codes (with % relevance for <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B" name="" onclick="javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');">SITE</a>) 
+          and</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#EiTOGgaC48kYAgqI" name="" onclick="javascript: highlightGridModelSelection('EiTOGgaC48kYAgqI');">Common 
+          Scientific Outline</a> (</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#EiTOGgaC48kYAgqI" name="" onclick="javascript: highlightGridModelSelection('EiTOGgaC48kYAgqI');">CSO</a></span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">)</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">codes</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">.</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#6WhOlwaC48kYAiyj" name="" onclick="javascript: highlightGridModelSelection('6WhOlwaC48kYAiyj');">Coding</a> 
+          unfunded</span><span class="Apple-converted-space">&nbsp;</span><span background-image="url(data:image/gif;base64,R0lGODlhBQAEAJECAP////8AAAAAAAAAACH5BAEAAAIALAAAAAAFAAQAAAIIlGAXCCHrTCgAOw==)" background-position="left bottom" class="SpellingError SCXW76477771 BCX4" style="background-repeat:repeat;margin-bottom:0px;padding-top:0px;padding-right:0px;border-bottom-width:1px;margin-right:0px;border-bottom-style:solid;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">applicaitons</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">helps 
+          <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Y_ei2gaFKcBauwqK" name="" onclick="javascript: highlightGridModelSelection('Y_ei2gaFKcBauwqK');">program</a> 
+          staff to calculate success rates.</span><span class="EOP SCXW76477771 BCX4" data-ccp-props="{" line-height="20.504166666666666px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" true="#DEFAULT">&nbsp;</span></font>
+        </p>
+        <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+          &nbsp;
+        </p>
+        <p align="left" class="Paragraph SCXW76477771 BCX4" font-style="normal" paraeid="{6d86e775-ed20-4736-86db-6a95f5eedceb}{63}" paraid="1413795412" style="margin-bottom:0px;color:black;font-weight:normal;padding-top:0px;padding-right:0px;vertical-align:baseline;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" text-indent="0px">
+          <span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;"><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#GWX35gaFKcBauwui" name="" onclick="javascript: highlightGridModelSelection('GWX35gaFKcBauwui');">FLARE</a> 
+          data sources include <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" name="" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');">NCI</a>&#8217;s 
+          <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn" name="" onclick="javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');">I2E</a> 
+          and <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Y_ei2gaFKcBauwqK" name="" onclick="javascript: highlightGridModelSelection('Y_ei2gaFKcBauwqK');">Program</a> 
+          Directors for definitions, <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#ta68MgaC48kYAidX" name="" onclick="javascript: highlightGridModelSelection('ta68MgaC48kYAidX');">IMPAC 
+          II</a></font></span><font face="Calibri, Calibri_MSFontService, sans-serif" size="12pt" style="font-size:12pt;"><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">, 
+          <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#VewfsgaC48kYAjFS" name="" onclick="javascript: highlightGridModelSelection('VewfsgaC48kYAjFS');">contract</a> 
+          data, and <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0" name="" onclick="javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');">RAEB</a> 
+          data (indexing, keywords, and <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#b2YXsgaC48kYAi.." name="" onclick="javascript: highlightGridModelSelection('b2YXsgaC48kYAi..');">PI</a> 
+          degree)</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">.</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#AAI4FwaC48kYAn7n" name="" onclick="javascript: highlightGridModelSelection('AAI4FwaC48kYAn7n');">SIC</a> 
+          and</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;"><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#gPlYFwaC48kYAn7B" name="" onclick="javascript: highlightGridModelSelection('gPlYFwaC48kYAn7B');">SITE</a></span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW76477771 BCX4" style="margin-bottom:0px;padding-top:0px;padding-right:0px;margin-right:0px;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;">information 
+          are released quarterly from <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#GWX35gaFKcBauwui" name="" onclick="javascript: highlightGridModelSelection('GWX35gaFKcBauwui');">FLARE</a>.</span><span class="EOP SCXW76477771 BCX4" data-ccp-props="{" line-height="20.504166666666666px" style="margin-bottom:0px;padding-top:0px;padding-right:0px;font-size:12pt;margin-right:0px;font-family:Calibri, Calibri_MSFontService, sans-serif;padding-left:0px;margin-left:0px;margin-top:0px;padding-bottom:0px;" true="#DEFAULT">&nbsp;</span></font>
+        </p>
+      </div>
+    </div>
+    &nbsp;
+
+    <p align="left" style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;text-align:left;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_GpLgojqAUhQsEgn8.html" class="ItemLink">CBIIT : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_kBdCojqAUhQsEg44.html" class="ItemLink">DEA : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" class="ItemLink">NCI : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+</body>
+</html>

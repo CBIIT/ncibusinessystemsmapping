@@ -1,0 +1,400 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Grid - Glossary Grid</title>
+	<META name="Description" content="This system provides NCI's Office of HIV and AIDS Malignancy office with an online mechanism to capture Non-Grants (contract/intramural/RMS) information related to AIDS."/>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="Model_eWw1mEaAU8kMbBLX.html" class="PageParentTitle">Glossary : Model</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Grid - Glossary Grid		</span>
+<a onclick="javascript: showVpLink('ETL.vpp://diagram/vxItmEaAU8kMbBMx', 'Glossary Grid\nETL.vpp://diagram/vxItmEaAU8kMbBMx', 'Glossary Grid', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<p>
+	</p>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+Configuration			</td>
+		</tr>
+		<tr>
+			<td class="TableCellSpaceHolder5PxTall">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="25%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Value</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Model Element</span>			</td>
+			<td>
+			</td>
+			<td>
+				<div class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Term.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Term.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <span style="line-height: 18px">Term</span>				</div>
+			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Scope</span>			</td>
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Project</span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Includes Referenced Projects</span>			</td>
+			<td>
+			</td>
+			<td>
+<span class="TableContent">true</span>			</td>
+		</tr>
+	</table>
+	<p>
+	</p>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+Terms			</td>
+		</tr>
+		<tr>
+			<td class="TableCellSpaceHolder5PxTall">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+		</tr>
+		<tr>
+			<td class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr id="modelSelection0_9LiUaAUhQCoQem" class="TableRow1">
+		</tr>
+		<tr id="modelSelection0g74WEaAUhQCoQ1e" class="TableRow2">
+		</tr>
+		<tr id="modelSelection0wOEWEaAUhQCoQ3N" class="TableRow1">
+		</tr>
+		<tr id="modelSelection1xV4WEaAUhQCoQ0m" class="TableRow2">
+		</tr>
+		<tr id="modelSelection4X5FCUaAUhQCoQkM" class="TableRow1">
+		</tr>
+		<tr id="modelSelection5K37iUaAUhQCoQmd" class="TableRow2">
+		</tr>
+		<tr id="modelSelection5QUXiUaAUhQCoQs." class="TableRow1">
+		</tr>
+		<tr id="modelSelection5d9LiUaAUhQCoQeW" class="TableRow2">
+		</tr>
+		<tr id="modelSelection5paFCUaAUhQCoQjg" class="TableRow1">
+		</tr>
+		<tr id="modelSelection6DGXiUaAUhQCoQtn" class="TableRow2">
+		</tr>
+		<tr id="modelSelection8Fd7iUaAUhQCoQl8" class="TableRow1">
+		</tr>
+		<tr id="modelSelection9ViEWEaAUhQCoQ2w" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionADT7iUaAUhQCoQmF" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionAef5CUaAUhQCoQiQ" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionAmeEWEaAUhQCoQ3d" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionArrFCUaAUhQCoQk0" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionDnZXiUaAUhQCoQuH" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionH3VXiUaAUhQCoQuP" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionHOwXiUaAUhQCoQsd" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionJLeXiUaAUhQCoQt3" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionJV6km0aAUrBayF3r" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionK03FCUaAUhQCoQk8" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionKZjXiUaAUhQCoQun" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionOZlFCUaAUhQCoQkU" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionPh9FCUaAUhQCoQkk" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionPivviUaAUhQCoQ0A" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionQ2MfiUaAUhQCoQ1M" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionQ8l4WEaAUhQCoQ0i" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionQIsXiUaAUhQCoQtH" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionQZnviUaAUhQCoQz4" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionRGDLiUaAUhQCoQe." class="TableRow1">
+		</tr>
+		<tr id="modelSelectionS8yXiUaAUhQCoQtX" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionUU8XiUaAUhQCoQtP" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionWFwfiUaAUhQCoQ0h" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionWG9LiUaAUhQCoQeF" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionWT14WEaAUhQCoQ0u" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionXqEFCUaAUhQCoQiu" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionZ3cEWEaAUhQCoQ2o" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionZSt4WEaAUhQCoQ02" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionZgr7iUaAUhQCoQmN" class="TableRow2">
+		</tr>
+		<tr id="modelSelection_oAHiUaAUhQCoQml" class="TableRow1">
+		</tr>
+		<tr id="modelSelectiona7eFCUaAUhQCoQj1" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionaUi4WEaAUhQCoQ0N" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionbw7viUaAUhQCoQzw" class="TableRow2">
+		</tr>
+		<tr id="modelSelectioncCH7iUaAUhQCoQmV" class="TableRow1">
+		</tr>
+		<tr id="modelSelectioncKkEWEaAUhQCoQ2Y" class="TableRow2">
+		</tr>
+		<tr id="modelSelectioncOOFCUaAUhQCoQjo" class="TableRow1">
+		</tr>
+		<tr id="modelSelectiondMmEWEaAUhQCoQ3J" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionfL0EWEaAUhQCoQ2g" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionfPj4WEaAUhQCoQ1G" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionfb9LiUaAUhQCoQee" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionfhhXiUaAUhQCoQt_" class="TableRow2">
+		</tr>
+		<tr id="modelSelectiongd7YWEaAUhQCoQzS" class="TableRow1">
+		</tr>
+		<tr id="modelSelectioniMi5CUaAUhQCoQhx" class="TableRow2">
+		</tr>
+		<tr id="modelSelectioniPtXiUaAUhQCoQuX" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionj_1FCUaAUhQCoQkc" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionjbxFCUaAUhQCoQkD" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionjvgEWEaAUhQCoQ2U" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionk6jFCUaAUhQCoQks" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionkFYfiUaAUhQCoQ0v" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionmxzviUaAUhQCoQzn" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionnYDLiUaAUhQCoQeu" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionoTL4WEaAUhQCoQ1W" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionq5X4WEaAUhQCoQ1m" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionqfnYWEaAUhQCoQzX" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionr8DLiUaAUhQCoQe2" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionrs9XiUaAUhQCoQuf" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionryuEWEaAUhQCoQ3V" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionu1SFCUaAUhQCoQjc" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionunaXiUaAUhQCoQtf" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionwZ9LiUaAUhQCoQeO" class="TableRow1">
+		</tr>
+		<tr id="modelSelectionxwz4WEaAUhQCoQ1O" class="TableRow2">
+		</tr>
+		<tr id="modelSelectionzRd4WEaAUhQCoQ0." class="TableRow1">
+		</tr>
+		<tr id="modelSelectionziWXiUaAUhQCoQtv" class="TableRow2">
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<p>
+	</p>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+</body>
+</html>

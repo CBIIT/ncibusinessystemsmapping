@@ -1,0 +1,510 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - My Dashboard ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_IN4IjoaAUhQsPklM.html" class="PageParentTitle">NCIConnect : Application Component</a> (in <a href="ArchiMateDiagram_IN4IjoaAUhQsPklM.html" class="PageParentTitle">HR Systems diagram</a> / <a href="ArchiMateDiagram__mJ_fUaAUhQsMaqL.html" class="PageParentTitle">Beacon ArchiMate Diagram</a> / <a href="ArchiMateDiagram_KCte8saAUrCskEtq.html" class="PageParentTitle">ITRC</a> / <a href="ArchiMateDiagram_meSSf8aAUhQsGDTU.html" class="PageParentTitle">Business Systems Archimate Diagram</a>)<span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="ArchiMateDiagram_q2zSwcaAUrAeqTZn.html" class="PageParentTitle">My Dashboard : Application Component</a> (in <a href="ArchiMateDiagram_q2zSwcaAUrAeqTZn.html" class="PageParentTitle">ITRC Buisness Intelligence ArchiMate Diagram</a> / <a href="ArchiMateDiagram_5q_kZuaAUhQA0hxJ.html" class="PageParentTitle">My Dashboard ArchiMate Diagram</a> / <a href="ArchiMateDiagram_WEZpo5aAUhQELmXq.html" class="PageParentTitle">ITRC DOC-centric ArchiMate Diagram</a> / <a href="ArchiMateDiagram_2w854MaAUrAy_BJ2.html" class="PageParentTitle">NCI Business Applications Archimate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - My Dashboard ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/5q.kZuaAUhQA0hxJ', 'My Dashboard ArchiMate Diagram\nNCI Buisness Architecture.vpp://diagram/5q.kZuaAUhQA0hxJ', 'My Dashboard ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|376.0|342.0|186.0|40.0|ArchiMateDataObject_SM_jdBaAUhQELsJN.html|ArchiMateDataObject_SM_jdBaAUhQELsJN.html|FAEYEFaGAqAAHEEt" id="optionFAEYEFaGAqAAHEEt">NCiConnect SharePoint Database : Data Object</option>
+<option value="shape|721.0|334.0|90.0|40.0|ArchiMateDataObject_trbsshaGAqAAHFc6.html|ArchiMateDataObject_trbsshaGAqAAHFc6.html|KA_oEFaGAqAAHED_" id="optionKA_oEFaGAqAAHED_">NCIDB-P180-v : Data Object</option>
+<option value="shape|204.0|52.0|179.0|40.0|ArchiMateApplicationComponent_jqKHDJaAUrBCTMlK.html|ArchiMateApplicationComponent_jqKHDJaAUrBCTMlK.html|3Yfde5aAUhQELtg9" id="option3Yfde5aAUhQELtg9">Active Directory : Application Component</option>
+<option value="shape|2.0|2.0|1252.0|140.0|ArchiMateGrouping_Pjem2UaAUhQsGoBP.html|ArchiMateGrouping_Pjem2UaAUhQsGoBP.html|x6Nde5aAUhQELtb_" id="optionx6Nde5aAUhQELtb_">NIH : Grouping</option>
+<option value="shape|885.0|459.0|168.0|40.0|ArchiMateBusinessActor_ObyUZuaAUhQA0hzK.html|ArchiMateBusinessActor_ObyUZuaAUhQA0hzK.html|2byUZuaAUhQA0hzJ" id="option2byUZuaAUhQA0hzJ">Manual Entry Online Forms : Business Actor</option>
+<option value="shape|227.0|342.0|112.0|40.0|ArchiMateApplicationComponent_BS7EZuaAUhQA0hpi.html|ArchiMateApplicationComponent_BS7EZuaAUhQA0hpi.html|z0DkZuaAUhQA0hxX" id="optionz0DkZuaAUhQA0hxX">My Dashboard : Application Component</option>
+<option value="shape|166.0|315.0|418.0|95.0|ArchiMateApplicationComponent_cdY6zsaAUrAeqTWm.html|ArchiMateApplicationComponent_cdY6zsaAUrAeqTWm.html|JpAUZuaAUhQA0hyL" id="optionJpAUZuaAUhQA0hyL">SharePoint : Application Component</option>
+<option value="shape|893.0|335.0|96.0|40.0|ArchiMateApplicationComponent_uNc6zsaAUrAeqTbj.html|ArchiMateApplicationComponent_uNc6zsaAUrAeqTbj.html|FVTkZuaAUhQA0hxj" id="optionFVTkZuaAUhQA0hxj">K2 : Application Component</option>
+<option value="shape|50.0|272.0|1110.0|163.0|ArchiMateGrouping_XhZbI2aAUrD2Qp6B.html|ArchiMateGrouping_XhZbI2aAUrD2Qp6B.html|4sTte5aAUhQELtWu" id="option4sTte5aAUhQELtWu">NCiConnect : Grouping</option>
+<option value="shape|32.0|226.0|1153.0|289.0|ArchiMateGrouping_Xp0kojqAUhQsEgtP.html|ArchiMateGrouping_Xp0kojqAUhQsEgtP.html|J0H0ZuaAUhQA0h00" id="optionJ0H0ZuaAUhQA0h00">ITRC : Grouping</option>
+<option value="shape|2.0|168.0|1252.0|417.0|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|8uyde5aAUhQELtYg" id="option8uyde5aAUhQELtYg">NCI : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/My_Dashboard_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="1258" height="589"/>
+					<map name="diagram_map">
+<area coords="55,274,118,288" coords2="55,274,118,288" shape="rect" alt="NCiConnect" href="GridDiagram_5GBJ6waAUJUCAjP0.html#5QUXiUaAUhQCoQs." onclick="javascript: highlightGridModelSelection('5QUXiUaAUhQCoQs.');"/>
+<area coords="361,319,417,333" coords2="361,319,417,333" shape="rect" alt="SharePoint" href="GridDiagram_5GBJ6waAUJUCAjP0.html#6DGXiUaAUhQCoQtn" onclick="javascript: highlightGridModelSelection('6DGXiUaAUhQCoQtn');"/>
+<area coords="380,360,443,374" coords2="380,360,443,374" shape="rect" alt="NCiConnect" href="GridDiagram_5GBJ6waAUJUCAjP0.html#5QUXiUaAUhQCoQs." onclick="javascript: highlightGridModelSelection('5QUXiUaAUhQCoQs.');"/>
+<area coords="446,360,502,374" coords2="446,360,502,374" shape="rect" alt="SharePoint" href="GridDiagram_5GBJ6waAUJUCAjP0.html#6DGXiUaAUhQCoQtn" onclick="javascript: highlightGridModelSelection('6DGXiUaAUhQCoQtn');"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Manual online forms are entered into K2
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="948.0, 375.0, 948.0, 459.0, 962.0, 459.0, 962.0, 375.0" coords2="948.0, 375.0, 948.0, 459.0, 962.0, 459.0, 962.0, 375.0" shape="poly" alt="Actor to K2:Flow" id="areadiagram_map_k5pUZuaAUhQA0hzn_default" href="ArchiMateFlow_I5pUZuaAUhQA0hzm.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="313.0, 92.0, 313.0, 155.0, 310.0, 155.0, 310.0, 169.0, 313.0, 169.0, 313.0, 172.0, 327.0, 172.0, 327.0, 169.0, 947.0, 169.0, 947.0, 335.0, 961.0, 335.0, 961.0, 169.0, 964.0, 169.0, 964.0, 155.0, 961.0, 155.0, 961.0, 152.0, 947.0, 152.0, 947.0, 155.0, 327.0, 155.0, 327.0, 92.0" coords2="313.0, 92.0, 313.0, 155.0, 310.0, 155.0, 310.0, 169.0, 313.0, 169.0, 313.0, 172.0, 327.0, 172.0, 327.0, 169.0, 947.0, 169.0, 947.0, 335.0, 961.0, 335.0, 961.0, 169.0, 964.0, 169.0, 964.0, 155.0, 961.0, 155.0, 961.0, 152.0, 947.0, 152.0, 947.0, 155.0, 327.0, 155.0, 327.0, 92.0" shape="poly" alt="K2 to Active Directory:Flow" id="areadiagram_map_PYfde5aAUhQELtg__default" href="ArchiMateFlow_b0bGo5aAUhQELuOt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="333.0, 92.0, 333.0, 143.0, 330.0, 143.0, 330.0, 157.0, 333.0, 157.0, 333.0, 160.0, 347.0, 160.0, 347.0, 157.0, 964.0, 157.0, 964.0, 335.0, 978.0, 335.0, 978.0, 157.0, 981.0, 157.0, 981.0, 143.0, 978.0, 143.0, 978.0, 140.0, 964.0, 140.0, 964.0, 143.0, 347.0, 143.0, 347.0, 92.0" coords2="333.0, 92.0, 333.0, 143.0, 330.0, 143.0, 330.0, 157.0, 333.0, 157.0, 333.0, 160.0, 347.0, 160.0, 347.0, 157.0, 964.0, 157.0, 964.0, 335.0, 978.0, 335.0, 978.0, 157.0, 981.0, 157.0, 981.0, 143.0, 978.0, 143.0, 978.0, 140.0, 964.0, 140.0, 964.0, 143.0, 347.0, 143.0, 347.0, 92.0" shape="poly" alt="Active Directory to K2:Flow" id="areadiagram_map_PYfde5aAUhQELthB_default" href="ArchiMateFlow_fW7Go5aAUhQELuRE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="246.0, 92.0, 246.0, 315.0, 260.0, 315.0, 260.0, 92.0" coords2="246.0, 92.0, 246.0, 315.0, 260.0, 315.0, 260.0, 92.0" shape="poly" alt="SharePoint to Active Directory:Flow" id="areadiagram_map_SgC9e5aAUhQELth4_default" href="ArchiMateFlow_sgC9e5aAUhQELth3.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="267.0, 92.0, 267.0, 315.0, 281.0, 315.0, 281.0, 92.0" coords2="267.0, 92.0, 267.0, 315.0, 281.0, 315.0, 281.0, 92.0" shape="poly" alt="Active Directory to SharePoint:Flow" id="areadiagram_map_N9K9e5aAUhQELtiM_default" href="ArchiMateFlow_59K9e5aAUhQELtiL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="758.0, 260.0, 758.0, 263.0, 755.0, 263.0, 755.0, 277.0, 758.0, 277.0, 758.0, 334.0, 772.0, 334.0, 772.0, 277.0, 934.0, 277.0, 934.0, 335.0, 948.0, 335.0, 948.0, 277.0, 951.0, 277.0, 951.0, 263.0, 948.0, 263.0, 948.0, 260.0, 934.0, 260.0, 934.0, 263.0, 772.0, 263.0, 772.0, 260.0" coords2="758.0, 260.0, 758.0, 263.0, 755.0, 263.0, 755.0, 277.0, 758.0, 277.0, 758.0, 334.0, 772.0, 334.0, 772.0, 277.0, 934.0, 277.0, 934.0, 335.0, 948.0, 335.0, 948.0, 277.0, 951.0, 277.0, 951.0, 263.0, 948.0, 263.0, 948.0, 260.0, 934.0, 260.0, 934.0, 263.0, 772.0, 263.0, 772.0, 260.0" shape="poly" alt="K2 to NCIDB-P180-v:Access" id="areadiagram_map_pYdYEFaGAqAAHEGW_default" href="ArchiMateAccess_CT4cshaGAqAAHFdg.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="461.0, 260.0, 461.0, 263.0, 458.0, 263.0, 458.0, 277.0, 461.0, 277.0, 461.0, 342.0, 475.0, 342.0, 475.0, 277.0, 738.0, 277.0, 738.0, 334.0, 752.0, 334.0, 752.0, 277.0, 755.0, 277.0, 755.0, 263.0, 752.0, 263.0, 752.0, 260.0, 738.0, 260.0, 738.0, 263.0, 475.0, 263.0, 475.0, 260.0" coords2="461.0, 260.0, 461.0, 263.0, 458.0, 263.0, 458.0, 277.0, 461.0, 277.0, 461.0, 342.0, 475.0, 342.0, 475.0, 277.0, 738.0, 277.0, 738.0, 334.0, 752.0, 334.0, 752.0, 277.0, 755.0, 277.0, 755.0, 263.0, 752.0, 263.0, 752.0, 260.0, 738.0, 260.0, 738.0, 263.0, 475.0, 263.0, 475.0, 260.0" shape="poly" alt=":Aggregation" id="areadiagram_map_3OvYEFaGAqAAHEHJ_default" href="ArchiMateAggregation_jOvYEFaGAqAAHEG9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="376, 342, 562, 382" coords2="376, 342, 562, 382" shape="rect" alt="NCiConnect SharePoint Database:Data Object" id="areadiagram_map_FAEYEFaGAqAAHEEt_default" href="ArchiMateDataObject_SM_jdBaAUhQELsJN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      This is a SQL server connected to the K2 system component located in &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#5QUXiUaAUhQCoQs.&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('5QUXiUaAUhQCoQs.');&amp;quot;&amp;gt;NCiConnect&amp;lt;/a&amp;gt;. 
+      We used to call it generically &amp;quot;K2 Server&amp;quot;. But we have since learned 
+      (as of 2/27/2019) it is called &amp;lt;span style=&amp;quot;font-size:12.0pt;font-family:Calibri,sans-serif;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Calibri,sans-serif&amp;quot; size=&amp;quot;12.0pt&amp;quot; style=&amp;quot;font-size:12.0pt;&amp;quot;&amp;gt;NCIDB-P180-v&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Calibri,sans-serif&amp;quot; size=&amp;quot;12.0pt&amp;quot; style=&amp;quot;font-size:12.0pt;&amp;quot;&amp;gt;&amp;lt;span&amp;gt;.&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Data elements include:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Name of One person
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Name of Multiple people
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      City
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Country
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Date of Travel
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Cost
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Conference Title
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Purpose
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Division Traveler Belongs To
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Destination
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Exemption Information
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="721, 334, 811, 374" coords2="721, 334, 811, 374" shape="rect" alt="NCIDB-P180-v:Data Object" id="areadiagram_map_KA_oEFaGAqAAHED__default" href="ArchiMateDataObject_trbsshaGAqAAHFc6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="204, 52, 383, 92" coords2="204, 52, 383, 92" shape="rect" alt="Active Directory:Application Component" id="areadiagram_map_3Yfde5aAUhQELtg9_default" href="ArchiMateApplicationComponent_jqKHDJaAUrBCTMlK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 1254, 142" coords2="2, 2, 1254, 142" shape="rect" alt="NIH:Grouping" id="areadiagram_map_x6Nde5aAUhQELtb__default" href="ArchiMateGrouping_Pjem2UaAUhQsGoBP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Manual online forms are entered into K2
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="885, 459, 1053, 499" coords2="885, 459, 1053, 499" shape="rect" alt="Manual Entry Online Forms:Business Actor" id="areadiagram_map_2byUZuaAUhQA0hzJ_default" href="ArchiMateBusinessActor_ObyUZuaAUhQA0hzK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="227, 342, 339, 382" coords2="227, 342, 339, 382" shape="rect" alt="My Dashboard:Application Component" id="areadiagram_map_z0DkZuaAUhQA0hxX_default" href="ArchiMateApplicationComponent_BS7EZuaAUhQA0hpi.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','227, 342, 339, 382',new Array('My Dashboard.jpeg*file:////Users/woodpm/Desktop/ITRC deep dive 11192018/My Dashboard.jpeg'),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_5q_kZuaAUhQA0hxJ.html/My Dashboard ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '227, 342, 339, 382'),showSubdiagramIcon('diagram', '227, 342, 339, 382'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="166, 315, 584, 410" coords2="166, 315, 584, 410" shape="rect" alt="SharePoint:Application Component" id="areadiagram_map_JpAUZuaAUhQA0hyL_default" href="ArchiMateApplicationComponent_cdY6zsaAUrAeqTWm.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','166, 315, 584, 410',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_lnnjdBaAUhQELsIz.html/SharePoint ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '166, 315, 584, 410'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="893, 335, 989, 375" coords2="893, 335, 989, 375" shape="rect" alt="K2:Application Component" id="areadiagram_map_FVTkZuaAUhQA0hxj_default" href="ArchiMateApplicationComponent_uNc6zsaAUrAeqTbj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="50, 272, 1160, 435" coords2="50, 272, 1160, 435" shape="rect" alt="NCiConnect:Grouping" id="areadiagram_map_4sTte5aAUhQELtWu_default" href="ArchiMateGrouping_XhZbI2aAUrD2Qp6B.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="32, 226, 1185, 515" coords2="32, 226, 1185, 515" shape="rect" alt="ITRC:Grouping" id="areadiagram_map_J0H0ZuaAUhQA0h00_default" href="ArchiMateGrouping_Xp0kojqAUhQsEgtP.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','32, 226, 1185, 515',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_WEZpo5aAUhQELmXq.html/ITRC DOC-centric ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '32, 226, 1185, 515'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 168, 1254, 585" coords2="2, 168, 1254, 585" shape="rect" alt="NCI:Grouping" id="areadiagram_map_8uyde5aAUhQELtYg_default" href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/DataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/DataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateDataObject_SM_jdBaAUhQELsJN.html" class="ItemLink">NCiConnect SharePoint Database : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/DataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/DataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateDataObject_trbsshaGAqAAHFc6.html" class="ItemLink">NCIDB-P180-v : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      This is a SQL server connected to the K2 system component located in <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#5QUXiUaAUhQCoQs." name="" onclick="javascript: highlightGridModelSelection('5QUXiUaAUhQCoQs.');">NCiConnect</a>. 
+      We used to call it generically &quot;K2 Server&quot;. But we have since learned 
+      (as of 2/27/2019) it is called <span style="font-size:12.0pt;font-family:Calibri,sans-serif;"><font face="Calibri,sans-serif" size="12.0pt" style="font-size:12.0pt;">NCIDB-P180-v</font></span><font face="Calibri,sans-serif" size="12.0pt" style="font-size:12.0pt;"><span>.</span></font>
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Data elements include:
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Name of One person
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Name of Multiple people
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      City
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Country
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Date of Travel
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Cost
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Conference Title
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Purpose
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Division Traveler Belongs To
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Destination
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Exemption Information
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_jqKHDJaAUrBCTMlK.html" class="ItemLink">Active Directory : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_Pjem2UaAUhQsGoBP.html" class="ItemLink">NIH : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_ObyUZuaAUhQA0hzK.html" class="ItemLink">Manual Entry Online Forms : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Manual online forms are entered into K2
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_BS7EZuaAUhQA0hpi.html" class="ItemLink">My Dashboard : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_cdY6zsaAUrAeqTWm.html" class="ItemLink">SharePoint : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_uNc6zsaAUrAeqTbj.html" class="ItemLink">K2 : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_XhZbI2aAUrD2Qp6B.html" class="ItemLink">NCiConnect : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_Xp0kojqAUhQsEgtP.html" class="ItemLink">ITRC : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" class="ItemLink">NCI : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+</body>
+</html>

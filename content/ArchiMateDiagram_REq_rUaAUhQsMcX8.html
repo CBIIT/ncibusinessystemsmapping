@@ -1,0 +1,600 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - eOPF ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - eOPF ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/REq_rUaAUhQsMcX8', 'eOPF ArchiMate Diagram\nNCI Buisness Architecture.vpp://diagram/REq_rUaAUhQsMcX8', 'eOPF ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|121.0|570.0|96.0|40.0|ArchiMateApplicationComponent_JSSRnjqAUhQsLAju.html|ArchiMateApplicationComponent_JSSRnjqAUhQsLAju.html|6ve_rUaAUhQsMcYw" id="option6ve_rUaAUhQsMcYw">SMART HR : Application Component</option>
+<option value="shape|2.0|443.0|694.0|325.0|ArchiMateGrouping_Zn1_rUaAUhQsMcbg.html|ArchiMateGrouping_Zn1_rUaAUhQsMcbg.html|Zn1_rUaAUhQsMcbf" id="optionZn1_rUaAUhQsMcbf">NIH3 : Grouping</option>
+<option value="shape|128.0|180.0|96.0|40.0|ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html|ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html|44O_rUaAUhQsMcYQ" id="option44O_rUaAUhQsMcYQ">eOPF : Application Component</option>
+<option value="shape|398.0|306.0|96.0|40.0|ArchiMateApplicationComponent_cDpGnjqAUhQsEh0Q.html|ArchiMateApplicationComponent_cDpGnjqAUhQsEh0Q.html|Eve_rUaAUhQsMcYm" id="optionEve_rUaAUhQsMcYm">Capital HR : Application Component</option>
+<option value="shape|398.0|180.0|96.0|40.0|ArchiMateApplicationComponent_lFAz4TqAUhQsLBC7.html|ArchiMateApplicationComponent_lFAz4TqAUhQsLBC7.html|xPe_rUaAUhQsMcYc" id="optionxPe_rUaAUhQsMcYc">AMS : Application Component</option>
+<option value="shape|398.0|65.0|96.0|40.0|ArchiMateApplicationComponent_gzu_WUaAUhQsGigB.html|ArchiMateApplicationComponent_gzu_WUaAUhQsGigB.html|lve_rUaAUhQsMcZA" id="optionlve_rUaAUhQsMcZA">OM : Application Component</option>
+<option value="shape|2.0|2.0|694.0|404.0|ArchiMateGrouping_mZ5_rUaAUhQsMcbG.html|ArchiMateGrouping_mZ5_rUaAUhQsMcbG.html|GZ5_rUaAUhQsMcbF" id="optionGZ5_rUaAUhQsMcbF">HHS2 : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/eOPF_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="700" height="772"/>
+					<map name="diagram_map">
+<area coords="152,585,207,599" coords2="152,585,207,599" shape="rect" alt="SMART HR" href="GridDiagram_5GBJ6waAUJUCAjP0.html#xwz4WEaAUhQCoQ1O" onclick="javascript: highlightGridModelSelection('xwz4WEaAUhQCoQ1O');"/>
+<area imageId="diagram" coords="224.0, 205.0, 224.0, 219.0, 398.0, 219.0, 398.0, 205.0" coords2="224.0, 205.0, 224.0, 219.0, 398.0, 219.0, 398.0, 205.0" shape="poly" alt="eOPF-&gt;AMS:Flow" id="areadiagram_map_xPe_rUaAUhQsMcYa_default" href="ArchiMateFlow_fBRKrgaAUhQsNh_F.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="346.0, 202.0, 346.0, 205.0, 224.0, 205.0, 224.0, 219.0, 346.0, 219.0, 346.0, 319.0, 343.0, 319.0, 343.0, 333.0, 346.0, 333.0, 346.0, 336.0, 360.0, 336.0, 360.0, 333.0, 398.0, 333.0, 398.0, 319.0, 360.0, 319.0, 360.0, 219.0, 363.0, 219.0, 363.0, 205.0, 360.0, 205.0, 360.0, 202.0" coords2="346.0, 202.0, 346.0, 205.0, 224.0, 205.0, 224.0, 219.0, 346.0, 219.0, 346.0, 319.0, 343.0, 319.0, 343.0, 333.0, 346.0, 333.0, 346.0, 336.0, 360.0, 336.0, 360.0, 333.0, 398.0, 333.0, 398.0, 319.0, 360.0, 319.0, 360.0, 219.0, 363.0, 219.0, 363.0, 205.0, 360.0, 205.0, 360.0, 202.0" shape="poly" alt="eOPF-&gt;CAPHR:Flow" id="areadiagram_map_Eve_rUaAUhQsMcYk_default" href="ArchiMateFlow_nrqqrgaAUhQsNh_1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:11px;margin-right:0;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Manual interface
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="169.0, 220.0, 169.0, 570.0, 183.0, 570.0, 183.0, 220.0" coords2="169.0, 220.0, 169.0, 570.0, 183.0, 570.0, 183.0, 220.0" shape="poly" alt="eOPF_TO_SMARTHR:Flow" id="areadiagram_map_6ve_rUaAUhQsMcYu_default" href="ArchiMateFlow_2igfaUaAUhQsGqdj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="224.0, 193.0, 224.0, 207.0, 398.0, 207.0, 398.0, 193.0" coords2="224.0, 193.0, 224.0, 207.0, 398.0, 207.0, 398.0, 193.0" shape="poly" alt="AMS-&gt;eOPF:Flow" id="areadiagram_map_Zve_rUaAUhQsMcY4_default" href="ArchiMateFlow_zGOKrgaAUhQsNh95.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="372.0, 190.0, 372.0, 193.0, 224.0, 193.0, 224.0, 207.0, 372.0, 207.0, 372.0, 308.0, 369.0, 308.0, 369.0, 322.0, 372.0, 322.0, 372.0, 325.0, 386.0, 325.0, 386.0, 322.0, 398.0, 322.0, 398.0, 308.0, 386.0, 308.0, 386.0, 207.0, 389.0, 207.0, 389.0, 193.0, 386.0, 193.0, 386.0, 190.0" coords2="372.0, 190.0, 372.0, 193.0, 224.0, 193.0, 224.0, 207.0, 372.0, 207.0, 372.0, 308.0, 369.0, 308.0, 369.0, 322.0, 372.0, 322.0, 372.0, 325.0, 386.0, 325.0, 386.0, 322.0, 398.0, 322.0, 398.0, 308.0, 386.0, 308.0, 386.0, 207.0, 389.0, 207.0, 389.0, 193.0, 386.0, 193.0, 386.0, 190.0" shape="poly" alt="CAPHR-&gt;eOPF:Flow" id="areadiagram_map_5ve_rUaAUhQsMcY7_default" href="ArchiMateFlow_mn5qrgaAUhQsNh_X.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="356.0, 64.0, 356.0, 67.0, 353.0, 67.0, 353.0, 81.0, 356.0, 81.0, 356.0, 193.0, 224.0, 193.0, 224.0, 207.0, 356.0, 207.0, 356.0, 210.0, 370.0, 210.0, 370.0, 207.0, 373.0, 207.0, 373.0, 193.0, 370.0, 193.0, 370.0, 81.0, 398.0, 81.0, 398.0, 67.0, 370.0, 67.0, 370.0, 64.0" coords2="356.0, 64.0, 356.0, 67.0, 353.0, 67.0, 353.0, 81.0, 356.0, 81.0, 356.0, 193.0, 224.0, 193.0, 224.0, 207.0, 356.0, 207.0, 356.0, 210.0, 370.0, 210.0, 370.0, 207.0, 373.0, 207.0, 373.0, 193.0, 370.0, 193.0, 370.0, 81.0, 398.0, 81.0, 398.0, 67.0, 370.0, 67.0, 370.0, 64.0" shape="poly" alt="OM-&gt;eOPF:Flow" id="areadiagram_map_lve_rUaAUhQsMcY._default" href="ArchiMateFlow_96gA2UaAUhQsGihn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:11px;margin-right:0;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;SMARTHR&amp;lt;/b&amp;gt; &amp;#8211; increases efficiency in the use of &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      resources and automates specialized reporting tasks performed by OHR. 
+      SMARTHR also provides the unique ability to bridge reporting gaps across 
+      multiple Human Resource (HR) and non-HR systems. By linking disparate 
+      data-sources, SMARTHR promotes a more complete assessment of the 
+      organization and human capital topics, while facilitating on-demand 
+      business intelligence to OHR and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#cvKYigaC48kYAjPI&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('cvKYigaC48kYAjPI');&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt; 
+      customers alike. managed by OHR HR Systems Support Helpdesk
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Sources
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ol class=&amp;quot;decimal&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;margin-bottom:0px;list-style-type:none;margin-left:40pt;margin-top:0px;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-bottom:0;margin-right:0;margin-left:0;margin-top:0;&amp;quot;&amp;gt;
+        nVision &amp;#8211; 3Rs Dashboard. Biweekly refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-bottom:0;margin-right:0;margin-left:0;margin-top:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Q8l4WEaAUhQCoQ0i&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Q8l4WEaAUhQCoQ0i');&amp;quot;&amp;gt;CapHR&amp;lt;/a&amp;gt;, 
+        NVision, BIIS &amp;#8211; Awards Dashboard. Biweekly refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-bottom:0;margin-right:0;margin-left:0;margin-top:0;&amp;quot;&amp;gt;
+        Survey Gizmo, nVision &amp;#8211; Exit Survey. Biweekly refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-bottom:0;margin-right:0;margin-left:0;margin-top:0;&amp;quot;&amp;gt;
+        Survey Gizmo &amp;#8211; HRSS Survey. Quarterly refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-bottom:0;margin-right:0;margin-left:0;margin-top:0;&amp;quot;&amp;gt;
+        nVision &amp;#8211; PMAP data call. Annually refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-bottom:0;margin-right:0;margin-left:0;margin-top:0;&amp;quot;&amp;gt;
+        nVision &amp;#8211; Workforce Analytics planning. Biweekly refreash
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ol&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="121, 570, 217, 610" coords2="121, 570, 217, 610" shape="rect" alt="SMART HR:Application Component" id="areadiagram_map_6ve_rUaAUhQsMcYw_default" href="ArchiMateApplicationComponent_JSSRnjqAUhQsLAju.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','121, 570, 217, 610',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram__fTPnUaAUhQsMRZw.html/SMART HR ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '121, 570, 217, 610'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="2, 443, 696, 768" coords2="2, 443, 696, 768" shape="rect" alt="NIH3:Grouping" id="areadiagram_map_Zn1_rUaAUhQsMcbf_default" href="ArchiMateGrouping_Zn1_rUaAUhQsMcbg.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:11px;margin-right:0;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;Office of Personnel Management (eOPF)&amp;lt;/b&amp;gt; - The eOPF is an electronic 
+      version of the paper OPF and a system for accessing the electronic 
+      folder online. The eOPF system combines document management with 
+      workflow capabilities. The eOPF allows each employee to have an 
+      electronic personnel folder instead of a paper folder. Benefits of eOPF 
+      include: * Immediate access to personnel forms and information for a 
+      geographically dispersed workforce. * E-mail &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#MXeSMgaC48kYAih0&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('MXeSMgaC48kYAih0');&amp;quot;&amp;gt;notification&amp;lt;/a&amp;gt; 
+      to employee when documents are added to their eOPF. * Multi-level secure 
+      environment with security rules for sensitive information. * No loss of 
+      official personnel documents due to filing and routing errors. * Reduced 
+      costs associated with storage, maintenance, and retrieval of records. * 
+      Electronic transfer of human resources (HR) data. * Integration with 
+      agency&amp;#8217;s human resources information systems (HRIS). * Compliance with 
+      OPM and federally mandated HR employee record management regulations.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="128, 180, 224, 220" coords2="128, 180, 224, 220" shape="rect" alt="eOPF:Application Component" id="areadiagram_map_44O_rUaAUhQsMcYQ_default" href="ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:11px;margin-right:0;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Q8l4WEaAUhQCoQ0i&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Q8l4WEaAUhQCoQ0i');&amp;quot;&amp;gt;CAPHR&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;/b&amp;gt;&amp;#8211; 
+      PeopleSoft based Human Resource (HR) information system used throughout 
+      the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Z3GPCgaC48kYAjHp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Z3GPCgaC48kYAjHp');&amp;quot;&amp;gt;Department 
+      of Health and Human Services&amp;lt;/a&amp;gt; (&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Z3GPCgaC48kYAjHp&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Z3GPCgaC48kYAjHp');&amp;quot;&amp;gt;HHS&amp;lt;/a&amp;gt;) 
+      to process personnel actions and administer benefits. The web-based 
+      Capital HR version 8.9 system replaced the legacy HR information system, 
+      IMPACT, in September of 2002. Capital HR contains &amp;quot;core&amp;quot; functionality 
+      common to the DHHS and its Agencies and is continually being reviewed 
+      for enhancements by the DHHS &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Y_ei2gaFKcBauwqK&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Y_ei2gaFKcBauwqK');&amp;quot;&amp;gt;Program&amp;lt;/a&amp;gt; 
+      Support Center (PSC).
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Link https://hr.&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#jPBYZwaC48kYAhBj&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('jPBYZwaC48kYAhBj');&amp;quot;&amp;gt;od&amp;lt;/a&amp;gt;.&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');&amp;quot;&amp;gt;nih&amp;lt;/a&amp;gt;.gov/HRSystems/staffing/&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#Q8l4WEaAUhQCoQ0i&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('Q8l4WEaAUhQCoQ0i');&amp;quot;&amp;gt;caphr&amp;lt;/a&amp;gt;/
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Feeds &amp;#8211; Central Pay System
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;table border-spacing=&amp;quot;0px&amp;quot; style=&amp;quot;border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;border-left-style:solid;border-right-width:1px;border-bottom-width:1px;border-left-color:#888888;border-top-color:#888888;border-right-color:#888888;border-bottom-style:solid;border-left-width:1px;border-top-style:solid;&amp;quot;&amp;gt;
+      &amp;lt;tr style=&amp;quot;text-align:left;&amp;quot;&amp;gt;
+        &amp;lt;td class=&amp;quot;xl66&amp;quot; height=&amp;quot;32.0pt&amp;quot; style=&amp;quot;border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;border-right-width:1px;padding-top:3;border-left-color:#888888;border-right-color:#888888;padding-left:3;border-left-width:1px;border-top-style:solid;border-left-style:solid;padding-right:3;border-bottom-width:1px;border-top-color:#888888;border-bottom-style:solid;padding-bottom:3;&amp;quot; width=&amp;quot;415pt&amp;quot;&amp;gt;
+          May be retired in 3 years of 12/17 and replaced with Enterprise 
+          Huaman Capital Management(EHCM) which will have HR data and Time 
+          keeping.&amp;lt;span&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;
+        &amp;lt;/td&amp;gt;
+      &amp;lt;/tr&amp;gt;
+    &amp;lt;/table&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="398, 306, 494, 346" coords2="398, 306, 494, 346" shape="rect" alt="Capital HR:Application Component" id="areadiagram_map_Eve_rUaAUhQsMcYm_default" href="ArchiMateApplicationComponent_cDpGnjqAUhQsEh0Q.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','398, 306, 494, 346',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_cdqHrUaAUhQsMcgA.html/CAPHR ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '398, 306, 494, 346'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:11px;margin-right:0;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#yMv7sgaC48kYAitE&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('yMv7sgaC48kYAitE');&amp;quot;&amp;gt;Account&amp;lt;/a&amp;gt; 
+      Management System(AMS)&amp;lt;/b&amp;gt; &amp;#8211; User-friendly module to create, manage and 
+      search existing accounts in &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#r3zcMgaC48kYAidB&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('r3zcMgaC48kYAidB');&amp;quot;&amp;gt;eRA&amp;lt;/a&amp;gt; 
+      Common, iEdison, And ASSIST as well as &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#r3zcMgaC48kYAidB&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('r3zcMgaC48kYAidB');&amp;quot;&amp;gt;eRA&amp;lt;/a&amp;gt; 
+      modules used by agency staff. Depending on role, users from 
+      Organizations., Universities, Federal Agencies, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#cvKYigaC48kYAjPI&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('cvKYigaC48kYAjPI');&amp;quot;&amp;gt;Institute/Center&amp;lt;/a&amp;gt; 
+      Coordinators, the State department (for &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#l.6dsgaC48kYAilS&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('l.6dsgaC48kYAilS');&amp;quot;&amp;gt;FACTS&amp;lt;/a&amp;gt;) 
+      and the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;GridDiagram_5GBJ6waAUJUCAjP0.html#r3zcMgaC48kYAidB&amp;quot; name=&amp;quot;&amp;quot; onclick=&amp;quot;javascript: highlightGridModelSelection('r3zcMgaC48kYAidB');&amp;quot;&amp;gt;eRA&amp;lt;/a&amp;gt; 
+      service desk staff are able to access and use the functionality.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="398, 180, 494, 220" coords2="398, 180, 494, 220" shape="rect" alt="AMS:Application Component" id="areadiagram_map_xPe_rUaAUhQsMcYc_default" href="ArchiMateApplicationComponent_lFAz4TqAUhQsLBC7.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','398, 180, 494, 220',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_OPkRDUaAUhQsGpUo.html/AMS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '398, 180, 494, 220'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:11px;margin-right:0;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;&amp;quot;&amp;gt;
+      Onboarding manager
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="398, 65, 494, 105" coords2="398, 65, 494, 105" shape="rect" alt="OM:Application Component" id="areadiagram_map_lve_rUaAUhQsMcZA_default" href="ArchiMateApplicationComponent_gzu_WUaAUhQsGigB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="2, 2, 696, 406" coords2="2, 2, 696, 406" shape="rect" alt="HHS2:Grouping" id="areadiagram_map_GZ5_rUaAUhQsMcbF_default" href="ArchiMateGrouping_mZ5_rUaAUhQsMcbG.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_JSSRnjqAUhQsLAju.html" class="ItemLink">SMART HR : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:11px;margin-right:0;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <b>SMARTHR</b> &#8211; increases efficiency in the use of <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW" name="" onclick="javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');">NIH</a> 
+      resources and automates specialized reporting tasks performed by OHR. 
+      SMARTHR also provides the unique ability to bridge reporting gaps across 
+      multiple Human Resource (HR) and non-HR systems. By linking disparate 
+      data-sources, SMARTHR promotes a more complete assessment of the 
+      organization and human capital topics, while facilitating on-demand 
+      business intelligence to OHR and <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#cvKYigaC48kYAjPI" name="" onclick="javascript: highlightGridModelSelection('cvKYigaC48kYAjPI');">IC</a> 
+      customers alike. managed by OHR HR Systems Support Helpdesk
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Sources
+    </p>
+    <ol class="decimal" margin-left-ltr="50" margin-right-rtl="50" style="margin-bottom:0px;list-style-type:none;margin-left:40pt;margin-top:0px;">
+      <li style="margin-bottom:0;margin-right:0;margin-left:0;margin-top:0;">
+        nVision &#8211; 3Rs Dashboard. Biweekly refreash
+      </li>
+      <li style="margin-bottom:0;margin-right:0;margin-left:0;margin-top:0;">
+        <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW" name="" onclick="javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');">NIH</a>&nbsp;<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Q8l4WEaAUhQCoQ0i" name="" onclick="javascript: highlightGridModelSelection('Q8l4WEaAUhQCoQ0i');">CapHR</a>, 
+        NVision, BIIS &#8211; Awards Dashboard. Biweekly refreash
+      </li>
+      <li style="margin-bottom:0;margin-right:0;margin-left:0;margin-top:0;">
+        Survey Gizmo, nVision &#8211; Exit Survey. Biweekly refreash
+      </li>
+      <li style="margin-bottom:0;margin-right:0;margin-left:0;margin-top:0;">
+        Survey Gizmo &#8211; HRSS Survey. Quarterly refreash
+      </li>
+      <li style="margin-bottom:0;margin-right:0;margin-left:0;margin-top:0;">
+        nVision &#8211; PMAP data call. Annually refreash
+      </li>
+      <li style="margin-bottom:0;margin-right:0;margin-left:0;margin-top:0;">
+        nVision &#8211; Workforce Analytics planning. Biweekly refreash
+      </li>
+    </ol>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_Zn1_rUaAUhQsMcbg.html" class="ItemLink">NIH3 : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html" class="ItemLink">eOPF : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:11px;margin-right:0;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <b>Office of Personnel Management (eOPF)</b> - The eOPF is an electronic 
+      version of the paper OPF and a system for accessing the electronic 
+      folder online. The eOPF system combines document management with 
+      workflow capabilities. The eOPF allows each employee to have an 
+      electronic personnel folder instead of a paper folder. Benefits of eOPF 
+      include: * Immediate access to personnel forms and information for a 
+      geographically dispersed workforce. * E-mail <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#MXeSMgaC48kYAih0" name="" onclick="javascript: highlightGridModelSelection('MXeSMgaC48kYAih0');">notification</a> 
+      to employee when documents are added to their eOPF. * Multi-level secure 
+      environment with security rules for sensitive information. * No loss of 
+      official personnel documents due to filing and routing errors. * Reduced 
+      costs associated with storage, maintenance, and retrieval of records. * 
+      Electronic transfer of human resources (HR) data. * Integration with 
+      agency&#8217;s human resources information systems (HRIS). * Compliance with 
+      OPM and federally mandated HR employee record management regulations.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_cDpGnjqAUhQsEh0Q.html" class="ItemLink">Capital HR : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:11px;margin-right:0;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <b><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Q8l4WEaAUhQCoQ0i" name="" onclick="javascript: highlightGridModelSelection('Q8l4WEaAUhQCoQ0i');">CAPHR</a>&nbsp;</b>&#8211; 
+      PeopleSoft based Human Resource (HR) information system used throughout 
+      the <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Z3GPCgaC48kYAjHp" name="" onclick="javascript: highlightGridModelSelection('Z3GPCgaC48kYAjHp');">Department 
+      of Health and Human Services</a> (<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Z3GPCgaC48kYAjHp" name="" onclick="javascript: highlightGridModelSelection('Z3GPCgaC48kYAjHp');">HHS</a>) 
+      to process personnel actions and administer benefits. The web-based 
+      Capital HR version 8.9 system replaced the legacy HR information system, 
+      IMPACT, in September of 2002. Capital HR contains &quot;core&quot; functionality 
+      common to the DHHS and its Agencies and is continually being reviewed 
+      for enhancements by the DHHS <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Y_ei2gaFKcBauwqK" name="" onclick="javascript: highlightGridModelSelection('Y_ei2gaFKcBauwqK');">Program</a> 
+      Support Center (PSC).
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Link https://hr.<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#jPBYZwaC48kYAhBj" name="" onclick="javascript: highlightGridModelSelection('jPBYZwaC48kYAhBj');">od</a>.<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#i_pPCgaC48kYAjIW" name="" onclick="javascript: highlightGridModelSelection('i_pPCgaC48kYAjIW');">nih</a>.gov/HRSystems/staffing/<a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Q8l4WEaAUhQCoQ0i" name="" onclick="javascript: highlightGridModelSelection('Q8l4WEaAUhQCoQ0i');">caphr</a>/
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Feeds &#8211; Central Pay System
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+    <table border-spacing="0px" style="border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;border-left-style:solid;border-right-width:1px;border-bottom-width:1px;border-left-color:#888888;border-top-color:#888888;border-right-color:#888888;border-bottom-style:solid;border-left-width:1px;border-top-style:solid;">
+      <tr style="text-align:left;">
+        <td class="xl66" height="32.0pt" style="border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;border-right-width:1px;padding-top:3;border-left-color:#888888;border-right-color:#888888;padding-left:3;border-left-width:1px;border-top-style:solid;border-left-style:solid;padding-right:3;border-bottom-width:1px;border-top-color:#888888;border-bottom-style:solid;padding-bottom:3;" width="415pt">
+          May be retired in 3 years of 12/17 and replaced with Enterprise 
+          Huaman Capital Management(EHCM) which will have HR data and Time 
+          keeping.<span>&nbsp;</span>
+        </td>
+      </tr>
+    </table>
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_lFAz4TqAUhQsLBC7.html" class="ItemLink">AMS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:11px;margin-right:0;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      <b><a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#yMv7sgaC48kYAitE" name="" onclick="javascript: highlightGridModelSelection('yMv7sgaC48kYAitE');">Account</a> 
+      Management System(AMS)</b> &#8211; User-friendly module to create, manage and 
+      search existing accounts in <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#r3zcMgaC48kYAidB" name="" onclick="javascript: highlightGridModelSelection('r3zcMgaC48kYAidB');">eRA</a> 
+      Common, iEdison, And ASSIST as well as <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#r3zcMgaC48kYAidB" name="" onclick="javascript: highlightGridModelSelection('r3zcMgaC48kYAidB');">eRA</a> 
+      modules used by agency staff. Depending on role, users from 
+      Organizations., Universities, Federal Agencies, <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#cvKYigaC48kYAjPI" name="" onclick="javascript: highlightGridModelSelection('cvKYigaC48kYAjPI');">Institute/Center</a> 
+      Coordinators, the State department (for <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#l.6dsgaC48kYAilS" name="" onclick="javascript: highlightGridModelSelection('l.6dsgaC48kYAilS');">FACTS</a>) 
+      and the <a class="ItemLink" href="GridDiagram_5GBJ6waAUJUCAjP0.html#r3zcMgaC48kYAidB" name="" onclick="javascript: highlightGridModelSelection('r3zcMgaC48kYAidB');">eRA</a> 
+      service desk staff are able to access and use the functionality.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_gzu_WUaAUhQsGigB.html" class="ItemLink">OM : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:11px;margin-right:0;font-family:Courier New;margin-left:0;">
+    <p style="margin-bottom:.0001pt;margin-right:0pt;margin-left:0pt;margin-top:0pt;">
+      Onboarding manager
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_mZ5_rUaAUhQsMcbG.html" class="ItemLink">HHS2 : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+</body>
+</html>
