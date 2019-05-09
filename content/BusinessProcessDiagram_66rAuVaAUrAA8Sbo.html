@@ -1,0 +1,480 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - Missing CAN Process Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - Missing CAN Process Diagram		</span>
+<a onclick="javascript: showVpLink('OBF mapping project.vpp://diagram/66rAuVaAUrAA8Sbo', 'Missing CAN Process Diagram\nOBF mapping project.vpp://diagram/66rAuVaAUrAA8Sbo', 'Missing CAN Process Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|191.0|499.0|78.0|40.0|BPTask_MF7IuVaAUrAA8SdC.html|BPTask_MF7IuVaAUrAA8SdC.html|MF7IuVaAUrAA8SdB" id="optionMF7IuVaAUrAA8SdB">Authenticate : Task</option>
+<option value="shape|104.0|368.0|20.0|20.0|BPStartEvent_b61IuVaAUrAA8ScQ.html|BPStartEvent_b61IuVaAUrAA8ScQ.html|b61IuVaAUrAA8ScP" id="optionb61IuVaAUrAA8ScP">Unnamed Start Event : Start Event</option>
+<option value="shape|17.0|303.0|2015.0|150.0|BPLane_lPrAuVaAUrAA8Sb2.html|BPLane_lPrAuVaAUrAA8Sb2.html|lPrAuVaAUrAA8Sb1" id="optionlPrAuVaAUrAA8Sb1">OBF : Lane</option>
+<option value="shape|17.0|453.0|2015.0|150.0|BPLane_gk9IuVaAUrAA8Scw.html|BPLane_gk9IuVaAUrAA8Scw.html|gk9IuVaAUrAA8Scv" id="optiongk9IuVaAUrAA8Scv">SOFie : Lane</option>
+<option value="shape|186.0|358.0|83.0|40.0|BPTask_7tNIuVaAUrAA8Sce.html|BPTask_7tNIuVaAUrAA8Sce.html|7tNIuVaAUrAA8Scd" id="option7tNIuVaAUrAA8Scd">Log into SOFie : Task</option>
+<option value="shape|392.0|499.0|110.0|40.0|BPTask_28QouVaAUrAA8SeO.html|BPTask_28QouVaAUrAA8SeO.html|28QouVaAUrAA8SeN" id="option28QouVaAUrAA8SeN">Create CAN record : Task</option>
+<option value="shape|601.0|491.0|141.0|40.0|BPTask_C5EouVaAUrAA8SfW.html|BPTask_C5EouVaAUrAA8SfW.html|C5EouVaAUrAA8SfV" id="optionC5EouVaAUrAA8SfV">Save CAN Data in record : Task</option>
+<option value="shape|403.0|367.0|72.0|40.0|BPTask_tSnIuVaAUrAA8Sdi.html|BPTask_tSnIuVaAUrAA8Sdi.html|tSnIuVaAUrAA8Sdh" id="optiontSnIuVaAUrAA8Sdh">Create CAN : Task</option>
+<option value="shape|867.0|479.0|123.0|40.0|BPTask_Sb8ouVaAUrAA8Sge.html|BPTask_Sb8ouVaAUrAA8Sge.html|ib8ouVaAUrAA8Sgd" id="optionib8ouVaAUrAA8Sgd">Add CAN to doc view : Task</option>
+<option value="shape|590.0|368.0|85.0|40.0|BPTask_11IouVaAUrAA8Seu.html|BPTask_11IouVaAUrAA8Seu.html|11IouVaAUrAA8Set" id="option11IouVaAUrAA8Set">Add CAN data : Task</option>
+<option value="shape|1142.0|499.0|20.0|20.0|BPEndEvent_8BSouVaAUrAA8Sg_.html|BPEndEvent_8BSouVaAUrAA8Sg_.html|8BSouVaAUrAA8Sg9" id="option8BSouVaAUrAA8Sg9">Unnamed End Event : End Event</option>
+<option value="shape|828.0|368.0|128.0|40.0|BPTask_qGMouVaAUrAA8Sf2.html|BPTask_qGMouVaAUrAA8Sf2.html|qGMouVaAUrAA8Sf1" id="optionqGMouVaAUrAA8Sf1">Add CAN to DOC view : Task</option>
+<option value="shape|2.0|303.0|2030.0|300.0|BPPool_BPrAuVaAUrAA8Sby.html|BPPool_BPrAuVaAUrAA8Sby.html|.PrAuVaAUrAA8Sbx" id="option.PrAuVaAUrAA8Sbx">Missing CAN : Pool</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Missing_CAN_Process_Diagram.png" usemap="#diagram_map" class="Image" width="2036" height="607"/>
+					<map name="diagram_map">
+<area coords="276,5,305,20" coords2="276,5,305,20" shape="rect" alt="Sofie" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ" onclick="javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');"/>
+<area coords="212,378,242,392" coords2="212,378,242,392" shape="rect" alt="Sofie" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ" onclick="javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');"/>
+<area coords="18,501,32,531" coords2="18,501,32,531" shape="rect" alt="Sofie" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Aef5CUaAUhQCoQiQ" onclick="javascript: highlightGridModelSelection('Aef5CUaAUhQCoQiQ');"/>
+<area imageId="diagram" coords="124.0, 371.0, 124.0, 385.0, 186.0, 385.0, 186.0, 371.0" coords2="124.0, 371.0, 124.0, 385.0, 186.0, 385.0, 186.0, 371.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_MdNIuVaAUrAA8Sck_default" href="BPSequenceFlow_EdNIuVaAUrAA8Scj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="209.0, 398.0, 209.0, 499.0, 223.0, 499.0, 223.0, 398.0" coords2="209.0, 398.0, 209.0, 499.0, 223.0, 499.0, 223.0, 398.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_RF7IuVaAUrAA8SdK_default" href="BPSequenceFlow_eF7IuVaAUrAA8SdJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="335.0, 377.0, 335.0, 380.0, 332.0, 380.0, 332.0, 394.0, 335.0, 394.0, 335.0, 512.0, 269.0, 512.0, 269.0, 526.0, 335.0, 526.0, 335.0, 529.0, 349.0, 529.0, 349.0, 526.0, 352.0, 526.0, 352.0, 512.0, 349.0, 512.0, 349.0, 394.0, 403.0, 394.0, 403.0, 380.0, 349.0, 380.0, 349.0, 377.0" coords2="335.0, 377.0, 335.0, 380.0, 332.0, 380.0, 332.0, 394.0, 335.0, 394.0, 335.0, 512.0, 269.0, 512.0, 269.0, 526.0, 335.0, 526.0, 335.0, 529.0, 349.0, 529.0, 349.0, 526.0, 352.0, 526.0, 352.0, 512.0, 349.0, 512.0, 349.0, 394.0, 403.0, 394.0, 403.0, 380.0, 349.0, 380.0, 349.0, 377.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_wynIuVaAUrAA8Sdq_default" href="BPSequenceFlow__SnIuVaAUrAA8Sdp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="410.0, 407.0, 410.0, 499.0, 424.0, 499.0, 424.0, 407.0" coords2="410.0, 407.0, 410.0, 499.0, 424.0, 499.0, 424.0, 407.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_L8QouVaAUrAA8SeW_default" href="BPSequenceFlow_D8QouVaAUrAA8SeV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="536.0, 378.0, 536.0, 381.0, 533.0, 381.0, 533.0, 395.0, 536.0, 395.0, 536.0, 512.0, 502.0, 512.0, 502.0, 526.0, 536.0, 526.0, 536.0, 529.0, 550.0, 529.0, 550.0, 526.0, 553.0, 526.0, 553.0, 512.0, 550.0, 512.0, 550.0, 395.0, 590.0, 395.0, 590.0, 381.0, 550.0, 381.0, 550.0, 378.0" coords2="536.0, 378.0, 536.0, 381.0, 533.0, 381.0, 533.0, 395.0, 536.0, 395.0, 536.0, 512.0, 502.0, 512.0, 502.0, 526.0, 536.0, 526.0, 536.0, 529.0, 550.0, 529.0, 550.0, 526.0, 553.0, 526.0, 553.0, 512.0, 550.0, 512.0, 550.0, 395.0, 590.0, 395.0, 590.0, 381.0, 550.0, 381.0, 550.0, 378.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_gNIouVaAUrAA8Se2_default" href="BPSequenceFlow_v1IouVaAUrAA8Se1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="618.0, 408.0, 618.0, 491.0, 632.0, 491.0, 632.0, 408.0" coords2="618.0, 408.0, 618.0, 491.0, 632.0, 491.0, 632.0, 408.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_V5EouVaAUrAA8Sfe_default" href="BPSequenceFlow_Z5EouVaAUrAA8Sfd.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="790.0, 378.0, 790.0, 381.0, 787.0, 381.0, 787.0, 395.0, 790.0, 395.0, 790.0, 504.0, 742.0, 504.0, 742.0, 518.0, 790.0, 518.0, 790.0, 521.0, 804.0, 521.0, 804.0, 518.0, 807.0, 518.0, 807.0, 504.0, 804.0, 504.0, 804.0, 395.0, 828.0, 395.0, 828.0, 381.0, 804.0, 381.0, 804.0, 378.0" coords2="790.0, 378.0, 790.0, 381.0, 787.0, 381.0, 787.0, 395.0, 790.0, 395.0, 790.0, 504.0, 742.0, 504.0, 742.0, 518.0, 790.0, 518.0, 790.0, 521.0, 804.0, 521.0, 804.0, 518.0, 807.0, 518.0, 807.0, 504.0, 804.0, 504.0, 804.0, 395.0, 828.0, 395.0, 828.0, 381.0, 804.0, 381.0, 804.0, 378.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_lGMouVaAUrAA8Sf._default" href="BPSequenceFlow_pGMouVaAUrAA8Sf9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="885.0, 408.0, 885.0, 479.0, 899.0, 479.0, 899.0, 408.0" coords2="885.0, 408.0, 885.0, 479.0, 899.0, 479.0, 899.0, 408.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_5b8ouVaAUrAA8Sgm_default" href="BPSequenceFlow_xb8ouVaAUrAA8Sgl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="990.0, 502.0, 990.0, 516.0, 1142.0, 516.0, 1142.0, 502.0" coords2="990.0, 502.0, 990.0, 516.0, 1142.0, 516.0, 1142.0, 502.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_JBSouVaAUrAA8ShE_default" href="BPSequenceFlow_BBSouVaAUrAA8ShD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1142, 499, 1162, 519" coords2="1142, 499, 1162, 519" shape="rect" alt=":End Event" id="areadiagram_map_8BSouVaAUrAA8Sg9_default" href="BPEndEvent_8BSouVaAUrAA8Sg_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="867, 479, 990, 519" coords2="867, 479, 990, 519" shape="rect" alt="Add CAN to doc view:Task" id="areadiagram_map_ib8ouVaAUrAA8Sgd_default" href="BPTask_Sb8ouVaAUrAA8Sge.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="828, 368, 956, 408" coords2="828, 368, 956, 408" shape="rect" alt="Add CAN to DOC view:Task" id="areadiagram_map_qGMouVaAUrAA8Sf1_default" href="BPTask_qGMouVaAUrAA8Sf2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="601, 491, 742, 531" coords2="601, 491, 742, 531" shape="rect" alt="Save CAN Data in record:Task" id="areadiagram_map_C5EouVaAUrAA8SfV_default" href="BPTask_C5EouVaAUrAA8SfW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="590, 368, 675, 408" coords2="590, 368, 675, 408" shape="rect" alt="Add CAN data:Task" id="areadiagram_map_11IouVaAUrAA8Set_default" href="BPTask_11IouVaAUrAA8Seu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="392, 499, 502, 539" coords2="392, 499, 502, 539" shape="rect" alt="Create CAN record:Task" id="areadiagram_map_28QouVaAUrAA8SeN_default" href="BPTask_28QouVaAUrAA8SeO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="403, 367, 475, 407" coords2="403, 367, 475, 407" shape="rect" alt="Create CAN:Task" id="areadiagram_map_tSnIuVaAUrAA8Sdh_default" href="BPTask_tSnIuVaAUrAA8Sdi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="191, 499, 269, 539" coords2="191, 499, 269, 539" shape="rect" alt="Authenticate:Task" id="areadiagram_map_MF7IuVaAUrAA8SdB_default" href="BPTask_MF7IuVaAUrAA8SdC.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 453, 2032, 603" coords2="17, 453, 2032, 603" shape="rect" alt="SOFie:Lane" id="areadiagram_map_gk9IuVaAUrAA8Scv_default" href="BPLane_gk9IuVaAUrAA8Scw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="186, 358, 269, 398" coords2="186, 358, 269, 398" shape="rect" alt="Log into SOFie:Task" id="areadiagram_map_7tNIuVaAUrAA8Scd_default" href="BPTask_7tNIuVaAUrAA8Sce.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="104, 368, 124, 388" coords2="104, 368, 124, 388" shape="rect" alt=":Start Event" id="areadiagram_map_b61IuVaAUrAA8ScP_default" href="BPStartEvent_b61IuVaAUrAA8ScQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 303, 2032, 453" coords2="17, 303, 2032, 453" shape="rect" alt="OBF:Lane" id="areadiagram_map_lPrAuVaAUrAA8Sb1_default" href="BPLane_lPrAuVaAUrAA8Sb2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 303, 2032, 603" coords2="2, 303, 2032, 603" shape="rect" alt="Missing CAN:Pool" id="areadiagram_map_.PrAuVaAUrAA8Sbx_default" href="BPPool_BPrAuVaAUrAA8Sby.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_MF7IuVaAUrAA8SdC.html" class="ItemLink">Authenticate : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_b61IuVaAUrAA8ScQ.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_lPrAuVaAUrAA8Sb2.html" class="ItemLink">OBF : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_gk9IuVaAUrAA8Scw.html" class="ItemLink">SOFie : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_7tNIuVaAUrAA8Sce.html" class="ItemLink">Log into SOFie : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_28QouVaAUrAA8SeO.html" class="ItemLink">Create CAN record : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_C5EouVaAUrAA8SfW.html" class="ItemLink">Save CAN Data in record : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_tSnIuVaAUrAA8Sdi.html" class="ItemLink">Create CAN : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Sb8ouVaAUrAA8Sge.html" class="ItemLink">Add CAN to doc view : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_11IouVaAUrAA8Seu.html" class="ItemLink">Add CAN data : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP08</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_8BSouVaAUrAA8Sg_.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP09</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_qGMouVaAUrAA8Sf2.html" class="ItemLink">Add CAN to DOC view : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP42</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_BPrAuVaAUrAA8Sby.html" class="ItemLink">Missing CAN : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+</body>
+</html>
