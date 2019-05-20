@@ -1,0 +1,821 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - Create the new CAN in NBS</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html" class="PageParentTitle">CAN Creation : Pool</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html" class="PageParentTitle">OBF : Lane</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html" class="PageParentTitle">Create the new CAN in NBS : Sub-Process</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - Create the new CAN in NBS		</span>
+<a onclick="javascript: showVpLink('OBF mapping project.vpp://diagram/QjjBq1aGAqAC73Ia', 'Create the new CAN in NBS\nOBF mapping project.vpp://diagram/QjjBq1aGAqAC73Ia', 'Create the new CAN in NBS', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|212.0|207.0|78.0|40.0|BPTask_MFkRq1aGAqAC73K_.html|BPTask_MFkRq1aGAqAC73K_.html|MFkRq1aGAqAC73K9" id="optionMFkRq1aGAqAC73K9">Authenticate : Task</option>
+<option value="shape|77.0|73.0|20.0|20.0|BPStartEvent_iLjBq1aGAqAC73Ii.html|BPStartEvent_iLjBq1aGAqAC73Ii.html|iLjBq1aGAqAC73Ih" id="optioniLjBq1aGAqAC73Ih">Unnamed Start Event : Start Event</option>
+<option value="shape|17.0|2.0|4517.0|150.0|BPLane_AA9hq1aGAqAC73JY.html|BPLane_AA9hq1aGAqAC73JY.html|__dhq1aGAqAC73JX" id="option__dhq1aGAqAC73JX">OBF : Lane</option>
+<option value="shape|17.0|152.0|4517.0|150.0|BPLane_sFjhq1aGAqAC73Jg.html|BPLane_sFjhq1aGAqAC73Jg.html|sFjhq1aGAqAC73Jf" id="optionsFjhq1aGAqAC73Jf"> NBS Budget &amp; Finance : Lane</option>
+<option value="shape|401.0|199.0|147.0|40.0|BPTask_vRHRq1aGAqAC73Mg.html|BPTask_vRHRq1aGAqAC73Mg.html|vRHRq1aGAqAC73Mf" id="optionvRHRq1aGAqAC73Mf">Return Find projects View : Task</option>
+<option value="shape|405.0|63.0|143.0|40.0|BPTask_a5SRq1aGAqAC73Lo.html|BPTask_a5SRq1aGAqAC73Lo.html|a5SRq1aGAqAC73Ln" id="optiona5SRq1aGAqAC73Ln">Navigate to Find Projects : Task</option>
+<option value="shape|2.0|2.0|4532.0|300.0|BPPool_YwzBq1aGAqAC73Is.html|BPPool_YwzBq1aGAqAC73Is.html|YwzBq1aGAqAC73Ir" id="optionYwzBq1aGAqAC73Ir">Pool : Pool</option>
+<option value="shape|618.0|187.0|246.0|40.0|BPTask_b4_xq1aGAqAC73OG.html|BPTask_b4_xq1aGAqAC73OG.html|b4.xq1aGAqAC73OF" id="optionb4.xq1aGAqAC73OF">Return Projects, Template Summary Window : Task</option>
+<option value="shape|631.0|53.0|216.0|40.0|BPTask_DVUxq1aGAqAC73NU.html|BPTask_DVUxq1aGAqAC73NU.html|DVUxq1aGAqAC73NT" id="optionDVUxq1aGAqAC73NT">Choose the “Template” option on the “Search For” field and hit “Find” : Task</option>
+<option value="shape|182.0|63.0|139.0|40.0|BPTask___KayVaAUrAA8VZ5.html|BPTask___KayVaAUrAA8VZ5.html|tYwRq1aGAqAC73KQ" id="optiontYwRq1aGAqAC73KQ">Log into NBS Budget &amp; Finance : Task</option>
+<option value="shape|1065.0|199.0|147.0|40.0|BPTask_cjaJq1aGAqAC73Pv.html|BPTask_cjaJq1aGAqAC73Pv.html|cjaJq1aGAqAC73Pu" id="optioncjaJq1aGAqAC73Pu">Create Copy of Template  : Task</option>
+<option value="shape|935.0|57.0|420.0|40.0|BPTask_X1AJq1aGAqAC73O9.html|BPTask_X1AJq1aGAqAC73O9.html|X1AJq1aGAqAC73O8" id="optionX1AJq1aGAqAC73O8"> choose the appropriated Number (e.g. for Direct/Non-appropriated Funds, choose T1, for Internal IAA type N choose T5, etc.), and hit “Copy To… : Task</option>
+<option value="shape|1324.0|199.0|150.0|40.0|BPTask_EsWJq1aGAqAC73QX.html|BPTask_EsWJq1aGAqAC73QX.html|EsWJq1aGAqAC73QW" id="optionEsWJq1aGAqAC73QW">Display Project Quick Entry  screen with assigned project Name(CAN No) : Task</option>
+<option value="shape|1548.0|53.0|301.0|40.0|BPTask_z_RJq1aGAqAC73Q3.html|BPTask_z_RJq1aGAqAC73Q3.html|z_RJq1aGAqAC73Q2" id="optionz_RJq1aGAqAC73Q2">using the details on the CAN request form to fill out all required fields then move the cursor down : Task</option>
+<option value="shape|2131.0|53.0|774.0|40.0|BPTask_tW4pq1aGAqAC73R8.html|BPTask_tW4pq1aGAqAC73R8.html|tW4pq1aGAqAC73R7" id="optiontW4pq1aGAqAC73R7">Using the information on the Active CAN Dashboard to enter the “optional radian” field for PCC 130 (e.g. NCI 249 for Direct Funds, NCI 045 for CRADA, NCI 911 for Gift Funds, etc.) (Pic 3.4.1), and hit Ok, please note that the PCC 130 is not required for Reimbursable Fund/CAN : Task</option>
+<option value="shape|2414.0|188.0|312.0|40.0|BPTask_lydpq1aGAqAC73S4.html|BPTask_lydpq1aGAqAC73S4.html|lydpq1aGAqAC73S3" id="optionlydpq1aGAqAC73S3">Return Projects, Template Summary Window with with the assigned Project Number and details filled in : Task</option>
+<option value="shape|3041.0|175.0|271.0|40.0|BPTask_D6G9q1aGAqAC73VE.html|BPTask_D6G9q1aGAqAC73VE.html|D6G9q1aGAqAC73VD" id="optionD6G9q1aGAqAC73VD">“Projects, Templates” screen with “almost completed” details of the new CAN/Project : Task</option>
+<option value="shape|2960.0|53.0|70.0|40.0|BPTask_z8YZq1aGAqAC73UA.html|BPTask_z8YZq1aGAqAC73UA.html|T8YZq1aGAqAC73T_" id="optionT8YZq1aGAqAC73T_">Press Open : Task</option>
+<option value="shape|3351.0|39.0|54.0|40.0|BPTask_jAh9q1aGAqAC73V3.html|BPTask_jAh9q1aGAqAC73V3.html|DAh9q1aGAqAC73V2" id="optionDAh9q1aGAqAC73V2">Press"[]" : Task</option>
+<option value="shape|3335.0|175.0|125.0|40.0|BPTask_NAT9q1aGAqAC73Wz.html|BPTask_NAT9q1aGAqAC73Wz.html|NAT9q1aGAqAC73Wy" id="optionNAT9q1aGAqAC73Wy">Return Project Screen : Task</option>
+<option value="shape|3493.0|175.0|150.0|40.0|BPTask_Yocvq1aGAqAC7yc8.html|BPTask_Yocvq1aGAqAC7yc8.html|Yocvq1aGAqAC7yc7" id="optionYocvq1aGAqAC7yc7">Display Account Flex Field : Task</option>
+<option value="shape|3492.0|39.0|101.0|40.0|BPTask_Eb_9q1aGAqAC73Xn.html|BPTask_Eb_9q1aGAqAC73Xn.html|4b_9q1aGAqAC73Xm" id="option4b_9q1aGAqAC73Xm">Click GL Account : Task</option>
+<option value="shape|3775.0|166.0|130.0|40.0|BPTask_2Owfq1aGAqAC7ygF.html|BPTask_2Owfq1aGAqAC7ygF.html|2Owfq1aGAqAC7ygE" id="option2Owfq1aGAqAC7ygE">Return Projects Screen : Task</option>
+<option value="shape|3692.0|39.0|296.0|40.0|BPTask_qoqvq1aGAqAC7ye5.html|BPTask_qoqvq1aGAqAC7ye5.html|qoqvq1aGAqAC7ye4" id="optionqoqvq1aGAqAC7ye4"> fill in all the values of the ACS Index which you have collected from the Active CAN Dashboard. Press OK  : Task</option>
+<option value="shape|4050.0|195.0|150.0|40.0|BPTask_Dvefq1aGAqAC7yhl.html|BPTask_Dvefq1aGAqAC7yhl.html|Dvefq1aGAqAC7yhk" id="optionDvefq1aGAqAC7yhk">Return Project, Templates Screen : Task</option>
+<option value="shape|4096.0|39.0|58.0|40.0|BPTask_peMfq1aGAqAC7ygz.html|BPTask_peMfq1aGAqAC7ygz.html|peMfq1aGAqAC7ygy" id="optionpeMfq1aGAqAC7ygy">Press OK : Task</option>
+<option value="shape|4301.0|188.0|135.0|40.0|BPTask_gUE_q1aGAqAC7ykH.html|BPTask_gUE_q1aGAqAC7ykH.html|gUE_q1aGAqAC7ykG" id="optiongUE_q1aGAqAC7ykG"> Send the request to NBS/OFM for approval : Task</option>
+<option value="shape|4328.0|47.0|97.0|40.0|BPTask_kVZfq1aGAqAC7yji.html|BPTask_kVZfq1aGAqAC7yji.html|kVZfq1aGAqAC7yjh" id="optionkVZfq1aGAqAC7yjh">Hit “Save”, then hit “Submit” : Task</option>
+<option value="shape|4497.0|199.0|20.0|20.0|BPEndEvent_2LjBq1aGAqAC73Io.html|BPEndEvent_2LjBq1aGAqAC73Io.html|2LjBq1aGAqAC73In" id="option2LjBq1aGAqAC73In">Unnamed End Event : End Event</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Create_the_new_CAN_in_NBS.png" usemap="#diagram_map" class="Image" width="4680" height="306"/>
+					<map name="diagram_map">
+<area coords="2170,73,2208,87" coords2="2170,73,2208,87" shape="rect" alt="CRADA" href="GridDiagram_5GBJ6waAUJUCAjP0.html#wZ9LiUaAUhQCoQeO" onclick="javascript: highlightGridModelSelection('wZ9LiUaAUhQCoQeO');"/>
+<area imageId="diagram" coords="97.0, 75.0, 97.0, 89.0, 182.0, 89.0, 182.0, 75.0" coords2="97.0, 75.0, 97.0, 89.0, 182.0, 89.0, 182.0, 75.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map__6IRq1aGAqAC73Kg_default" href="BPSequenceFlow_v6IRq1aGAqAC73Kf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="244.0, 103.0, 244.0, 207.0, 258.0, 207.0, 258.0, 103.0" coords2="244.0, 103.0, 244.0, 207.0, 258.0, 207.0, 258.0, 103.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_xFkRq1aGAqAC73LG_default" href="BPSequenceFlow_BFkRq1aGAqAC73LF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="358.0, 73.0, 358.0, 76.0, 355.0, 76.0, 355.0, 90.0, 358.0, 90.0, 358.0, 207.0, 290.0, 207.0, 290.0, 221.0, 358.0, 221.0, 358.0, 224.0, 372.0, 224.0, 372.0, 221.0, 375.0, 221.0, 375.0, 207.0, 372.0, 207.0, 372.0, 90.0, 405.0, 90.0, 405.0, 76.0, 372.0, 76.0, 372.0, 73.0" coords2="358.0, 73.0, 358.0, 76.0, 355.0, 76.0, 355.0, 90.0, 358.0, 90.0, 358.0, 207.0, 290.0, 207.0, 290.0, 221.0, 358.0, 221.0, 358.0, 224.0, 372.0, 224.0, 372.0, 221.0, 375.0, 221.0, 375.0, 207.0, 372.0, 207.0, 372.0, 90.0, 405.0, 90.0, 405.0, 76.0, 372.0, 76.0, 372.0, 73.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_t5SRq1aGAqAC73Lw_default" href="BPSequenceFlow_l5SRq1aGAqAC73Lv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="461.0, 103.0, 461.0, 199.0, 475.0, 199.0, 475.0, 103.0" coords2="461.0, 103.0, 461.0, 199.0, 475.0, 199.0, 475.0, 103.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_WxHRq1aGAqAC73Mo_default" href="BPSequenceFlow_axHRq1aGAqAC73Mn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="595.0, 63.0, 595.0, 66.0, 592.0, 66.0, 592.0, 80.0, 595.0, 80.0, 595.0, 199.0, 548.0, 199.0, 548.0, 213.0, 595.0, 213.0, 595.0, 216.0, 609.0, 216.0, 609.0, 213.0, 612.0, 213.0, 612.0, 199.0, 609.0, 199.0, 609.0, 80.0, 631.0, 80.0, 631.0, 66.0, 609.0, 66.0, 609.0, 63.0" coords2="595.0, 63.0, 595.0, 66.0, 592.0, 66.0, 592.0, 80.0, 595.0, 80.0, 595.0, 199.0, 548.0, 199.0, 548.0, 213.0, 595.0, 213.0, 595.0, 216.0, 609.0, 216.0, 609.0, 213.0, 612.0, 213.0, 612.0, 199.0, 609.0, 199.0, 609.0, 80.0, 631.0, 80.0, 631.0, 66.0, 609.0, 66.0, 609.0, 63.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_41Uxq1aGAqAC73Nc_default" href="BPSequenceFlow_Q1Uxq1aGAqAC73Nb.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="722.0, 93.0, 722.0, 187.0, 736.0, 187.0, 736.0, 93.0" coords2="722.0, 93.0, 722.0, 187.0, 736.0, 187.0, 736.0, 93.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_cE.xq1aGAqAC73OO_default" href="BPSequenceFlow_UE_xq1aGAqAC73ON.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="909.0, 67.0, 909.0, 70.0, 906.0, 70.0, 906.0, 84.0, 909.0, 84.0, 909.0, 199.0, 864.0, 199.0, 864.0, 213.0, 909.0, 213.0, 909.0, 216.0, 923.0, 216.0, 923.0, 213.0, 926.0, 213.0, 926.0, 199.0, 923.0, 199.0, 923.0, 84.0, 935.0, 84.0, 935.0, 70.0, 923.0, 70.0, 923.0, 67.0" coords2="909.0, 67.0, 909.0, 70.0, 906.0, 70.0, 906.0, 84.0, 909.0, 84.0, 909.0, 199.0, 864.0, 199.0, 864.0, 213.0, 909.0, 213.0, 909.0, 216.0, 923.0, 216.0, 923.0, 213.0, 926.0, 213.0, 926.0, 199.0, 923.0, 199.0, 923.0, 84.0, 935.0, 84.0, 935.0, 70.0, 923.0, 70.0, 923.0, 67.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_iNAJq1aGAqAC73PF_default" href="BPSequenceFlow_sNAJq1aGAqAC73PE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1131.0, 97.0, 1131.0, 199.0, 1145.0, 199.0, 1145.0, 97.0" coords2="1131.0, 97.0, 1131.0, 199.0, 1145.0, 199.0, 1145.0, 97.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_pjaJq1aGAqAC73P3_default" href="BPSequenceFlow_hjaJq1aGAqAC73P2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1212.0, 212.0, 1212.0, 226.0, 1324.0, 226.0, 1324.0, 212.0" coords2="1212.0, 212.0, 1212.0, 226.0, 1324.0, 226.0, 1324.0, 212.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_.sWJq1aGAqAC73Qf_default" href="BPSequenceFlow_2sWJq1aGAqAC73Qe.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1491.0, 63.0, 1491.0, 66.0, 1488.0, 66.0, 1488.0, 80.0, 1491.0, 80.0, 1491.0, 207.0, 1474.0, 207.0, 1474.0, 221.0, 1491.0, 221.0, 1491.0, 224.0, 1505.0, 224.0, 1505.0, 221.0, 1508.0, 221.0, 1508.0, 207.0, 1505.0, 207.0, 1505.0, 80.0, 1548.0, 80.0, 1548.0, 66.0, 1505.0, 66.0, 1505.0, 63.0" coords2="1491.0, 63.0, 1491.0, 66.0, 1488.0, 66.0, 1488.0, 80.0, 1491.0, 80.0, 1491.0, 207.0, 1474.0, 207.0, 1474.0, 221.0, 1491.0, 221.0, 1491.0, 224.0, 1505.0, 224.0, 1505.0, 221.0, 1508.0, 221.0, 1508.0, 207.0, 1505.0, 207.0, 1505.0, 80.0, 1548.0, 80.0, 1548.0, 66.0, 1505.0, 66.0, 1505.0, 63.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_KIJJq1aGAqAC73RJ_default" href="BPSequenceFlow_cIJJq1aGAqAC73RI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1849.0, 66.0, 1849.0, 80.0, 2131.0, 80.0, 2131.0, 66.0" coords2="1849.0, 66.0, 1849.0, 80.0, 2131.0, 80.0, 2131.0, 66.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_I24pq1aGAqAC73SE_default" href="BPSequenceFlow_A24pq1aGAqAC73SD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2515.0, 93.0, 2515.0, 188.0, 2529.0, 188.0, 2529.0, 93.0" coords2="2515.0, 93.0, 2515.0, 188.0, 2529.0, 188.0, 2529.0, 93.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_fydpq1aGAqAC73TA_default" href="BPSequenceFlow_Xydpq1aGAqAC73S_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2926.0, 63.0, 2926.0, 66.0, 2923.0, 66.0, 2923.0, 80.0, 2926.0, 80.0, 2926.0, 201.0, 2726.0, 201.0, 2726.0, 215.0, 2926.0, 215.0, 2926.0, 218.0, 2940.0, 218.0, 2940.0, 215.0, 2943.0, 215.0, 2943.0, 201.0, 2940.0, 201.0, 2940.0, 80.0, 2960.0, 80.0, 2960.0, 66.0, 2940.0, 66.0, 2940.0, 63.0" coords2="2926.0, 63.0, 2926.0, 66.0, 2923.0, 66.0, 2923.0, 80.0, 2926.0, 80.0, 2926.0, 201.0, 2726.0, 201.0, 2726.0, 215.0, 2926.0, 215.0, 2926.0, 218.0, 2940.0, 218.0, 2940.0, 215.0, 2943.0, 215.0, 2943.0, 201.0, 2940.0, 201.0, 2940.0, 80.0, 2960.0, 80.0, 2960.0, 66.0, 2940.0, 66.0, 2940.0, 63.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_kCYZq1aGAqAC73UI_default" href="BPSequenceFlow_oCYZq1aGAqAC73UH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2988.0, 93.0, 2988.0, 188.0, 2985.0, 188.0, 2985.0, 202.0, 2988.0, 202.0, 2988.0, 205.0, 3002.0, 205.0, 3002.0, 202.0, 3041.0, 202.0, 3041.0, 188.0, 3002.0, 188.0, 3002.0, 93.0" coords2="2988.0, 93.0, 2988.0, 188.0, 2985.0, 188.0, 2985.0, 202.0, 2988.0, 202.0, 2988.0, 205.0, 3002.0, 205.0, 3002.0, 202.0, 3041.0, 202.0, 3041.0, 188.0, 3002.0, 188.0, 3002.0, 93.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_4GG9q1aGAqAC73VM_default" href="BPSequenceFlow_QGG9q1aGAqAC73VL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3305.0, 69.0, 3305.0, 72.0, 3302.0, 72.0, 3302.0, 86.0, 3305.0, 86.0, 3305.0, 175.0, 3312.0, 175.0, 3312.0, 185.0, 3319.0, 185.0, 3319.0, 86.0, 3361.0, 86.0, 3361.0, 79.0, 3351.0, 79.0, 3351.0, 72.0, 3319.0, 72.0, 3319.0, 69.0" coords2="3305.0, 69.0, 3305.0, 72.0, 3302.0, 72.0, 3302.0, 86.0, 3305.0, 86.0, 3305.0, 175.0, 3312.0, 175.0, 3312.0, 185.0, 3319.0, 185.0, 3319.0, 86.0, 3361.0, 86.0, 3361.0, 79.0, 3351.0, 79.0, 3351.0, 72.0, 3319.0, 72.0, 3319.0, 69.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_4gh9q1aGAqAC73V__default" href="BPSequenceFlow_wgh9q1aGAqAC73V_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3386.0, 79.0, 3386.0, 175.0, 3400.0, 175.0, 3400.0, 79.0" coords2="3386.0, 79.0, 3386.0, 175.0, 3400.0, 175.0, 3400.0, 79.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_ogT9q1aGAqAC73W7_default" href="BPSequenceFlow_AgT9q1aGAqAC73W6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3479.0, 49.0, 3479.0, 52.0, 3476.0, 52.0, 3476.0, 66.0, 3479.0, 66.0, 3479.0, 188.0, 3460.0, 188.0, 3460.0, 202.0, 3479.0, 202.0, 3479.0, 205.0, 3493.0, 205.0, 3493.0, 202.0, 3496.0, 202.0, 3496.0, 188.0, 3493.0, 188.0, 3493.0, 79.0, 3492.0, 79.0, 3492.0, 49.0" coords2="3479.0, 49.0, 3479.0, 52.0, 3476.0, 52.0, 3476.0, 66.0, 3479.0, 66.0, 3479.0, 188.0, 3460.0, 188.0, 3460.0, 202.0, 3479.0, 202.0, 3479.0, 205.0, 3493.0, 205.0, 3493.0, 202.0, 3496.0, 202.0, 3496.0, 188.0, 3493.0, 188.0, 3493.0, 79.0, 3492.0, 79.0, 3492.0, 49.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Bb_9q1aGAqAC73Xv_default" href="BPSequenceFlow_Ob_9q1aGAqAC73Xu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3535.0, 79.0, 3535.0, 175.0, 3549.0, 175.0, 3549.0, 79.0" coords2="3535.0, 79.0, 3535.0, 175.0, 3549.0, 175.0, 3549.0, 79.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Bocvq1aGAqAC7ydE_default" href="BPSequenceFlow_2ocvq1aGAqAC7ydD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3665.0, 49.0, 3665.0, 52.0, 3662.0, 52.0, 3662.0, 66.0, 3665.0, 66.0, 3665.0, 188.0, 3643.0, 188.0, 3643.0, 202.0, 3665.0, 202.0, 3665.0, 205.0, 3679.0, 205.0, 3679.0, 202.0, 3682.0, 202.0, 3682.0, 188.0, 3679.0, 188.0, 3679.0, 66.0, 3692.0, 66.0, 3692.0, 52.0, 3679.0, 52.0, 3679.0, 49.0" coords2="3665.0, 49.0, 3665.0, 52.0, 3662.0, 52.0, 3662.0, 66.0, 3665.0, 66.0, 3665.0, 188.0, 3643.0, 188.0, 3643.0, 202.0, 3665.0, 202.0, 3665.0, 205.0, 3679.0, 205.0, 3679.0, 202.0, 3682.0, 202.0, 3682.0, 188.0, 3679.0, 188.0, 3679.0, 66.0, 3692.0, 66.0, 3692.0, 52.0, 3679.0, 52.0, 3679.0, 49.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_c3Rvq1aGAqAC7yfi_default" href="BPSequenceFlow_43Rvq1aGAqAC7yfh.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3833.0, 79.0, 3833.0, 166.0, 3847.0, 166.0, 3847.0, 79.0" coords2="3833.0, 79.0, 3833.0, 166.0, 3847.0, 166.0, 3847.0, 79.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_zOwfq1aGAqAC7ygN_default" href="BPSequenceFlow_9Owfq1aGAqAC7ygM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4021.0, 49.0, 4021.0, 52.0, 4018.0, 52.0, 4018.0, 66.0, 4021.0, 66.0, 4021.0, 165.0, 3895.0, 165.0, 3895.0, 166.0, 3905.0, 166.0, 3905.0, 179.0, 4021.0, 179.0, 4021.0, 182.0, 4035.0, 182.0, 4035.0, 179.0, 4038.0, 179.0, 4038.0, 165.0, 4035.0, 165.0, 4035.0, 66.0, 4096.0, 66.0, 4096.0, 52.0, 4035.0, 52.0, 4035.0, 49.0" coords2="4021.0, 49.0, 4021.0, 52.0, 4018.0, 52.0, 4018.0, 66.0, 4021.0, 66.0, 4021.0, 165.0, 3895.0, 165.0, 3895.0, 166.0, 3905.0, 166.0, 3905.0, 179.0, 4021.0, 179.0, 4021.0, 182.0, 4035.0, 182.0, 4035.0, 179.0, 4038.0, 179.0, 4038.0, 165.0, 4035.0, 165.0, 4035.0, 66.0, 4096.0, 66.0, 4096.0, 52.0, 4035.0, 52.0, 4035.0, 49.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_feMfq1aGAqAC7yg7_default" href="BPSequenceFlow_neMfq1aGAqAC7yg6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4110.0, 79.0, 4110.0, 195.0, 4124.0, 195.0, 4124.0, 79.0" coords2="4110.0, 79.0, 4110.0, 195.0, 4124.0, 195.0, 4124.0, 79.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Yfefq1aGAqAC7yht_default" href="BPSequenceFlow_Qfefq1aGAqAC7yhs.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4193.0, 57.0, 4193.0, 60.0, 4190.0, 60.0, 4190.0, 74.0, 4193.0, 74.0, 4193.0, 195.0, 4200.0, 195.0, 4200.0, 205.0, 4207.0, 205.0, 4207.0, 74.0, 4328.0, 74.0, 4328.0, 60.0, 4207.0, 60.0, 4207.0, 57.0" coords2="4193.0, 57.0, 4193.0, 60.0, 4190.0, 60.0, 4190.0, 74.0, 4193.0, 74.0, 4193.0, 195.0, 4200.0, 195.0, 4200.0, 205.0, 4207.0, 205.0, 4207.0, 74.0, 4328.0, 74.0, 4328.0, 60.0, 4207.0, 60.0, 4207.0, 57.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_BVZfq1aGAqAC7yjq_default" href="BPSequenceFlow_OVZfq1aGAqAC7yjp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4369.0, 87.0, 4369.0, 188.0, 4383.0, 188.0, 4383.0, 87.0" coords2="4369.0, 87.0, 4369.0, 188.0, 4383.0, 188.0, 4383.0, 87.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_WUE_q1aGAqAC7ykP_default" href="BPSequenceFlow_qUE_q1aGAqAC7ykO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4436.0, 202.0, 4436.0, 216.0, 4497.0, 216.0, 4497.0, 202.0" coords2="4436.0, 202.0, 4436.0, 216.0, 4497.0, 216.0, 4497.0, 202.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_KoK_q1aGAqAC7ykv_default" href="BPSequenceFlow_SoK_q1aGAqAC7yku.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4497, 252, 4676, 270" coords2="4497, 252, 4676, 270" shape="rect" alt="Create CAN record in SOFie:Sub-Process" id="areadiagram_map_2LjBq1aGAqAC73In_sublevelflowitem1" href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html?shapeid=sh3Ya1aGAqAC7ypT"/>
+<area imageId="diagram" coords="4497, 270, 4676, 288" coords2="4497, 270, 4676, 288" shape="rect" alt="VALIDATE:Gateway" id="areadiagram_map_2LjBq1aGAqAC73In_sublevelflowitem2" href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html?shapeid=NnO6yVaAUrAA8Vec"/>
+<area imageId="diagram" coords="4497, 199, 4517, 219" coords2="4497, 199, 4517, 219" shape="rect" alt=":End Event" id="areadiagram_map_2LjBq1aGAqAC73In_default" href="BPEndEvent_2LjBq1aGAqAC73Io.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4301, 188, 4436, 228" coords2="4301, 188, 4436, 228" shape="rect" alt=" Send the request to NBS/OFM for approval:Task" id="areadiagram_map_gUE_q1aGAqAC7ykG_default" href="BPTask_gUE_q1aGAqAC7ykH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4328, 47, 4425, 87" coords2="4328, 47, 4425, 87" shape="rect" alt="Hit “Save”, then hit “Submit”:Task" id="areadiagram_map_kVZfq1aGAqAC7yjh_default" href="BPTask_kVZfq1aGAqAC7yji.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','4328, 47, 4425, 87',new Array(),new Array(),new Array(new Array('https://nih.sharepoint.com/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%203.6_NBS%20IC%20Project%20Request_Projects%20Templates%20Window_After%20Submitted%20to%20NBS%20and%20Saved.jpg?csf=1&cid=0d13fe3d-fb1f-4122-b1f8-3434435fa7ac','Save and Submit from Projects screen Screen Shot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '4328, 47, 4425, 87'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4050, 195, 4200, 235" coords2="4050, 195, 4200, 235" shape="rect" alt="Return Project, Templates Screen:Task" id="areadiagram_map_Dvefq1aGAqAC7yhk_default" href="BPTask_Dvefq1aGAqAC7yhl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4096, 39, 4154, 79" coords2="4096, 39, 4154, 79" shape="rect" alt="Press OK:Task" id="areadiagram_map_peMfq1aGAqAC7ygy_default" href="BPTask_peMfq1aGAqAC7ygz.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','4096, 39, 4154, 79',new Array(),new Array(),new Array(new Array('https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%203.5.5_NBS%20IC%20Project%20Request_Projects%20Templates%20Window_Details_Project%20Screen%20with%20ACS%20Index%20Info_OK.jpg?csf=1','Projects Sceen Screen Shot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '4096, 39, 4154, 79'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3775, 166, 3905, 206" coords2="3775, 166, 3905, 206" shape="rect" alt="Return Projects Screen:Task" id="areadiagram_map_2Owfq1aGAqAC7ygE_default" href="BPTask_2Owfq1aGAqAC7ygF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3692, 39, 3988, 79" coords2="3692, 39, 3988, 79" shape="rect" alt=" fill in all the values of the ACS Index which you have collected from the Active CAN Dashboard. Press OK :Task" id="areadiagram_map_qoqvq1aGAqAC7ye4_default" href="BPTask_qoqvq1aGAqAC7ye5.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','3692, 39, 3988, 79',new Array(),new Array(),new Array(new Array('https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%203.5.3_NBS%20IC%20Project%20Request_Accounting%20Flexfield%20Window_for%20Entering%20ACS%20Index.jpg?csf=1','Fill in ACS Index fields Sceen Shot'),new Array('https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%203.5.4_NBS%20IC%20Project%20Request_Accounting%20Flexfield%20Window_Details%20of%20ACS%20Index%20for%20new%20CAN.jpg?csf=1','Filled in ACS index fields.')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '3692, 39, 3988, 79'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3493, 175, 3643, 215" coords2="3493, 175, 3643, 215" shape="rect" alt="Display Account Flex Field:Task" id="areadiagram_map_Yocvq1aGAqAC7yc7_default" href="BPTask_Yocvq1aGAqAC7yc8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3492, 39, 3593, 79" coords2="3492, 39, 3593, 79" shape="rect" alt="Click GL Account:Task" id="areadiagram_map_4b_9q1aGAqAC73Xm_default" href="BPTask_Eb_9q1aGAqAC73Xn.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','3492, 39, 3593, 79',new Array(),new Array(),new Array(new Array('https://nih.sharepoint.com/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%203.5.2_NBS%20IC%20Project%20Request_Projects%20Templates%20Window_Details_Project%20Screen_GL%20Account%20for%20Entering%20ACS%20Index.jpg?csf=1&cid=9054a90c-4561-4309-810a-3741013d86f8','Projects Screen -Open GL field Screen Shot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '3492, 39, 3593, 79'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3335, 175, 3460, 215" coords2="3335, 175, 3460, 215" shape="rect" alt="Return Project Screen:Task" id="areadiagram_map_NAT9q1aGAqAC73Wy_default" href="BPTask_NAT9q1aGAqAC73Wz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3351, 39, 3405, 79" coords2="3351, 39, 3405, 79" shape="rect" alt="Press"[]":Task" id="areadiagram_map_DAh9q1aGAqAC73V2_default" href="BPTask_jAh9q1aGAqAC73V3.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','3351, 39, 3405, 79',new Array(),new Array(),new Array(new Array('https://nih.sharepoint.com/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%203.5.1_NBS%20IC%20Project%20Request_Projects%20Templates%20Window_Details_Before%20Entering%20ACS%20Index%20%5B%5D.jpg?csf=1&cid=e2eb1087-5eb3-49ef-8314-d88f172f8420','“Projects, Templates” screen with “almost completed” details of the new CAN/Project Screen Shot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '3351, 39, 3405, 79'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3041, 175, 3312, 215" coords2="3041, 175, 3312, 215" shape="rect" alt="“Projects, Templates” screen with “almost completed” details of the new CAN/Project:Task" id="areadiagram_map_D6G9q1aGAqAC73VD_default" href="BPTask_D6G9q1aGAqAC73VE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2960, 53, 3030, 93" coords2="2960, 53, 3030, 93" shape="rect" alt="Press Open:Task" id="areadiagram_map_T8YZq1aGAqAC73T__default" href="BPTask_z8YZq1aGAqAC73UA.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','2960, 53, 3030, 93',new Array(),new Array(),new Array(new Array(' https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%203.5_NBS%20IC%20Project%20Request_Projects%20Templates%20Summary%20Window_Full%20Project%20No.%20assigned_Open.jpg?csf=1','View Template Summary Window with Project Details Screen Shot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '2960, 53, 3030, 93'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2414, 188, 2726, 228" coords2="2414, 188, 2726, 228" shape="rect" alt="Return Projects, Template Summary Window with with the assigned Project Number and details filled in:Task" id="areadiagram_map_lydpq1aGAqAC73S3_default" href="BPTask_lydpq1aGAqAC73S4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2131, 53, 2905, 93" coords2="2131, 53, 2905, 93" shape="rect" alt="Using the information on the Active CAN Dashboard to enter the “optional radian” field for PCC 130 (e.g. NCI 249 for Direct Funds, NCI 045 for CRADA, NCI 911 for Gift Funds, etc.) (Pic 3.4.1), and hit Ok, please note that the PCC 130 is not required for Reimbursable Fund/CAN:Task" id="areadiagram_map_tW4pq1aGAqAC73R7_default" href="BPTask_tW4pq1aGAqAC73R8.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','2131, 53, 2905, 93',new Array(),new Array(),new Array(new Array('https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%203.4.1_NBS%20IC%20Project%20Request_Projects%20Quick%20Entry%20Window_PC130_OK.jpg?csf=1','Add Class Code Screen Shot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '2131, 53, 2905, 93'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1548, 53, 1849, 93" coords2="1548, 53, 1849, 93" shape="rect" alt="using the details on the CAN request form to fill out all required fields then move the cursor down:Task" id="areadiagram_map_z_RJq1aGAqAC73Q2_default" href="BPTask_z_RJq1aGAqAC73Q3.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1548, 53, 1849, 93',new Array(),new Array(),new Array(new Array(' https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%203.4_NBS%20IC%20Project%20Request_Projects%20Quick%20Entry%20Window_Move%20cursor%20down.jpg?csf=1','Fill out proect entry')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '1548, 53, 1849, 93'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1324, 199, 1474, 239" coords2="1324, 199, 1474, 239" shape="rect" alt="Display Project Quick Entry  screen with assigned project Name(CAN No):Task" id="areadiagram_map_EsWJq1aGAqAC73QW_default" href="BPTask_EsWJq1aGAqAC73QX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1065, 199, 1212, 239" coords2="1065, 199, 1212, 239" shape="rect" alt="Create Copy of Template :Task" id="areadiagram_map_cjaJq1aGAqAC73Pu_default" href="BPTask_cjaJq1aGAqAC73Pv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="935, 57, 1355, 97" coords2="935, 57, 1355, 97" shape="rect" alt=" choose the appropriated Number (e.g. for Direct/Non-appropriated Funds, choose T1, for Internal IAA type N choose T5, etc.), and hit “Copy To…:Task" id="areadiagram_map_X1AJq1aGAqAC73O8_default" href="BPTask_X1AJq1aGAqAC73O9.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','935, 57, 1355, 97',new Array(),new Array(),new Array(new Array(' https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%203.3_NBS%20IC%20Project%20Request_Projects%20Templates%20Summary%20Window_Options_Copy%20To.jpg?csf=1','Choose appropriate number screen shot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '935, 57, 1355, 97'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="618, 187, 864, 227" coords2="618, 187, 864, 227" shape="rect" alt="Return Projects, Template Summary Window:Task" id="areadiagram_map_b4.xq1aGAqAC73OF_default" href="BPTask_b4_xq1aGAqAC73OG.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="631, 53, 847, 93" coords2="631, 53, 847, 93" shape="rect" alt="Choose the “Template” option on the “Search For” field and hit “Find”:Task" id="areadiagram_map_DVUxq1aGAqAC73NT_default" href="BPTask_DVUxq1aGAqAC73NU.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','631, 53, 847, 93',new Array(),new Array(),new Array(new Array(' https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%203.2_NBS%20IC%20Project%20Request_Find%20Projects%20Window_Template_Find.jpg?csf=1','Choose Template and Find Screen shoot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '631, 53, 847, 93'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="401, 199, 548, 239" coords2="401, 199, 548, 239" shape="rect" alt="Return Find projects View:Task" id="areadiagram_map_vRHRq1aGAqAC73Mf_default" href="BPTask_vRHRq1aGAqAC73Mg.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="405, 63, 548, 103" coords2="405, 63, 548, 103" shape="rect" alt="Navigate to Find Projects:Task" id="areadiagram_map_a5SRq1aGAqAC73Ln_default" href="BPTask_a5SRq1aGAqAC73Lo.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','405, 63, 548, 103',new Array(),new Array(),new Array(new Array('https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%203.1_NBS%20IC%20Project%20Request_Find%20Projects%20Window.jpg?csf=1','Find Project Screen Shot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '405, 63, 548, 103'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="212, 207, 290, 247" coords2="212, 207, 290, 247" shape="rect" alt="Authenticate:Task" id="areadiagram_map_MFkRq1aGAqAC73K9_default" href="BPTask_MFkRq1aGAqAC73K_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="182, 63, 321, 103" coords2="182, 63, 321, 103" shape="rect" alt="Log into NBS Budget &amp; Finance:Task" id="areadiagram_map_tYwRq1aGAqAC73KQ_default" href="BPTask___KayVaAUrAA8VZ5.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="77, 126, 373, 144" coords2="77, 126, 373, 144" shape="rect" alt="Fix CAN Request:Task" id="areadiagram_map_iLjBq1aGAqAC73Ih_sublevelflowitem1" href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html?shapeid=2mCH6VaAUhQuH0NR"/>
+<area imageId="diagram" coords="77, 144, 373, 162" coords2="77, 144, 373, 162" shape="rect" alt="Valid Request:Gateway" id="areadiagram_map_iLjBq1aGAqAC73Ih_sublevelflowitem2" href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html?shapeid=zWJqyVaAUrAA8VZH"/>
+<area imageId="diagram" coords="77, 162, 373, 180" coords2="77, 162, 373, 180" shape="rect" alt="Work With X team lead to determine best solution :Task" id="areadiagram_map_iLjBq1aGAqAC73Ih_sublevelflowitem3" href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html?shapeid=Il5n6VaAUhQuH3B9"/>
+<area imageId="diagram" coords="77, 73, 97, 93" coords2="77, 73, 97, 93" shape="rect" alt=":Start Event" id="areadiagram_map_iLjBq1aGAqAC73Ih_default" href="BPStartEvent_iLjBq1aGAqAC73Ii.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 152, 4534, 302" coords2="17, 152, 4534, 302" shape="rect" alt=" NBS Budget &amp; Finance:Lane" id="areadiagram_map_sFjhq1aGAqAC73Jf_default" href="BPLane_sFjhq1aGAqAC73Jg.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 2, 4534, 152" coords2="17, 2, 4534, 152" shape="rect" alt="OBF:Lane" id="areadiagram_map___dhq1aGAqAC73JX_default" href="BPLane_AA9hq1aGAqAC73JY.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 4534, 302" coords2="2, 2, 4534, 302" shape="rect" alt="Pool:Pool" id="areadiagram_map_YwzBq1aGAqAC73Ir_default" href="BPPool_YwzBq1aGAqAC73Is.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_MFkRq1aGAqAC73K_.html" class="ItemLink">Authenticate : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_iLjBq1aGAqAC73Ii.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_AA9hq1aGAqAC73JY.html" class="ItemLink">OBF : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_sFjhq1aGAqAC73Jg.html" class="ItemLink"> NBS Budget &amp; Finance : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_vRHRq1aGAqAC73Mg.html" class="ItemLink">Return Find projects View : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_a5SRq1aGAqAC73Lo.html" class="ItemLink">Navigate to Find Projects : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_YwzBq1aGAqAC73Is.html" class="ItemLink">Pool : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_b4_xq1aGAqAC73OG.html" class="ItemLink">Return Projects, Template Summary Window : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_DVUxq1aGAqAC73NU.html" class="ItemLink">Choose the “Template” option on the “Search For” field and hit “Find” : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP06</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask___KayVaAUrAA8VZ5.html" class="ItemLink">Log into NBS Budget &amp; Finance : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_cjaJq1aGAqAC73Pv.html" class="ItemLink">Create Copy of Template  : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_X1AJq1aGAqAC73O9.html" class="ItemLink"> choose the appropriated Number (e.g. for Direct/Non-appropriated Funds, choose T1, for Internal IAA type N choose T5, etc.), and hit “Copy To… : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP08</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_EsWJq1aGAqAC73QX.html" class="ItemLink">Display Project Quick Entry  screen with assigned project Name(CAN No) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP09</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_z_RJq1aGAqAC73Q3.html" class="ItemLink">using the details on the CAN request form to fill out all required fields then move the cursor down : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP10</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_tW4pq1aGAqAC73R8.html" class="ItemLink">Using the information on the Active CAN Dashboard to enter the “optional radian” field for PCC 130 (e.g. NCI 249 for Direct Funds, NCI 045 for CRADA, NCI 911 for Gift Funds, etc.) (Pic 3.4.1), and hit Ok, please note that the PCC 130 is not required for Reimbursable Fund/CAN : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP11</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_lydpq1aGAqAC73S4.html" class="ItemLink">Return Projects, Template Summary Window with with the assigned Project Number and details filled in : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP13</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_D6G9q1aGAqAC73VE.html" class="ItemLink">“Projects, Templates” screen with “almost completed” details of the new CAN/Project : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP13</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_z8YZq1aGAqAC73UA.html" class="ItemLink">Press Open : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP15</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_jAh9q1aGAqAC73V3.html" class="ItemLink">Press"[]" : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP16</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_NAT9q1aGAqAC73Wz.html" class="ItemLink">Return Project Screen : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP18</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Yocvq1aGAqAC7yc8.html" class="ItemLink">Display Account Flex Field : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP18</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Eb_9q1aGAqAC73Xn.html" class="ItemLink">Click GL Account : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP20</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_2Owfq1aGAqAC7ygF.html" class="ItemLink">Return Projects Screen : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP20</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_qoqvq1aGAqAC7ye5.html" class="ItemLink"> fill in all the values of the ACS Index which you have collected from the Active CAN Dashboard. Press OK  : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP22</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Dvefq1aGAqAC7yhl.html" class="ItemLink">Return Project, Templates Screen : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP22</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_peMfq1aGAqAC7ygz.html" class="ItemLink">Press OK : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP24</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_gUE_q1aGAqAC7ykH.html" class="ItemLink"> Send the request to NBS/OFM for approval : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP24</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_kVZfq1aGAqAC7yji.html" class="ItemLink">Hit “Save”, then hit “Submit” : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP25</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_2LjBq1aGAqAC73Io.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+</body>
+</html>
