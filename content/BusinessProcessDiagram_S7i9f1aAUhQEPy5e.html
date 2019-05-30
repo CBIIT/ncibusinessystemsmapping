@@ -1,0 +1,614 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - I2E</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - <a onclick="javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn" class="ItemLink">I2E</a>		</span>
+<a onclick="javascript: showVpLink('Research Funding Management Archtecture.vpp://diagram/S7i9f1aAUhQEPy5e', 'I2E\nResearch Funding Management Archtecture.vpp://diagram/S7i9f1aAUhQEPy5e', 'I2E', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|743.0|807.0|60.0|36.0|BPSubProcess_0Hi9f1aAUhQEPy6y.html|BPSubProcess_0Hi9f1aAUhQEPy6y.html|0Hi9f1aAUhQEPy6x" id="option0Hi9f1aAUhQEPy6x">Info : Sub-Process</option>
+<option value="shape|744.0|702.0|60.0|36.0|BPSubProcess_EHi9f1aAUhQEPy6v.html|BPSubProcess_EHi9f1aAUhQEPy6v.html|EHi9f1aAUhQEPy6u" id="optionEHi9f1aAUhQEPy6u">Info : Sub-Process</option>
+<option value="shape|421.0|233.0|214.0|234.0|BPSubProcess_z7i9f1aAUhQEPy6L.html|BPSubProcess_z7i9f1aAUhQEPy6L.html|z7i9f1aAUhQEPy6K" id="optionz7i9f1aAUhQEPy6K">I2E Web Applications
+I2E Landing Page
+Workbench
+Document Viewer
+Enterprise Maintenance (EM)
+NCI Extramural Access Request System
+IMPAC II and I2E Accounts Tracking System
+Enterprise Maintenance Wiki
+Sync your Discoverer Password
+
+I2E Database/Reporting Tools
+I2E Transactional Database
+I2E Reporting Database (DataMart)
+QlikView Reports
+Oracle Discoverer Admin
+Oracle Discoverer User
+Crystal Reports : Sub-Process</option>
+<option value="shape|205.0|233.0|214.0|234.0|BPSubProcess_d7i9f1aAUhQEPy6I.html|BPSubProcess_d7i9f1aAUhQEPy6I.html|d7i9f1aAUhQEPy6H" id="optiond7i9f1aAUhQEPy6H">I2E Grant Lifecycle Modules
+ARA 
+Referral
+Referral Activity
+Program Director Assignment
+Paylist Manager
+Paylist
+GreenSheets
+GreenSheets Form Builder
+Program Funding Request (PFR)
+Grants Portfolio Management and Tracking System (GPMATS)
+Specialist Assignment Business Rules Editor 
+
+I2E General Modules
+Grant Meeting Viewer
+Notifications
+Your Grants : Sub-Process</option>
+<option value="shape|708.0|578.0|124.0|53.0|BPDataStore_V7i9f1aAUhQEPy6E.html|BPDataStore_V7i9f1aAUhQEPy6E.html|V7i9f1aAUhQEPy6D" id="optionV7i9f1aAUhQEPy6D">NCI Funded Research Portfolio (NFRP) : Data Store</option>
+<option value="shape|14.0|203.0|124.0|53.0|BPDataStore_F7i9f1aAUhQEPy6B.html|BPDataStore_F7i9f1aAUhQEPy6B.html|F7i9f1aAUhQEPy6A" id="optionF7i9f1aAUhQEPy6A">nVIsion : Data Store</option>
+<option value="shape|14.0|143.0|124.0|53.0|BPDataStore_Z7i9f1aAUhQEPy5_.html|BPDataStore_Z7i9f1aAUhQEPy5_.html|Z7i9f1aAUhQEPy59" id="optionZ7i9f1aAUhQEPy59">NIH eRA IMPAC II : Data Store</option>
+<option value="shape|708.0|350.0|124.0|53.0|BPDataStore_J7i9f1aAUhQEPy57.html|BPDataStore_J7i9f1aAUhQEPy57.html|x7i9f1aAUhQEPy56" id="optionx7i9f1aAUhQEPy56">FAM Module : Data Store</option>
+<option value="shape|708.0|236.0|124.0|53.0|BPDataStore_h7i9f1aAUhQEPy54.html|BPDataStore_h7i9f1aAUhQEPy54.html|h7i9f1aAUhQEPy53" id="optionh7i9f1aAUhQEPy53">Portfolio Management Application (PMA) : Data Store</option>
+<option value="shape|708.0|464.0|124.0|53.0|BPDataStore_e7i9f1aAUhQEPy51.html|BPDataStore_e7i9f1aAUhQEPy51.html|e7i9f1aAUhQEPy50" id="optione7i9f1aAUhQEPy50">eGrants : Data Store</option>
+<option value="shape|707.0|62.0|124.0|53.0|BPDataStore_27i9f1aAUhQEPy5y.html|BPDataStore_27i9f1aAUhQEPy5y.html|27i9f1aAUhQEPy5x" id="option27i9f1aAUhQEPy5x">Concept to Award Tracking System (CATS) : Data Store</option>
+<option value="shape|707.0|122.0|124.0|53.0|BPDataStore_m7i9f1aAUhQEPy5v.html|BPDataStore_m7i9f1aAUhQEPy5v.html|m7i9f1aAUhQEPy5u" id="optionm7i9f1aAUhQEPy5u">Program Coding Module : Data Store</option>
+<option value="shape|707.0|2.0|124.0|53.0|BPDataStore_67i9f1aAUhQEPy5s.html|BPDataStore_67i9f1aAUhQEPy5s.html|67i9f1aAUhQEPy5r" id="option67i9f1aAUhQEPy5r">Fiscal-Linked Analysis of Research Emphasis (FLARE) : Data Store</option>
+<option value="shape|357.0|173.0|124.0|53.0|BPDataStore_K7i9f1aAUhQEPy5p.html|BPDataStore_K7i9f1aAUhQEPy5p.html|K7i9f1aAUhQEPy5o" id="optionK7i9f1aAUhQEPy5o">I2E : Data Store</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/I2E.png" usemap="#diagram_map" class="Image" width="848" height="877"/>
+					<map name="diagram_map">
+<area coords="238,239,254,253" coords2="238,239,254,253" shape="rect" alt="I2E" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn" onclick="javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');"/>
+<area coords="257,239,286,253" coords2="257,239,286,253" shape="rect" alt="Grant" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH" onclick="javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');"/>
+<area coords="300,253,322,267" coords2="300,253,322,267" shape="rect" alt="ARA" href="GridDiagram_5GBJ6waAUJUCAjP0.html#TnO2RAaC48kYAhd0" onclick="javascript: highlightGridModelSelection('TnO2RAaC48kYAhd0');"/>
+<area coords="291,267,333,281" coords2="291,267,333,281" shape="rect" alt="Referral" href="GridDiagram_5GBJ6waAUJUCAjP0.html#dLWNsgaC48kYAiiO" onclick="javascript: highlightGridModelSelection('dLWNsgaC48kYAiiO');"/>
+<area coords="269,281,353,295" coords2="269,281,353,295" shape="rect" alt="RA" href="GridDiagram_5GBJ6waAUJUCAjP0.html#NsBiMgaC48kYAigS" onclick="javascript: highlightGridModelSelection('NsBiMgaC48kYAigS');"/>
+<area coords="232,295,324,309" coords2="232,295,324,309" shape="rect" alt="PO" href="GridDiagram_5GBJ6waAUJUCAjP0.html#nMTXsgaC48kYAi_a" onclick="javascript: highlightGridModelSelection('nMTXsgaC48kYAi_a');"/>
+<area coords="327,295,390,309" coords2="327,295,390,309" shape="rect" alt="Assignment" href="GridDiagram_5GBJ6waAUJUCAjP0.html#LtI8YIaC48kYAllw" onclick="javascript: highlightGridModelSelection('LtI8YIaC48kYAllw');"/>
+<area coords="270,309,353,323" coords2="270,309,353,323" shape="rect" alt="Paylist Manager" href="GridDiagram_5GBJ6waAUJUCAjP0.html#vBUiMgaC48kYAifj" onclick="javascript: highlightGridModelSelection('vBUiMgaC48kYAifj');"/>
+<area coords="295,323,329,337" coords2="295,323,329,337" shape="rect" alt="Paylist" href="GridDiagram_5GBJ6waAUJUCAjP0.html#ETqCMgaC48kYAieL" onclick="javascript: highlightGridModelSelection('ETqCMgaC48kYAieL');"/>
+<area coords="278,337,344,351" coords2="278,337,344,351" shape="rect" alt="Greensheets" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YvxMMgaC48kYAicV" onclick="javascript: highlightGridModelSelection('YvxMMgaC48kYAicV');"/>
+<area coords="243,351,309,365" coords2="243,351,309,365" shape="rect" alt="Greensheets" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YvxMMgaC48kYAicV" onclick="javascript: highlightGridModelSelection('YvxMMgaC48kYAicV');"/>
+<area coords="228,365,366,379" coords2="228,365,366,379" shape="rect" alt="PFR" href="GridDiagram_5GBJ6waAUJUCAjP0.html#_aKiMgaC48kYAif2" onclick="javascript: highlightGridModelSelection('_aKiMgaC48kYAif2');"/>
+<area coords="373,365,392,379" coords2="373,365,392,379" shape="rect" alt="PFR" href="GridDiagram_5GBJ6waAUJUCAjP0.html#_aKiMgaC48kYAif2" onclick="javascript: highlightGridModelSelection('_aKiMgaC48kYAif2');"/>
+<area coords="222,379,257,393" coords2="222,379,257,393" shape="rect" alt="Grant" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH" onclick="javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');"/>
+<area coords="335,393,379,407" coords2="335,393,379,407" shape="rect" alt="GPMATS" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Vd.YCkaGAqAC308X" onclick="javascript: highlightGridModelSelection('Vd.YCkaGAqAC308X');"/>
+<area coords="265,407,328,421" coords2="265,407,328,421" shape="rect" alt="Assignment" href="GridDiagram_5GBJ6waAUJUCAjP0.html#LtI8YIaC48kYAllw" onclick="javascript: highlightGridModelSelection('LtI8YIaC48kYAllw');"/>
+<area coords="306,435,316,449" coords2="306,435,316,449" shape="rect" alt="I2E" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn" onclick="javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');"/>
+<area coords="472,239,488,253" coords2="472,239,488,253" shape="rect" alt="I2E" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn" onclick="javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');"/>
+<area coords="517,239,583,253" coords2="517,239,583,253" shape="rect" alt="Application" href="GridDiagram_5GBJ6waAUJUCAjP0.html#MEn3sgaC48kYAjBT" onclick="javascript: highlightGridModelSelection('MEn3sgaC48kYAjBT');"/>
+<area coords="482,253,498,267" coords2="482,253,498,267" shape="rect" alt="I2E" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn" onclick="javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');"/>
+<area coords="444,309,463,323" coords2="444,309,463,323" shape="rect" alt="NCI" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');"/>
+<area coords="433,337,477,351" coords2="433,337,477,351" shape="rect" alt="IMPAC II" href="GridDiagram_5GBJ6waAUJUCAjP0.html#ta68MgaC48kYAidX" onclick="javascript: highlightGridModelSelection('ta68MgaC48kYAidX');"/>
+<area coords="504,337,520,351" coords2="504,337,520,351" shape="rect" alt="I2E" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn" onclick="javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');"/>
+<area coords="445,379,610,393" coords2="445,379,610,393" shape="rect" alt="Sync Your Discoverer Password" href="GridDiagram_5GBJ6waAUJUCAjP0.html#nZtNsgaC48kYAii0" onclick="javascript: highlightGridModelSelection('nZtNsgaC48kYAii0');"/>
+<area coords="448,407,464,421" coords2="448,407,464,421" shape="rect" alt="I2E" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn" onclick="javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');"/>
+<area coords="455,421,471,435" coords2="455,421,471,435" shape="rect" alt="I2E" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn" onclick="javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');"/>
+<area coords="429,435,445,449" coords2="429,435,445,449" shape="rect" alt="I2E" href="GridDiagram_5GBJ6waAUJUCAjP0.html#YJQsMgaC48kYAicn" onclick="javascript: highlightGridModelSelection('YJQsMgaC48kYAicn');"/>
+<area coords="561,435,610,449" coords2="561,435,610,449" shape="rect" alt="Datamart" href="GridDiagram_5GBJ6waAUJUCAjP0.html#gsGoGgaC48kYAiwp" onclick="javascript: highlightGridModelSelection('gsGoGgaC48kYAiwp');"/>
+<area imageId="diagram" coords="677.0, 190.0, 677.0, 818.0, 674.0, 818.0, 674.0, 832.0, 677.0, 832.0, 677.0, 835.0, 691.0, 835.0, 691.0, 832.0, 743.0, 832.0, 743.0, 818.0, 691.0, 818.0, 691.0, 190.0" coords2="677.0, 190.0, 677.0, 818.0, 674.0, 818.0, 674.0, 832.0, 677.0, 832.0, 677.0, 835.0, 691.0, 835.0, 691.0, 832.0, 743.0, 832.0, 743.0, 818.0, 691.0, 818.0, 691.0, 190.0" shape="poly" alt=":Data Association" id="areadiagram_map_YHi9f1aAUhQEPy6r_default" href="BPDataAssociation_YHi9f1aAUhQEPy6s.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="677.0, 189.0, 677.0, 713.0, 674.0, 713.0, 674.0, 727.0, 677.0, 727.0, 677.0, 730.0, 691.0, 730.0, 691.0, 727.0, 744.0, 727.0, 744.0, 713.0, 691.0, 713.0, 691.0, 189.0" coords2="677.0, 189.0, 677.0, 713.0, 674.0, 713.0, 674.0, 727.0, 677.0, 727.0, 677.0, 730.0, 691.0, 730.0, 691.0, 727.0, 744.0, 727.0, 744.0, 713.0, 691.0, 713.0, 691.0, 189.0" shape="poly" alt=":Data Association" id="areadiagram_map_oHi9f1aAUhQEPy6o_default" href="BPDataAssociation_oHi9f1aAUhQEPy6p.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="743, 807, 803, 843" coords2="743, 807, 803, 843" shape="rect" alt="Info:Sub-Process" id="areadiagram_map_0Hi9f1aAUhQEPy6x_default" href="BPSubProcess_0Hi9f1aAUhQEPy6y.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="744, 702, 804, 738" coords2="744, 702, 804, 738" shape="rect" alt="Info:Sub-Process" id="areadiagram_map_EHi9f1aAUhQEPy6u_default" href="BPSubProcess_EHi9f1aAUhQEPy6v.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="421, 233, 635, 467" coords2="421, 233, 635, 467" shape="rect" alt="I2E Web Applications
+I2E Landing Page
+Workbench
+Document Viewer
+Enterprise Maintenance (EM)
+NCI Extramural Access Request System
+IMPAC II and I2E Accounts Tracking System
+Enterprise Maintenance Wiki
+Sync your Discoverer Password
+
+I2E Database/Reporting Tools
+I2E Transactional Database
+I2E Reporting Database (DataMart)
+QlikView Reports
+Oracle Discoverer Admin
+Oracle Discoverer User
+Crystal Reports:Sub-Process" id="areadiagram_map_z7i9f1aAUhQEPy6K_default" href="BPSubProcess_z7i9f1aAUhQEPy6L.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="205, 233, 419, 467" coords2="205, 233, 419, 467" shape="rect" alt="I2E Grant Lifecycle Modules
+ARA 
+Referral
+Referral Activity
+Program Director Assignment
+Paylist Manager
+Paylist
+GreenSheets
+GreenSheets Form Builder
+Program Funding Request (PFR)
+Grants Portfolio Management and Tracking System (GPMATS)
+Specialist Assignment Business Rules Editor 
+
+I2E General Modules
+Grant Meeting Viewer
+Notifications
+Your Grants:Sub-Process" id="areadiagram_map_d7i9f1aAUhQEPy6H_default" href="BPSubProcess_d7i9f1aAUhQEPy6I.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="708, 578, 832, 631" coords2="708, 578, 832, 631" shape="rect" alt="NCI Funded Research Portfolio (NFRP):Data Store" id="areadiagram_map_V7i9f1aAUhQEPy6D_default" href="BPDataStore_V7i9f1aAUhQEPy6E.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="14, 203, 138, 256" coords2="14, 203, 138, 256" shape="rect" alt="nVIsion:Data Store" id="areadiagram_map_F7i9f1aAUhQEPy6A_default" href="BPDataStore_F7i9f1aAUhQEPy6B.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="14, 143, 138, 196" coords2="14, 143, 138, 196" shape="rect" alt="NIH eRA IMPAC II:Data Store" id="areadiagram_map_Z7i9f1aAUhQEPy59_default" href="BPDataStore_Z7i9f1aAUhQEPy5_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="708, 350, 832, 403" coords2="708, 350, 832, 403" shape="rect" alt="FAM Module:Data Store" id="areadiagram_map_x7i9f1aAUhQEPy56_default" href="BPDataStore_J7i9f1aAUhQEPy57.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="708, 236, 832, 289" coords2="708, 236, 832, 289" shape="rect" alt="Portfolio Management Application (PMA):Data Store" id="areadiagram_map_h7i9f1aAUhQEPy53_default" href="BPDataStore_h7i9f1aAUhQEPy54.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="708, 464, 832, 517" coords2="708, 464, 832, 517" shape="rect" alt="eGrants:Data Store" id="areadiagram_map_e7i9f1aAUhQEPy50_default" href="BPDataStore_e7i9f1aAUhQEPy51.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="707, 62, 831, 115" coords2="707, 62, 831, 115" shape="rect" alt="Concept to Award Tracking System (CATS):Data Store" id="areadiagram_map_27i9f1aAUhQEPy5x_default" href="BPDataStore_27i9f1aAUhQEPy5y.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="707, 122, 831, 175" coords2="707, 122, 831, 175" shape="rect" alt="Program Coding Module:Data Store" id="areadiagram_map_m7i9f1aAUhQEPy5u_default" href="BPDataStore_m7i9f1aAUhQEPy5v.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="707, 2, 831, 55" coords2="707, 2, 831, 55" shape="rect" alt="Fiscal-Linked Analysis of Research Emphasis (FLARE):Data Store" id="areadiagram_map_67i9f1aAUhQEPy5r_default" href="BPDataStore_67i9f1aAUhQEPy5s.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="357, 173, 481, 226" coords2="357, 173, 481, 226" shape="rect" alt="I2E:Data Store" id="areadiagram_map_K7i9f1aAUhQEPy5o_default" href="BPDataStore_K7i9f1aAUhQEPy5p.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_0Hi9f1aAUhQEPy6y.html" class="ItemLink">Info : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_EHi9f1aAUhQEPy6v.html" class="ItemLink">Info : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_z7i9f1aAUhQEPy6L.html" class="ItemLink">I2E Web Applications
+I2E Landing Page
+Workbench
+Document Viewer
+Enterprise Maintenance (EM)
+NCI Extramural Access Request System
+IMPAC II and I2E Accounts Tracking System
+Enterprise Maintenance Wiki
+Sync your Discoverer Password
+
+I2E Database/Reporting Tools
+I2E Transactional Database
+I2E Reporting Database (DataMart)
+QlikView Reports
+Oracle Discoverer Admin
+Oracle Discoverer User
+Crystal Reports : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_d7i9f1aAUhQEPy6I.html" class="ItemLink">I2E Grant Lifecycle Modules
+ARA 
+Referral
+Referral Activity
+Program Director Assignment
+Paylist Manager
+Paylist
+GreenSheets
+GreenSheets Form Builder
+Program Funding Request (PFR)
+Grants Portfolio Management and Tracking System (GPMATS)
+Specialist Assignment Business Rules Editor 
+
+I2E General Modules
+Grant Meeting Viewer
+Notifications
+Your Grants : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_V7i9f1aAUhQEPy6E.html" class="ItemLink">NCI Funded Research Portfolio (NFRP) : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_F7i9f1aAUhQEPy6B.html" class="ItemLink">nVIsion : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_Z7i9f1aAUhQEPy5_.html" class="ItemLink">NIH eRA IMPAC II : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_J7i9f1aAUhQEPy57.html" class="ItemLink">FAM Module : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_h7i9f1aAUhQEPy54.html" class="ItemLink">Portfolio Management Application (PMA) : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_e7i9f1aAUhQEPy51.html" class="ItemLink">eGrants : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_27i9f1aAUhQEPy5y.html" class="ItemLink">Concept to Award Tracking System (CATS) : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_m7i9f1aAUhQEPy5v.html" class="ItemLink">Program Coding Module : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_67i9f1aAUhQEPy5s.html" class="ItemLink">Fiscal-Linked Analysis of Research Emphasis (FLARE) : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_K7i9f1aAUhQEPy5p.html" class="ItemLink">I2E : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+</body>
+</html>

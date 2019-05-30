@@ -1,0 +1,1015 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - 8 - Official Public Data Reporting</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - 8 - Official Public Data Reporting		</span>
+<a onclick="javascript: showVpLink('Research Funding Management Archtecture.vpp://diagram/JDi9f1aAUhQEPyzq', '8 - Official Public Data Reporting\nResearch Funding Management Archtecture.vpp://diagram/JDi9f1aAUhQEPyzq', '8 - Official Public Data Reporting', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|1239.0|908.0|48.0|48.0|BPSubProcess_fTi9f1aAUhQEPy2m.html|BPSubProcess_fTi9f1aAUhQEPy2m.html|vTi9f1aAUhQEPy2l" id="optionvTi9f1aAUhQEPy2l">H : Sub-Process</option>
+<option value="shape|1314.0|764.0|114.0|60.0|BPSubProcess_nTi9f1aAUhQEPy2g.html|BPSubProcess_nTi9f1aAUhQEPy2g.html|nTi9f1aAUhQEPy2f" id="optionnTi9f1aAUhQEPy2f">OBF receives extramural data from OEFIA and intramural data from... : Sub-Process</option>
+<option value="shape|1335.0|843.0|72.0|33.0|BPSubProcess_rTi9f1aAUhQEPy2a.html|BPSubProcess_rTi9f1aAUhQEPy2a.html|LTi9f1aAUhQEPy2Z" id="optionLTi9f1aAUhQEPy2Z">Spreadsheets : Sub-Process</option>
+<option value="shape|1317.0|893.0|108.0|78.0|BPSubProcess_DTi9f1aAUhQEPy2U.html|BPSubProcess_DTi9f1aAUhQEPy2U.html|DTi9f1aAUhQEPy2T" id="optionDTi9f1aAUhQEPy2T">OEFIA pulls extramural grant data from FAM and sends the data via spreadsheet to OBF. : Sub-Process</option>
+<option value="shape|69.0|441.0|60.0|33.0|BPDataStore_tTi9f1aAUhQEPy2O.html|BPDataStore_tTi9f1aAUhQEPy2O.html|NTi9f1aAUhQEPy2N" id="optionNTi9f1aAUhQEPy2N">I2E : Data Store</option>
+<option value="shape|75.0|362.0|48.0|48.0|BPSubProcess_FTi9f1aAUhQEPy2I.html|BPSubProcess_FTi9f1aAUhQEPy2I.html|FTi9f1aAUhQEPy2H" id="optionFTi9f1aAUhQEPy2H">F : Sub-Process</option>
+<option value="shape|1348.0|4.0|24.0|19.0|BPSubProcess_pTi9f1aAUhQEPy2F.html|BPSubProcess_pTi9f1aAUhQEPy2F.html|pTi9f1aAUhQEPy2E" id="optionpTi9f1aAUhQEPy2E">Process40 : Sub-Process</option>
+<option value="shape|1547.0|4.0|18.0|19.0|BPSubProcess_xTi9f1aAUhQEPy2C.html|BPSubProcess_xTi9f1aAUhQEPy2C.html|RTi9f1aAUhQEPy2B" id="optionRTi9f1aAUhQEPy2B">Process39 : Sub-Process</option>
+<option value="shape|1503.0|5.0|17.0|18.0|BPSubProcess_BTi9f1aAUhQEPy1_.html|BPSubProcess_BTi9f1aAUhQEPy1_.html|BTi9f1aAUhQEPy1." id="optionBTi9f1aAUhQEPy1.">Process38 : Sub-Process</option>
+<option value="shape|1247.0|3.0|26.0|21.0|BPSubProcess_uTi9f1aAUhQEPy18.html|BPSubProcess_uTi9f1aAUhQEPy18.html|uTi9f1aAUhQEPy17" id="optionuTi9f1aAUhQEPy17">Process37 : Sub-Process</option>
+<option value="shape|1303.0|3.0|25.0|23.0|BPGateway_2Ti9f1aAUhQEPy14.html|BPGateway_2Ti9f1aAUhQEPy14.html|2Ti9f1aAUhQEPy13" id="option2Ti9f1aAUhQEPy13">Gateway8 : Gateway</option>
+<option value="shape|1396.0|6.0|29.0|16.0|BPSubProcess_mTi9f1aAUhQEPy11.html|BPSubProcess_mTi9f1aAUhQEPy11.html|mTi9f1aAUhQEPy10" id="optionmTi9f1aAUhQEPy10">Process36 : Sub-Process</option>
+<option value="shape|1200.0|6.0|16.0|16.0|BPEndEvent_6Ti9f1aAUhQEPy1y.html|BPEndEvent_6Ti9f1aAUhQEPy1y.html|aTi9f1aAUhQEPy1x" id="optionaTi9f1aAUhQEPy1x">Unnamed End Event : End Event</option>
+<option value="shape|1503.0|596.0|36.0|36.0|BPStartEvent_MTi9f1aAUhQEPy1q.html|BPStartEvent_MTi9f1aAUhQEPy1q.html|MTi9f1aAUhQEPy1p" id="optionMTi9f1aAUhQEPy1p">STOP : Start Event</option>
+<option value="shape|1283.0|565.0|174.0|96.0|BPDataStore_fji9f1aAUhQEPy1e.html|BPDataStore_fji9f1aAUhQEPy1e.html|vji9f1aAUhQEPy1d" id="optionvji9f1aAUhQEPy1d">OBF Factbook – Reports on NCI Budget and provides NCI funding policies related to research grant awards. OBF Factbook is considered Official Public Data by NCI. : Data Store</option>
+<option value="shape|1323.0|683.0|96.0|60.0|BPSubProcess_3ji9f1aAUhQEPy1b.html|BPSubProcess_3ji9f1aAUhQEPy1b.html|Xji9f1aAUhQEPy1a" id="optionXji9f1aAUhQEPy1a">OBF annually publishes the NCI Factbook. : Sub-Process</option>
+<option value="shape|435.0|110.0|295.0|108.0|BPDataStore_Hji9f1aAUhQEPy1Y.html|BPDataStore_Hji9f1aAUhQEPy1Y.html|Hji9f1aAUhQEPy1X" id="optionHji9f1aAUhQEPy1X">NCI Funded Research Portfolio (NFRP) – Reports on NCI projects and NCI scientific coding and is managed by CSSI/KMSP. NFRP is considered Official Public Data by NCI, because it is vetted by the NCI Budget Office. Primary groups that supply data to NFRP are: RAEB (Extramural Grants and Research Contracts); DCEG (Intramural projects); CCR (Intramural projects); and, OBF (RMS and Leidos projects). : Data Store</option>
+<option value="shape|1077.0|761.0|36.0|36.0|BPStartEvent_bji9f1aAUhQEPy1V.html|BPStartEvent_bji9f1aAUhQEPy1V.html|rji9f1aAUhQEPy1U" id="optionrji9f1aAUhQEPy1U">STOP : Start Event</option>
+<option value="shape|1065.0|147.0|60.0|33.0|BPDataStore_jji9f1aAUhQEPy1P.html|BPDataStore_jji9f1aAUhQEPy1P.html|9ji9f1aAUhQEPy1O" id="option9ji9f1aAUhQEPy1O">NFRP : Data Store</option>
+<option value="shape|922.0|122.0|108.0|84.0|BPSubProcess_Vji9f1aAUhQEPy1J.html|BPSubProcess_Vji9f1aAUhQEPy1J.html|Vji9f1aAUhQEPy1I" id="optionVji9f1aAUhQEPy1I">KMSP provides reports of the working FY data for OBF to validate. : Sub-Process</option>
+<option value="shape|999.0|592.0|192.0|126.0|BPSubProcess_pji9f1aAUhQEPy1A.html|BPSubProcess_pji9f1aAUhQEPy1A.html|pji9f1aAUhQEPy0_" id="optionpji9f1aAUhQEPy0_">The total NCI budget is validated by OBF as the ‘Cancer’ category on NFRP. During the validation process, OBF staff have access to the NFRP development system where data are loaded as they are received. They can use the development system as an automated aid in their validation process. : Sub-Process</option>
+<option value="shape|762.0|614.0|114.0|84.0|BPSubProcess_Rji9f1aAUhQEPy09.html|BPSubProcess_Rji9f1aAUhQEPy09.html|Rji9f1aAUhQEPy08" id="optionRji9f1aAUhQEPy08">OBF validates and approves project and disease category data before that data is made public on NFRP. : Sub-Process</option>
+<option value="shape|765.0|122.0|108.0|84.0|BPSubProcess__ji9f1aAUhQEPy06.html|BPSubProcess__ji9f1aAUhQEPy06.html|2ji9f1aAUhQEPy05" id="option2ji9f1aAUhQEPy05">KMSP performs the first level QA-QC of NFRP data as it is being loaded to the NFRP database. : Sub-Process</option>
+<option value="shape|471.0|739.0|72.0|33.0|BPSubProcess_iji9f1aAUhQEPy0u.html|BPSubProcess_iji9f1aAUhQEPy0u.html|iji9f1aAUhQEPy0t" id="optioniji9f1aAUhQEPy0t">Spreadsheets : Sub-Process</option>
+<option value="shape|262.0|739.0|72.0|33.0|BPSubProcess_kji9f1aAUhQEPy0f.html|BPSubProcess_kji9f1aAUhQEPy0f.html|kji9f1aAUhQEPy0e" id="optionkji9f1aAUhQEPy0e">Spreadsheets : Sub-Process</option>
+<option value="shape|528.0|242.0|108.0|72.0|BPSubProcess_gji9f1aAUhQEPy0Q.html|BPSubProcess_gji9f1aAUhQEPy0Q.html|gji9f1aAUhQEPy0P" id="optiongji9f1aAUhQEPy0P">KMSP runs scripts to load the RMS and Leidos data to the NFRP database. : Sub-Process</option>
+<option value="shape|363.0|242.0|108.0|72.0|BPSubProcess_fDi9f1aAUhQEPy0N.html|BPSubProcess_fDi9f1aAUhQEPy0N.html|fDi9f1aAUhQEPy0M" id="optionfDi9f1aAUhQEPy0M">KMSP runs scripts to load the Intramural data to the NFRP database. : Sub-Process</option>
+<option value="shape|459.0|620.0|96.0|72.0|BPSubProcess_PDi9f1aAUhQEPy0K.html|BPSubProcess_PDi9f1aAUhQEPy0K.html|PDi9f1aAUhQEPy0J" id="optionPDi9f1aAUhQEPy0J">OBF sends RMS and Leidos data to KMSP via spreadsheets. : Sub-Process</option>
+<option value="shape|220.0|604.0|156.0|103.0|BPSubProcess_XDi9f1aAUhQEPy0H.html|BPSubProcess_XDi9f1aAUhQEPy0H.html|XDi9f1aAUhQEPy0G" id="optionXDi9f1aAUhQEPy0G">OBF collects data from Intramural groups and sends it via spreadsheets to KMSP. (OBF reconciles scientific coding with funding data before transmitting information to NFRP.) : Sub-Process</option>
+<option value="shape|244.0|242.0|108.0|72.0|BPSubProcess_HDi9f1aAUhQEPy0E.html|BPSubProcess_HDi9f1aAUhQEPy0E.html|HDi9f1aAUhQEPy0D" id="optionHDi9f1aAUhQEPy0D">KMSP accesses that data and runs scripts to load/copy it into the NFRP database. : Sub-Process</option>
+<option value="shape|153.0|419.0|120.0|78.0|BPSubProcess_rDi9f1aAUhQEPy0B.html|BPSubProcess_rDi9f1aAUhQEPy0B.html|rDi9f1aAUhQEPy0A" id="optionrDi9f1aAUhQEPy0A">At the end of each fiscal year, DEA RAEB images final FY data and transfers it to an NFRP schema in I2E. : Sub-Process</option>
+<option value="shape|183.0|361.0|60.0|33.0|BPDataStore_zDi9f1aAUhQEPyz_.html|BPDataStore_zDi9f1aAUhQEPyz_.html|zDi9f1aAUhQEPyz9" id="optionzDi9f1aAUhQEPyz9">I2E : Data Store</option>
+<option value="shape|2.0|836.0|1584.0|162.0|BPPool_DDi9f1aAUhQEPyz5.html|BPPool_DDi9f1aAUhQEPyz5.html|DDi9f1aAUhQEPyz4" id="optionDDi9f1aAUhQEPyz4">OEFIA : Pool</option>
+<option value="shape|2.0|326.0|1584.0|225.0|BPPool_tDi9f1aAUhQEPyz2.html|BPPool_tDi9f1aAUhQEPyz2.html|NDi9f1aAUhQEPyz1" id="optionNDi9f1aAUhQEPyz1">DEA : Pool</option>
+<option value="shape|2.0|86.0|1584.0|240.0|BPPool_VDi9f1aAUhQEPyzz.html|BPPool_VDi9f1aAUhQEPyzz.html|VDi9f1aAUhQEPyzy" id="optionVDi9f1aAUhQEPyzy">CSSI/KMSP : Pool</option>
+<option value="shape|2.0|551.0|1584.0|285.0|BPPool_5Di9f1aAUhQEPyzw.html|BPPool_5Di9f1aAUhQEPyzw.html|5Di9f1aAUhQEPyzv" id="option5Di9f1aAUhQEPyzv">OBF : Pool</option>
+<option value="shape|2.0|2.0|1584.0|996.0|BPPool_pDi9f1aAUhQEPyzt.html|BPPool_pDi9f1aAUhQEPyzt.html|pDi9f1aAUhQEPyzs" id="optionpDi9f1aAUhQEPyzs">Pool9 : Pool</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/8_Official_Public_Data_Reporting.png" usemap="#diagram_map" class="Image" width="1591" height="1002"/>
+					<map name="diagram_map">
+<area coords="3,671,17,692" coords2="3,671,17,692" shape="rect" alt="OBF" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');"/>
+<area coords="3,200,17,223" coords2="3,200,17,223" shape="rect" alt="CSSI" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bVqEGgaC48kYAj.K" onclick="javascript: highlightGridModelSelection('bVqEGgaC48kYAj.K');"/>
+<area coords="3,165,17,194" coords2="3,165,17,194" shape="rect" alt="KMSP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mALEGgaC48kYAkEl" onclick="javascript: highlightGridModelSelection('mALEGgaC48kYAkEl');"/>
+<area coords="3,416,17,438" coords2="3,416,17,438" shape="rect" alt="DEA" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bZtbsgaC48kYAisp" onclick="javascript: highlightGridModelSelection('bZtbsgaC48kYAisp');"/>
+<area coords="3,890,17,921" coords2="3,890,17,921" shape="rect" alt="OEFIA" href="GridDiagram_5GBJ6waAUJUCAjP0.html#fyK4GgaC48kYAjrB" onclick="javascript: highlightGridModelSelection('fyK4GgaC48kYAjrB');"/>
+<area coords="171,438,225,452" coords2="171,438,225,452" shape="rect" alt="FY" href="GridDiagram_5GBJ6waAUJUCAjP0.html#KV6eagaC48kYAg4d" onclick="javascript: highlightGridModelSelection('KV6eagaC48kYAg4d');"/>
+<area coords="232,438,254,452" coords2="232,438,254,452" shape="rect" alt="DEA" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bZtbsgaC48kYAisp" onclick="javascript: highlightGridModelSelection('bZtbsgaC48kYAisp');"/>
+<area coords="165,452,192,466" coords2="165,452,192,466" shape="rect" alt="RAEB" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mPPwGgaC48kYAiT0" onclick="javascript: highlightGridModelSelection('mPPwGgaC48kYAiT0');"/>
+<area coords="174,466,187,480" coords2="174,466,187,480" shape="rect" alt="FY" href="GridDiagram_5GBJ6waAUJUCAjP0.html#KV6eagaC48kYAg4d" onclick="javascript: highlightGridModelSelection('KV6eagaC48kYAg4d');"/>
+<area coords="258,244,287,258" coords2="258,244,287,258" shape="rect" alt="KMSP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mALEGgaC48kYAkEl" onclick="javascript: highlightGridModelSelection('mALEGgaC48kYAkEl');"/>
+<area coords="237,607,258,621" coords2="237,607,258,621" shape="rect" alt="OBF" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');"/>
+<area coords="246,649,275,663" coords2="246,649,275,663" shape="rect" alt="KMSP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mALEGgaC48kYAkEl" onclick="javascript: highlightGridModelSelection('mALEGgaC48kYAkEl');"/>
+<area coords="286,649,307,663" coords2="286,649,307,663" shape="rect" alt="OBF" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');"/>
+<area coords="241,663,328,677" coords2="241,663,328,677" shape="rect" alt="Research Coding" href="GridDiagram_5GBJ6waAUJUCAjP0.html#8hHrmQaAUsSyF0r3" onclick="javascript: highlightGridModelSelection('8hHrmQaAUsSyF0r3');"/>
+<area coords="465,622,486,636" coords2="465,622,486,636" shape="rect" alt="OBF" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');"/>
+<area coords="524,622,546,636" coords2="524,622,546,636" shape="rect" alt="RMS" href="GridDiagram_5GBJ6waAUJUCAjP0.html#ybLdmQaAUsSyF0ka" onclick="javascript: highlightGridModelSelection('ybLdmQaAUsSyF0ka');"/>
+<area coords="512,650,541,664" coords2="512,650,541,664" shape="rect" alt="KMSP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mALEGgaC48kYAkEl" onclick="javascript: highlightGridModelSelection('mALEGgaC48kYAkEl');"/>
+<area coords="369,244,398,258" coords2="369,244,398,258" shape="rect" alt="KMSP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mALEGgaC48kYAkEl" onclick="javascript: highlightGridModelSelection('mALEGgaC48kYAkEl');"/>
+<area coords="414,286,441,300" coords2="414,286,441,300" shape="rect" alt="NFRP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#UU8XiUaAUhQCoQtP" onclick="javascript: highlightGridModelSelection('UU8XiUaAUhQCoQtP');"/>
+<area coords="534,244,563,258" coords2="534,244,563,258" shape="rect" alt="KMSP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mALEGgaC48kYAkEl" onclick="javascript: highlightGridModelSelection('mALEGgaC48kYAkEl');"/>
+<area coords="601,258,623,272" coords2="601,258,623,272" shape="rect" alt="RMS" href="GridDiagram_5GBJ6waAUJUCAjP0.html#ybLdmQaAUsSyF0ka" onclick="javascript: highlightGridModelSelection('ybLdmQaAUsSyF0ka');"/>
+<area coords="579,286,606,300" coords2="579,286,606,300" shape="rect" alt="NFRP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#UU8XiUaAUhQCoQtP" onclick="javascript: highlightGridModelSelection('UU8XiUaAUhQCoQtP');"/>
+<area coords="778,123,807,137" coords2="778,123,807,137" shape="rect" alt="KMSP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mALEGgaC48kYAkEl" onclick="javascript: highlightGridModelSelection('mALEGgaC48kYAkEl');"/>
+<area coords="805,137,826,151" coords2="805,137,826,151" shape="rect" alt="R29" href="GridDiagram_5GBJ6waAUJUCAjP0.html#u2Vr6gaC48kYAhG_" onclick="javascript: highlightGridModelSelection('u2Vr6gaC48kYAhG_');"/>
+<area coords="833,151,860,165" coords2="833,151,860,165" shape="rect" alt="NFRP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#UU8XiUaAUhQCoQtP" onclick="javascript: highlightGridModelSelection('UU8XiUaAUhQCoQtP');"/>
+<area coords="850,179,860,193" coords2="850,179,860,193" shape="rect" alt="NFRP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#UU8XiUaAUhQCoQtP" onclick="javascript: highlightGridModelSelection('UU8XiUaAUhQCoQtP');"/>
+<area coords="771,615,792,629" coords2="771,615,792,629" shape="rect" alt="OBF" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');"/>
+<area coords="1058,593,1077,607" coords2="1058,593,1077,607" shape="rect" alt="NCI" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mi7PCgaC48kYAjIt" onclick="javascript: highlightGridModelSelection('mi7PCgaC48kYAjIt');"/>
+<area coords="1080,593,1118,607" coords2="1080,593,1118,607" shape="rect" alt="Budget" href="GridDiagram_5GBJ6waAUJUCAjP0.html#LzdPsgaC48kYAjDp" onclick="javascript: highlightGridModelSelection('LzdPsgaC48kYAjDp');"/>
+<area coords="1026,607,1047,621" coords2="1026,607,1047,621" shape="rect" alt="OBF" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');"/>
+<area coords="1030,621,1057,635" coords2="1030,621,1057,635" shape="rect" alt="NFRP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#UU8XiUaAUhQCoQtP" onclick="javascript: highlightGridModelSelection('UU8XiUaAUhQCoQtP');"/>
+<area coords="1054,635,1075,649" coords2="1054,635,1075,649" shape="rect" alt="OBF" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');"/>
+<area coords="1035,649,1062,663" coords2="1035,649,1062,663" shape="rect" alt="NFRP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#UU8XiUaAUhQCoQtP" onclick="javascript: highlightGridModelSelection('UU8XiUaAUhQCoQtP');"/>
+<area coords="936,123,965,137" coords2="936,123,965,137" shape="rect" alt="KMSP" href="GridDiagram_5GBJ6waAUJUCAjP0.html#mALEGgaC48kYAkEl" onclick="javascript: highlightGridModelSelection('mALEGgaC48kYAkEl');"/>
+<area coords="979,151,992,165" coords2="979,151,992,165" shape="rect" alt="FY" href="GridDiagram_5GBJ6waAUJUCAjP0.html#KV6eagaC48kYAg4d" onclick="javascript: highlightGridModelSelection('KV6eagaC48kYAg4d');"/>
+<area coords="967,165,988,179" coords2="967,165,988,179" shape="rect" alt="OBF" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');"/>
+<area coords="1336,686,1357,700" coords2="1336,686,1357,700" shape="rect" alt="OBF" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');"/>
+<area coords="1333,714,1404,728" coords2="1333,714,1404,728" shape="rect" alt="Budget Fact Book" href="GridDiagram_5GBJ6waAUJUCAjP0.html#Fyn0ZwaC48kYAhGT" onclick="javascript: highlightGridModelSelection('Fyn0ZwaC48kYAhGT');"/>
+<area coords="1340,898,1371,912" coords2="1340,898,1371,912" shape="rect" alt="OEFIA" href="GridDiagram_5GBJ6waAUJUCAjP0.html#fyK4GgaC48kYAjrB" onclick="javascript: highlightGridModelSelection('fyK4GgaC48kYAjrB');"/>
+<area coords="1387,912,1415,926" coords2="1387,912,1415,926" shape="rect" alt="Grant" href="GridDiagram_5GBJ6waAUJUCAjP0.html#bYdIigaC48kYAjNH" onclick="javascript: highlightGridModelSelection('bYdIigaC48kYAjNH');"/>
+<area coords="1387,926,1410,940" coords2="1387,926,1410,940" shape="rect" alt="FAM" href="GridDiagram_5GBJ6waAUJUCAjP0.html#xY1i2gaFKcBauwqo" onclick="javascript: highlightGridModelSelection('xY1i2gaFKcBauwqo');"/>
+<area coords="1336,767,1357,781" coords2="1336,767,1357,781" shape="rect" alt="OBF" href="GridDiagram_5GBJ6waAUJUCAjP0.html#oBFYGgaC48kYAjqp" onclick="javascript: highlightGridModelSelection('oBFYGgaC48kYAjqp');"/>
+<area coords="1350,795,1381,809" coords2="1350,795,1381,809" shape="rect" alt="OEFIA" href="GridDiagram_5GBJ6waAUJUCAjP0.html#fyK4GgaC48kYAjrB" onclick="javascript: highlightGridModelSelection('fyK4GgaC48kYAjrB');"/>
+<area imageId="diagram" coords="1317.0, 923.1277, 1312.6, 925.0, 1287.0, 925.0, 1287.0, 951.0213, 1315.25, 939.0, 1317.0, 939.0, 1317.0, 923.1277" coords2="1317.0, 923.1277, 1312.6, 925.0, 1287.0, 925.0, 1287.0, 951.0213, 1315.25, 939.0, 1317.0, 939.0, 1317.0, 923.1277" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Azi9f1aAUhQEPy2o_default" href="BPSequenceFlow_Azi9f1aAUhQEPy2p.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1362.0, 743.0, 1351.5, 764.0, 1378.0, 764.0, 1378.0, 743.0" coords2="1362.0, 743.0, 1351.5, 764.0, 1378.0, 764.0, 1378.0, 743.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_PTi9f1aAUhQEPy2i_default" href="BPSequenceFlow_PTi9f1aAUhQEPy2j.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1364.0, 833.0, 1364.0, 838.0, 1349.0, 838.0, 1349.0, 843.0, 1381.0, 843.0, 1381.0, 838.0, 1378.0, 838.0, 1378.0, 833.0" coords2="1364.0, 833.0, 1364.0, 838.0, 1349.0, 838.0, 1349.0, 843.0, 1381.0, 843.0, 1381.0, 838.0, 1378.0, 838.0, 1378.0, 833.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_7Ti9f1aAUhQEPy2c_default" href="BPSequenceFlow_7Ti9f1aAUhQEPy2d.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1364.0, 883.0, 1364.0, 887.0, 1349.0, 887.0, 1349.0, 893.0, 1381.0, 893.0, 1381.0, 887.0, 1378.0, 887.0, 1378.0, 883.0" coords2="1364.0, 883.0, 1364.0, 887.0, 1349.0, 887.0, 1349.0, 893.0, 1381.0, 893.0, 1381.0, 887.0, 1378.0, 887.0, 1378.0, 883.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_zTi9f1aAUhQEPy2W_default" href="BPSequenceFlow_zTi9f1aAUhQEPy2X.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="122.0, 435.0, 119.69231, 441.0, 129.0, 441.0, 129.0, 465.0, 152.7, 465.0, 153.0, 465.14285, 153.0, 465.14285, 153.0, 449.7619, 153.0, 449.7619, 122.0, 435.0" coords2="122.0, 435.0, 119.69231, 441.0, 129.0, 441.0, 129.0, 465.0, 152.7, 465.0, 153.0, 465.14285, 153.0, 465.14285, 153.0, 449.7619, 153.0, 449.7619, 122.0, 435.0" shape="poly" alt=":Data Association" id="areadiagram_map_dTi9f1aAUhQEPy2Q_default" href="BPDataAssociation_9Ti9f1aAUhQEPy2R.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="77.0, 410.0, 77.0, 417.0, 109.0, 417.0, 109.0, 410.0" coords2="77.0, 410.0, 77.0, 417.0, 109.0, 417.0, 109.0, 410.0" shape="poly" alt=":Data Association" id="areadiagram_map_VTi9f1aAUhQEPy2K_default" href="BPDataAssociation_1Ti9f1aAUhQEPy2L.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1074.7288, 718.0, 1087.1187, 761.0, 1102.0167, 761.0, 1102.0, 760.94116, 1102.0, 718.0" coords2="1074.7288, 718.0, 1087.1187, 761.0, 1102.0167, 761.0, 1102.0, 760.94116, 1102.0, 718.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_oTi9f1aAUhQEPy1m_default" href="BPSequenceFlow_oTi9f1aAUhQEPy1n.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="730.0, 144.28847, 730.0, 171.0, 765.0, 171.0, 765.0, 155.73077, 730.0, 144.28847" coords2="730.0, 144.28847, 730.0, 171.0, 765.0, 171.0, 765.0, 155.73077, 730.0, 144.28847" shape="poly" alt=":Data Association" id="areadiagram_map_wTi9f1aAUhQEPy1j_default" href="BPDataAssociation_wTi9f1aAUhQEPy1k.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1362.5, 661.0, 1351.5, 683.0, 1378.0, 683.0, 1378.0, 661.0" coords2="1362.5, 661.0, 1351.5, 683.0, 1378.0, 683.0, 1378.0, 661.0" shape="poly" alt=":Data Association" id="areadiagram_map_QTi9f1aAUhQEPy1g_default" href="BPDataAssociation_QTi9f1aAUhQEPy1h.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1065.0, 156.24529, 1062.6471, 157.0, 1030.0, 157.0, 1030.0, 182.71153, 1065.0, 171.26923, 1065.0, 156.24529" coords2="1065.0, 156.24529, 1062.6471, 157.0, 1030.0, 157.0, 1030.0, 182.71153, 1065.0, 171.26923, 1065.0, 156.24529" shape="poly" alt=":Data Association" id="areadiagram_map_Lji9f1aAUhQEPy1R_default" href="BPDataAssociation_Lji9f1aAUhQEPy1S.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1076.2778, 180.0, 1087.7222, 592.0, 1102.0, 592.0, 1102.0, 180.0" coords2="1076.2778, 180.0, 1087.7222, 592.0, 1102.0, 592.0, 1102.0, 180.0" shape="poly" alt=":Data Association" id="areadiagram_map_dji9f1aAUhQEPy1L_default" href="BPDataAssociation_dji9f1aAUhQEPy1M.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="969.0, 206.0, 969.0, 666.0, 983.0, 666.0, 983.0, 206.0" coords2="969.0, 206.0, 969.0, 666.0, 983.0, 666.0, 983.0, 206.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Fji9f1aAUhQEPy1F_default" href="BPSequenceFlow_Fji9f1aAUhQEPy1G.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="800.2804, 206.0, 811.7196, 614.0, 826.0, 614.0, 826.0, 206.0" coords2="800.2804, 206.0, 811.7196, 614.0, 826.0, 614.0, 826.0, 206.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_5ji9f1aAUhQEPy1C_default" href="BPSequenceFlow_5ji9f1aAUhQEPy1D.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="560.0, 235.0, 560.0, 242.0, 592.0, 242.0, 592.0, 235.0" coords2="560.0, 235.0, 560.0, 242.0, 592.0, 242.0, 592.0, 235.0" shape="poly" alt=":Data Association" id="areadiagram_map_Wji9f1aAUhQEPy02_default" href="BPDataAssociation_Wji9f1aAUhQEPy03.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="575.0, 314.0, 575.0, 765.0, 589.0, 765.0, 589.0, 314.0" coords2="575.0, 314.0, 575.0, 765.0, 589.0, 765.0, 589.0, 314.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_qji9f1aAUhQEPy0z_default" href="BPSequenceFlow_qji9f1aAUhQEPy00.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="486.85938, 692.0, 499.34375, 739.0, 514.16925, 739.0, 514.0, 738.35297, 514.0, 692.0" coords2="486.85938, 692.0, 499.34375, 739.0, 514.16925, 739.0, 514.0, 738.35297, 514.0, 692.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Kji9f1aAUhQEPy0w_default" href="BPSequenceFlow_Kji9f1aAUhQEPy0x.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="279.3871, 314.0, 290.6129, 604.0, 305.0, 604.0, 305.0, 314.0" coords2="279.3871, 314.0, 290.6129, 604.0, 305.0, 604.0, 305.0, 314.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_8ji9f1aAUhQEPy0q_default" href="BPSequenceFlow_Cji9f1aAUhQEPy0r.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="500.0, 268.0, 500.0, 620.0, 514.0, 620.0, 514.0, 268.0" coords2="500.0, 268.0, 500.0, 620.0, 514.0, 620.0, 514.0, 268.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_cji9f1aAUhQEPy0n_default" href="BPSequenceFlow_cji9f1aAUhQEPy0o.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="410.0, 154.0, 410.0, 157.0, 407.0, 157.0, 407.0, 171.0, 410.0, 171.0, 410.0, 242.0, 424.0, 242.0, 424.0, 171.0, 435.0, 171.0, 435.0, 157.0, 424.0, 157.0, 424.0, 154.0" coords2="410.0, 154.0, 410.0, 157.0, 407.0, 157.0, 407.0, 171.0, 410.0, 171.0, 410.0, 242.0, 424.0, 242.0, 424.0, 171.0, 435.0, 171.0, 435.0, 157.0, 424.0, 157.0, 424.0, 154.0" shape="poly" alt=":Data Association" id="areadiagram_map_Mji9f1aAUhQEPy0k_default" href="BPDataAssociation_Mji9f1aAUhQEPy0l.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="409.0, 314.0, 409.0, 765.0, 423.0, 765.0, 423.0, 314.0" coords2="409.0, 314.0, 409.0, 765.0, 423.0, 765.0, 423.0, 314.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_0ji9f1aAUhQEPy0h_default" href="BPSequenceFlow_0ji9f1aAUhQEPy0i.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="288.0, 157.0, 288.0, 171.0, 435.0, 171.0, 435.0, 157.0" coords2="288.0, 157.0, 288.0, 171.0, 435.0, 171.0, 435.0, 157.0" shape="poly" alt=":Data Association" id="areadiagram_map_Eji9f1aAUhQEPy0b_default" href="BPDataAssociation_Eji9f1aAUhQEPy0c.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="276.0, 707.0, 276.0, 715.0, 308.0, 715.0, 308.0, 707.0" coords2="276.0, 707.0, 276.0, 715.0, 308.0, 715.0, 308.0, 707.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Yji9f1aAUhQEPy0Y_default" href="BPSequenceFlow_Yji9f1aAUhQEPy0Z.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="203.0, 271.0, 203.0, 285.0, 244.0, 285.0, 244.0, 271.0" coords2="203.0, 271.0, 203.0, 285.0, 244.0, 285.0, 244.0, 271.0" shape="poly" alt=":Data Association" id="areadiagram_map_oji9f1aAUhQEPy0V_default" href="BPDataAssociation_oji9f1aAUhQEPy0W.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="204.7619, 394.0, 192.85715, 419.0, 220.0, 419.0, 220.0, 394.3, 220.14285, 394.0" coords2="204.7619, 394.0, 192.85715, 419.0, 220.0, 419.0, 220.0, 394.3, 220.14285, 394.0" shape="poly" alt=":Data Association" id="areadiagram_map_wji9f1aAUhQEPy0S_default" href="BPDataAssociation_wji9f1aAUhQEPy0T.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1239, 908, 1287, 956" coords2="1239, 908, 1287, 956" shape="rect" alt="H:Sub-Process" id="areadiagram_map_vTi9f1aAUhQEPy2l_default" href="BPSubProcess_fTi9f1aAUhQEPy2m.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1314, 764, 1428, 824" coords2="1314, 764, 1428, 824" shape="rect" alt="OBF receives extramural data from OEFIA and intramural data from...:Sub-Process" id="areadiagram_map_nTi9f1aAUhQEPy2f_default" href="BPSubProcess_nTi9f1aAUhQEPy2g.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1335, 843, 1407, 876" coords2="1335, 843, 1407, 876" shape="rect" alt="Spreadsheets:Sub-Process" id="areadiagram_map_LTi9f1aAUhQEPy2Z_default" href="BPSubProcess_rTi9f1aAUhQEPy2a.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1317, 893, 1425, 971" coords2="1317, 893, 1425, 971" shape="rect" alt="OEFIA pulls extramural grant data from FAM and sends the data via spreadsheet to OBF.:Sub-Process" id="areadiagram_map_DTi9f1aAUhQEPy2T_default" href="BPSubProcess_DTi9f1aAUhQEPy2U.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="69, 441, 129, 474" coords2="69, 441, 129, 474" shape="rect" alt="I2E:Data Store" id="areadiagram_map_NTi9f1aAUhQEPy2N_default" href="BPDataStore_tTi9f1aAUhQEPy2O.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="75, 362, 123, 410" coords2="75, 362, 123, 410" shape="rect" alt="F:Sub-Process" id="areadiagram_map_FTi9f1aAUhQEPy2H_default" href="BPSubProcess_FTi9f1aAUhQEPy2I.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1348, 4, 1372, 23" coords2="1348, 4, 1372, 23" shape="rect" alt="Process40:Sub-Process" id="areadiagram_map_pTi9f1aAUhQEPy2E_default" href="BPSubProcess_pTi9f1aAUhQEPy2F.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1547, 4, 1565, 23" coords2="1547, 4, 1565, 23" shape="rect" alt="Process39:Sub-Process" id="areadiagram_map_RTi9f1aAUhQEPy2B_default" href="BPSubProcess_xTi9f1aAUhQEPy2C.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1503, 5, 1520, 23" coords2="1503, 5, 1520, 23" shape="rect" alt="Process38:Sub-Process" id="areadiagram_map_BTi9f1aAUhQEPy1._default" href="BPSubProcess_BTi9f1aAUhQEPy1_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1247, 3, 1273, 24" coords2="1247, 3, 1273, 24" shape="rect" alt="Process37:Sub-Process" id="areadiagram_map_uTi9f1aAUhQEPy17_default" href="BPSubProcess_uTi9f1aAUhQEPy18.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1303, 3, 1328, 26" coords2="1303, 3, 1328, 26" shape="rect" alt="Gateway8:Gateway" id="areadiagram_map_2Ti9f1aAUhQEPy13_default" href="BPGateway_2Ti9f1aAUhQEPy14.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1396, 6, 1425, 22" coords2="1396, 6, 1425, 22" shape="rect" alt="Process36:Sub-Process" id="areadiagram_map_mTi9f1aAUhQEPy10_default" href="BPSubProcess_mTi9f1aAUhQEPy11.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1200, 6, 1216, 22" coords2="1200, 6, 1216, 22" shape="rect" alt=":End Event" id="areadiagram_map_aTi9f1aAUhQEPy1x_default" href="BPEndEvent_6Ti9f1aAUhQEPy1y.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1503, 596, 1539, 632" coords2="1503, 596, 1539, 632" shape="rect" alt="STOP:Start Event" id="areadiagram_map_MTi9f1aAUhQEPy1p_default" href="BPStartEvent_MTi9f1aAUhQEPy1q.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1283, 565, 1457, 661" coords2="1283, 565, 1457, 661" shape="rect" alt="OBF Factbook – Reports on NCI Budget and provides NCI funding policies related to research grant awards. OBF Factbook is considered Official Public Data by NCI.:Data Store" id="areadiagram_map_vji9f1aAUhQEPy1d_default" href="BPDataStore_fji9f1aAUhQEPy1e.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1323, 683, 1419, 743" coords2="1323, 683, 1419, 743" shape="rect" alt="OBF annually publishes the NCI Factbook.:Sub-Process" id="areadiagram_map_Xji9f1aAUhQEPy1a_default" href="BPSubProcess_3ji9f1aAUhQEPy1b.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="435, 110, 730, 218" coords2="435, 110, 730, 218" shape="rect" alt="NCI Funded Research Portfolio (NFRP) – Reports on NCI projects and NCI scientific coding and is managed by CSSI/KMSP. NFRP is considered Official Public Data by NCI, because it is vetted by the NCI Budget Office. Primary groups that supply data to NFRP are: RAEB (Extramural Grants and Research Contracts); DCEG (Intramural projects); CCR (Intramural projects); and, OBF (RMS and Leidos projects).:Data Store" id="areadiagram_map_Hji9f1aAUhQEPy1X_default" href="BPDataStore_Hji9f1aAUhQEPy1Y.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1077, 761, 1113, 797" coords2="1077, 761, 1113, 797" shape="rect" alt="STOP:Start Event" id="areadiagram_map_rji9f1aAUhQEPy1U_default" href="BPStartEvent_bji9f1aAUhQEPy1V.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1065, 147, 1125, 180" coords2="1065, 147, 1125, 180" shape="rect" alt="NFRP:Data Store" id="areadiagram_map_9ji9f1aAUhQEPy1O_default" href="BPDataStore_jji9f1aAUhQEPy1P.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="922, 122, 1030, 206" coords2="922, 122, 1030, 206" shape="rect" alt="KMSP provides reports of the working FY data for OBF to validate.:Sub-Process" id="areadiagram_map_Vji9f1aAUhQEPy1I_default" href="BPSubProcess_Vji9f1aAUhQEPy1J.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="999, 592, 1191, 718" coords2="999, 592, 1191, 718" shape="rect" alt="The total NCI budget is validated by OBF as the ‘Cancer’ category on NFRP. During the validation process, OBF staff have access to the NFRP development system where data are loaded as they are received. They can use the development system as an automated aid in their validation process.:Sub-Process" id="areadiagram_map_pji9f1aAUhQEPy0__default" href="BPSubProcess_pji9f1aAUhQEPy1A.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="762, 614, 876, 698" coords2="762, 614, 876, 698" shape="rect" alt="OBF validates and approves project and disease category data before that data is made public on NFRP.:Sub-Process" id="areadiagram_map_Rji9f1aAUhQEPy08_default" href="BPSubProcess_Rji9f1aAUhQEPy09.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="765, 122, 873, 206" coords2="765, 122, 873, 206" shape="rect" alt="KMSP performs the first level QA-QC of NFRP data as it is being loaded to the NFRP database.:Sub-Process" id="areadiagram_map_2ji9f1aAUhQEPy05_default" href="BPSubProcess__ji9f1aAUhQEPy06.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="471, 739, 543, 772" coords2="471, 739, 543, 772" shape="rect" alt="Spreadsheets:Sub-Process" id="areadiagram_map_iji9f1aAUhQEPy0t_default" href="BPSubProcess_iji9f1aAUhQEPy0u.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="262, 739, 334, 772" coords2="262, 739, 334, 772" shape="rect" alt="Spreadsheets:Sub-Process" id="areadiagram_map_kji9f1aAUhQEPy0e_default" href="BPSubProcess_kji9f1aAUhQEPy0f.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="528, 242, 636, 314" coords2="528, 242, 636, 314" shape="rect" alt="KMSP runs scripts to load the RMS and Leidos data to the NFRP database.:Sub-Process" id="areadiagram_map_gji9f1aAUhQEPy0P_default" href="BPSubProcess_gji9f1aAUhQEPy0Q.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="363, 242, 471, 314" coords2="363, 242, 471, 314" shape="rect" alt="KMSP runs scripts to load the Intramural data to the NFRP database.:Sub-Process" id="areadiagram_map_fDi9f1aAUhQEPy0M_default" href="BPSubProcess_fDi9f1aAUhQEPy0N.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="459, 620, 555, 692" coords2="459, 620, 555, 692" shape="rect" alt="OBF sends RMS and Leidos data to KMSP via spreadsheets.:Sub-Process" id="areadiagram_map_PDi9f1aAUhQEPy0J_default" href="BPSubProcess_PDi9f1aAUhQEPy0K.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="220, 604, 376, 707" coords2="220, 604, 376, 707" shape="rect" alt="OBF collects data from Intramural groups and sends it via spreadsheets to KMSP. (OBF reconciles scientific coding with funding data before transmitting information to NFRP.):Sub-Process" id="areadiagram_map_XDi9f1aAUhQEPy0G_default" href="BPSubProcess_XDi9f1aAUhQEPy0H.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="244, 242, 352, 314" coords2="244, 242, 352, 314" shape="rect" alt="KMSP accesses that data and runs scripts to load/copy it into the NFRP database.:Sub-Process" id="areadiagram_map_HDi9f1aAUhQEPy0D_default" href="BPSubProcess_HDi9f1aAUhQEPy0E.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="153, 419, 273, 497" coords2="153, 419, 273, 497" shape="rect" alt="At the end of each fiscal year, DEA RAEB images final FY data and transfers it to an NFRP schema in I2E.:Sub-Process" id="areadiagram_map_rDi9f1aAUhQEPy0A_default" href="BPSubProcess_rDi9f1aAUhQEPy0B.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="183, 361, 243, 394" coords2="183, 361, 243, 394" shape="rect" alt="I2E:Data Store" id="areadiagram_map_zDi9f1aAUhQEPyz9_default" href="BPDataStore_zDi9f1aAUhQEPyz_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 836, 1586, 998" coords2="2, 836, 1586, 998" shape="rect" alt="OEFIA:Pool" id="areadiagram_map_DDi9f1aAUhQEPyz4_default" href="BPPool_DDi9f1aAUhQEPyz5.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 326, 1586, 551" coords2="2, 326, 1586, 551" shape="rect" alt="DEA:Pool" id="areadiagram_map_NDi9f1aAUhQEPyz1_default" href="BPPool_tDi9f1aAUhQEPyz2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 86, 1586, 326" coords2="2, 86, 1586, 326" shape="rect" alt="CSSI/KMSP:Pool" id="areadiagram_map_VDi9f1aAUhQEPyzy_default" href="BPPool_VDi9f1aAUhQEPyzz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 551, 1586, 836" coords2="2, 551, 1586, 836" shape="rect" alt="OBF:Pool" id="areadiagram_map_5Di9f1aAUhQEPyzv_default" href="BPPool_5Di9f1aAUhQEPyzw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 1586, 998" coords2="2, 2, 1586, 998" shape="rect" alt="Pool9:Pool" id="areadiagram_map_pDi9f1aAUhQEPyzs_default" href="BPPool_pDi9f1aAUhQEPyzt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_fTi9f1aAUhQEPy2m.html" class="ItemLink">H : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_nTi9f1aAUhQEPy2g.html" class="ItemLink">OBF receives extramural data from OEFIA and intramural data from... : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_rTi9f1aAUhQEPy2a.html" class="ItemLink">Spreadsheets : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_DTi9f1aAUhQEPy2U.html" class="ItemLink">OEFIA pulls extramural grant data from FAM and sends the data via spreadsheet to OBF. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_tTi9f1aAUhQEPy2O.html" class="ItemLink">I2E : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_FTi9f1aAUhQEPy2I.html" class="ItemLink">F : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_pTi9f1aAUhQEPy2F.html" class="ItemLink">Process40 : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_xTi9f1aAUhQEPy2C.html" class="ItemLink">Process39 : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_BTi9f1aAUhQEPy1_.html" class="ItemLink">Process38 : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_uTi9f1aAUhQEPy18.html" class="ItemLink">Process37 : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_2Ti9f1aAUhQEPy14.html" class="ItemLink">Gateway8 : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_mTi9f1aAUhQEPy11.html" class="ItemLink">Process36 : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_6Ti9f1aAUhQEPy1y.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_MTi9f1aAUhQEPy1q.html" class="ItemLink">STOP : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_fji9f1aAUhQEPy1e.html" class="ItemLink">OBF Factbook – Reports on NCI Budget and provides NCI funding policies related to research grant awards. OBF Factbook is considered Official Public Data by NCI. : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_3ji9f1aAUhQEPy1b.html" class="ItemLink">OBF annually publishes the NCI Factbook. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_Hji9f1aAUhQEPy1Y.html" class="ItemLink">NCI Funded Research Portfolio (NFRP) – Reports on NCI projects and NCI scientific coding and is managed by CSSI/KMSP. NFRP is considered Official Public Data by NCI, because it is vetted by the NCI Budget Office. Primary groups that supply data to NFRP are: RAEB (Extramural Grants and Research Contracts); DCEG (Intramural projects); CCR (Intramural projects); and, OBF (RMS and Leidos projects). : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_bji9f1aAUhQEPy1V.html" class="ItemLink">STOP : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_jji9f1aAUhQEPy1P.html" class="ItemLink">NFRP : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Vji9f1aAUhQEPy1J.html" class="ItemLink">KMSP provides reports of the working FY data for OBF to validate. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_pji9f1aAUhQEPy1A.html" class="ItemLink">The total NCI budget is validated by OBF as the ‘Cancer’ category on NFRP. During the validation process, OBF staff have access to the NFRP development system where data are loaded as they are received. They can use the development system as an automated aid in their validation process. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Rji9f1aAUhQEPy09.html" class="ItemLink">OBF validates and approves project and disease category data before that data is made public on NFRP. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess__ji9f1aAUhQEPy06.html" class="ItemLink">KMSP performs the first level QA-QC of NFRP data as it is being loaded to the NFRP database. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_iji9f1aAUhQEPy0u.html" class="ItemLink">Spreadsheets : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_kji9f1aAUhQEPy0f.html" class="ItemLink">Spreadsheets : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_gji9f1aAUhQEPy0Q.html" class="ItemLink">KMSP runs scripts to load the RMS and Leidos data to the NFRP database. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_fDi9f1aAUhQEPy0N.html" class="ItemLink">KMSP runs scripts to load the Intramural data to the NFRP database. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_PDi9f1aAUhQEPy0K.html" class="ItemLink">OBF sends RMS and Leidos data to KMSP via spreadsheets. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_XDi9f1aAUhQEPy0H.html" class="ItemLink">OBF collects data from Intramural groups and sends it via spreadsheets to KMSP. (OBF reconciles scientific coding with funding data before transmitting information to NFRP.) : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_HDi9f1aAUhQEPy0E.html" class="ItemLink">KMSP accesses that data and runs scripts to load/copy it into the NFRP database. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_rDi9f1aAUhQEPy0B.html" class="ItemLink">At the end of each fiscal year, DEA RAEB images final FY data and transfers it to an NFRP schema in I2E. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_zDi9f1aAUhQEPyz_.html" class="ItemLink">I2E : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_DDi9f1aAUhQEPyz5.html" class="ItemLink">OEFIA : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_tDi9f1aAUhQEPyz2.html" class="ItemLink">DEA : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_VDi9f1aAUhQEPyzz.html" class="ItemLink">CSSI/KMSP : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_5Di9f1aAUhQEPyzw.html" class="ItemLink">OBF : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_pDi9f1aAUhQEPyzt.html" class="ItemLink">Pool9 : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		NCI Business Architecture	</div>
+</body>
+</html>
