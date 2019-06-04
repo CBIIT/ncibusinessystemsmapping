@@ -1,0 +1,434 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - DCIS/FPDS-ng ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_T7yPrGaAUhQuH2zK.html" class="PageParentTitle">NBS : Application Component</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="ArchiMateDiagram_q5C5gaaAUrDYD4kV.html" class="PageParentTitle">DCIS/FPDS-ng : Application Component</a> (in <a href="ArchiMateDiagram_q5C5gaaAUrDYD4kV.html" class="PageParentTitle">NBS ArchiMate Diagram</a> / <a href="ArchiMateDiagram_XBj9oaaAUrDYD8Cd.html" class="PageParentTitle">PRISM ArchiMate Diagram</a> / <a href="ArchiMateDiagram_PJ3zlaaAUhQuHwJV.html" class="PageParentTitle">P-Card ArchiMate Diagram</a> / <a href="ArchiMateDiagram_f6D_zaaAUrCWvUWf.html" class="PageParentTitle">DCIS/FPDS-ng ArchiMate Diagram</a> / <a href="ArchiMateDiagram_pWLsG6aAUrC0RDgz.html" class="PageParentTitle">NBS Acquisition</a> / <a href="ArchiMateDiagram_T7yPrGaAUhQuH2zK.html" class="PageParentTitle">Projected view of NBS Archimate ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - DCIS/FPDS-ng ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NBS Systems Architecture.vpp://diagram/f6D_zaaAUrCWvUWf', 'DCIS/FPDS-ng ArchiMate Diagram\nNBS Systems Architecture.vpp://diagram/f6D_zaaAUrCWvUWf', 'DCIS/FPDS-ng ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|486.0|86.0|96.0|40.0|ArchiMateApplicationComponent_oVacYaaAUrDYD1ki.html|ArchiMateApplicationComponent_oVacYaaAUrDYD1ki.html|VEoALaaAUrCWvUYK" id="optionVEoALaaAUrCWvUYK">P-Card : Application Component</option>
+<option value="shape|486.0|169.0|96.0|40.0|ArchiMateApplicationComponent_WM7doaaAUrDYD8AA.html|ArchiMateApplicationComponent_WM7doaaAUrDYD8AA.html|2EoALaaAUrCWvUYA" id="option2EoALaaAUrCWvUYA">PRISM : Application Component</option>
+<option value="shape|74.0|134.0|127.0|40.0|ArchiMateApplicationComponent_kKw1oaaAUrDYD76i.html|ArchiMateApplicationComponent_kKw1oaaAUrDYD76i.html|tc__zaaAUrCWvUXv" id="optiontc__zaaAUrCWvUXv">DCIS/FPDS-ng : Application Component</option>
+<option value="shape|427.0|31.0|211.0|243.0|ArchiMateGrouping_iq3ZgaaAUrDYDyrJ.html|ArchiMateGrouping_iq3ZgaaAUrDYDyrJ.html|P7b_zaaAUrCWvUXW" id="optionP7b_zaaAUrCWvUXW">NBS Core Applications : Grouping</option>
+<option value="shape|415.0|2.0|239.0|304.0|ArchiMateGrouping_iq3ZgaaAUrDYDyrK.html|ArchiMateGrouping_iq3ZgaaAUrDYDyrK.html|c8b_zaaAUrCWvUXA" id="optionc8b_zaaAUrCWvUXA">NBS : Grouping</option>
+<option value="shape|2.0|2.0|258.0|304.0|ArchiMateGrouping_FkPhRTqAUhQsXQ1y.html|ArchiMateGrouping_FkPhRTqAUhQsXQ1y.html|OaT_zaaAUrCWvUWu" id="optionOaT_zaaAUrCWvUWu">??? : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/DCISFPDSng_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="658" height="310"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="405.0, 24.0, 405.0, 38.0, 415.0, 38.0, 415.0, 24.0" coords2="405.0, 24.0, 405.0, 38.0, 415.0, 38.0, 415.0, 24.0" shape="poly" alt=":Access" id="areadiagram_map_v7b_zaaAUrCWvUXY_default" href="ArchiMateAccess_9E9FgaaAUrDYD5KL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_pQpPsgaC48kYAjDM.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Award&amp;lt;/a&amp;gt; 
+      Data &amp;​gt; 10K
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="227.0, 159.0, 227.0, 162.0, 201.0, 162.0, 201.0, 174.0, 191.0, 174.0, 191.0, 176.0, 224.0, 176.0, 224.0, 190.0, 227.0, 190.0, 227.0, 193.0, 241.0, 193.0, 241.0, 190.0, 486.0, 190.0, 486.0, 176.0, 244.0, 176.0, 244.0, 162.0, 241.0, 162.0, 241.0, 159.0" coords2="227.0, 159.0, 227.0, 162.0, 201.0, 162.0, 201.0, 174.0, 191.0, 174.0, 191.0, 176.0, 224.0, 176.0, 224.0, 190.0, 227.0, 190.0, 227.0, 193.0, 241.0, 193.0, 241.0, 190.0, 486.0, 190.0, 486.0, 176.0, 244.0, 176.0, 244.0, 162.0, 241.0, 162.0, 241.0, 159.0" shape="poly" alt="DCIS/FPDS-ng-&gt;Prism:Flow" id="areadiagram_map_WEoALaaAUrCWvUX._default" href="ArchiMateFlow_jdM1oaaAUrDYD77E.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;​gt;10K Cons Contr.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="227.0, 102.0, 227.0, 105.0, 224.0, 105.0, 224.0, 119.0, 227.0, 119.0, 227.0, 147.0, 201.0, 147.0, 201.0, 161.0, 227.0, 161.0, 227.0, 164.0, 241.0, 164.0, 241.0, 161.0, 244.0, 161.0, 244.0, 147.0, 241.0, 147.0, 241.0, 119.0, 486.0, 119.0, 486.0, 105.0, 241.0, 105.0, 241.0, 102.0" coords2="227.0, 102.0, 227.0, 105.0, 224.0, 105.0, 224.0, 119.0, 227.0, 119.0, 227.0, 147.0, 201.0, 147.0, 201.0, 161.0, 227.0, 161.0, 227.0, 164.0, 241.0, 164.0, 241.0, 161.0, 244.0, 161.0, 244.0, 147.0, 241.0, 147.0, 241.0, 119.0, 486.0, 119.0, 486.0, 105.0, 241.0, 105.0, 241.0, 102.0" shape="poly" alt="P-Card-&gt;DCIS/FPDS-ng:Flow" id="areadiagram_map_VEoALaaAUrCWvUYI_default" href="ArchiMateFlow_ARezlaaAUhQuH6w2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      NBS &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt;/Processes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Invoices
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      P-Card Logs
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="486, 86, 582, 126" coords2="486, 86, 582, 126" shape="rect" alt="P-Card:Application Component" id="areadiagram_map_VEoALaaAUrCWvUYK_default" href="ArchiMateApplicationComponent_oVacYaaAUrDYD1ki.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','486, 86, 582, 126',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_PJ3zlaaAUhQuHwJV.html/P-Card ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '486, 86, 582, 126'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_pQpPsgaC48kYAjDM.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Award&amp;lt;/a&amp;gt; 
+      Data &amp;​gt; 10K
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Synopsis?
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      commitments &amp;amp; obligations
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Vendor Info
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Awards &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_nMTXsgaC48kYAi_a.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;PO&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="486, 169, 582, 209" coords2="486, 169, 582, 209" shape="rect" alt="PRISM:Application Component" id="areadiagram_map_2EoALaaAUrCWvUYA_default" href="ArchiMateApplicationComponent_WM7doaaAUrDYD8AA.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','486, 169, 582, 209',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_XBj9oaaAUrDYD8Cd.html/PRISM ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '486, 169, 582, 209'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_pQpPsgaC48kYAjDM.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Award&amp;lt;/a&amp;gt; 
+      data &amp;​gt; 10K
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;​gt;10K Cons Contr
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="74, 134, 201, 174" coords2="74, 134, 201, 174" shape="rect" alt="DCIS/FPDS-ng:Application Component" id="areadiagram_map_tc__zaaAUrCWvUXv_default" href="ArchiMateApplicationComponent_kKw1oaaAUrDYD76i.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','74, 134, 201, 174',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_f6D_zaaAUrCWvUWf.html/DCIS/FPDS-ng ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '74, 134, 201, 174'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="427, 31, 638, 274" coords2="427, 31, 638, 274" shape="rect" alt="NBS Core Applications:Grouping" id="areadiagram_map_P7b_zaaAUrCWvUXW_default" href="ArchiMateGrouping_iq3ZgaaAUrDYDyrJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="415, 2, 654, 318.0" coords2="415, 2, 654, 318.0" shape="rect" alt="NBS:Grouping" id="areadiagram_map_c8b_zaaAUrCWvUXA_default" href="ArchiMateGrouping_iq3ZgaaAUrDYDyrK.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','415, 2, 654, 306',new Array(),new Array(),new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_2w854MaAUrAy_BJ2.html?shapeid=4tmohMaAU8yEyjXQ/NBS/ApplicationComponent'),new Array()),hideReferenceIcon(),hideSubdiagramIcon(),showTransitorIcon('diagram', '415, 2, 654, 306')" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 260, 306" coords2="2, 2, 260, 306" shape="rect" alt="???:Grouping" id="areadiagram_map_OaT_zaaAUrCWvUWu_default" href="ArchiMateGrouping_FkPhRTqAUhQsXQ1y.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_oVacYaaAUrDYD1ki.html" class="ItemLink">P-Card : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      NBS <a class="ItemLink" href="Glossary_MEn3sgaC48kYAjBT.html" name="">Application</a>/Processes
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Contains:
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Invoices
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      P-Card Logs
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_WM7doaaAUrDYD8AA.html" class="ItemLink">PRISM : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Contains:
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_pQpPsgaC48kYAjDM.html" name="">Award</a> 
+      Data &gt; 10K
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Synopsis?
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a> 
+      commitments &amp; obligations
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Vendor Info
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Awards <a class="ItemLink" href="Glossary_nMTXsgaC48kYAi_a.html" name="">PO</a>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_kKw1oaaAUrDYD76i.html" class="ItemLink">DCIS/FPDS-ng : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Contains:
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_pQpPsgaC48kYAjDM.html" name="">Award</a> 
+      data &gt; 10K
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &gt;10K Cons Contr
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_iq3ZgaaAUrDYDyrJ.html" class="ItemLink">NBS Core Applications : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_iq3ZgaaAUrDYDyrK.html" class="ItemLink">NBS : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_FkPhRTqAUhQsXQ1y.html" class="ItemLink">??? : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

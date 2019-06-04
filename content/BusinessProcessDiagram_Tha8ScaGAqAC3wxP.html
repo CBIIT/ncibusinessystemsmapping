@@ -1,0 +1,1094 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - CSR Receipt &amp; Referral</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html" class="PageParentTitle">NIHwhat is  : Pool</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html" class="PageParentTitle">Business Process : Lane</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html" class="PageParentTitle">CSR Receipt &amp; Referral : Sub-Process</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - <a href="Glossary_D91qagaC48kYAg1H.html" class="ItemLink">CSR</a> Receipt &amp; <a href="Glossary_dLWNsgaC48kYAiiO.html" class="ItemLink">Referral</a>		</span>
+<a onclick="javascript: showVpLink('NCI Funding Research Ecosystem.vpp://diagram/Tha8ScaGAqAC3wxP', 'CSR Receipt &amp; Referral\nNCI Funding Research Ecosystem.vpp://diagram/Tha8ScaGAqAC3wxP', 'CSR Receipt &amp; Referral', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|4.0|1329.0|338.0|193.0|Callout_pbKJxcaGAqAC37rk.html|Callout_pbKJxcaGAqAC37rk.html|6bKJxcaGAqAC37rj" id="option6bKJxcaGAqAC37rj">Unnamed Callout : Callout</option>
+<option value="shape|2.0|820.0|339.0|319.0|Callout_67GrRcaGAqAC35xS.html|Callout_67GrRcaGAqAC35xS.html|7bGrRcaGAqAC35xA" id="option7bGrRcaGAqAC35xA">Unnamed Callout : Callout</option>
+<option value="shape|374.0|686.0|170.0|90.0|Callout_f_q6RcaGAqAC34hF.html|Callout_f_q6RcaGAqAC34hF.html|6_q6RcaGAqAC34gz" id="option6_q6RcaGAqAC34gz">Unnamed Callout : Callout</option>
+<option value="shape|613.0|722.0|526.0|344.0|Callout_21B2GcaGAqAC3zjt.html|Callout_21B2GcaGAqAC3zjt.html|21B2GcaGAqAC3zjs" id="option21B2GcaGAqAC3zjs">Unnamed Callout : Callout</option>
+<option value="shape|612.0|106.0|375.0|133.0|Callout_MeSSGcaGAqAC3y9F.html|Callout_MeSSGcaGAqAC3y9F.html|MeSSGcaGAqAC3y9E" id="optionMeSSGcaGAqAC3y9E">Unnamed Callout : Callout</option>
+<option value="shape|602.0|2.0|228.0|227.0|Callout_XNPwGcaGAqAC3ycr.html|Callout_XNPwGcaGAqAC3ycr.html|nNPwGcaGAqAC3ycq" id="optionnNPwGcaGAqAC3ycq">Unnamed Callout : Callout</option>
+<option value="shape|677.0|1442.0|20.0|20.0|BPStartEvent_Yla8ScaGAqAC3wxX.html|BPStartEvent_Yla8ScaGAqAC3wxX.html|ola8ScaGAqAC3wxW" id="optionola8ScaGAqAC3wxW">Unnamed Start Event : Start Event</option>
+<option value="shape|987.0|549.0|20.0|20.0|BPEndEvent_Bla8ScaGAqAC3wxi.html|BPEndEvent_Bla8ScaGAqAC3wxi.html|Bla8ScaGAqAC3wxh" id="optionBla8ScaGAqAC3wxh">Refereed to CSR Peer Review : End Event</option>
+<option value="shape|535.0|440.0|115.0|40.0|BPTask_hCQyScaGAqAC3xDk.html|BPTask_hCQyScaGAqAC3xDk.html|hCQyScaGAqAC3xDj" id="optionhCQyScaGAqAC3xDj">Assign to Referral Officer : Task</option>
+<option value="shape|546.0|47.0|93.0|40.0|BPTask_XaFOScaGAqAC3xPI.html|BPTask_XaFOScaGAqAC3xPI.html|XaFOScaGAqAC3xPH" id="optionXaFOScaGAqAC3xPH">Assign to IC Review : Task</option>
+<option value="shape|528.0|1211.0|131.0|40.0|BPTask_RL_4KcaGAqAC3xmQ.html|BPTask_RL_4KcaGAqAC3xmQ.html|.L.4KcaGAqAC3xmP" id="option.L.4KcaGAqAC3xmP">First Contact Application Review : Task</option>
+<option value="shape|573.0|1109.0|40.0|40.0|BPGateway_n8D4KcaGAqAC3xnA.html|BPGateway_n8D4KcaGAqAC3xnA.html|n8D4KcaGAqAC3xm_" id="optionn8D4KcaGAqAC3xm_">Application Complete? : Gateway</option>
+<option value="shape|448.0|1119.0|20.0|20.0|BPIntermediateEvent_1mH4KcaGAqAC3xna.html|BPIntermediateEvent_1mH4KcaGAqAC3xna.html|VmH4KcaGAqAC3xnZ" id="optionVmH4KcaGAqAC3xnZ">Sent Back for Revision : Intermediate Event</option>
+<option value="shape|448.0|1221.0|20.0|20.0|BPIntermediateEvent_FDIEKcaGAqAC3xoC.html|BPIntermediateEvent_FDIEKcaGAqAC3xoC.html|FDIEKcaGAqAC3xoB" id="optionFDIEKcaGAqAC3xoB">Revision Received : Intermediate Event</option>
+<option value="shape|544.0|670.0|98.0|40.0|BPTask_tyJEKcaGAqAC3xwh.html|BPTask_tyJEKcaGAqAC3xwh.html|NyJEKcaGAqAC3xwg" id="optionNyJEKcaGAqAC3xwg">Breakout Review : Task</option>
+<option value="shape|574.0|222.0|40.0|40.0|BPGateway_BWo76caGAqAC3x_d.html|BPGateway_BWo76caGAqAC3x_d.html|.Wo76caGAqAC3x_c" id="option.Wo76caGAqAC3x_c">Unnamed Gateway : Gateway</option>
+<option value="shape|697.0|289.0|89.0|42.0|BPTask_7yyn6caGAqAC3yL6.html|BPTask_7yyn6caGAqAC3yL6.html|7yyn6caGAqAC3yL5" id="option7yyn6caGAqAC3yL5">Send Back to Breakout : Task</option>
+<option value="shape|383.0|221.0|102.0|42.0|BPTask_vj3n6caGAqAC3yUP.html|BPTask_vj3n6caGAqAC3yUP.html|Pj3n6caGAqAC3yUO" id="optionPj3n6caGAqAC3yUO">Send to other Referral Officer : Task</option>
+<option value="shape|513.0|949.0|164.0|40.0|BPTask_H910GcaGAqAC3yr3.html|BPTask_H910GcaGAqAC3yr3.html|H910GcaGAqAC3yr2" id="optionH910GcaGAqAC3yr2">Match ARA
+(closes non-permanent ARA) : Task</option>
+<option value="shape|668.0|1354.0|40.0|40.0|BPGateway_3EJaGcaGAqAC3zFA.html|BPGateway_3EJaGcaGAqAC3zFA.html|XEJaGcaGAqAC3zE_" id="optionXEJaGcaGAqAC3zE_">Paper or eSubmission? : Gateway</option>
+<option value="shape|686.0|1299.0|150.0|40.0|BPTask_GBnaGcaGAqAC3zGS.html|BPTask_GBnaGcaGAqAC3zGS.html|GBnaGcaGAqAC3zGR" id="optionGBnaGcaGAqAC3zGR">Pre Data Entry
+Submission MetaData : Task</option>
+<option value="shape|686.0|1109.0|150.0|40.0|BPTask_Xro6GcaGAqAC3zHC.html|BPTask_Xro6GcaGAqAC3zHC.html|Xro6GcaGAqAC3zHB" id="optionXro6GcaGAqAC3zHB">Data Entry : Task</option>
+<option value="shape|520.0|859.0|150.0|40.0|BPTask_yFPGGcaGAqAC3zPy.html|BPTask_yFPGGcaGAqAC3zPy.html|SFPGGcaGAqAC3zPx" id="optionSFPGGcaGAqAC3zPx">Application Check and System Validation : Task</option>
+<option value="shape|573.0|1026.0|40.0|40.0|BPGateway_XQKmGcaGAqAC3zQs.html|BPGateway_XQKmGcaGAqAC3zQs.html|XQKmGcaGAqAC3zQr" id="optionXQKmGcaGAqAC3zQr">ARA? : Gateway</option>
+<option value="shape|573.0|791.0|40.0|40.0|BPGateway_C8M2GcaGAqAC3zbD.html|BPGateway_C8M2GcaGAqAC3zbD.html|88M2GcaGAqAC3zbC" id="option88M2GcaGAqAC3zbC">Valid? : Gateway</option>
+<option value="shape|573.0|539.0|40.0|40.0|BPGateway_MRO3GcaGAqAC3zrs.html|BPGateway_MRO3GcaGAqAC3zrs.html|URO3GcaGAqAC3zrr" id="optionURO3GcaGAqAC3zrr">Unnamed Gateway : Gateway</option>
+<option value="shape|379.0|539.0|88.0|40.0|BPTask_sGJ3GcaGAqAC3zsK.html|BPTask_sGJ3GcaGAqAC3zsK.html|MGJ3GcaGAqAC3zsJ" id="optionMGJ3GcaGAqAC3zsJ">Assign to IC(s) : Task</option>
+<option value="shape|209.0|549.0|20.0|20.0|BPEndEvent_WMEPGcaGAqAC3ztU.html|BPEndEvent_WMEPGcaGAqAC3ztU.html|mMEPGcaGAqAC3ztT" id="optionmMEPGcaGAqAC3ztT">Referred to IC : End Event</option>
+<option value="shape|772.0|539.0|150.0|40.0|BPTask__F0bmcaGAqAC3z80.html|BPTask__F0bmcaGAqAC3z80.html|vF0bmcaGAqAC3z8z" id="optionvF0bmcaGAqAC3z8z">Assign to CSR IRG or SRG or SEP : Task</option>
+<option value="shape|209.0|386.0|20.0|20.0|BPEndEvent_q0VbmcaGAqAC3z9a.html|BPEndEvent_q0VbmcaGAqAC3z9a.html|K0VbmcaGAqAC3z9Z" id="optionK0VbmcaGAqAC3z9Z">No Further Processing : End Event</option>
+<option value="shape|546.0|342.0|96.0|40.0|BPTask_ik0_mcaGAqAC32Qc.html|BPTask_ik0_mcaGAqAC32Qc.html|Ck0_mcaGAqAC32Qb" id="optionCk0_mcaGAqAC32Qb">Referral Officer Processing : Task</option>
+<option value="shape|686.0|1203.0|150.0|55.0|BPTask_4Wk1O8aAU80UsVal.html|BPTask_4Wk1O8aAU80UsVal.html|4Wk1O8aAU80UsVak" id="option4Wk1O8aAU80UsVak">San all paper application documents and put PDFs in Grant Folder : Task</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/CSR_Receipt_Referral.png" usemap="#diagram_map" class="Image" width="1143" height="1537"/>
+					<map name="diagram_map">
+<area coords="598,446,640,460" coords2="598,446,640,460" shape="rect" alt="Referral" href="Glossary_dLWNsgaC48kYAiiO.html"/>
+<area coords="613,53,624,67" coords2="613,53,624,67" shape="rect" alt="IC" href="Glossary_cvKYigaC48kYAjPI.html"/>
+<area coords="559,1217,582,1231" coords2="559,1217,582,1231" shape="rect" alt="R29" href="Glossary_u2Vr6gaC48kYAhG_.html"/>
+<area coords="542,1231,602,1245" coords2="542,1231,602,1245" shape="rect" alt="Application" href="Glossary_MEn3sgaC48kYAjBT.html"/>
+<area coords="392,242,434,256" coords2="392,242,434,256" shape="rect" alt="Referral" href="Glossary_dLWNsgaC48kYAiiO.html"/>
+<area coords="602,955,624,969" coords2="602,955,624,969" shape="rect" alt="ARA" href="Glossary_TnO2RAaC48kYAhd0.html"/>
+<area coords="646,969,668,983" coords2="646,969,668,983" shape="rect" alt="ARA" href="Glossary_TnO2RAaC48kYAhd0.html"/>
+<area coords="534,865,594,879" coords2="534,865,594,879" shape="rect" alt="Application" href="Glossary_MEn3sgaC48kYAjBT.html"/>
+<area coords="437,552,448,566" coords2="437,552,448,566" shape="rect" alt="IC" href="Glossary_cvKYigaC48kYAjPI.html"/>
+<area coords="833,545,853,559" coords2="833,545,853,559" shape="rect" alt="CSR" href="Glossary_D91qagaC48kYAg1H.html"/>
+<area coords="856,545,874,559" coords2="856,545,874,559" shape="rect" alt="IRG" href="Glossary_yRyEigaC48kYAjQd.html"/>
+<area coords="892,545,913,559" coords2="892,545,913,559" shape="rect" alt="SRG" href="Glossary_VhD9sgaC48kYAin1.html"/>
+<area coords="845,559,863,573" coords2="845,559,863,573" shape="rect" alt="SEP" href="Glossary_WMG25waC48kYAlY6.html"/>
+<area coords="552,348,594,362" coords2="552,348,594,362" shape="rect" alt="Referral" href="Glossary_dLWNsgaC48kYAiiO.html"/>
+<area coords="766,1209,825,1223" coords2="766,1209,825,1223" shape="rect" alt="Application" href="Glossary_MEn3sgaC48kYAjBT.html"/>
+<area coords="733,1237,762,1251" coords2="733,1237,762,1251" shape="rect" alt="Grant" href="Glossary_bYdIigaC48kYAjNH.html"/>
+<area imageId="diagram" coords="681.0, 1394.0, 681.0, 1442.0, 695.0, 1442.0, 695.0, 1394.0" coords2="681.0, 1394.0, 681.0, 1442.0, 695.0, 1442.0, 695.0, 1394.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_xiQyScaGAqAC3xDq_default" href="BPSequenceFlow_uiQyScaGAqAC3xDp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="586.0, 1149.0, 586.0, 1211.0, 600.0, 1211.0, 600.0, 1149.0" coords2="586.0, 1149.0, 586.0, 1211.0, 600.0, 1211.0, 600.0, 1149.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Yb.4KcaGAqAC3xmU_default" href="BPSequenceFlow_Ab_4KcaGAqAC3xmT.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="586.0, 1066.0, 586.0, 1109.0, 600.0, 1109.0, 600.0, 1066.0" coords2="586.0, 1066.0, 586.0, 1109.0, 600.0, 1109.0, 600.0, 1066.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_iCD4KcaGAqAC3xnG_default" href="BPSequenceFlow_0CD4KcaGAqAC3xnF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="468.0, 1122.0, 468.0, 1136.0, 573.0, 1136.0, 573.0, 1122.0" coords2="468.0, 1122.0, 468.0, 1136.0, 573.0, 1136.0, 573.0, 1122.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_IWH4KcaGAqAC3xng_default" href="BPSequenceFlow_fmH4KcaGAqAC3xnf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="451.0, 1139.0, 451.0, 1221.0, 465.0, 1221.0, 465.0, 1139.0" coords2="451.0, 1139.0, 451.0, 1221.0, 465.0, 1221.0, 465.0, 1139.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_AjIEKcaGAqAC3xoI_default" href="BPSequenceFlow_XDIEKcaGAqAC3xoH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="458.0, 1214.0, 458.0, 1221.0, 468.0, 1221.0, 468.0, 1228.0, 528.0, 1228.0, 528.0, 1214.0" coords2="458.0, 1214.0, 458.0, 1221.0, 468.0, 1221.0, 468.0, 1228.0, 528.0, 1228.0, 528.0, 1214.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_03UEKcaGAqAC3xoo_default" href="BPSequenceFlow_Y3UEKcaGAqAC3xon.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="586.0, 579.0, 586.0, 670.0, 600.0, 670.0, 600.0, 579.0" coords2="586.0, 579.0, 586.0, 670.0, 600.0, 670.0, 600.0, 579.0" shape="poly" alt="Process Application:Sequence Flow" id="areadiagram_map_sKJEKcaGAqAC3xwl_default" href="BPSequenceFlow_4KJEKcaGAqAC3xwk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="587.0, 87.0, 587.0, 222.0, 601.0, 222.0, 601.0, 87.0" coords2="587.0, 87.0, 587.0, 222.0, 601.0, 222.0, 601.0, 87.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_S2o76caGAqAC3x_j_default" href="BPSequenceFlow_M2o76caGAqAC3x_i.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="642.0, 245.0, 642.0, 248.0, 614.0, 248.0, 614.0, 262.0, 642.0, 262.0, 642.0, 303.0, 639.0, 303.0, 639.0, 317.0, 642.0, 317.0, 642.0, 320.0, 656.0, 320.0, 656.0, 317.0, 697.0, 317.0, 697.0, 303.0, 656.0, 303.0, 656.0, 262.0, 659.0, 262.0, 659.0, 248.0, 656.0, 248.0, 656.0, 245.0" coords2="642.0, 245.0, 642.0, 248.0, 614.0, 248.0, 614.0, 262.0, 642.0, 262.0, 642.0, 303.0, 639.0, 303.0, 639.0, 317.0, 642.0, 317.0, 642.0, 320.0, 656.0, 320.0, 656.0, 317.0, 697.0, 317.0, 697.0, 303.0, 656.0, 303.0, 656.0, 262.0, 659.0, 262.0, 659.0, 248.0, 656.0, 248.0, 656.0, 245.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_hKyn6caGAqAC3yMC_default" href="BPSequenceFlow_2Kyn6caGAqAC3yMB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="730.0, 331.0, 730.0, 543.0, 613.0, 543.0, 613.0, 557.0, 730.0, 557.0, 730.0, 560.0, 744.0, 560.0, 744.0, 557.0, 747.0, 557.0, 747.0, 543.0, 744.0, 543.0, 744.0, 331.0" coords2="730.0, 331.0, 730.0, 543.0, 613.0, 543.0, 613.0, 557.0, 730.0, 557.0, 730.0, 560.0, 744.0, 560.0, 744.0, 557.0, 747.0, 557.0, 747.0, 543.0, 744.0, 543.0, 744.0, 331.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_.m2n6caGAqAC3yMk_default" href="BPSequenceFlow_2m2n6caGAqAC3yMj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="485.0, 235.0, 485.0, 249.0, 574.0, 249.0, 574.0, 235.0" coords2="485.0, 235.0, 485.0, 249.0, 574.0, 249.0, 574.0, 235.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_uT3n6caGAqAC3yUX_default" href="BPSequenceFlow_6T3n6caGAqAC3yUW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="586.0, 1251.0, 586.0, 1366.0, 583.0, 1366.0, 583.0, 1380.0, 586.0, 1380.0, 586.0, 1383.0, 600.0, 1383.0, 600.0, 1380.0, 668.0, 1380.0, 668.0, 1366.0, 600.0, 1366.0, 600.0, 1251.0" coords2="586.0, 1251.0, 586.0, 1366.0, 583.0, 1366.0, 583.0, 1380.0, 586.0, 1380.0, 586.0, 1383.0, 600.0, 1383.0, 600.0, 1380.0, 668.0, 1380.0, 668.0, 1366.0, 600.0, 1366.0, 600.0, 1251.0" shape="poly" alt="eSubmission
+Grants.gov:Sequence Flow" id="areadiagram_map_ykJaGcaGAqAC3zFG_default" href="BPSequenceFlow_skJaGcaGAqAC3zFF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="754.0, 1339.0, 754.0, 1367.0, 708.0, 1367.0, 708.0, 1381.0, 754.0, 1381.0, 754.0, 1384.0, 768.0, 1384.0, 768.0, 1381.0, 771.0, 1381.0, 771.0, 1367.0, 768.0, 1367.0, 768.0, 1339.0" coords2="754.0, 1339.0, 754.0, 1367.0, 708.0, 1367.0, 708.0, 1381.0, 754.0, 1381.0, 754.0, 1384.0, 768.0, 1384.0, 768.0, 1381.0, 771.0, 1381.0, 771.0, 1367.0, 768.0, 1367.0, 768.0, 1339.0" shape="poly" alt="Paper Submission:Sequence Flow" id="areadiagram_map_dBnaGcaGAqAC3zGa_default" href="BPSequenceFlow_lBnaGcaGAqAC3zGZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="754.0, 1258.0, 754.0, 1299.0, 768.0, 1299.0, 768.0, 1258.0" coords2="754.0, 1258.0, 754.0, 1299.0, 768.0, 1299.0, 768.0, 1258.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_qbo6GcaGAqAC3zHK_default" href="BPSequenceFlow_8bo6GcaGAqAC3zHJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="613.0, 1120.0, 613.0, 1134.0, 686.0, 1134.0, 686.0, 1120.0" coords2="613.0, 1120.0, 613.0, 1134.0, 686.0, 1134.0, 686.0, 1120.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_yUE6GcaGAqAC3zHg_default" href="BPSequenceFlow_iUE6GcaGAqAC3zHf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="586.0, 831.0, 586.0, 859.0, 600.0, 859.0, 600.0, 831.0" coords2="586.0, 831.0, 586.0, 859.0, 600.0, 859.0, 600.0, 831.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_HFPGGcaGAqAC3zP2_default" href="BPSequenceFlow_zFPGGcaGAqAC3zP1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="586.0, 989.0, 586.0, 1026.0, 600.0, 1026.0, 600.0, 989.0" coords2="586.0, 989.0, 586.0, 1026.0, 600.0, 1026.0, 600.0, 989.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_iwKmGcaGAqAC3zQy_default" href="BPSequenceFlow_0wKmGcaGAqAC3zQx.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="451.0, 869.0, 451.0, 872.0, 448.0, 872.0, 448.0, 886.0, 451.0, 886.0, 451.0, 1039.0, 448.0, 1039.0, 448.0, 1053.0, 451.0, 1053.0, 451.0, 1056.0, 465.0, 1056.0, 465.0, 1053.0, 573.0, 1053.0, 573.0, 1039.0, 465.0, 1039.0, 465.0, 886.0, 520.0, 886.0, 520.0, 872.0, 465.0, 872.0, 465.0, 869.0" coords2="451.0, 869.0, 451.0, 872.0, 448.0, 872.0, 448.0, 886.0, 451.0, 886.0, 451.0, 1039.0, 448.0, 1039.0, 448.0, 1053.0, 451.0, 1053.0, 451.0, 1056.0, 465.0, 1056.0, 465.0, 1053.0, 573.0, 1053.0, 573.0, 1039.0, 465.0, 1039.0, 465.0, 886.0, 520.0, 886.0, 520.0, 872.0, 465.0, 872.0, 465.0, 869.0" shape="poly" alt="No ARA:Sequence Flow" id="areadiagram_map_xIxmGcaGAqAC3zR8_default" href="BPSequenceFlow__IxmGcaGAqAC3zR7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="588.0, 899.0, 588.0, 949.0, 602.0, 949.0, 602.0, 899.0" coords2="588.0, 899.0, 588.0, 949.0, 602.0, 949.0, 602.0, 899.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_mRlmGcaGAqAC3zSg_default" href="BPSequenceFlow_aRlmGcaGAqAC3zSf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="586.0, 710.0, 586.0, 791.0, 600.0, 791.0, 600.0, 710.0" coords2="586.0, 710.0, 586.0, 791.0, 600.0, 791.0, 600.0, 710.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_l8M2GcaGAqAC3zbJ_default" href="BPSequenceFlow_J8M2GcaGAqAC3zbI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="374.0, 801.0, 374.0, 804.0, 371.0, 804.0, 371.0, 818.0, 374.0, 818.0, 374.0, 1120.0, 371.0, 1120.0, 371.0, 1134.0, 374.0, 1134.0, 374.0, 1137.0, 388.0, 1137.0, 388.0, 1134.0, 448.0, 1134.0, 448.0, 1120.0, 388.0, 1120.0, 388.0, 818.0, 573.0, 818.0, 573.0, 804.0, 388.0, 804.0, 388.0, 801.0" coords2="374.0, 801.0, 374.0, 804.0, 371.0, 804.0, 371.0, 818.0, 374.0, 818.0, 374.0, 1120.0, 371.0, 1120.0, 371.0, 1134.0, 374.0, 1134.0, 374.0, 1137.0, 388.0, 1137.0, 388.0, 1134.0, 448.0, 1134.0, 448.0, 1120.0, 388.0, 1120.0, 388.0, 818.0, 573.0, 818.0, 573.0, 804.0, 388.0, 804.0, 388.0, 801.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_tgS2GcaGAqAC3zb1_default" href="BPSequenceFlow_5gS2GcaGAqAC3zb0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="586.0, 480.0, 586.0, 539.0, 600.0, 539.0, 600.0, 480.0" coords2="586.0, 480.0, 586.0, 539.0, 600.0, 539.0, 600.0, 480.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_RRO3GcaGAqAC3zry_default" href="BPSequenceFlow_uRO3GcaGAqAC3zrx.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="467.0, 552.0, 467.0, 566.0, 573.0, 566.0, 573.0, 552.0" coords2="467.0, 552.0, 467.0, 566.0, 573.0, 566.0, 573.0, 552.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_hGJ3GcaGAqAC3zsS_default" href="BPSequenceFlow_uGJ3GcaGAqAC3zsR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="229.0, 552.0, 229.0, 566.0, 379.0, 566.0, 379.0, 552.0" coords2="229.0, 552.0, 229.0, 566.0, 379.0, 566.0, 379.0, 552.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_tMEPGcaGAqAC3zta_default" href="BPSequenceFlow_lMEPGcaGAqAC3ztZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="613.0, 552.0, 613.0, 566.0, 772.0, 566.0, 772.0, 552.0" coords2="613.0, 552.0, 613.0, 566.0, 772.0, 566.0, 772.0, 552.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Ll0bmcaGAqAC3z88_default" href="BPSequenceFlow_dl0bmcaGAqAC3z87.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="506.0, 386.0, 506.0, 389.0, 229.0, 389.0, 229.0, 403.0, 506.0, 403.0, 506.0, 539.0, 503.0, 539.0, 503.0, 553.0, 506.0, 553.0, 506.0, 556.0, 520.0, 556.0, 520.0, 553.0, 573.0, 553.0, 573.0, 539.0, 520.0, 539.0, 520.0, 403.0, 523.0, 403.0, 523.0, 389.0, 520.0, 389.0, 520.0, 386.0" coords2="506.0, 386.0, 506.0, 389.0, 229.0, 389.0, 229.0, 403.0, 506.0, 403.0, 506.0, 539.0, 503.0, 539.0, 503.0, 553.0, 506.0, 553.0, 506.0, 556.0, 520.0, 556.0, 520.0, 553.0, 573.0, 553.0, 573.0, 539.0, 520.0, 539.0, 520.0, 403.0, 523.0, 403.0, 523.0, 389.0, 520.0, 389.0, 520.0, 386.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_F0VbmcaGAqAC3z9g_default" href="BPSequenceFlow_R0VbmcaGAqAC3z9f.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="922.0, 552.0, 922.0, 566.0, 987.0, 566.0, 987.0, 552.0" coords2="922.0, 552.0, 922.0, 566.0, 987.0, 566.0, 987.0, 552.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_COy7mcaGAqAC30GD_default" href="BPSequenceFlow_cOy7mcaGAqAC30GC.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="587.0, 382.0, 587.0, 440.0, 601.0, 440.0, 601.0, 382.0" coords2="587.0, 382.0, 587.0, 440.0, 601.0, 440.0, 601.0, 382.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_1k0_mcaGAqAC32Qk_default" href="BPSequenceFlow_Zk0_mcaGAqAC32Qj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="587.0, 262.0, 587.0, 342.0, 601.0, 342.0, 601.0, 262.0" coords2="587.0, 262.0, 587.0, 342.0, 601.0, 342.0, 601.0, 262.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_00m_mcaGAqAC32Rc_default" href="BPSequenceFlow_k0m_mcaGAqAC32Rb.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="211.0, 136.0, 211.0, 139.0, 208.0, 139.0, 208.0, 153.0, 211.0, 153.0, 211.0, 386.0, 225.0, 386.0, 225.0, 153.0, 587.0, 153.0, 587.0, 222.0, 601.0, 222.0, 601.0, 153.0, 604.0, 153.0, 604.0, 139.0, 601.0, 139.0, 601.0, 136.0, 587.0, 136.0, 587.0, 139.0, 225.0, 139.0, 225.0, 136.0" coords2="211.0, 136.0, 211.0, 139.0, 208.0, 139.0, 208.0, 153.0, 211.0, 153.0, 211.0, 386.0, 225.0, 386.0, 225.0, 153.0, 587.0, 153.0, 587.0, 222.0, 601.0, 222.0, 601.0, 153.0, 604.0, 153.0, 604.0, 139.0, 601.0, 139.0, 601.0, 136.0, 587.0, 136.0, 587.0, 139.0, 225.0, 139.0, 225.0, 136.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_UaW_mcaGAqAC32Ry_default" href="BPSequenceFlow_4aW_mcaGAqAC32Rx.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="485.0, 225.0, 485.0, 239.0, 574.0, 239.0, 574.0, 225.0" coords2="485.0, 225.0, 485.0, 239.0, 574.0, 239.0, 574.0, 225.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_JKn_mcaGAqAC32Zt_default" href="BPSequenceFlow_RKn_mcaGAqAC32Zs.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="128.0, 57.0, 128.0, 60.0, 125.0, 60.0, 125.0, 74.0, 128.0, 74.0, 128.0, 552.0, 125.0, 552.0, 125.0, 566.0, 128.0, 566.0, 128.0, 569.0, 142.0, 569.0, 142.0, 566.0, 209.0, 566.0, 209.0, 552.0, 142.0, 552.0, 142.0, 74.0, 546.0, 74.0, 546.0, 60.0, 142.0, 60.0, 142.0, 57.0" coords2="128.0, 57.0, 128.0, 60.0, 125.0, 60.0, 125.0, 74.0, 128.0, 74.0, 128.0, 552.0, 125.0, 552.0, 125.0, 566.0, 128.0, 566.0, 128.0, 569.0, 142.0, 569.0, 142.0, 566.0, 209.0, 566.0, 209.0, 552.0, 142.0, 552.0, 142.0, 74.0, 546.0, 74.0, 546.0, 60.0, 142.0, 60.0, 142.0, 57.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_.5YLWcaGAqAC32pU_default" href="BPSequenceFlow_q5YLWcaGAqAC32pT.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="840.0, 232.0, 840.0, 235.0, 614.0, 235.0, 614.0, 249.0, 840.0, 249.0, 840.0, 539.0, 854.0, 539.0, 854.0, 249.0, 857.0, 249.0, 857.0, 235.0, 854.0, 235.0, 854.0, 232.0" coords2="840.0, 232.0, 840.0, 235.0, 614.0, 235.0, 614.0, 249.0, 840.0, 249.0, 840.0, 539.0, 854.0, 539.0, 854.0, 249.0, 857.0, 249.0, 857.0, 235.0, 854.0, 235.0, 854.0, 232.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_VgMLWcaGAqAC32p4_default" href="BPSequenceFlow_pgMLWcaGAqAC32p3.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="596.0, 579.0, 596.0, 670.0, 610.0, 670.0, 610.0, 579.0" coords2="596.0, 579.0, 596.0, 670.0, 610.0, 670.0, 610.0, 579.0" shape="poly" alt="Release Application:Sequence Flow" id="areadiagram_map_ySdaRcaGAqAC34Kx_default" href="BPSequenceFlow_PidaRcaGAqAC34Kw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="754.0, 1149.0, 754.0, 1203.0, 768.0, 1203.0, 768.0, 1149.0" coords2="754.0, 1149.0, 754.0, 1203.0, 768.0, 1203.0, 768.0, 1149.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_pWk1O8aAU80UsVap_default" href="BPSequenceFlow_BWk1O8aAU80UsVao.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="686, 1203, 836, 1258" coords2="686, 1203, 836, 1258" shape="rect" alt="San all paper application documents and put PDFs in Grant Folder:Task" id="areadiagram_map_4Wk1O8aAU80UsVak_default" href="BPTask_4Wk1O8aAU80UsVal.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_D91qagaC48kYAg1H.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSR&amp;lt;/a&amp;gt; 
+      (&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_D91qagaC48kYAg1H.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSR&amp;lt;/a&amp;gt;) 
+      reviews the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      for completeness, determines the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_O_gs6gaC48kYAg_E.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;R15&amp;lt;/a&amp;gt; 
+      of research and assigns the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      to an Institute or Center (&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt;) 
+      for review and funding consideration based on the focus and mission of 
+      the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt;.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      The &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      is then assigned to either a &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_VhD9sgaC48kYAin1.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SRG&amp;lt;/a&amp;gt; 
+      (&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_VhD9sgaC48kYAin1.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SRG&amp;lt;/a&amp;gt;) 
+      within &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_D91qagaC48kYAg1H.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSR&amp;lt;/a&amp;gt; 
+      or to the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bZtbsgaC48kYAisp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DEA&amp;lt;/a&amp;gt; 
+      (&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bZtbsgaC48kYAisp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DEA&amp;lt;/a&amp;gt;) 
+      for review.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      When an &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      is assigned to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;, 
+      a &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_dLWNsgaC48kYAiiO.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Referral&amp;lt;/a&amp;gt; 
+      officer will examine and direct it to the appropriate &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_nMTXsgaC48kYAi_a.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;PO&amp;lt;/a&amp;gt; 
+      (see &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bZtbsgaC48kYAisp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DEA&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_dLWNsgaC48kYAiiO.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Referral&amp;lt;/a&amp;gt; 
+      Diagram).
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="4, 1329, 342, 1522" coords2="4, 1329, 342, 1522" shape="rect" alt="Center for Scientific Review (CSR) reviews the application for completeness, determines the area of research and assigns the application to an Institute or Center (IC) for review and funding consideration based on the focus and mission of the IC.
+
+The application is then assigned to either a Scientific Review Group (SRG) within CSR or to the NCI Division of Extramural Activities (DEA) for review.
+
+When an application is assigned to NCI, a referral officer will examine and direct it to the appropriate NCI program director (see NCI DEA Referral Diagram).:Callout" id="areadiagram_map_6bKJxcaGAqAC37rj_default" href="Callout_pbKJxcaGAqAC37rk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      The &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_dLWNsgaC48kYAiiO.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Referral&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      also manages requisitions and communications between stakeholders.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      The typical workflow consists of searching by specific parameters, 
+      retrieve a hitlist of matching &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      which gets reserved for processing, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      have to be released before another user can be processed by another 
+      user, although override is possible too.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      roles are comprised entirely of &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_D91qagaC48kYAg1H.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSR&amp;lt;/a&amp;gt; 
+      roles
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Note: The &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_dLWNsgaC48kYAiiO.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Referral&amp;lt;/a&amp;gt; 
+      potentially corresponds to two separate activities:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ol class=&amp;quot;decimal&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;list-style-type:none;margin-top:0px;margin-left:40pt;margin-bottom:0px;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        .Consideration for Funding
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_u2Vr6gaC48kYAhG_.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;R29&amp;lt;/a&amp;gt; 
+        Level &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_9hYAagaC48kYAgjC.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Peer 
+        Review&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ol&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      For &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      wide &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_7y19sgaC48kYAinf.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FOA&amp;lt;/a&amp;gt; 
+      the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_u2Vr6gaC48kYAhG_.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;R29&amp;lt;/a&amp;gt;-Level 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_9hYAagaC48kYAgjC.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Peer 
+      Review&amp;lt;/a&amp;gt; is typically coordinated by &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_D91qagaC48kYAg1H.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSR&amp;lt;/a&amp;gt;. 
+      For &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+      originating &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_7y19sgaC48kYAinf.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FOA&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bZtbsgaC48kYAisp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DEA&amp;lt;/a&amp;gt; 
+      is coordinating &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_u2Vr6gaC48kYAhG_.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;R29&amp;lt;/a&amp;gt;-Level 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_9hYAagaC48kYAgjC.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Peer 
+      Review&amp;lt;/a&amp;gt;.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="2, 820, 341, 1139" coords2="2, 820, 341, 1139" shape="rect" alt="The Referral application also manages requisitions and communications between stakeholders.
+
+The typical workflow consists of searching by specific parameters, retrieve a hitlist of matching applications which gets reserved for processing, applications have to be released before another user can be processed by another user, although override is possible too.
+
+Application roles are comprised entirely of CSR roles
+
+Note: The IC referral potentially corresponds to two separate activities:
+
+.Consideration for Funding
+First Level Peer Review
+
+For NIH wide FOA the First-Level Peer Review is typically coordinated by NIH CSR.  For NCI originating FOAs DEA is coordinating First-Level Peer Review.:Callout" id="areadiagram_map_7bGrRcaGAqAC35xA_default" href="Callout_67GrRcaGAqAC35xS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      System calculates &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LtI8YIaC48kYAllw.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Assignment&amp;lt;/a&amp;gt; 
+      which can be confirmed or overridden by Breakout or &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_dLWNsgaC48kYAiiO.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Referral&amp;lt;/a&amp;gt; 
+      Officer
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="374, 686, 544, 776" coords2="374, 686, 544, 776" shape="rect" alt="System calculates assignment which can be confirmed or overridden by Breakout or Referral Officer:Callout" id="areadiagram_map_6_q6RcaGAqAC34gz_default" href="Callout_f_q6RcaGAqAC34hF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="546, 342, 642, 382" coords2="546, 342, 642, 382" shape="rect" alt="Referral Officer Processing:Task" id="areadiagram_map_Ck0_mcaGAqAC32Qb_default" href="BPTask_ik0_mcaGAqAC32Qc.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="209, 439, 361, 457" coords2="209, 439, 361, 457" shape="rect" alt="First-Level Review:Sub-Process" id="areadiagram_map_K0VbmcaGAqAC3z9Z_sublevelflowitem1" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=OdgIPMaGAqAC31LR"/>
+<area imageId="diagram" coords="209, 457, 361, 475" coords2="209, 457, 361, 475" shape="rect" alt="No Further Processing:End Event" id="areadiagram_map_K0VbmcaGAqAC3z9Z_sublevelflowitem2" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=KYT7mcaGAqAC30fc"/>
+<area imageId="diagram" coords="209, 475, 361, 493" coords2="209, 475, 361, 493" shape="rect" alt="Referral to IC (NCI):Intermediate Event" id="areadiagram_map_K0VbmcaGAqAC3z9Z_sublevelflowitem3" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=O5RHmcaGAqAC309r"/>
+<area imageId="diagram" coords="209, 386, 229, 406" coords2="209, 386, 229, 406" shape="rect" alt="No Further Processing:End Event" id="areadiagram_map_K0VbmcaGAqAC3z9Z_default" href="BPEndEvent_q0VbmcaGAqAC3z9a.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="772, 539, 922, 579" coords2="772, 539, 922, 579" shape="rect" alt="Assign to CSR IRG or SRG or SEP:Task" id="areadiagram_map_vF0bmcaGAqAC3z8z_default" href="BPTask__F0bmcaGAqAC3z80.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="209, 602, 361, 620" coords2="209, 602, 361, 620" shape="rect" alt="First-Level Review:Sub-Process" id="areadiagram_map_mMEPGcaGAqAC3ztT_sublevelflowitem1" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=OdgIPMaGAqAC31LR"/>
+<area imageId="diagram" coords="209, 620, 361, 638" coords2="209, 620, 361, 638" shape="rect" alt="No Further Processing:End Event" id="areadiagram_map_mMEPGcaGAqAC3ztT_sublevelflowitem2" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=KYT7mcaGAqAC30fc"/>
+<area imageId="diagram" coords="209, 638, 361, 656" coords2="209, 638, 361, 656" shape="rect" alt="Referral to IC (NCI):Intermediate Event" id="areadiagram_map_mMEPGcaGAqAC3ztT_sublevelflowitem3" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=O5RHmcaGAqAC309r"/>
+<area imageId="diagram" coords="209, 549, 229, 569" coords2="209, 549, 229, 569" shape="rect" alt="Referred to IC:End Event" id="areadiagram_map_mMEPGcaGAqAC3ztT_default" href="BPEndEvent_WMEPGcaGAqAC3ztU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="379, 539, 467, 579" coords2="379, 539, 467, 579" shape="rect" alt="Assign to IC(s):Task" id="areadiagram_map_MGJ3GcaGAqAC3zsJ_default" href="BPTask_sGJ3GcaGAqAC3zsK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="573, 539, 613, 579" coords2="573, 539, 613, 579" shape="rect" alt=":Gateway" id="areadiagram_map_URO3GcaGAqAC3zrr_default" href="BPGateway_MRO3GcaGAqAC3zrs.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Systematically flagged Validation Errors:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ul class=&amp;quot;disc&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;list-style-type:none;margin-top:0px;margin-left:40pt;margin-bottom:0px;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        ORI Sanctions E-Mail Sent
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Duplicate Submission Identified
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Second Resubmission
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Greater than $500K
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Non-modular Less Than $250K
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Late Submission In Response to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_exd9sgaC48kYAinr.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RFA&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Resubmission Submitted in Response to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_exd9sgaC48kYAinr.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RFA&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Different Project Title On A Revision
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Phase I &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+        Not Awarded
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Phase I &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_DmYydwaC48kYAkCu.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant 
+        Number&amp;lt;/a&amp;gt; Not Recognized
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Foreign Organization for &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bw5M6gaC48kYAg9u.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;R13&amp;lt;/a&amp;gt;/U13
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Revision from Different Organization
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Announcement &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary__upsJwaC48kYAg2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Activity 
+        Code&amp;lt;/a&amp;gt; and/or &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt; 
+        Different from Prior &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary__upsJwaC48kYAg2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Activity 
+        Code&amp;lt;/a&amp;gt; and/or &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Incomplete information for &amp;#8216;Limited&amp;#8217; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LtI8YIaC48kYAllw.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Assignment&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ul&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;Manually flagged Validation Errors:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Incorrect Prior Number
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ul class=&amp;quot;disc&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;list-style-type:none;margin-top:0px;margin-left:40pt;margin-bottom:0px;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_DmYydwaC48kYAkCu.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant 
+        Number&amp;lt;/a&amp;gt; Set Incorrectly
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Send to Supervisor
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Second Resubmission
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Other
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ul&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="613, 722, 1139, 1066" coords2="613, 722, 1139, 1066" shape="rect" alt="Systematically flagged Validation Errors:
+ORI Sanctions E-Mail Sent
+Duplicate Submission Identified
+Second Resubmission
+Greater than $500K
+Non-modular Less Than $250K
+Late Submission In Response to RFA
+Resubmission Submitted in Response to RFA
+Different Project Title On A Revision
+Phase I Grant Not Awarded
+Phase I Grant Number Not Recognized
+Foreign Organization for R13/U13
+Revision from Different Organization
+Announcement Activity Code and/or IC Different from Prior Grant Activity Code and/or IC
+Incomplete information for ‘Limited’ assignment
+ Manually flagged Validation Errors:
+Incorrect Prior Number
+Grant Number Set Incorrectly
+Send to Supervisor
+Second Resubmission
+Other
+ :Callout" id="areadiagram_map_21B2GcaGAqAC3zjs_default" href="Callout_21B2GcaGAqAC3zjt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="573, 791, 613, 831" coords2="573, 791, 613, 831" shape="rect" alt="Valid?:Gateway" id="areadiagram_map_88M2GcaGAqAC3zbC_default" href="BPGateway_C8M2GcaGAqAC3zbD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="573, 1026, 613, 1066" coords2="573, 1026, 613, 1066" shape="rect" alt="ARA?:Gateway" id="areadiagram_map_XQKmGcaGAqAC3zQr_default" href="BPGateway_XQKmGcaGAqAC3zQs.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="520, 859, 670, 899" coords2="520, 859, 670, 899" shape="rect" alt="Application Check and System Validation:Task" id="areadiagram_map_SFPGGcaGAqAC3zPx_default" href="BPTask_yFPGGcaGAqAC3zPy.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="686, 1109, 836, 1149" coords2="686, 1109, 836, 1149" shape="rect" alt="Data Entry:Task" id="areadiagram_map_Xro6GcaGAqAC3zHB_default" href="BPTask_Xro6GcaGAqAC3zHC.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="686, 1299, 836, 1339" coords2="686, 1299, 836, 1339" shape="rect" alt="Pre Data Entry
+Submission MetaData:Task" id="areadiagram_map_GBnaGcaGAqAC3zGR_default" href="BPTask_GBnaGcaGAqAC3zGS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="668, 1354, 708, 1394" coords2="668, 1354, 708, 1394" shape="rect" alt="Paper or eSubmission?:Gateway" id="areadiagram_map_XEJaGcaGAqAC3zE__default" href="BPGateway_3EJaGcaGAqAC3zFA.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LtI8YIaC48kYAllw.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Assignment&amp;lt;/a&amp;gt; 
+      Requests:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ul class=&amp;quot;disc&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;list-style-type:none;margin-top:0px;margin-left:40pt;margin-bottom:0px;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt; 
+        (wanted - not wanted)
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_yRyEigaC48kYAjQd.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IRG&amp;lt;/a&amp;gt;(wanted 
+        - not wanted)
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_vewTsgaC48kYAipz.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SRO&amp;lt;/a&amp;gt; 
+        (wanted - not wanted
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ul&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="612, 106, 987, 239" coords2="612, 106, 987, 239" shape="rect" alt="Assignment Requests:
+IC (wanted - not wanted)
+IRG(wanted - not wanted)
+SRO (wanted - not wanted
+ :Callout" id="areadiagram_map_MeSSGcaGAqAC3y9E_default" href="Callout_MeSSGcaGAqAC3y9F.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="513, 949, 677, 989" coords2="513, 949, 677, 989" shape="rect" alt="Match ARA
+(closes non-permanent ARA):Task" id="areadiagram_map_H910GcaGAqAC3yr2_default" href="BPTask_H910GcaGAqAC3yr3.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_dLWNsgaC48kYAiiO.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Referral&amp;lt;/a&amp;gt; 
+      based on:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ul class=&amp;quot;disc&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;list-style-type:none;margin-top:0px;margin-left:40pt;margin-bottom:0px;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_7y19sgaC48kYAinf.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FOA&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_TnO2RAaC48kYAhd0.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ARA&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_b2YXsgaC48kYAi__.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;PI&amp;lt;/a&amp;gt; 
+        History
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ul&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="602, 2, 830, 229" coords2="602, 2, 830, 229" shape="rect" alt="Referral based on:
+FOA
+ARA
+PI History
+Application
+ :Callout" id="areadiagram_map_nNPwGcaGAqAC3ycq_default" href="Callout_XNPwGcaGAqAC3ycr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="383, 221, 485, 263" coords2="383, 221, 485, 263" shape="rect" alt="Send to other Referral Officer:Task" id="areadiagram_map_Pj3n6caGAqAC3yUO_default" href="BPTask_vj3n6caGAqAC3yUP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="697, 289, 786, 331" coords2="697, 289, 786, 331" shape="rect" alt="Send Back to Breakout:Task" id="areadiagram_map_7yyn6caGAqAC3yL5_default" href="BPTask_7yyn6caGAqAC3yL6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="574, 222, 614, 262" coords2="574, 222, 614, 262" shape="rect" alt=":Gateway" id="areadiagram_map_.Wo76caGAqAC3x_c_default" href="BPGateway_BWo76caGAqAC3x_d.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="544, 670, 642, 710" coords2="544, 670, 642, 710" shape="rect" alt="Breakout Review:Task" id="areadiagram_map_NyJEKcaGAqAC3xwg_default" href="BPTask_tyJEKcaGAqAC3xwh.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="448, 1221, 468, 1241" coords2="448, 1221, 468, 1241" shape="rect" alt="Revision Received:Intermediate Event" id="areadiagram_map_FDIEKcaGAqAC3xoB_default" href="BPIntermediateEvent_FDIEKcaGAqAC3xoC.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="448, 1119, 468, 1139" coords2="448, 1119, 468, 1139" shape="rect" alt="Sent Back for Revision:Intermediate Event" id="areadiagram_map_VmH4KcaGAqAC3xnZ_default" href="BPIntermediateEvent_1mH4KcaGAqAC3xna.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="573, 1109, 613, 1149" coords2="573, 1109, 613, 1149" shape="rect" alt="Application Complete?:Gateway" id="areadiagram_map_n8D4KcaGAqAC3xm__default" href="BPGateway_n8D4KcaGAqAC3xnA.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="528, 1211, 659, 1251" coords2="528, 1211, 659, 1251" shape="rect" alt="First Contact Application Review:Task" id="areadiagram_map_.L.4KcaGAqAC3xmP_default" href="BPTask_RL_4KcaGAqAC3xmQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="546, 47, 639, 87" coords2="546, 47, 639, 87" shape="rect" alt="Assign to IC Review:Task" id="areadiagram_map_XaFOScaGAqAC3xPH_default" href="BPTask_XaFOScaGAqAC3xPI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="535, 440, 650, 480" coords2="535, 440, 650, 480" shape="rect" alt="Assign to Referral Officer:Task" id="areadiagram_map_hCQyScaGAqAC3xDj_default" href="BPTask_hCQyScaGAqAC3xDk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="987, 602, 1139, 620" coords2="987, 602, 1139, 620" shape="rect" alt="First-Level Review:Sub-Process" id="areadiagram_map_Bla8ScaGAqAC3wxh_sublevelflowitem1" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=OdgIPMaGAqAC31LR"/>
+<area imageId="diagram" coords="987, 620, 1139, 638" coords2="987, 620, 1139, 638" shape="rect" alt="No Further Processing:End Event" id="areadiagram_map_Bla8ScaGAqAC3wxh_sublevelflowitem2" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=KYT7mcaGAqAC30fc"/>
+<area imageId="diagram" coords="987, 638, 1139, 656" coords2="987, 638, 1139, 656" shape="rect" alt="Referral to IC (NCI):Intermediate Event" id="areadiagram_map_Bla8ScaGAqAC3wxh_sublevelflowitem3" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=O5RHmcaGAqAC309r"/>
+<area imageId="diagram" coords="987, 549, 1007, 569" coords2="987, 549, 1007, 569" shape="rect" alt="Refereed to CSR Peer Review:End Event" id="areadiagram_map_Bla8ScaGAqAC3wxh_default" href="BPEndEvent_Bla8ScaGAqAC3wxi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="677, 1495, 883, 1513" coords2="677, 1495, 883, 1513" shape="rect" alt="Application available in IMPAC II:Intermediate Event" id="areadiagram_map_ola8ScaGAqAC3wxW_sublevelflowitem1" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=PSoO7caAU82MuUNQ"/>
+<area imageId="diagram" coords="677, 1513, 883, 1531" coords2="677, 1513, 883, 1531" shape="rect" alt="Committee Meeting Management:Task" id="areadiagram_map_ola8ScaGAqAC3wxW_sublevelflowitem2" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=5Wub08aAU8kM6EDo"/>
+<area imageId="diagram" coords="677, 1442, 697, 1462" coords2="677, 1442, 697, 1462" shape="rect" alt=":Start Event" id="areadiagram_map_ola8ScaGAqAC3wxW_default" href="BPStartEvent_Yla8ScaGAqAC3wxX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_Yla8ScaGAqAC3wxX.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_Bla8ScaGAqAC3wxi.html" class="ItemLink">Refereed to CSR Peer Review : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_hCQyScaGAqAC3xDk.html" class="ItemLink">Assign to Referral Officer : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP17</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_XaFOScaGAqAC3xPI.html" class="ItemLink">Assign to IC Review : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP19</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_RL_4KcaGAqAC3xmQ.html" class="ItemLink">First Contact Application Review : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP21</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_n8D4KcaGAqAC3xnA.html" class="ItemLink">Application Complete? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP23</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsIntermediate.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsIntermediate.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPIntermediateEvent_1mH4KcaGAqAC3xna.html" class="ItemLink">Sent Back for Revision : Message Trigger</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP25</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsIntermediate.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsIntermediate.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPIntermediateEvent_FDIEKcaGAqAC3xoC.html" class="ItemLink">Revision Received : Message Trigger</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP28</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_tyJEKcaGAqAC3xwh.html" class="ItemLink">Breakout Review : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP30</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_BWo76caGAqAC3x_d.html" class="ItemLink">N/A : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP34</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_7yyn6caGAqAC3yL6.html" class="ItemLink">Send Back to Breakout : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP37</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_vj3n6caGAqAC3yUP.html" class="ItemLink">Send to other Referral Officer : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP42</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_H910GcaGAqAC3yr3.html" class="ItemLink">Match ARA
+(closes non-permanent ARA) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP50</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_3EJaGcaGAqAC3zFA.html" class="ItemLink">Paper or eSubmission? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP52</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_GBnaGcaGAqAC3zGS.html" class="ItemLink">Pre Data Entry
+Submission MetaData : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP54</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Xro6GcaGAqAC3zHC.html" class="ItemLink">Data Entry : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP57</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_yFPGGcaGAqAC3zPy.html" class="ItemLink">Application Check and System Validation : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP59</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_XQKmGcaGAqAC3zQs.html" class="ItemLink">ARA? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP63</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_C8M2GcaGAqAC3zbD.html" class="ItemLink">Valid? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP66</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_MRO3GcaGAqAC3zrs.html" class="ItemLink">N/A : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP68</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_sGJ3GcaGAqAC3zsK.html" class="ItemLink">Assign to IC(s) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP72</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_WMEPGcaGAqAC3ztU.html" class="ItemLink">Referred to IC : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP75</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask__F0bmcaGAqAC3z80.html" class="ItemLink">Assign to CSR IRG or SRG or SEP : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP77</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_q0VbmcaGAqAC3z9a.html" class="ItemLink">No Further Processing : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP82</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_ik0_mcaGAqAC32Qc.html" class="ItemLink">Referral Officer Processing : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP90</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_4Wk1O8aAU80UsVal.html" class="ItemLink">San all paper application documents and put PDFs in Grant Folder : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

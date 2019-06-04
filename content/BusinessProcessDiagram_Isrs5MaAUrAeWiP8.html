@@ -1,0 +1,842 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - HHS 717</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="BusinessProcessDiagram_bqUqZMaAU8yEypWB.html" class="PageParentTitle">Employee : Pool</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_bqUqZMaAU8yEypWB.html" class="PageParentTitle">HHS 717 process 1.0 : Task</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - <a href="Glossary_Z3GPCgaC48kYAjHp.html" class="ItemLink">HHS</a> 717		</span>
+<a onclick="javascript: showVpLink('OfficeOfEthics.vpp://diagram/Isrs5MaAUrAeWiP8', 'HHS 717\nOfficeOfEthics.vpp://diagram/Isrs5MaAUrAeWiP8', 'HHS 717', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|1610.0|631.0|120.0|90.0|BPSubProcess_yirs5MaAUrAeWiTW.html|BPSubProcess_yirs5MaAUrAeWiTW.html|yirs5MaAUrAeWiTV" id="optionyirs5MaAUrAeWiTV">Corrected document delivered to Ethics Office : Sub-Process</option>
+<option value="shape|1280.0|182.0|120.0|90.0|BPSubProcess_wirs5MaAUrAeWiTH.html|BPSubProcess_wirs5MaAUrAeWiTH.html|wirs5MaAUrAeWiTG" id="optionwirs5MaAUrAeWiTG">Corrections made and employee signs/certifies : Sub-Process</option>
+<option value="shape|260.0|631.0|132.0|90.0|BPSubProcess_rCrs5MaAUrAeWiS3.html|BPSubProcess_rCrs5MaAUrAeWiS3.html|LCrs5MaAUrAeWiS2" id="optionLCrs5MaAUrAeWiS2">Signed CD and/or compliance pages are combined with other parts (pgs 1-14) : Sub-Process</option>
+<option value="shape|416.0|182.0|120.0|90.0|BPSubProcess_NCrs5MaAUrAeWiSu.html|BPSubProcess_NCrs5MaAUrAeWiSu.html|NCrs5MaAUrAeWiSt" id="optionNCrs5MaAUrAeWiSt">Completes part VII of 717; signs and certifies (pg 11) : Sub-Process</option>
+<option value="shape|416.0|827.0|120.0|90.0|BPSubProcess_ZCrs5MaAUrAeWiSo.html|BPSubProcess_ZCrs5MaAUrAeWiSo.html|pCrs5MaAUrAeWiSn" id="optionpCrs5MaAUrAeWiSn">Prepare compliance guidance and sends part VII : Sub-Process</option>
+<option value="shape|1089.0|630.0|120.0|90.0|BPSubProcess__Crs5MaAUrAeWiSi.html|BPSubProcess__Crs5MaAUrAeWiSi.html|.Crs5MaAUrAeWiSh" id="option.Crs5MaAUrAeWiSh">Prepare redacted copy of report for supervisory review (redact values, etc) : Sub-Process</option>
+<option value="shape|609.0|630.0|120.0|90.0|BPSubProcess_mCrs5MaAUrAeWiSc.html|BPSubProcess_mCrs5MaAUrAeWiSc.html|GCrs5MaAUrAeWiSb" id="optionGCrs5MaAUrAeWiSb">Prepare CD guidance and explanation, and sends part VI &amp; VII to employee : Sub-Process</option>
+<option value="shape|609.0|182.0|120.0|90.0|BPSubProcess_8Crs5MaAUrAeWiSW.html|BPSubProcess_8Crs5MaAUrAeWiSW.html|8Crs5MaAUrAeWiSV" id="option8Crs5MaAUrAeWiSV">Recieves guidance and completes part VI of 717; signs and certifies (pg 10) : Sub-Process</option>
+<option value="shape|609.0|827.0|120.0|90.0|BPGateway_kCrs5MaAUrAeWiSP.html|BPGateway_kCrs5MaAUrAeWiSP.html|kCrs5MaAUrAeWiSO" id="optionkCrs5MaAUrAeWiSO">Is CD being sought? : Gateway</option>
+<option value="shape|776.0|827.0|120.0|90.0|BPSubProcess_QCrs5MaAUrAeWiSG.html|BPSubProcess_QCrs5MaAUrAeWiSG.html|gCrs5MaAUrAeWiSF" id="optiongCrs5MaAUrAeWiSF">Completes Part V. Signs and certifies.(Pg 8-9) : Sub-Process</option>
+<option value="shape|943.0|827.0|120.0|90.0|BPSubProcess_H8rs5MaAUrAeWiR9.html|BPSubProcess_H8rs5MaAUrAeWiR9.html|78rs5MaAUrAeWiR8" id="option78rs5MaAUrAeWiR8">DEC review and Disposition (work with employee if necessary) : Sub-Process</option>
+<option value="shape|942.0|630.0|120.0|90.0|BPSubProcess_j8rs5MaAUrAeWiR6.html|BPSubProcess_j8rs5MaAUrAeWiR6.html|D8rs5MaAUrAeWiR5" id="optionD8rs5MaAUrAeWiR5">Redacted copy delivered to NCI Ethics Office, paired with original : Sub-Process</option>
+<option value="shape|1089.0|402.0|120.0|90.0|BPSubProcess_58rs5MaAUrAeWiR0.html|BPSubProcess_58rs5MaAUrAeWiR0.html|58rs5MaAUrAeWiRz" id="option58rs5MaAUrAeWiRz">Completes part IV. And signs redacted document (pg 6-7) : Sub-Process</option>
+<option value="shape|1089.0|827.0|120.0|90.0|BPGateway_e8rs5MaAUrAeWiRq.html|BPGateway_e8rs5MaAUrAeWiRq.html|u8rs5MaAUrAeWiRp" id="optionu8rs5MaAUrAeWiRp">Is supervisory review required? : Gateway</option>
+<option value="shape|1280.0|827.0|120.0|90.0|BPGateway_Y8rs5MaAUrAeWiRf.html|BPGateway_Y8rs5MaAUrAeWiRf.html|o8rs5MaAUrAeWiRe" id="optiono8rs5MaAUrAeWiRe">Are corrections needed? : Gateway</option>
+<option value="shape|1445.0|827.0|120.0|90.0|BPSubProcess_A8rs5MaAUrAeWiRc.html|BPSubProcess_A8rs5MaAUrAeWiRc.html|_crs5MaAUrAeWiRb" id="option_crs5MaAUrAeWiRb">Specialist performs substantive review to determine course of action : Sub-Process</option>
+<option value="shape|1775.0|32.0|120.0|90.0|BPSubProcess_Lcrs5MaAUrAeWiRT.html|BPSubProcess_Lcrs5MaAUrAeWiRT.html|Lcrs5MaAUrAeWiRS" id="optionLcrs5MaAUrAeWiRS">Completes Part III – Disclosure); Signs/Certifies (pgs 4-5) : Sub-Process</option>
+<option value="shape|375.0|32.0|120.0|90.0|BPSubProcess_Ncrs5MaAUrAeWiRN.html|BPSubProcess_Ncrs5MaAUrAeWiRN.html|lcrs5MaAUrAeWiRM" id="optionlcrs5MaAUrAeWiRM">Employee finds or is given fillable PDF of HHS-717-1 form. : Sub-Process</option>
+<option value="shape|1775.0|631.0|120.0|90.0|BPSubProcess_xcrs5MaAUrAeWiRK.html|BPSubProcess_xcrs5MaAUrAeWiRK.html|Rcrs5MaAUrAeWiRJ" id="optionRcrs5MaAUrAeWiRJ">Document is delivered to NCI Ethics Office via email or paper : Sub-Process</option>
+<option value="shape|1350.0|32.0|120.0|90.0|BPSubProcess_Gcrs5MaAUrAeWiRE.html|BPSubProcess_Gcrs5MaAUrAeWiRE.html|Gcrs5MaAUrAeWiRD" id="optionGcrs5MaAUrAeWiRD">Employee reads part II – Summary of law and obligations (pgs 2 - 3. : Sub-Process</option>
+<option value="shape|997.0|32.0|120.0|90.0|BPSubProcess_8crs5MaAUrAeWiQ_.html|BPSubProcess_8crs5MaAUrAeWiQ_.html|ccrs5MaAUrAeWiQ9" id="optionccrs5MaAUrAeWiQ9">Employee completes Part I – Employee Information: Name, grade, position, phone, etc (pg 1). : Sub-Process</option>
+<option value="shape|686.0|32.0|120.0|90.0|BPSubProcess__srs5MaAUrAeWiQs.html|BPSubProcess__srs5MaAUrAeWiQs.html|fsrs5MaAUrAeWiQq" id="optionfsrs5MaAUrAeWiQq">Employee chooses one of three options to indicate the reason for the form : Sub-Process</option>
+<option value="shape|106.0|55.0|45.0|45.0|BPStartEvent_7srs5MaAUrAeWiQg.html|BPStartEvent_7srs5MaAUrAeWiQg.html|rsrs5MaAUrAeWiQf" id="optionrsrs5MaAUrAeWiQf">HHS-717 required by aplicable regulation : Start Event</option>
+<option value="shape|2.0|572.0|1956.0|405.0|BPPool_zsrs5MaAUrAeWiQd.html|BPPool_zsrs5MaAUrAeWiQd.html|zsrs5MaAUrAeWiQc" id="optionzsrs5MaAUrAeWiQc">NCI Ethics Office : Pool</option>
+<option value="shape|2.0|2.0|1956.0|360.0|BPPool_Dsrs5MaAUrAeWiQa.html|BPPool_Dsrs5MaAUrAeWiQa.html|Dsrs5MaAUrAeWiQZ" id="optionDsrs5MaAUrAeWiQZ">NCI Employee : Pool</option>
+<option value="shape|2.0|362.0|1956.0|210.0|BPPool_tsrs5MaAUrAeWiQX.html|BPPool_tsrs5MaAUrAeWiQX.html|Vsrs5MaAUrAeWiQW" id="optionVsrs5MaAUrAeWiQW">NCI Employee’s Supervisor : Pool</option>
+<option value="shape|1775.0|827.0|120.0|90.0|BPTask_e5G_5MaAUhQC_hDr.html|BPTask_e5G_5MaAUhQC_hDr.html|O5G.5MaAUhQC.hDq" id="optionO5G.5MaAUhQC.hDq">Logged into office tracking log (Excel) and assigned to specialist : Task</option>
+<option value="shape|1610.0|827.0|120.0|90.0|BPTask_BKb_5MaAUhQC_hE5.html|BPTask_BKb_5MaAUhQC_hE5.html|BKb.5MaAUhQC.hE4" id="optionBKb.5MaAUhQC.hE4">Document /data entered to EMIS : Task</option>
+<option value="shape|268.0|827.0|117.0|90.0|BPTask_c_oh5MaAUhQC_hH0.html|BPTask_c_oh5MaAUhQC_hH0.html|c.oh5MaAUhQC.hHz" id="optionc.oh5MaAUhQC.hHz">EMIS record updated and final package uploaded to EMIS : Task</option>
+<option value="shape|106.0|850.0|45.0|45.0|BPEndEvent_0bDR5MaAUhQC_hLy.html|BPEndEvent_0bDR5MaAUhQC_hLy.html|UbDR5MaAUhQC.hLx" id="optionUbDR5MaAUhQC.hLx">Action logged out/closed on Excel log : End Event</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/HHS_717.png" usemap="#diagram_map" class="Image" width="1962" height="981"/>
+					<map name="diagram_map">
+<area coords="1686,872,1711,886" coords2="1686,872,1711,886" shape="rect" alt="EMIS" href="Glossary_qfnYWEaAUhQCoQzX.html"/>
+<area coords="295,844,320,858" coords2="295,844,320,858" shape="rect" alt="EMIS" href="Glossary_qfnYWEaAUhQCoQzX.html"/>
+<area coords="321,886,346,900" coords2="321,886,346,900" shape="rect" alt="EMIS" href="Glossary_qfnYWEaAUhQCoQzX.html"/>
+<area imageId="diagram" coords="375.0, 69.03704, 151.0, 69.95885, 151.0, 69.95885, 151.0, 83.95885, 151.0, 83.95885, 375.0, 83.03704, 375.0, 83.03704, 375.0, 69.03704" coords2="375.0, 69.03704, 151.0, 69.95885, 151.0, 69.95885, 151.0, 83.95885, 151.0, 83.95885, 375.0, 83.03704, 375.0, 83.03704, 375.0, 69.03704" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Psrs5MaAUrAeWiQi_default" href="BPSequenceFlow_vsrs5MaAUrAeWiQo.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="806.0, 70.0, 806.0, 84.0, 997.0, 84.0, 997.0, 70.0" coords2="806.0, 70.0, 806.0, 84.0, 997.0, 84.0, 997.0, 70.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_qcrs5MaAUrAeWiRA_default" href="BPSequenceFlow_acrs5MaAUrAeWiRB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1117.0, 70.0, 1117.0, 84.0, 1350.0, 84.0, 1350.0, 70.0" coords2="1117.0, 70.0, 1117.0, 84.0, 1350.0, 84.0, 1350.0, 70.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Bcrs5MaAUrAeWiRG_default" href="BPSequenceFlow_hcrs5MaAUrAeWiRH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="495.0, 70.0, 495.0, 84.0, 686.0, 84.0, 686.0, 70.0" coords2="495.0, 70.0, 495.0, 84.0, 686.0, 84.0, 686.0, 70.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Tcrs5MaAUrAeWiRP_default" href="BPSequenceFlow_zcrs5MaAUrAeWiRQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1827.0, 122.0, 1827.0, 631.0, 1841.0, 631.0, 1841.0, 122.0" coords2="1827.0, 122.0, 1827.0, 631.0, 1841.0, 631.0, 1841.0, 122.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_ncrs5MaAUrAeWiRV_default" href="BPSequenceFlow_Xcrs5MaAUrAeWiRW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1400.0, 865.0, 1400.0, 879.0, 1445.0, 879.0, 1445.0, 865.0" coords2="1400.0, 865.0, 1400.0, 879.0, 1445.0, 879.0, 1445.0, 865.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_m8rs5MaAUrAeWiRm_default" href="BPSequenceFlow_m8rs5MaAUrAeWiRn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1209.0, 865.0, 1209.0, 879.0, 1280.0, 879.0, 1280.0, 865.0" coords2="1209.0, 865.0, 1209.0, 879.0, 1280.0, 879.0, 1280.0, 865.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_h8rs5MaAUrAeWiRt_default" href="BPSequenceFlow_R8rs5MaAUrAeWiRu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1142.0, 720.0, 1142.0, 827.0, 1156.0, 827.0, 1156.0, 720.0" coords2="1142.0, 720.0, 1142.0, 827.0, 1156.0, 827.0, 1156.0, 720.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_p8rs5MaAUrAeWiRw_default" href="BPSequenceFlow_p8rs5MaAUrAeWiRx.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="994.0, 474.0, 994.0, 477.0, 991.0, 477.0, 991.0, 491.0, 994.0, 491.0, 994.0, 630.0, 1008.0, 630.0, 1008.0, 491.0, 1089.0, 491.0, 1089.0, 477.0, 1008.0, 477.0, 1008.0, 474.0" coords2="994.0, 474.0, 994.0, 477.0, 991.0, 477.0, 991.0, 491.0, 994.0, 491.0, 994.0, 630.0, 1008.0, 630.0, 1008.0, 491.0, 1089.0, 491.0, 1089.0, 477.0, 1008.0, 477.0, 1008.0, 474.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_98rs5MaAUrAeWiR2_default" href="BPSequenceFlow_98rs5MaAUrAeWiR3.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1063.0, 865.0, 1063.0, 879.0, 1089.0, 879.0, 1089.0, 865.0" coords2="1063.0, 865.0, 1063.0, 879.0, 1089.0, 879.0, 1089.0, 865.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_v8rs5MaAUrAeWiR__default" href="BPSequenceFlow_v8rs5MaAUrAeWiSA.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="994.0, 720.0, 994.0, 827.0, 1008.0, 827.0, 1008.0, 720.0" coords2="994.0, 720.0, 994.0, 827.0, 1008.0, 827.0, 1008.0, 720.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map__8rs5MaAUrAeWiSC_default" href="BPSequenceFlow_ACrs5MaAUrAeWiSD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="896.0, 865.0, 896.0, 879.0, 943.0, 879.0, 943.0, 865.0" coords2="896.0, 865.0, 896.0, 879.0, 943.0, 879.0, 943.0, 865.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_YCrs5MaAUrAeWiSI_default" href="BPSequenceFlow_YCrs5MaAUrAeWiSJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1470.0, 70.0, 1470.0, 84.0, 1775.0, 84.0, 1775.0, 70.0" coords2="1470.0, 70.0, 1470.0, 84.0, 1775.0, 84.0, 1775.0, 70.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_ECrs5MaAUrAeWiSL_default" href="BPSequenceFlow_ECrs5MaAUrAeWiSM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="729.0, 865.0, 729.0, 879.0, 776.0, 879.0, 776.0, 865.0" coords2="729.0, 865.0, 729.0, 879.0, 776.0, 879.0, 776.0, 865.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_MCrs5MaAUrAeWiSS_default" href="BPSequenceFlow_sCrs5MaAUrAeWiST.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="662.0, 720.0, 662.0, 827.0, 676.0, 827.0, 676.0, 720.0" coords2="662.0, 720.0, 662.0, 827.0, 676.0, 827.0, 676.0, 720.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_KCrs5MaAUrAeWiSY_default" href="BPSequenceFlow_KCrs5MaAUrAeWiSZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="660.0, 272.0, 660.0, 630.0, 674.0, 630.0, 674.0, 272.0" coords2="660.0, 272.0, 660.0, 630.0, 674.0, 630.0, 674.0, 272.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_uCrs5MaAUrAeWiSe_default" href="BPSequenceFlow_uCrs5MaAUrAeWiSf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1142.0, 492.0, 1142.0, 630.0, 1156.0, 630.0, 1156.0, 492.0" coords2="1142.0, 492.0, 1142.0, 630.0, 1156.0, 630.0, 1156.0, 492.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_JCrs5MaAUrAeWiSk_default" href="BPSequenceFlow_JCrs5MaAUrAeWiSl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="536.0, 865.0, 536.0, 879.0, 609.0, 879.0, 609.0, 865.0" coords2="536.0, 865.0, 536.0, 879.0, 609.0, 879.0, 609.0, 865.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_VCrs5MaAUrAeWiSq_default" href="BPSequenceFlow_VCrs5MaAUrAeWiSr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="536.0, 220.0, 536.0, 234.0, 609.0, 234.0, 609.0, 220.0" coords2="536.0, 220.0, 536.0, 234.0, 609.0, 234.0, 609.0, 220.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_TCrs5MaAUrAeWiSw_default" href="BPSequenceFlow_TCrs5MaAUrAeWiSx.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="469.0, 272.0, 469.0, 827.0, 483.0, 827.0, 483.0, 272.0" coords2="469.0, 272.0, 469.0, 827.0, 483.0, 827.0, 483.0, 272.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_zCrs5MaAUrAeWiSz_default" href="BPSequenceFlow_zCrs5MaAUrAeWiS0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="312.0, 215.0, 312.0, 218.0, 309.0, 218.0, 309.0, 232.0, 312.0, 232.0, 312.0, 631.0, 326.0, 631.0, 326.0, 232.0, 416.0, 232.0, 416.0, 218.0, 326.0, 218.0, 326.0, 215.0" coords2="312.0, 215.0, 312.0, 218.0, 309.0, 218.0, 309.0, 232.0, 312.0, 232.0, 312.0, 631.0, 326.0, 631.0, 326.0, 232.0, 416.0, 232.0, 416.0, 218.0, 326.0, 218.0, 326.0, 215.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_XCrs5MaAUrAeWiS5_default" href="BPSequenceFlow_XCrs5MaAUrAeWiS6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1333.0, 272.0, 1333.0, 827.0, 1347.0, 827.0, 1347.0, 272.0" coords2="1333.0, 272.0, 1333.0, 827.0, 1347.0, 827.0, 1347.0, 272.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_4irs5MaAUrAeWiTJ_default" href="BPSequenceFlow_4irs5MaAUrAeWiTK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1663.0, 216.0, 1663.0, 219.0, 1400.0, 219.0, 1400.0, 233.0, 1663.0, 233.0, 1663.0, 631.0, 1677.0, 631.0, 1677.0, 233.0, 1680.0, 233.0, 1680.0, 219.0, 1677.0, 219.0, 1677.0, 216.0" coords2="1663.0, 216.0, 1663.0, 219.0, 1400.0, 219.0, 1400.0, 233.0, 1663.0, 233.0, 1663.0, 631.0, 1677.0, 631.0, 1677.0, 233.0, 1680.0, 233.0, 1680.0, 219.0, 1677.0, 219.0, 1677.0, 216.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_cirs5MaAUrAeWiTS_default" href="BPSequenceFlow_cirs5MaAUrAeWiTT.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1730.0, 866.0, 1730.0, 880.0, 1775.0, 880.0, 1775.0, 866.0" coords2="1730.0, 866.0, 1730.0, 880.0, 1775.0, 880.0, 1775.0, 866.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_MsUB5MaAUhQC.hFU_default" href="BPSequenceFlow_bMUB5MaAUhQC_hFT.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1565.0, 861.0, 1565.0, 875.0, 1610.0, 875.0, 1610.0, 861.0" coords2="1565.0, 861.0, 1565.0, 875.0, 1610.0, 875.0, 1610.0, 861.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_LN0B5MaAUhQC.hFY_default" href="BPSequenceFlow_BN0B5MaAUhQC_hFX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="318.0, 721.0, 318.0, 827.0, 332.0, 827.0, 332.0, 721.0" coords2="318.0, 721.0, 318.0, 827.0, 332.0, 827.0, 332.0, 721.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_lfGh5MaAUhQC.hI7_default" href="BPSequenceFlow_KfGh5MaAUhQC_hI6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1828.0, 721.0, 1828.0, 827.0, 1842.0, 827.0, 1842.0, 721.0" coords2="1828.0, 721.0, 1828.0, 827.0, 1842.0, 827.0, 1842.0, 721.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_7Z2.5MaAUhQC.hD9_default" href="BPSequenceFlow_RZ2_5MaAUhQC_hD8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1660.0, 721.0, 1660.0, 827.0, 1674.0, 827.0, 1674.0, 721.0" coords2="1660.0, 721.0, 1660.0, 827.0, 1674.0, 827.0, 1674.0, 721.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_ZoIR5MaAUhQC.hKR_default" href="BPSequenceFlow_ioIR5MaAUhQC_hKQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="151.0, 865.0, 151.0, 879.0, 268.0, 879.0, 268.0, 865.0" coords2="151.0, 865.0, 151.0, 879.0, 268.0, 879.0, 268.0, 865.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_ONrR5MaAUhQC.hMC_default" href="BPSequenceFlow_kNrR5MaAUhQC_hMB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="106, 850, 151, 895" coords2="106, 850, 151, 895" shape="rect" alt="Action logged out/closed on Excel log:End Event" id="areadiagram_map_UbDR5MaAUhQC.hLx_default" href="BPEndEvent_0bDR5MaAUhQC_hLy.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="268, 827, 385, 917" coords2="268, 827, 385, 917" shape="rect" alt="EMIS record updated and final package uploaded to EMIS:Task" id="areadiagram_map_c.oh5MaAUhQC.hHz_default" href="BPTask_c_oh5MaAUhQC_hH0.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','268, 827, 385, 917',new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_VFXnXUaAUhQsMVar.html/EMIS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '268, 827, 385, 917'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1610, 827, 1730, 917" coords2="1610, 827, 1730, 917" shape="rect" alt="Document /data entered to EMIS:Task" id="areadiagram_map_BKb.5MaAUhQC.hE4_default" href="BPTask_BKb_5MaAUhQC_hE5.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1610, 827, 1730, 917',new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_VFXnXUaAUhQsMVar.html/EMIS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '1610, 827, 1730, 917'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1775, 827, 1895, 917" coords2="1775, 827, 1895, 917" shape="rect" alt="Logged into office tracking log (Excel) and assigned to specialist:Task" id="areadiagram_map_O5G.5MaAUhQC.hDq_default" href="BPTask_e5G_5MaAUhQC_hDr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1610, 631, 1730, 721" coords2="1610, 631, 1730, 721" shape="rect" alt="Corrected document delivered to Ethics Office:Sub-Process" id="areadiagram_map_yirs5MaAUrAeWiTV_default" href="BPSubProcess_yirs5MaAUrAeWiTW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1280, 182, 1400, 272" coords2="1280, 182, 1400, 272" shape="rect" alt="Corrections made and employee signs/certifies:Sub-Process" id="areadiagram_map_wirs5MaAUrAeWiTG_default" href="BPSubProcess_wirs5MaAUrAeWiTH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="260, 631, 392, 721" coords2="260, 631, 392, 721" shape="rect" alt="Signed CD and/or compliance pages are combined with other parts (pgs 1-14):Sub-Process" id="areadiagram_map_LCrs5MaAUrAeWiS2_default" href="BPSubProcess_rCrs5MaAUrAeWiS3.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="416, 182, 536, 272" coords2="416, 182, 536, 272" shape="rect" alt="Completes part VII of 717; signs and certifies (pg 11):Sub-Process" id="areadiagram_map_NCrs5MaAUrAeWiSt_default" href="BPSubProcess_NCrs5MaAUrAeWiSu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="416, 827, 536, 917" coords2="416, 827, 536, 917" shape="rect" alt="Prepare compliance guidance and sends part VII:Sub-Process" id="areadiagram_map_pCrs5MaAUrAeWiSn_default" href="BPSubProcess_ZCrs5MaAUrAeWiSo.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1089, 630, 1209, 720" coords2="1089, 630, 1209, 720" shape="rect" alt="Prepare redacted copy of report for supervisory review (redact values, etc):Sub-Process" id="areadiagram_map_.Crs5MaAUrAeWiSh_default" href="BPSubProcess__Crs5MaAUrAeWiSi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="609, 630, 729, 720" coords2="609, 630, 729, 720" shape="rect" alt="Prepare CD guidance and explanation, and sends part VI &amp; VII to employee:Sub-Process" id="areadiagram_map_GCrs5MaAUrAeWiSb_default" href="BPSubProcess_mCrs5MaAUrAeWiSc.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="609, 182, 729, 272" coords2="609, 182, 729, 272" shape="rect" alt="Recieves guidance and completes part VI of 717; signs and certifies (pg 10):Sub-Process" id="areadiagram_map_8Crs5MaAUrAeWiSV_default" href="BPSubProcess_8Crs5MaAUrAeWiSW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="609, 827, 729, 917" coords2="609, 827, 729, 917" shape="rect" alt="Is CD being sought?:Gateway" id="areadiagram_map_kCrs5MaAUrAeWiSO_default" href="BPGateway_kCrs5MaAUrAeWiSP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="776, 827, 896, 917" coords2="776, 827, 896, 917" shape="rect" alt="Completes Part V. Signs and certifies.(Pg 8-9):Sub-Process" id="areadiagram_map_gCrs5MaAUrAeWiSF_default" href="BPSubProcess_QCrs5MaAUrAeWiSG.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="943, 827, 1063, 917" coords2="943, 827, 1063, 917" shape="rect" alt="DEC review and Disposition (work with employee if necessary):Sub-Process" id="areadiagram_map_78rs5MaAUrAeWiR8_default" href="BPSubProcess_H8rs5MaAUrAeWiR9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="942, 630, 1062, 720" coords2="942, 630, 1062, 720" shape="rect" alt="Redacted copy delivered to NCI Ethics Office, paired with original:Sub-Process" id="areadiagram_map_D8rs5MaAUrAeWiR5_default" href="BPSubProcess_j8rs5MaAUrAeWiR6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1089, 402, 1209, 492" coords2="1089, 402, 1209, 492" shape="rect" alt="Completes part IV. And signs redacted document (pg 6-7):Sub-Process" id="areadiagram_map_58rs5MaAUrAeWiRz_default" href="BPSubProcess_58rs5MaAUrAeWiR0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1089, 827, 1209, 917" coords2="1089, 827, 1209, 917" shape="rect" alt="Is supervisory review required?:Gateway" id="areadiagram_map_u8rs5MaAUrAeWiRp_default" href="BPGateway_e8rs5MaAUrAeWiRq.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1280, 827, 1400, 917" coords2="1280, 827, 1400, 917" shape="rect" alt="Are corrections needed?:Gateway" id="areadiagram_map_o8rs5MaAUrAeWiRe_default" href="BPGateway_Y8rs5MaAUrAeWiRf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1445, 827, 1565, 917" coords2="1445, 827, 1565, 917" shape="rect" alt="Specialist performs substantive review to determine course of action:Sub-Process" id="areadiagram_map__crs5MaAUrAeWiRb_default" href="BPSubProcess_A8rs5MaAUrAeWiRc.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1775, 32, 1895, 122" coords2="1775, 32, 1895, 122" shape="rect" alt="Completes Part III – Disclosure); Signs/Certifies (pgs 4-5):Sub-Process" id="areadiagram_map_Lcrs5MaAUrAeWiRS_default" href="BPSubProcess_Lcrs5MaAUrAeWiRT.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="375, 32, 495, 122" coords2="375, 32, 495, 122" shape="rect" alt="Employee finds or is given fillable PDF of HHS-717-1 form.:Sub-Process" id="areadiagram_map_lcrs5MaAUrAeWiRM_default" href="BPSubProcess_Ncrs5MaAUrAeWiRN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1775, 631, 1895, 721" coords2="1775, 631, 1895, 721" shape="rect" alt="Document is delivered to NCI Ethics Office via email or paper:Sub-Process" id="areadiagram_map_Rcrs5MaAUrAeWiRJ_default" href="BPSubProcess_xcrs5MaAUrAeWiRK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1350, 32, 1470, 122" coords2="1350, 32, 1470, 122" shape="rect" alt="Employee reads part II – Summary of law and obligations (pgs 2 - 3.:Sub-Process" id="areadiagram_map_Gcrs5MaAUrAeWiRD_default" href="BPSubProcess_Gcrs5MaAUrAeWiRE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="997, 32, 1117, 122" coords2="997, 32, 1117, 122" shape="rect" alt="Employee completes Part I – Employee Information: Name, grade, position, phone, etc (pg 1).:Sub-Process" id="areadiagram_map_ccrs5MaAUrAeWiQ9_default" href="BPSubProcess_8crs5MaAUrAeWiQ_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="686, 32, 806, 122" coords2="686, 32, 806, 122" shape="rect" alt="Employee chooses one of three options to indicate the reason for the form:Sub-Process" id="areadiagram_map_fsrs5MaAUrAeWiQq_default" href="BPSubProcess__srs5MaAUrAeWiQs.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="106, 55, 151, 100" coords2="106, 55, 151, 100" shape="rect" alt="HHS-717 required by aplicable regulation:Start Event" id="areadiagram_map_rsrs5MaAUrAeWiQf_default" href="BPStartEvent_7srs5MaAUrAeWiQg.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 572, 1958, 977" coords2="2, 572, 1958, 977" shape="rect" alt="NCI Ethics Office:Pool" id="areadiagram_map_zsrs5MaAUrAeWiQc_default" href="BPPool_zsrs5MaAUrAeWiQd.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 1958, 362" coords2="2, 2, 1958, 362" shape="rect" alt="NCI Employee:Pool" id="areadiagram_map_Dsrs5MaAUrAeWiQZ_default" href="BPPool_Dsrs5MaAUrAeWiQa.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 362, 1958, 572" coords2="2, 362, 1958, 572" shape="rect" alt="NCI Employee’s Supervisor:Pool" id="areadiagram_map_Vsrs5MaAUrAeWiQW_default" href="BPPool_tsrs5MaAUrAeWiQX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_yirs5MaAUrAeWiTW.html" class="ItemLink">Corrected document delivered to Ethics Office : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_wirs5MaAUrAeWiTH.html" class="ItemLink">Corrections made and employee signs/certifies : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_rCrs5MaAUrAeWiS3.html" class="ItemLink">Signed CD and/or compliance pages are combined with other parts (pgs 1-14) : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_NCrs5MaAUrAeWiSu.html" class="ItemLink">Completes part VII of 717; signs and certifies (pg 11) : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_ZCrs5MaAUrAeWiSo.html" class="ItemLink">Prepare compliance guidance and sends part VII : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess__Crs5MaAUrAeWiSi.html" class="ItemLink">Prepare redacted copy of report for supervisory review (redact values, etc) : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_mCrs5MaAUrAeWiSc.html" class="ItemLink">Prepare CD guidance and explanation, and sends part VI &amp; VII to employee : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_8Crs5MaAUrAeWiSW.html" class="ItemLink">Recieves guidance and completes part VI of 717; signs and certifies (pg 10) : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_kCrs5MaAUrAeWiSP.html" class="ItemLink">Is CD being sought? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_QCrs5MaAUrAeWiSG.html" class="ItemLink">Completes Part V. Signs and certifies.(Pg 8-9) : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_H8rs5MaAUrAeWiR9.html" class="ItemLink">DEC review and Disposition (work with employee if necessary) : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_j8rs5MaAUrAeWiR6.html" class="ItemLink">Redacted copy delivered to NCI Ethics Office, paired with original : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_58rs5MaAUrAeWiR0.html" class="ItemLink">Completes part IV. And signs redacted document (pg 6-7) : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_e8rs5MaAUrAeWiRq.html" class="ItemLink">Is supervisory review required? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_Y8rs5MaAUrAeWiRf.html" class="ItemLink">Are corrections needed? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_A8rs5MaAUrAeWiRc.html" class="ItemLink">Specialist performs substantive review to determine course of action : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Lcrs5MaAUrAeWiRT.html" class="ItemLink">Completes Part III – Disclosure); Signs/Certifies (pgs 4-5) : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Ncrs5MaAUrAeWiRN.html" class="ItemLink">Employee finds or is given fillable PDF of HHS-717-1 form. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_xcrs5MaAUrAeWiRK.html" class="ItemLink">Document is delivered to NCI Ethics Office via email or paper : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Gcrs5MaAUrAeWiRE.html" class="ItemLink">Employee reads part II – Summary of law and obligations (pgs 2 - 3. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_8crs5MaAUrAeWiQ_.html" class="ItemLink">Employee completes Part I – Employee Information: Name, grade, position, phone, etc (pg 1). : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess__srs5MaAUrAeWiQs.html" class="ItemLink">Employee chooses one of three options to indicate the reason for the form : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_7srs5MaAUrAeWiQg.html" class="ItemLink">HHS-717 required by aplicable regulation : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_zsrs5MaAUrAeWiQd.html" class="ItemLink">NCI Ethics Office : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_Dsrs5MaAUrAeWiQa.html" class="ItemLink">NCI Employee : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_tsrs5MaAUrAeWiQX.html" class="ItemLink">NCI Employee’s Supervisor : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP59</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_e5G_5MaAUhQC_hDr.html" class="ItemLink">Logged into office tracking log (Excel) and assigned to specialist : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP61</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_BKb_5MaAUhQC_hE5.html" class="ItemLink">Document /data entered to EMIS : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP65</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_c_oh5MaAUhQC_hH0.html" class="ItemLink">EMIS record updated and final package uploaded to EMIS : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP71</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_0bDR5MaAUhQC_hLy.html" class="ItemLink">Action logged out/closed on Excel log : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

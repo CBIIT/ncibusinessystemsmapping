@@ -1,0 +1,511 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - DEA Referral</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html" class="PageParentTitle">NCI : Pool</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html" class="PageParentTitle">Business Process : Lane</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html" class="PageParentTitle">DEA Referral : Sub-Process</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - <a href="Glossary_bZtbsgaC48kYAisp.html" class="ItemLink">DEA</a> <a href="Glossary_dLWNsgaC48kYAiiO.html" class="ItemLink">Referral</a>		</span>
+<a onclick="javascript: showVpLink('NCI Funding Research Ecosystem.vpp://diagram/5cgyxcaGAqAC369E', 'DEA Referral\nNCI Funding Research Ecosystem.vpp://diagram/5cgyxcaGAqAC369E', 'DEA Referral', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|2.0|324.0|338.0|209.0|Callout_gJ65xcaGAqAC3w1g.html|Callout_gJ65xcaGAqAC3w1g.html|gJ65xcaGAqAC3w1f" id="optiongJ65xcaGAqAC3w1f">Unnamed Callout : Callout</option>
+<option value="shape|415.0|453.0|20.0|20.0|BPStartEvent_fqgyxcaGAqAC369f.html|BPStartEvent_fqgyxcaGAqAC369f.html|7qgyxcaGAqAC369N" id="option7qgyxcaGAqAC369N">Unnamed Start Event : Start Event</option>
+<option value="shape|612.0|453.0|20.0|20.0|BPEndEvent_4agyxcaGAqAC369j.html|BPEndEvent_4agyxcaGAqAC369j.html|4agyxcaGAqAC369i" id="option4agyxcaGAqAC369i">Unnamed End Event : End Event</option>
+<option value="shape|340.0|281.0|150.0|40.0|BPTask_bD8VxcaGAqAC3xJo.html|BPTask_bD8VxcaGAqAC3xJo.html|bD8VxcaGAqAC3xJn" id="optionbD8VxcaGAqAC3xJn">DEA Referral to Program : Task</option>
+<option value="shape|395.0|145.0|40.0|40.0|BPGateway_O_mVxcaGAqAC3xJ_.html|BPGateway_O_mVxcaGAqAC3xJ_.html|2_mVxcaGAqAC3xJ9" id="option2_mVxcaGAqAC3xJ9">Program Staff Decision : Gateway</option>
+<option value="shape|152.0|145.0|121.0|40.0|BPTask_LTeVxcaGAqAC3xKa.html|BPTask_LTeVxcaGAqAC3xKa.html|zTeVxcaGAqAC3xKZ" id="optionzTeVxcaGAqAC3xKZ">Reject Referral : Task</option>
+<option value="shape|340.0|2.0|150.0|40.0|BPTask_lNlVxcaGAqAC3xLU.html|BPTask_lNlVxcaGAqAC3xLU.html|lNlVxcaGAqAC3xLT" id="optionlNlVxcaGAqAC3xLT">Refer to other Program : Task</option>
+<option value="shape|566.0|145.0|113.0|40.0|BPTask_ifbVxcaGAqAC3xTR.html|BPTask_ifbVxcaGAqAC3xTR.html|ifbVxcaGAqAC3xTQ" id="optionifbVxcaGAqAC3xTQ">Accept Assignment : Task</option>
+<option value="shape|747.0|248.0|153.0|119.0|BPTextAnnotation__Aj1xcaGAqAC3xxO.html|BPTextAnnotation__Aj1xcaGAqAC3xxO.html|.Aj1xcaGAqAC3xxN" id="option.Aj1xcaGAqAC3xxN">Annotation22 : Text Annotation</option>
+<option value="shape|152.0|2.0|95.0|40.0|BPTask_cG69xcaGAqAC3yA8.html|BPTask_cG69xcaGAqAC3yA8.html|sG69xcaGAqAC3yA7" id="optionsG69xcaGAqAC3yA7">Release Dual IC Assignment : Task</option>
+<option value="shape|567.0|281.0|111.0|40.0|BPTask_0YYDxcaGAqAC3yJZ.html|BPTask_0YYDxcaGAqAC3yJZ.html|UYYDxcaGAqAC3yJY" id="optionUYYDxcaGAqAC3yJY">Assign to Program Director : Task</option>
+<option value="shape|59.0|12.0|20.0|20.0|BPEndEvent_VDCzxcaGAqAC3y1l.html|BPEndEvent_VDCzxcaGAqAC3y1l.html|ZDCzxcaGAqAC3y1k" id="optionZDCzxcaGAqAC3y1k">Unnamed End Event : End Event</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/DEA_Referral.png" usemap="#diagram_map" class="Image" width="904" height="537"/>
+					<map name="diagram_map">
+<area coords="350,294,372,308" coords2="350,294,372,308" shape="rect" alt="DEA" href="Glossary_bZtbsgaC48kYAisp.html"/>
+<area coords="375,294,417,308" coords2="375,294,417,308" shape="rect" alt="Referral" href="Glossary_dLWNsgaC48kYAiiO.html"/>
+<area coords="435,294,480,308" coords2="435,294,480,308" shape="rect" alt="CAA" href="Glossary_Y_ei2gaFKcBauwqK.html"/>
+<area coords="209,158,251,172" coords2="209,158,251,172" shape="rect" alt="Referral" href="Glossary_dLWNsgaC48kYAiiO.html"/>
+<area coords="430,15,475,29" coords2="430,15,475,29" shape="rect" alt="CAA" href="Glossary_Y_ei2gaFKcBauwqK.html"/>
+<area coords="611,158,674,172" coords2="611,158,674,172" shape="rect" alt="Assignment" href="Glossary_LtI8YIaC48kYAllw.html"/>
+<area coords="750,251,834,265" coords2="750,251,834,265" shape="rect" alt="CAA" href="Glossary_Y_ei2gaFKcBauwqK.html"/>
+<area coords="754,265,803,279" coords2="754,265,803,279" shape="rect" alt="CAA" href="Glossary_Y_ei2gaFKcBauwqK.html"/>
+<area coords="837,265,853,279" coords2="837,265,853,279" shape="rect" alt="PO" href="Glossary_nMTXsgaC48kYAi_a.html"/>
+<area coords="848,293,871,307" coords2="848,293,871,307" shape="rect" alt="PCC" href="Glossary_SjrMJwaC48kYAg1Y.html"/>
+<area coords="772,307,818,321" coords2="772,307,818,321" shape="rect" alt="IMPAC II" href="Glossary_ta68MgaC48kYAidX.html"/>
+<area coords="160,22,171,36" coords2="160,22,171,36" shape="rect" alt="IC" href="Glossary_cvKYigaC48kYAjPI.html"/>
+<area coords="174,22,237,36" coords2="174,22,237,36" shape="rect" alt="Assignment" href="Glossary_LtI8YIaC48kYAllw.html"/>
+<area coords="576,301,668,315" coords2="576,301,668,315" shape="rect" alt="PO" href="Glossary_nMTXsgaC48kYAi_a.html"/>
+<area imageId="diagram" coords="418.0, 321.0, 418.0, 453.0, 432.0, 453.0, 432.0, 321.0" coords2="418.0, 321.0, 418.0, 453.0, 432.0, 453.0, 432.0, 321.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_IT8VxcaGAqAC3xJu_default" href="BPSequenceFlow_vj8VxcaGAqAC3xJt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="408.0, 185.0, 408.0, 281.0, 422.0, 281.0, 422.0, 185.0" coords2="408.0, 185.0, 408.0, 281.0, 422.0, 281.0, 422.0, 185.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_QAWVxcaGAqAC3xKG_default" href="BPSequenceFlow_v_mVxcaGAqAC3xKF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="273.0, 158.0, 273.0, 172.0, 395.0, 172.0, 395.0, 158.0" coords2="273.0, 158.0, 273.0, 172.0, 395.0, 172.0, 395.0, 158.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_ezeVxcaGAqAC3xKi_default" href="BPSequenceFlow_GzeVxcaGAqAC3xKh.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="170.0, 185.0, 170.0, 293.0, 167.0, 293.0, 167.0, 307.0, 170.0, 307.0, 170.0, 310.0, 184.0, 310.0, 184.0, 307.0, 340.0, 307.0, 340.0, 293.0, 184.0, 293.0, 184.0, 185.0" coords2="170.0, 185.0, 170.0, 293.0, 167.0, 293.0, 167.0, 307.0, 170.0, 307.0, 170.0, 310.0, 184.0, 310.0, 184.0, 307.0, 340.0, 307.0, 340.0, 293.0, 184.0, 293.0, 184.0, 185.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_dCJVxcaGAqAC3xK4_default" href="BPSequenceFlow_NCJVxcaGAqAC3xK3.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="400.0, 42.0, 400.0, 145.0, 414.0, 145.0, 414.0, 42.0" coords2="400.0, 42.0, 400.0, 145.0, 414.0, 145.0, 414.0, 42.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_wtlVxcaGAqAC3xLc_default" href="BPSequenceFlow_vNlVxcaGAqAC3xLb.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="419.0, 42.0, 419.0, 145.0, 433.0, 145.0, 433.0, 42.0" coords2="419.0, 42.0, 419.0, 145.0, 433.0, 145.0, 433.0, 42.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_2MjVxcaGAqAC3xL0_default" href="BPSequenceFlow_6MjVxcaGAqAC3xLz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="435.0, 158.0, 435.0, 172.0, 566.0, 172.0, 566.0, 158.0" coords2="435.0, 158.0, 435.0, 172.0, 566.0, 172.0, 566.0, 158.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_1fbVxcaGAqAC3xTZ_default" href="BPSequenceFlow_5fbVxcaGAqAC3xTY.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="615.0, 185.0, 615.0, 281.0, 629.0, 281.0, 629.0, 185.0" coords2="615.0, 185.0, 615.0, 281.0, 629.0, 281.0, 629.0, 185.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Kj01xcaGAqAC3xbP_default" href="BPSequenceFlow_ij01xcaGAqAC3xbO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="678.0, 294.0, 678.0, 308.0, 747.0, 308.0, 747.0, 294.0" coords2="678.0, 294.0, 678.0, 308.0, 747.0, 308.0, 747.0, 294.0" shape="poly" alt=":Association" id="areadiagram_map_6gj1xcaGAqAC3xxk_default" href="BPAssociation_Cgj1xcaGAqAC3xxj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="304.0, 12.0, 304.0, 15.0, 247.0, 15.0, 247.0, 29.0, 304.0, 29.0, 304.0, 149.0, 301.0, 149.0, 301.0, 163.0, 304.0, 163.0, 304.0, 166.0, 318.0, 166.0, 318.0, 163.0, 395.0, 163.0, 395.0, 149.0, 318.0, 149.0, 318.0, 29.0, 321.0, 29.0, 321.0, 15.0, 318.0, 15.0, 318.0, 12.0" coords2="304.0, 12.0, 304.0, 15.0, 247.0, 15.0, 247.0, 29.0, 304.0, 29.0, 304.0, 149.0, 301.0, 149.0, 301.0, 163.0, 304.0, 163.0, 304.0, 166.0, 318.0, 166.0, 318.0, 163.0, 395.0, 163.0, 395.0, 149.0, 318.0, 149.0, 318.0, 29.0, 321.0, 29.0, 321.0, 15.0, 318.0, 15.0, 318.0, 12.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Hm69xcaGAqAC3yBE_default" href="BPSequenceFlow_jm69xcaGAqAC3yBD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="615.0, 321.0, 615.0, 453.0, 629.0, 453.0, 629.0, 321.0" coords2="615.0, 321.0, 615.0, 453.0, 629.0, 453.0, 629.0, 321.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_x0YDxcaGAqAC3yJd_default" href="BPSequenceFlow_e0YDxcaGAqAC3yJc.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="79.0, 15.0, 79.0, 29.0, 152.0, 29.0, 152.0, 15.0" coords2="79.0, 15.0, 79.0, 29.0, 152.0, 29.0, 152.0, 15.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_4jCzxcaGAqAC3y1r_default" href="BPSequenceFlow_QjCzxcaGAqAC3y1q.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="59, 65, 187, 83" coords2="59, 65, 187, 83" shape="rect" alt="First-Level Review:Sub-Process" id="areadiagram_map_ZDCzxcaGAqAC3y1k_sublevelflowitem1" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=OdgIPMaGAqAC31LR"/>
+<area imageId="diagram" coords="59, 12, 79, 32" coords2="59, 12, 79, 32" shape="rect" alt=":End Event" id="areadiagram_map_ZDCzxcaGAqAC3y1k_default" href="BPEndEvent_VDCzxcaGAqAC3y1l.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="567, 281, 678, 321" coords2="567, 281, 678, 321" shape="rect" alt="Assign to Program Director:Task" id="areadiagram_map_UYYDxcaGAqAC3yJY_default" href="BPTask_0YYDxcaGAqAC3yJZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="152, 2, 247, 42" coords2="152, 2, 247, 42" shape="rect" alt="Release Dual IC Assignment:Task" id="areadiagram_map_sG69xcaGAqAC3yA7_default" href="BPTask_cG69xcaGAqAC3yA8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="747, 248, 900, 367" coords2="747, 248, 900, 367" shape="rect" alt="Cancer Activity Code (Program) and PD Code are concatenated and sent to populate PCC in the IMPAC II system:Text Annotation" id="areadiagram_map_.Aj1xcaGAqAC3xxN_default" href="BPTextAnnotation__Aj1xcaGAqAC3xxO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="566, 145, 679, 185" coords2="566, 145, 679, 185" shape="rect" alt="Accept Assignment:Task" id="areadiagram_map_ifbVxcaGAqAC3xTQ_default" href="BPTask_ifbVxcaGAqAC3xTR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="340, 2, 490, 42" coords2="340, 2, 490, 42" shape="rect" alt="Refer to other Program:Task" id="areadiagram_map_lNlVxcaGAqAC3xLT_default" href="BPTask_lNlVxcaGAqAC3xLU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="152, 145, 273, 185" coords2="152, 145, 273, 185" shape="rect" alt="Reject Referral:Task" id="areadiagram_map_zTeVxcaGAqAC3xKZ_default" href="BPTask_LTeVxcaGAqAC3xKa.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="395, 145, 435, 185" coords2="395, 145, 435, 185" shape="rect" alt="Program Staff Decision:Gateway" id="areadiagram_map_2_mVxcaGAqAC3xJ9_default" href="BPGateway_O_mVxcaGAqAC3xJ_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="340, 281, 490, 321" coords2="340, 281, 490, 321" shape="rect" alt="DEA Referral to Program:Task" id="areadiagram_map_bD8VxcaGAqAC3xJn_default" href="BPTask_bD8VxcaGAqAC3xJo.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bZtbsgaC48kYAisp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DEA&amp;lt;/a&amp;gt; 
+      (&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bZtbsgaC48kYAisp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DEA&amp;lt;/a&amp;gt;) 
+      organizes and manages the chartered &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_VhD9sgaC48kYAin1.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SRG&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_9hYAagaC48kYAgjC.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Peer 
+      Review&amp;lt;/a&amp;gt; of &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary__BcfsgaC48kYAjFg.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Cooperative 
+      Agreement&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      that are highly mission specific to the institute. These include
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ul class=&amp;quot;disc&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;list-style-type:none;margin-top:0px;margin-left:40pt;margin-bottom:0px;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+        for &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Y_ei2gaFKcBauwqK.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CAA&amp;lt;/a&amp;gt; 
+        projects,
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Cancer Center Support &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+        (CCSGs),
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        multi-&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gPlYFwaC48kYAn7B.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+        clinical trials,
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;#8217;s 
+        Clinical Trials Cooperative Groups,
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Ruth L. Kirschstein National Research Service &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_pQpPsgaC48kYAjDM.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Award&amp;lt;/a&amp;gt; 
+        (NRSA) &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt;, 
+        and
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        cancer education &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt;.
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ul&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="2, 324, 340, 533" coords2="2, 324, 340, 533" shape="rect" alt="Division of Extramural Activities (DEA) organizes and manages the chartered SRG peer review of grant and cooperative agreement applications that are highly mission specific to the institute. These include
+applications for program projects,
+Cancer Center Support Grants (CCSGs),
+multi-site clinical trials,
+the NCI’s Clinical Trials Cooperative Groups,
+Ruth L. Kirschstein National Research Service Award (NRSA) grants, and
+cancer education grants.
+ :Callout" id="areadiagram_map_gJ65xcaGAqAC3w1f_default" href="Callout_gJ65xcaGAqAC3w1g.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="612, 506, 740, 524" coords2="612, 506, 740, 524" shape="rect" alt="First-Level Review:Sub-Process" id="areadiagram_map_4agyxcaGAqAC369i_sublevelflowitem1" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=OdgIPMaGAqAC31LR"/>
+<area imageId="diagram" coords="612, 453, 632, 473" coords2="612, 453, 632, 473" shape="rect" alt=":End Event" id="areadiagram_map_4agyxcaGAqAC369i_default" href="BPEndEvent_4agyxcaGAqAC369j.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="415, 506, 547, 524" coords2="415, 506, 547, 524" shape="rect" alt="Referral to IC (NCI):Intermediate Event" id="areadiagram_map_7qgyxcaGAqAC369N_sublevelflowitem1" href="BusinessProcessDiagram_qrfOd0aGAqAC3zdD.html?shapeid=O5RHmcaGAqAC309r"/>
+<area imageId="diagram" coords="415, 453, 435, 473" coords2="415, 453, 435, 473" shape="rect" alt=":Start Event" id="areadiagram_map_7qgyxcaGAqAC369N_default" href="BPStartEvent_fqgyxcaGAqAC369f.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_fqgyxcaGAqAC369f.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_4agyxcaGAqAC369j.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_bD8VxcaGAqAC3xJo.html" class="ItemLink">DEA Referral to Program : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_O_mVxcaGAqAC3xJ_.html" class="ItemLink">Program Staff Decision : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_LTeVxcaGAqAC3xKa.html" class="ItemLink">Reject Referral : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP10</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_lNlVxcaGAqAC3xLU.html" class="ItemLink">Refer to other Program : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP13</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_ifbVxcaGAqAC3xTR.html" class="ItemLink">Accept Assignment : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP16</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactTextAnnotation.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactTextAnnotation.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTextAnnotation__Aj1xcaGAqAC3xxO.html" class="ItemLink">Annotation22 : Text Annotation</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP18</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_cG69xcaGAqAC3yA8.html" class="ItemLink">Release Dual IC Assignment : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP20</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_0YYDxcaGAqAC3yJZ.html" class="ItemLink">Assign to Program Director : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP22</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_VDCzxcaGAqAC3y1l.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

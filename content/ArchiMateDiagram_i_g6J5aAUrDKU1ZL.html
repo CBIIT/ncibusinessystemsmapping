@@ -1,0 +1,292 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - OGA Green Sheets ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_EnnmauaAUrCsulL3.html" class="PageParentTitle">OGA Green Sheets : Business Actor</a> (in <a href="ArchiMateDiagram_EnnmauaAUrCsulL3.html" class="PageParentTitle">RF ArchiMate Diagram</a> / <a href="ArchiMateDiagram_JSOyaZaAUhQuHycY.html" class="PageParentTitle">CBIIT Grants ArchMate Diagram</a> / <a href="ArchiMateDiagram_UX_tI5aFS_l_E2NH.html" class="PageParentTitle">GreenSheets ArchiMate Diagram</a> / <a href="ArchiMateDiagram_Svnbx5aAUrDKU1ZH.html" class="PageParentTitle">OGA ArchiMate Diagram</a> / <a href="ArchiMateDiagram_i_g6J5aAUrDKU1ZL.html" class="PageParentTitle">OGA Green Sheets ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - <a href="Glossary_U1iBagaC48kYAg6I.html" class="ItemLink">OGA</a> Green Sheets ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('Research Funding Management Archtecture.vpp://diagram/i.g6J5aAUrDKU1ZL', 'OGA Green Sheets ArchiMate Diagram\nResearch Funding Management Archtecture.vpp://diagram/i.g6J5aAUrDKU1ZL', 'OGA Green Sheets ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|53.0|99.0|134.0|40.0|ArchiMateBusinessActor_HnmgXuaAUrC0fHDR.html|ArchiMateBusinessActor_HnmgXuaAUrC0fHDR.html|x9I6J5aAUrDKU1Zd" id="optionx9I6J5aAUrDKU1Zd">OGA Green Sheets : Business Actor</option>
+<option value="shape|425.0|99.0|96.0|40.0|ArchiMateApplicationComponent_lOBqjWaAUrCs4BzF.html|ArchiMateApplicationComponent_lOBqjWaAUrCs4BzF.html|6mQ6J5aAUrDKU1ZX" id="option6mQ6J5aAUrDKU1ZX">Greensheets : Application Component</option>
+<option value="shape|37.0|43.0|204.0|144.0|ArchiMateGrouping_ruZ9LuaAUrCsujRu.html|ArchiMateGrouping_ruZ9LuaAUrCsujRu.html|2YY6J5aAUrDKU1Zs" id="option2YY6J5aAUrDKU1Zs">OGA : Grouping</option>
+<option value="shape|375.0|42.0|224.0|145.0|ArchiMateGrouping_GpLgojqAUhQsEgn8.html|ArchiMateGrouping_GpLgojqAUhQsEgn8.html|zIU6J5aAUrDKU2u1" id="optionzIU6J5aAUrDKU2u1">CBIIT : Grouping</option>
+<option value="shape|2.0|2.0|638.0|226.0|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|AXs6J5aAUrDKU2vE" id="optionAXs6J5aAUrDKU2vE">NCI : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/OGA_Green_Sheets_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="644" height="232"/>
+					<map name="diagram_map">
+<area coords="11,4,30,18" coords2="11,4,30,18" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="384,44,411,58" coords2="384,44,411,58" shape="rect" alt="CBIIT" href="Glossary_mYeIGgaC48kYAilB.html"/>
+<area coords="41,45,65,59" coords2="41,45,65,59" shape="rect" alt="OGA" href="Glossary_U1iBagaC48kYAg6I.html"/>
+<area coords="451,114,517,128" coords2="451,114,517,128" shape="rect" alt="Greensheets" href="Glossary_YvxMMgaC48kYAicV.html"/>
+<area coords="63,112,87,126" coords2="63,112,87,126" shape="rect" alt="OGA" href="Glossary_U1iBagaC48kYAg6I.html"/>
+<area imageId="diagram" coords="187.0, 112.0, 187.0, 126.0, 425.0, 126.0, 425.0, 112.0" coords2="187.0, 112.0, 187.0, 126.0, 425.0, 126.0, 425.0, 112.0" shape="poly" alt=":Flow" id="areadiagram_map_R9I6J5aAUrDKU1Zb_default" href="ArchiMateFlow_tDHaJ5aAUrDKU1I8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="53, 99, 187, 139" coords2="53, 99, 187, 139" shape="rect" alt="OGA Green Sheets:Business Actor" id="areadiagram_map_x9I6J5aAUrDKU1Zd_default" href="ArchiMateBusinessActor_HnmgXuaAUrC0fHDR.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','53, 99, 187, 139',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_i_g6J5aAUrDKU1ZL.html/OGA Green Sheets ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '53, 99, 187, 139'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="425, 99, 521, 139" coords2="425, 99, 521, 139" shape="rect" alt="Greensheets:Application Component" id="areadiagram_map_6mQ6J5aAUrDKU1ZX_default" href="ArchiMateApplicationComponent_lOBqjWaAUrCs4BzF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="37, 43, 241, 187" coords2="37, 43, 241, 187" shape="rect" alt="OGA:Grouping" id="areadiagram_map_2YY6J5aAUrDKU1Zs_default" href="ArchiMateGrouping_ruZ9LuaAUrCsujRu.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','37, 43, 241, 187',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_Svnbx5aAUrDKU1ZH.html/OGA ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '37, 43, 241, 187'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="375, 42, 599, 187" coords2="375, 42, 599, 187" shape="rect" alt="CBIIT:Grouping" id="areadiagram_map_zIU6J5aAUrDKU2u1_default" href="ArchiMateGrouping_GpLgojqAUhQsEgn8.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','375, 42, 599, 187',new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_JSOyaZaAUhQuHycY.html/CBIIT Grants ArchMate Diagram/ArchiMateDiagram'),new Array(),new Array('ArchiMateDiagram_okVQ4JaAUhQELi8s.html/CBIIT DOC-centric ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '375, 42, 599, 187'),showSubdiagramIcon('diagram', '375, 42, 599, 187'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 640, 228" coords2="2, 2, 640, 228" shape="rect" alt="NCI:Grouping" id="areadiagram_map_AXs6J5aAUrDKU2vE_default" href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_HnmgXuaAUrC0fHDR.html" class="ItemLink">OGA Green Sheets : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_lOBqjWaAUrCs4BzF.html" class="ItemLink">Greensheets : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_ruZ9LuaAUrCsujRu.html" class="ItemLink">OGA : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_GpLgojqAUhQsEgn8.html" class="ItemLink">CBIIT : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" class="ItemLink">NCI : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

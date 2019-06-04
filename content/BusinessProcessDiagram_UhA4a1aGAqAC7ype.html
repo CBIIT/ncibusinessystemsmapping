@@ -1,0 +1,1034 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - Create CAN record in SOFie</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="Model_HdOcEFaAUrCanAiG.html" class="PageParentTitle">RF : Model</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="ArchiMateDiagram_C9xcEFaAUrCanAkH.html" class="PageParentTitle">CAN Administration : Business Function</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="ArchiMateDiagram_C9xcEFaAUrCanAkH.html" class="PageParentTitle">CANs - Creation/Database Input &amp; Maintenance  : Business Role</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html" class="PageParentTitle">CAN Creation : Pool</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html" class="PageParentTitle">OBF : Lane</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html" class="PageParentTitle">Create CAN record in SOFie : Sub-Process</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - Create CAN record in <a href="Glossary_Aef5CUaAUhQCoQiQ.html" class="ItemLink">Sofie</a>		</span>
+<a onclick="javascript: showVpLink('OBF mapping project.vpp://diagram/UhA4a1aGAqAC7ype', 'Create CAN record in SOFie\nOBF mapping project.vpp://diagram/UhA4a1aGAqAC7ype', 'Create CAN record in SOFie', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|155.0|206.0|78.0|40.0|BPTask_7Z84a1aGAqAC7yrU.html|BPTask_7Z84a1aGAqAC7yrU.html|7Z84a1aGAqAC7yrT" id="option7Z84a1aGAqAC7yrT">Authenticate : Task</option>
+<option value="shape|53.0|67.0|20.0|20.0|BPStartEvent_QxA4a1aGAqAC7ypo.html|BPStartEvent_QxA4a1aGAqAC7ypo.html|QxA4a1aGAqAC7ypn" id="optionQxA4a1aGAqAC7ypn">Unnamed Start Event : Start Event</option>
+<option value="shape|17.0|2.0|5371.0|163.0|BPLane_6gk4a1aGAqAC7yqQ.html|BPLane_6gk4a1aGAqAC7yqQ.html|6gk4a1aGAqAC7yqP" id="option6gk4a1aGAqAC7yqP">OBF : Lane</option>
+<option value="shape|151.0|57.0|87.0|40.0|BPTask_KXM4a1aGAqAC7yq4.html|BPTask_KXM4a1aGAqAC7yq4.html|KXM4a1aGAqAC7yq3" id="optionKXM4a1aGAqAC7yq3">Login to SOFie : Task</option>
+<option value="shape|17.0|165.0|5371.0|150.0|BPLane_sQU4a1aGAqAC7yqY.html|BPLane_sQU4a1aGAqAC7yqY.html|MQU4a1aGAqAC7yqX" id="optionMQU4a1aGAqAC7yqX">SOFie : Lane</option>
+<option value="shape|271.0|206.0|114.0|40.0|BPTask_jyG4a1aGAqAC7ysX.html|BPTask_jyG4a1aGAqAC7ysX.html|jyG4a1aGAqAC7ysW" id="optionjyG4a1aGAqAC7ysW">Return SOFie main page : Task</option>
+<option value="shape|2.0|2.0|5386.0|313.0|BPPool_nbg4a1aGAqAC7ypw.html|BPPool_nbg4a1aGAqAC7ypw.html|nbg4a1aGAqAC7ypv" id="optionnbg4a1aGAqAC7ypv">Pool2 : Pool</option>
+<option value="shape|475.0|47.0|336.0|68.0|BPGroup_v9tEa1aGAqAC7yu9.html|BPGroup_v9tEa1aGAqAC7yu9.html|P9tEa1aGAqAC7yu8" id="optionP9tEa1aGAqAC7yu8">Unnamed Group : Group</option>
+<option value="shape|1028.0|198.0|133.0|40.0|BPTask_51kka1aGAqAC7ywS.html|BPTask_51kka1aGAqAC7ywS.html|51kka1aGAqAC7ywR" id="option51kka1aGAqAC7ywR">Display New CAN Form : Task</option>
+<option value="shape|293.0|57.0|145.0|40.0|BPTask_89q4a1aGAqAC7yr3.html|BPTask_89q4a1aGAqAC7yr3.html|89q4a1aGAqAC7yr2" id="option89q4a1aGAqAC7yr2">Choose Administration Tab : Task</option>
+<option value="shape|481.0|57.0|50.0|40.0|BPTask_Nvl4a1aGAqAC7ytN.html|BPTask_Nvl4a1aGAqAC7ytN.html|Nvl4a1aGAqAC7ytM" id="optionNvl4a1aGAqAC7ytM">Choose Views : Task</option>
+<option value="shape|1210.0|198.0|150.0|40.0|BPTask_pwHka1aGAqAC7yyi.html|BPTask_pwHka1aGAqAC7yyi.html|pwHka1aGAqAC7yyh" id="optionpwHka1aGAqAC7yyh">Add CAN To Proper Folder : Task</option>
+<option value="shape|593.0|57.0|50.0|40.0|BPTask_7rj4a1aGAqAC7yto.html|BPTask_7rj4a1aGAqAC7yto.html|brj4a1aGAqAC7ytn" id="optionbrj4a1aGAqAC7ytn">Choose Master : Task</option>
+<option value="shape|1729.0|202.0|138.0|40.0|BPTask_pmfUa1aGAqAC7y2Q.html|BPTask_pmfUa1aGAqAC7y2Q.html|pmfUa1aGAqAC7y2P" id="optionpmfUa1aGAqAC7y2P">Return up Division View : Task</option>
+<option value="shape|705.0|57.0|93.0|40.0|BPTask_IqH4a1aGAqAC7yuS.html|BPTask_IqH4a1aGAqAC7yuS.html|IqH4a1aGAqAC7yuR" id="optionIqH4a1aGAqAC7yuR">Click Edit Items : Task</option>
+<option value="shape|2258.0|189.0|137.0|40.0|BPTask_ejy2a1aGAqAC7y4e.html|BPTask_ejy2a1aGAqAC7y4e.html|ejy2a1aGAqAC7y4d" id="optionejy2a1aGAqAC7y4d">Return view with record : Task</option>
+<option value="shape|839.0|57.0|160.0|40.0|BPTask_UHHEa1aGAqAC7yvW.html|BPTask_UHHEa1aGAqAC7yvW.html|UHHEa1aGAqAC7yvV" id="optionUHHEa1aGAqAC7yvV">Select the right Division and Mechanism and Thrust : Task</option>
+<option value="shape|2942.0|189.0|150.0|40.0|BPTask__usOa1aGAqAC7y8U.html|BPTask__usOa1aGAqAC7y8U.html|.usOa1aGAqAC7y8T" id="option.usOa1aGAqAC7y8T">Return Budget Mechanism View : Task</option>
+<option value="shape|3594.0|189.0|142.0|40.0|BPTask_ACJOa1aGAqAC7y_N.html|BPTask_ACJOa1aGAqAC7y_N.html|ACJOa1aGAqAC7y.M" id="optionACJOa1aGAqAC7y.M">Return View With Record : Task</option>
+<option value="shape|1228.0|53.0|115.0|40.0|BPTask_07ska1aGAqAC7yw0.html|BPTask_07ska1aGAqAC7yw0.html|07ska1aGAqAC7ywz" id="option07ska1aGAqAC7ywz">Fill in CAN Values, Press insert : Task</option>
+<option value="shape|4002.0|189.0|142.0|40.0|BPTask_XVnOa1aGAqAC7zAk.html|BPTask_XVnOa1aGAqAC7zAk.html|XVnOa1aGAqAC7zAj" id="optionXVnOa1aGAqAC7zAj">Return Daily Status View : Task</option>
+<option value="shape|1363.0|53.0|106.0|40.0|BPTask_SAZka1aGAqAC7yxj.html|BPTask_SAZka1aGAqAC7yxj.html|SAZka1aGAqAC7yxi" id="optionSAZka1aGAqAC7yxi">Display CAN List : Task</option>
+<option value="shape|1514.0|53.0|111.0|40.0|BPTask_yLWUa1aGAqAC7y0d.html|BPTask_yLWUa1aGAqAC7y0d.html|SLWUa1aGAqAC7y0c" id="optionSLWUa1aGAqAC7y0c">Click on Views Tab : Task</option>
+<option value="shape|1680.0|53.0|284.0|40.0|BPTask_vxZUa1aGAqAC7y1D.html|BPTask_vxZUa1aGAqAC7y1D.html|PxZUa1aGAqAC7y1C" id="optionPxZUa1aGAqAC7y1C">Find the proper Division (where the new requested CAN to be established), then click on “Edit Items” : Task</option>
+<option value="shape|2027.0|53.0|408.0|40.0|BPTask_ZMk0a1aGAqAC7y3O.html|BPTask_ZMk0a1aGAqAC7y3O.html|ZMk0a1aGAqAC7y3N" id="optionZMk0a1aGAqAC7y3N"> input the new CAN number (which you have established on the “Master’s view”) in the blank field and click the “FIND ACCOUNT OR CAN” : Task</option>
+<option value="shape|2559.0|53.0|40.0|40.0|BPGateway_hU_2a1aGAqAC7y5X.html|BPGateway_hU_2a1aGAqAC7y5X.html|hU.2a1aGAqAC7y5W" id="optionhU.2a1aGAqAC7y5W">Direct Fund : Gateway</option>
+<option value="shape|2685.0|54.0|111.0|40.0|BPTask_h012a1aGAqAC7y6b.html|BPTask_h012a1aGAqAC7y6b.html|h012a1aGAqAC7y6a" id="optionh012a1aGAqAC7y6a">Click on Views Tab : Task</option>
+<option value="shape|2846.0|53.0|370.0|40.0|BPTask__0H2a1aGAqAC7y7K.html|BPTask__0H2a1aGAqAC7y7K.html|.0H2a1aGAqAC7y7J" id="option.0H2a1aGAqAC7y7J">Find the proper Budget Mechinism (where the new requested CAN to be established), then click on “Edit Items” : Task</option>
+<option value="shape|3266.0|54.0|420.0|40.0|BPTask_zraOa1aGAqAC7y9b.html|BPTask_zraOa1aGAqAC7y9b.html|zraOa1aGAqAC7y9a" id="optionzraOa1aGAqAC7y9a"> input the new CAN number (which you have established on the “Master’s view”) in the blank field and click the “FIND ACCOUNT OR CAN” : Task</option>
+<option value="shape|3736.0|54.0|94.0|40.0|BPTask_RZNOa1aGAqAC7y_M.html|BPTask_RZNOa1aGAqAC7y_M.html|RZNOa1aGAqAC7y_L" id="optionRZNOa1aGAqAC7y_L">Click Views Tab : Task</option>
+<option value="shape|4621.0|189.0|142.0|40.0|BPTask_rd2ua1aGAqAC7zDc.html|BPTask_rd2ua1aGAqAC7zDc.html|rd2ua1aGAqAC7zDb" id="optionrd2ua1aGAqAC7zDb">Return View With Record : Task</option>
+<option value="shape|3904.0|54.0|339.0|40.0|BPTask_v8TOa1aGAqAC7y_8.html|BPTask_v8TOa1aGAqAC7y_8.html|v8TOa1aGAqAC7y_7" id="optionv8TOa1aGAqAC7y_7">Find the proper Daily's Status(where the new requested CAN to be established), then click on “Edit Items” : Task</option>
+<option value="shape|2103.0|189.0|40.0|40.0|BPGateway_lcr7wNaAU0xuAtYz.html|BPGateway_lcr7wNaAU0xuAtYz.html|lcr7wNaAU0xuAtYy" id="optionlcr7wNaAU0xuAtYy">Does Record Exist : Gateway</option>
+<option value="shape|4317.0|53.0|420.0|40.0|BPTask_4D0ua1aGAqAC7zCO.html|BPTask_4D0ua1aGAqAC7zCO.html|4D0ua1aGAqAC7zCN" id="option4D0ua1aGAqAC7zCN"> input the new CAN number (which you have established on the “Master’s view”) in the blank field and click the “FIND ACCOUNT OR CAN” : Task</option>
+<option value="shape|5159.0|57.0|20.0|20.0|BPEndEvent_ExA4a1aGAqAC7yps.html|BPEndEvent_ExA4a1aGAqAC7yps.html|ExA4a1aGAqAC7ypr" id="optionExA4a1aGAqAC7ypr">Unnamed End Event : End Event</option>
+<option value="shape|4962.0|47.0|113.0|40.0|BPTask_KwQ_a1aGAqAC7zIo.html|BPTask_KwQ_a1aGAqAC7zIo.html|KwQ.a1aGAqAC7zIn" id="optionKwQ.a1aGAqAC7zIn">View Successful CAN : Task</option>
+<option value="shape|3449.0|189.0|40.0|40.0|BPGateway_FVtHwNaAU0xuAtb2.html|BPGateway_FVtHwNaAU0xuAtb2.html|5VtHwNaAU0xuAtb1" id="option5VtHwNaAU0xuAtb1">Does Record Exist : Gateway</option>
+<option value="shape|1049.0|57.0|91.0|40.0|BPTask_Evk7wNaAU0xuAtXX.html|BPTask_Evk7wNaAU0xuAtXX.html|Evk7wNaAU0xuAtXW" id="optionEvk7wNaAU0xuAtXW">Choose Add new CAN : Task</option>
+<option value="shape|4507.0|189.0|40.0|40.0|BPGateway__MSnwNaAU0xuAtdv.html|BPGateway__MSnwNaAU0xuAtdv.html|.MSnwNaAU0xuAtdu" id="option.MSnwNaAU0xuAtdu">Does Can Exist : Gateway</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Create_CAN_record_in_SOFie.png" usemap="#diagram_map" class="Image" width="5392" height="319"/>
+					<map name="diagram_map">
+<area coords="18,213,32,243" coords2="18,213,32,243" shape="rect" alt="Sofie" href="Glossary_Aef5CUaAUhQCoQiQ.html"/>
+<area coords="203,70,233,84" coords2="203,70,233,84" shape="rect" alt="Sofie" href="Glossary_Aef5CUaAUhQCoQiQ.html"/>
+<area coords="317,212,347,226" coords2="317,212,347,226" shape="rect" alt="Sofie" href="Glossary_Aef5CUaAUhQCoQiQ.html"/>
+<area imageId="diagram" coords="73.0, 70.0, 73.0, 84.0, 151.0, 84.0, 151.0, 70.0" coords2="73.0, 70.0, 73.0, 84.0, 151.0, 84.0, 151.0, 70.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_VXM4a1aGAqAC7yq._default" href="BPSequenceFlow_pXM4a1aGAqAC7yq9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="187.0, 97.0, 187.0, 206.0, 201.0, 206.0, 201.0, 97.0" coords2="187.0, 97.0, 187.0, 206.0, 201.0, 206.0, 201.0, 97.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_s584a1aGAqAC7yrc_default" href="BPSequenceFlow_E584a1aGAqAC7yrb.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="310.0, 97.0, 310.0, 206.0, 324.0, 206.0, 324.0, 97.0" coords2="310.0, 97.0, 310.0, 206.0, 324.0, 206.0, 324.0, 97.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Z9q4a1aGAqAC7yr__default" href="BPSequenceFlow_h9q4a1aGAqAC7yr_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="233.0, 219.0, 233.0, 233.0, 271.0, 233.0, 271.0, 219.0" coords2="233.0, 219.0, 233.0, 233.0, 271.0, 233.0, 271.0, 219.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_kKG4a1aGAqAC7ysf_default" href="BPSequenceFlow_IKG4a1aGAqAC7yse.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="438.0, 70.0, 438.0, 84.0, 481.0, 84.0, 481.0, 70.0" coords2="438.0, 70.0, 438.0, 84.0, 481.0, 84.0, 481.0, 70.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Afl4a1aGAqAC7ytV_default" href="BPSequenceFlow_Pvl4a1aGAqAC7ytU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="531.0, 70.0, 531.0, 84.0, 593.0, 84.0, 593.0, 70.0" coords2="531.0, 70.0, 531.0, 84.0, 593.0, 84.0, 593.0, 70.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_sbj4a1aGAqAC7ytw_default" href="BPSequenceFlow_kbj4a1aGAqAC7ytv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="643.0, 65.0, 643.0, 79.0, 705.0, 79.0, 705.0, 65.0" coords2="643.0, 65.0, 643.0, 79.0, 705.0, 79.0, 705.0, 65.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_2qH4a1aGAqAC7yua_default" href="BPSequenceFlow_6qH4a1aGAqAC7yuZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="798.0, 70.0, 798.0, 84.0, 839.0, 84.0, 839.0, 70.0" coords2="798.0, 70.0, 798.0, 84.0, 839.0, 84.0, 839.0, 70.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_hHHEa1aGAqAC7yve_default" href="BPSequenceFlow_OHHEa1aGAqAC7yvd.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="999.0, 69.0, 999.0, 83.0, 1049.0, 83.0, 1049.0, 69.0" coords2="999.0, 69.0, 999.0, 83.0, 1049.0, 83.0, 1049.0, 69.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_f1kka1aGAqAC7ywa_default" href="BPSequenceFlow_n1kka1aGAqAC7ywZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1177.0, 63.0, 1177.0, 66.0, 1174.0, 66.0, 1174.0, 80.0, 1177.0, 80.0, 1177.0, 211.0, 1161.0, 211.0, 1161.0, 225.0, 1177.0, 225.0, 1177.0, 228.0, 1191.0, 228.0, 1191.0, 225.0, 1194.0, 225.0, 1194.0, 211.0, 1191.0, 211.0, 1191.0, 80.0, 1228.0, 80.0, 1228.0, 66.0, 1191.0, 66.0, 1191.0, 63.0" coords2="1177.0, 63.0, 1177.0, 66.0, 1174.0, 66.0, 1174.0, 80.0, 1177.0, 80.0, 1177.0, 211.0, 1161.0, 211.0, 1161.0, 225.0, 1177.0, 225.0, 1177.0, 228.0, 1191.0, 228.0, 1191.0, 225.0, 1194.0, 225.0, 1194.0, 211.0, 1191.0, 211.0, 1191.0, 80.0, 1228.0, 80.0, 1228.0, 66.0, 1191.0, 66.0, 1191.0, 63.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_R7ska1aGAqAC7yw8_default" href="BPSequenceFlow_e7ska1aGAqAC7yw7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1265.0, 93.0, 1265.0, 198.0, 1279.0, 198.0, 1279.0, 93.0" coords2="1265.0, 93.0, 1265.0, 198.0, 1279.0, 198.0, 1279.0, 93.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_3wHka1aGAqAC7yyq_default" href="BPSequenceFlow_7wHka1aGAqAC7yyp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1380.0, 93.0, 1380.0, 211.0, 1360.0, 211.0, 1360.0, 225.0, 1380.0, 225.0, 1380.0, 228.0, 1394.0, 228.0, 1394.0, 225.0, 1397.0, 225.0, 1397.0, 211.0, 1394.0, 211.0, 1394.0, 93.0" coords2="1380.0, 93.0, 1380.0, 211.0, 1360.0, 211.0, 1360.0, 225.0, 1380.0, 225.0, 1380.0, 228.0, 1394.0, 228.0, 1394.0, 225.0, 1397.0, 225.0, 1397.0, 211.0, 1394.0, 211.0, 1394.0, 93.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_gKfka1aGAqAC7yzE_default" href="BPSequenceFlow_AKfka1aGAqAC7yzD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1469.0, 66.0, 1469.0, 80.0, 1514.0, 80.0, 1514.0, 66.0" coords2="1469.0, 66.0, 1469.0, 80.0, 1514.0, 80.0, 1514.0, 66.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_mI.Ua1aGAqAC7y01_default" href="BPSequenceFlow_KI_Ua1aGAqAC7y00.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1625.0, 66.0, 1625.0, 80.0, 1680.0, 80.0, 1680.0, 66.0" coords2="1625.0, 66.0, 1625.0, 80.0, 1680.0, 80.0, 1680.0, 66.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_KJZUa1aGAqAC7y1L_default" href="BPSequenceFlow_8JZUa1aGAqAC7y1K.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1798.0, 93.0, 1798.0, 202.0, 1812.0, 202.0, 1812.0, 93.0" coords2="1798.0, 93.0, 1798.0, 202.0, 1812.0, 202.0, 1812.0, 93.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_XmfUa1aGAqAC7y2Y_default" href="BPSequenceFlow_7mfUa1aGAqAC7y2X.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2000.0, 63.0, 2000.0, 66.0, 1997.0, 66.0, 1997.0, 80.0, 2000.0, 80.0, 2000.0, 202.0, 1867.0, 202.0, 1867.0, 216.0, 2000.0, 216.0, 2000.0, 219.0, 2014.0, 219.0, 2014.0, 216.0, 2017.0, 216.0, 2017.0, 202.0, 2014.0, 202.0, 2014.0, 80.0, 2027.0, 80.0, 2027.0, 66.0, 2014.0, 66.0, 2014.0, 63.0" coords2="2000.0, 63.0, 2000.0, 66.0, 1997.0, 66.0, 1997.0, 80.0, 2000.0, 80.0, 2000.0, 202.0, 1867.0, 202.0, 1867.0, 216.0, 2000.0, 216.0, 2000.0, 219.0, 2014.0, 219.0, 2014.0, 216.0, 2017.0, 216.0, 2017.0, 202.0, 2014.0, 202.0, 2014.0, 80.0, 2027.0, 80.0, 2027.0, 66.0, 2014.0, 66.0, 2014.0, 63.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_PMk0a1aGAqAC7y3W_default" href="BPSequenceFlow_nMk0a1aGAqAC7y3V.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2116.0, 93.0, 2116.0, 189.0, 2130.0, 189.0, 2130.0, 93.0" coords2="2116.0, 93.0, 2116.0, 189.0, 2130.0, 189.0, 2130.0, 93.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_bjy2a1aGAqAC7y4m_default" href="BPSequenceFlow_Tjy2a1aGAqAC7y4l.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2599.0, 63.0, 2599.0, 77.0, 2685.0, 77.0, 2685.0, 63.0" coords2="2599.0, 63.0, 2599.0, 77.0, 2685.0, 77.0, 2685.0, 63.0" shape="poly" alt="is Direct Fund:Sequence Flow" id="areadiagram_map_n012a1aGAqAC7y6j_default" href="BPSequenceFlow_L012a1aGAqAC7y6i.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2796.0, 67.0, 2796.0, 81.0, 2846.0, 81.0, 2846.0, 67.0" coords2="2796.0, 67.0, 2796.0, 81.0, 2846.0, 81.0, 2846.0, 67.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_b0H2a1aGAqAC7y7S_default" href="BPSequenceFlow_j0H2a1aGAqAC7y7R.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2502.0, 60.0, 2502.0, 63.0, 2499.0, 63.0, 2499.0, 77.0, 2502.0, 77.0, 2502.0, 187.0, 2384.0, 187.0, 2384.0, 189.0, 2395.0, 189.0, 2395.0, 201.0, 2502.0, 201.0, 2502.0, 204.0, 2516.0, 204.0, 2516.0, 201.0, 2519.0, 201.0, 2519.0, 187.0, 2516.0, 187.0, 2516.0, 77.0, 2559.0, 77.0, 2559.0, 63.0, 2516.0, 63.0, 2516.0, 60.0" coords2="2502.0, 60.0, 2502.0, 63.0, 2499.0, 63.0, 2499.0, 77.0, 2502.0, 77.0, 2502.0, 187.0, 2384.0, 187.0, 2384.0, 189.0, 2395.0, 189.0, 2395.0, 201.0, 2502.0, 201.0, 2502.0, 204.0, 2516.0, 204.0, 2516.0, 201.0, 2519.0, 201.0, 2519.0, 187.0, 2516.0, 187.0, 2516.0, 77.0, 2559.0, 77.0, 2559.0, 63.0, 2516.0, 63.0, 2516.0, 60.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_1xoOa1aGAqAC7y7y_default" href="BPSequenceFlow_lxoOa1aGAqAC7y7x.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2992.0, 93.0, 2992.0, 189.0, 3006.0, 189.0, 3006.0, 93.0" coords2="2992.0, 93.0, 2992.0, 189.0, 3006.0, 189.0, 3006.0, 93.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_7usOa1aGAqAC7y8c_default" href="BPSequenceFlow_TusOa1aGAqAC7y8b.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3220.0, 64.0, 3220.0, 67.0, 3217.0, 67.0, 3217.0, 81.0, 3220.0, 81.0, 3220.0, 202.0, 3092.0, 202.0, 3092.0, 216.0, 3220.0, 216.0, 3220.0, 219.0, 3234.0, 219.0, 3234.0, 216.0, 3237.0, 216.0, 3237.0, 202.0, 3234.0, 202.0, 3234.0, 81.0, 3266.0, 81.0, 3266.0, 67.0, 3234.0, 67.0, 3234.0, 64.0" coords2="3220.0, 64.0, 3220.0, 67.0, 3217.0, 67.0, 3217.0, 81.0, 3220.0, 81.0, 3220.0, 202.0, 3092.0, 202.0, 3092.0, 216.0, 3220.0, 216.0, 3220.0, 219.0, 3234.0, 219.0, 3234.0, 216.0, 3237.0, 216.0, 3237.0, 202.0, 3234.0, 202.0, 3234.0, 81.0, 3266.0, 81.0, 3266.0, 67.0, 3234.0, 67.0, 3234.0, 64.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_kbaOa1aGAqAC7y9j_default" href="BPSequenceFlow_obaOa1aGAqAC7y9i.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3463.0, 94.0, 3463.0, 189.0, 3477.0, 189.0, 3477.0, 94.0" coords2="3463.0, 94.0, 3463.0, 189.0, 3477.0, 189.0, 3477.0, 94.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_aCJOa1aGAqAC7y.V_default" href="BPSequenceFlow_SCJOa1aGAqAC7y_U.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3776.0, 94.0, 3776.0, 202.0, 3736.0, 202.0, 3736.0, 216.0, 3776.0, 216.0, 3776.0, 219.0, 3790.0, 219.0, 3790.0, 216.0, 3793.0, 216.0, 3793.0, 202.0, 3790.0, 202.0, 3790.0, 94.0" coords2="3776.0, 94.0, 3776.0, 202.0, 3736.0, 202.0, 3736.0, 216.0, 3776.0, 216.0, 3776.0, 219.0, 3790.0, 219.0, 3790.0, 216.0, 3793.0, 216.0, 3793.0, 202.0, 3790.0, 202.0, 3790.0, 94.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_XZNOa1aGAqAC7y_U_default" href="BPSequenceFlow_rZNOa1aGAqAC7y_T.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3830.0, 67.0, 3830.0, 81.0, 3904.0, 81.0, 3904.0, 67.0" coords2="3830.0, 67.0, 3830.0, 81.0, 3904.0, 81.0, 3904.0, 67.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_qCTOa1aGAqAC7zAE_default" href="BPSequenceFlow_iCTOa1aGAqAC7zAD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4066.0, 94.0, 4066.0, 189.0, 4080.0, 189.0, 4080.0, 94.0" coords2="4066.0, 94.0, 4066.0, 189.0, 4080.0, 189.0, 4080.0, 94.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_S1nOa1aGAqAC7zAs_default" href="BPSequenceFlow_c1nOa1aGAqAC7zAr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4245.0, 76.0, 4245.0, 79.0, 4242.0, 79.0, 4242.0, 93.0, 4245.0, 93.0, 4245.0, 202.0, 4144.0, 202.0, 4144.0, 216.0, 4245.0, 216.0, 4245.0, 219.0, 4259.0, 219.0, 4259.0, 216.0, 4262.0, 216.0, 4262.0, 202.0, 4259.0, 202.0, 4259.0, 93.0, 4317.0, 93.0, 4317.0, 79.0, 4259.0, 79.0, 4259.0, 76.0" coords2="4245.0, 76.0, 4245.0, 79.0, 4242.0, 79.0, 4242.0, 93.0, 4245.0, 93.0, 4245.0, 202.0, 4144.0, 202.0, 4144.0, 216.0, 4245.0, 216.0, 4245.0, 219.0, 4259.0, 219.0, 4259.0, 216.0, 4262.0, 216.0, 4262.0, 202.0, 4259.0, 202.0, 4259.0, 93.0, 4317.0, 93.0, 4317.0, 79.0, 4259.0, 79.0, 4259.0, 76.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_.D0ua1aGAqAC7zCW_default" href="BPSequenceFlow_2D0ua1aGAqAC7zCV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4520.0, 93.0, 4520.0, 189.0, 4534.0, 189.0, 4534.0, 93.0" coords2="4520.0, 93.0, 4520.0, 189.0, 4534.0, 189.0, 4534.0, 93.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_M92ua1aGAqAC7zDk_default" href="BPSequenceFlow_E92ua1aGAqAC7zDj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4825.0, 57.0, 4825.0, 60.0, 4822.0, 60.0, 4822.0, 74.0, 4825.0, 74.0, 4825.0, 188.0, 4753.0, 188.0, 4753.0, 189.0, 4763.0, 189.0, 4763.0, 202.0, 4825.0, 202.0, 4825.0, 205.0, 4839.0, 205.0, 4839.0, 202.0, 4842.0, 202.0, 4842.0, 188.0, 4839.0, 188.0, 4839.0, 74.0, 4962.0, 74.0, 4962.0, 60.0, 4839.0, 60.0, 4839.0, 57.0" coords2="4825.0, 57.0, 4825.0, 60.0, 4822.0, 60.0, 4822.0, 74.0, 4825.0, 74.0, 4825.0, 188.0, 4753.0, 188.0, 4753.0, 189.0, 4763.0, 189.0, 4763.0, 202.0, 4825.0, 202.0, 4825.0, 205.0, 4839.0, 205.0, 4839.0, 202.0, 4842.0, 202.0, 4842.0, 188.0, 4839.0, 188.0, 4839.0, 74.0, 4962.0, 74.0, 4962.0, 60.0, 4839.0, 60.0, 4839.0, 57.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_3Ixua1aGAqAC7zEY_default" href="BPSequenceFlow_nIxua1aGAqAC7zEX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2572.0, 11.0, 2572.0, 14.0, 2569.0, 14.0, 2569.0, 28.0, 2572.0, 28.0, 2572.0, 53.0, 2586.0, 53.0, 2586.0, 28.0, 4825.0, 28.0, 4825.0, 60.0, 4822.0, 60.0, 4822.0, 74.0, 4825.0, 74.0, 4825.0, 77.0, 4839.0, 77.0, 4839.0, 74.0, 4962.0, 74.0, 4962.0, 60.0, 4839.0, 60.0, 4839.0, 28.0, 4842.0, 28.0, 4842.0, 14.0, 4839.0, 14.0, 4839.0, 11.0, 4825.0, 11.0, 4825.0, 14.0, 2586.0, 14.0, 2586.0, 11.0" coords2="2572.0, 11.0, 2572.0, 14.0, 2569.0, 14.0, 2569.0, 28.0, 2572.0, 28.0, 2572.0, 53.0, 2586.0, 53.0, 2586.0, 28.0, 4825.0, 28.0, 4825.0, 60.0, 4822.0, 60.0, 4822.0, 74.0, 4825.0, 74.0, 4825.0, 77.0, 4839.0, 77.0, 4839.0, 74.0, 4962.0, 74.0, 4962.0, 60.0, 4839.0, 60.0, 4839.0, 28.0, 4842.0, 28.0, 4842.0, 14.0, 4839.0, 14.0, 4839.0, 11.0, 4825.0, 11.0, 4825.0, 14.0, 2586.0, 14.0, 2586.0, 11.0" shape="poly" alt="Appropriated Fund:Sequence Flow" id="areadiagram_map_a7Fua1aGAqAC7zE0_default" href="BPSequenceFlow_K7Fua1aGAqAC7zEz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="5075.0, 61.0, 5075.0, 75.0, 5159.0, 75.0, 5159.0, 61.0" coords2="5075.0, 61.0, 5075.0, 75.0, 5159.0, 75.0, 5159.0, 61.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Jg4.a1aGAqAC7zJO_default" href="BPSequenceFlow_Rg4_a1aGAqAC7zJN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1087.0, 97.0, 1087.0, 198.0, 1101.0, 198.0, 1101.0, 97.0" coords2="1087.0, 97.0, 1087.0, 198.0, 1101.0, 198.0, 1101.0, 97.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_1iG7wNaAU0xuAtYh_default" href="BPSequenceFlow_liG7wNaAU0xuAtYg.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2000.0, 63.0, 2000.0, 66.0, 1997.0, 66.0, 1997.0, 80.0, 2000.0, 80.0, 2000.0, 200.0, 1997.0, 200.0, 1997.0, 214.0, 2000.0, 214.0, 2000.0, 217.0, 2014.0, 217.0, 2014.0, 214.0, 2103.0, 214.0, 2103.0, 200.0, 2014.0, 200.0, 2014.0, 80.0, 2027.0, 80.0, 2027.0, 66.0, 2014.0, 66.0, 2014.0, 63.0" coords2="2000.0, 63.0, 2000.0, 66.0, 1997.0, 66.0, 1997.0, 80.0, 2000.0, 80.0, 2000.0, 200.0, 1997.0, 200.0, 1997.0, 214.0, 2000.0, 214.0, 2000.0, 217.0, 2014.0, 217.0, 2014.0, 214.0, 2103.0, 214.0, 2103.0, 200.0, 2014.0, 200.0, 2014.0, 80.0, 2027.0, 80.0, 2027.0, 66.0, 2014.0, 66.0, 2014.0, 63.0" shape="poly" alt="Does not exit:Sequence Flow" id="areadiagram_map_cV4HwNaAU0xuAtZQ_default" href="BPSequenceFlow_MV4HwNaAU0xuAtZP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2143.0, 202.0, 2143.0, 216.0, 2258.0, 216.0, 2258.0, 202.0" coords2="2143.0, 202.0, 2143.0, 216.0, 2258.0, 216.0, 2258.0, 202.0" shape="poly" alt="Exists:Sequence Flow" id="areadiagram_map_5ecHwNaAU0xuAtZu_default" href="BPSequenceFlow_pecHwNaAU0xuAtZt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3220.0, 64.0, 3220.0, 67.0, 3217.0, 67.0, 3217.0, 81.0, 3220.0, 81.0, 3220.0, 202.0, 3217.0, 202.0, 3217.0, 216.0, 3220.0, 216.0, 3220.0, 219.0, 3234.0, 219.0, 3234.0, 216.0, 3449.0, 216.0, 3449.0, 202.0, 3234.0, 202.0, 3234.0, 81.0, 3266.0, 81.0, 3266.0, 67.0, 3234.0, 67.0, 3234.0, 64.0" coords2="3220.0, 64.0, 3220.0, 67.0, 3217.0, 67.0, 3217.0, 81.0, 3220.0, 81.0, 3220.0, 202.0, 3217.0, 202.0, 3217.0, 216.0, 3220.0, 216.0, 3220.0, 219.0, 3234.0, 219.0, 3234.0, 216.0, 3449.0, 216.0, 3449.0, 202.0, 3234.0, 202.0, 3234.0, 81.0, 3266.0, 81.0, 3266.0, 67.0, 3234.0, 67.0, 3234.0, 64.0" shape="poly" alt="Does Not Exist:Sequence Flow" id="areadiagram_map_rkgnwNaAU0xuAtca_default" href="BPSequenceFlow_LkgnwNaAU0xuAtcZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3489.0, 202.0, 3489.0, 216.0, 3594.0, 216.0, 3594.0, 202.0" coords2="3489.0, 202.0, 3489.0, 216.0, 3594.0, 216.0, 3594.0, 202.0" shape="poly" alt="Exists:Sequence Flow" id="areadiagram_map_JJMnwNaAU0xuAtdN_default" href="BPSequenceFlow_xJMnwNaAU0xuAtdM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4245.0, 76.0, 4245.0, 79.0, 4242.0, 79.0, 4242.0, 93.0, 4245.0, 93.0, 4245.0, 202.0, 4242.0, 202.0, 4242.0, 216.0, 4245.0, 216.0, 4245.0, 219.0, 4259.0, 219.0, 4259.0, 216.0, 4507.0, 216.0, 4507.0, 202.0, 4259.0, 202.0, 4259.0, 93.0, 4317.0, 93.0, 4317.0, 79.0, 4259.0, 79.0, 4259.0, 76.0" coords2="4245.0, 76.0, 4245.0, 79.0, 4242.0, 79.0, 4242.0, 93.0, 4245.0, 93.0, 4245.0, 202.0, 4242.0, 202.0, 4242.0, 216.0, 4245.0, 216.0, 4245.0, 219.0, 4259.0, 219.0, 4259.0, 216.0, 4507.0, 216.0, 4507.0, 202.0, 4259.0, 202.0, 4259.0, 93.0, 4317.0, 93.0, 4317.0, 79.0, 4259.0, 79.0, 4259.0, 76.0" shape="poly" alt="Does Not Exist:Sequence Flow" id="areadiagram_map_bC6nwNaAU0xuAteP_default" href="BPSequenceFlow_LC6nwNaAU0xuAteO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4547.0, 202.0, 4547.0, 216.0, 4621.0, 216.0, 4621.0, 202.0" coords2="4547.0, 202.0, 4547.0, 216.0, 4621.0, 216.0, 4621.0, 202.0" shape="poly" alt="Exists:Sequence Flow" id="areadiagram_map_R..nwNaAU0xuAte6_default" href="BPSequenceFlow_h__nwNaAU0xuAte5.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4507, 189, 4547, 229" coords2="4507, 189, 4547, 229" shape="rect" alt="Does Can Exist:Gateway" id="areadiagram_map_.MSnwNaAU0xuAtdu_default" href="BPGateway__MSnwNaAU0xuAtdv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3449, 189, 3489, 229" coords2="3449, 189, 3489, 229" shape="rect" alt="Does Record Exist:Gateway" id="areadiagram_map_5VtHwNaAU0xuAtb1_default" href="BPGateway_FVtHwNaAU0xuAtb2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2103, 189, 2143, 229" coords2="2103, 189, 2143, 229" shape="rect" alt="Does Record Exist:Gateway" id="areadiagram_map_lcr7wNaAU0xuAtYy_default" href="BPGateway_lcr7wNaAU0xuAtYz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1049, 57, 1140, 97" coords2="1049, 57, 1140, 97" shape="rect" alt="Choose Add new CAN:Task" id="areadiagram_map_Evk7wNaAU0xuAtXW_default" href="BPTask_Evk7wNaAU0xuAtXX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4962, 47, 5075, 87" coords2="4962, 47, 5075, 87" shape="rect" alt="View Successful CAN:Task" id="areadiagram_map_KwQ.a1aGAqAC7zIn_default" href="BPTask_KwQ_a1aGAqAC7zIo.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','4962, 47, 5075, 87',new Array(),new Array(),new Array(new Array('https://nih.sharepoint.com/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%204.2.2_SOFie_Administration_Division%20View_CAN%20is%20showed%20at%20its%20Division%20folder.jpg?csf=1&cid=99bdd581-ded2-4d09-928a-c85b48b14ca4','https://nih.sharepoint.com/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%204.2.2_SOFie_Administration_Division%20View_CAN%20is%20showed%20at%20its%20Division%20folder.jpg?csf=1&cid=99bdd581-ded2-4d09-928a-c85b48b14ca4')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '4962, 47, 5075, 87'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4621, 189, 4763, 229" coords2="4621, 189, 4763, 229" shape="rect" alt="Return View With Record:Task" id="areadiagram_map_rd2ua1aGAqAC7zDb_default" href="BPTask_rd2ua1aGAqAC7zDc.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4317, 53, 4737, 93" coords2="4317, 53, 4737, 93" shape="rect" alt=" input the new CAN number (which you have established on the “Master’s view”) in the blank field and click the “FIND ACCOUNT OR CAN”:Task" id="areadiagram_map_4D0ua1aGAqAC7zCN_default" href="BPTask_4D0ua1aGAqAC7zCO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4002, 189, 4144, 229" coords2="4002, 189, 4144, 229" shape="rect" alt="Return Daily Status View:Task" id="areadiagram_map_XVnOa1aGAqAC7zAj_default" href="BPTask_XVnOa1aGAqAC7zAk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3904, 54, 4243, 94" coords2="3904, 54, 4243, 94" shape="rect" alt="Find the proper Daily's Status(where the new requested CAN to be established), then click on “Edit Items”:Task" id="areadiagram_map_v8TOa1aGAqAC7y_7_default" href="BPTask_v8TOa1aGAqAC7y_8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3736, 54, 3830, 94" coords2="3736, 54, 3830, 94" shape="rect" alt="Click Views Tab:Task" id="areadiagram_map_RZNOa1aGAqAC7y_L_default" href="BPTask_RZNOa1aGAqAC7y_M.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3594, 189, 3736, 229" coords2="3594, 189, 3736, 229" shape="rect" alt="Return View With Record:Task" id="areadiagram_map_ACJOa1aGAqAC7y.M_default" href="BPTask_ACJOa1aGAqAC7y_N.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3266, 54, 3686, 94" coords2="3266, 54, 3686, 94" shape="rect" alt=" input the new CAN number (which you have established on the “Master’s view”) in the blank field and click the “FIND ACCOUNT OR CAN”:Task" id="areadiagram_map_zraOa1aGAqAC7y9a_default" href="BPTask_zraOa1aGAqAC7y9b.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2942, 189, 3092, 229" coords2="2942, 189, 3092, 229" shape="rect" alt="Return Budget Mechanism View:Task" id="areadiagram_map_.usOa1aGAqAC7y8T_default" href="BPTask__usOa1aGAqAC7y8U.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2846, 53, 3216, 93" coords2="2846, 53, 3216, 93" shape="rect" alt="Find the proper Budget Mechinism (where the new requested CAN to be established), then click on “Edit Items”:Task" id="areadiagram_map_.0H2a1aGAqAC7y7J_default" href="BPTask__0H2a1aGAqAC7y7K.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2685, 54, 2796, 94" coords2="2685, 54, 2796, 94" shape="rect" alt="Click on Views Tab:Task" id="areadiagram_map_h012a1aGAqAC7y6a_default" href="BPTask_h012a1aGAqAC7y6b.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2559, 53, 2599, 93" coords2="2559, 53, 2599, 93" shape="rect" alt="Direct Fund:Gateway" id="areadiagram_map_hU.2a1aGAqAC7y5W_default" href="BPGateway_hU_2a1aGAqAC7y5X.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2258, 189, 2395, 229" coords2="2258, 189, 2395, 229" shape="rect" alt="Return view with record:Task" id="areadiagram_map_ejy2a1aGAqAC7y4d_default" href="BPTask_ejy2a1aGAqAC7y4e.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2027, 53, 2435, 93" coords2="2027, 53, 2435, 93" shape="rect" alt=" input the new CAN number (which you have established on the “Master’s view”) in the blank field and click the “FIND ACCOUNT OR CAN”:Task" id="areadiagram_map_ZMk0a1aGAqAC7y3N_default" href="BPTask_ZMk0a1aGAqAC7y3O.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','2027, 53, 2435, 93',new Array(),new Array(),new Array(new Array('https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%204.2.1_SOFie_Administration_Division%20View_Ensure%20CAN%20is%20showed%20at%20its%20Division%20folder.jpg?csf=1','Find Account or CAN screen shot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '2027, 53, 2435, 93'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1729, 202, 1867, 242" coords2="1729, 202, 1867, 242" shape="rect" alt="Return up Division View:Task" id="areadiagram_map_pmfUa1aGAqAC7y2P_default" href="BPTask_pmfUa1aGAqAC7y2Q.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1680, 53, 1964, 93" coords2="1680, 53, 1964, 93" shape="rect" alt="Find the proper Division (where the new requested CAN to be established), then click on “Edit Items”:Task" id="areadiagram_map_PxZUa1aGAqAC7y1C_default" href="BPTask_vxZUa1aGAqAC7y1D.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1680, 53, 1964, 93',new Array(),new Array(),new Array(new Array(' https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%204.2_SOFie_Administration_Division%20View_Verify%20new%20CAN%20is%20on%20Division%20View.jpg?csf=1','Pick Division Screen Shot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '1680, 53, 1964, 93'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1514, 53, 1625, 93" coords2="1514, 53, 1625, 93" shape="rect" alt="Click on Views Tab:Task" id="areadiagram_map_SLWUa1aGAqAC7y0c_default" href="BPTask_yLWUa1aGAqAC7y0d.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1210, 198, 1360, 238" coords2="1210, 198, 1360, 238" shape="rect" alt="Add CAN To Proper Folder:Task" id="areadiagram_map_pwHka1aGAqAC7yyh_default" href="BPTask_pwHka1aGAqAC7yyi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1363, 53, 1469, 93" coords2="1363, 53, 1469, 93" shape="rect" alt="Display CAN List:Task" id="areadiagram_map_SAZka1aGAqAC7yxi_default" href="BPTask_SAZka1aGAqAC7yxj.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1363, 53, 1469, 93',new Array(),new Array(),new Array(new Array('https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%204.1.2_SOFie_Administration_Master%20Views_Record%20for%20new%20CAN%20has%20been%20added%20to%20SOFie%20at%20appropriated%20folder.jpg?csf=1 ','CAN added to folder Screen Shot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '1363, 53, 1469, 93'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1228, 53, 1343, 93" coords2="1228, 53, 1343, 93" shape="rect" alt="Fill in CAN Values, Press insert:Task" id="areadiagram_map_07ska1aGAqAC7ywz_default" href="BPTask_07ska1aGAqAC7yw0.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1228, 53, 1343, 93',new Array(),new Array(),new Array(new Array('https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%204.1.1_SOFie_Administration_Master%20Views_Create%20record%20for%20new%20CAN_form%20with%20details.jpg?csf=1','New CAN Form  Screen Shot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '1228, 53, 1343, 93'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1028, 198, 1161, 238" coords2="1028, 198, 1161, 238" shape="rect" alt="Display New CAN Form:Task" id="areadiagram_map_51kka1aGAqAC7ywR_default" href="BPTask_51kka1aGAqAC7ywS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="839, 57, 999, 97" coords2="839, 57, 999, 97" shape="rect" alt="Select the right Division and Mechanism and Thrust:Task" id="areadiagram_map_UHHEa1aGAqAC7yvV_default" href="BPTask_UHHEa1aGAqAC7yvW.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','839, 57, 999, 97',new Array(),new Array(),new Array(new Array('https://nih.sharepoint.com/:i:/r/sites/nci/CBIIT/IITOB/ssawg/Shared%20Documents/Projects-New/OBF-New/Project%20Document-New/InkedPic%204.1_SOFie_Administration_Master%20View_Create%20record%20for%20new%20CAN_blank%20form.jpg?csf=1','Add new CAN Screen Shot')),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '839, 57, 999, 97'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="705, 57, 798, 97" coords2="705, 57, 798, 97" shape="rect" alt="Click Edit Items:Task" id="areadiagram_map_IqH4a1aGAqAC7yuR_default" href="BPTask_IqH4a1aGAqAC7yuS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="593, 57, 643, 97" coords2="593, 57, 643, 97" shape="rect" alt="Choose Master:Task" id="areadiagram_map_brj4a1aGAqAC7ytn_default" href="BPTask_7rj4a1aGAqAC7yto.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="481, 57, 531, 97" coords2="481, 57, 531, 97" shape="rect" alt="Choose Views:Task" id="areadiagram_map_Nvl4a1aGAqAC7ytM_default" href="BPTask_Nvl4a1aGAqAC7ytN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="271, 206, 385, 246" coords2="271, 206, 385, 246" shape="rect" alt="Return SOFie main page:Task" id="areadiagram_map_jyG4a1aGAqAC7ysW_default" href="BPTask_jyG4a1aGAqAC7ysX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="293, 57, 438, 97" coords2="293, 57, 438, 97" shape="rect" alt="Choose Administration Tab:Task" id="areadiagram_map_89q4a1aGAqAC7yr2_default" href="BPTask_89q4a1aGAqAC7yr3.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="475, 47, 811, 115" coords2="475, 47, 811, 115" shape="rect" alt=":Group" id="areadiagram_map_P9tEa1aGAqAC7yu8_default" href="BPGroup_v9tEa1aGAqAC7yu9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="155, 206, 233, 246" coords2="155, 206, 233, 246" shape="rect" alt="Authenticate:Task" id="areadiagram_map_7Z84a1aGAqAC7yrT_default" href="BPTask_7Z84a1aGAqAC7yrU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="151, 57, 238, 97" coords2="151, 57, 238, 97" shape="rect" alt="Login to SOFie:Task" id="areadiagram_map_KXM4a1aGAqAC7yq3_default" href="BPTask_KXM4a1aGAqAC7yq4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="53, 120, 172, 138" coords2="53, 120, 172, 138" shape="rect" alt="Accept or Reject:Gateway" id="areadiagram_map_QxA4a1aGAqAC7ypn_sublevelflowitem1" href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html?shapeid=71WOyVaAUrAA8Vjr"/>
+<area imageId="diagram" coords="53, 138, 172, 156" coords2="53, 138, 172, 156" shape="rect" alt="Accepted:Sequence Flow" id="areadiagram_map_QxA4a1aGAqAC7ypn_sublevelflowitem2" href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html?shapeid=71WOyVaAUrAA8Vjr"/>
+<area imageId="diagram" coords="53, 67, 73, 87" coords2="53, 67, 73, 87" shape="rect" alt=":Start Event" id="areadiagram_map_QxA4a1aGAqAC7ypn_default" href="BPStartEvent_QxA4a1aGAqAC7ypo.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="5159, 110, 5276, 128" coords2="5159, 110, 5276, 128" shape="rect" alt="Email Requester:Task" id="areadiagram_map_ExA4a1aGAqAC7ypr_sublevelflowitem1" href="BusinessProcessDiagram_VTAyyVaAUrAA8Up1.html?shapeid=h3BeyVaAUrAA8VqK"/>
+<area imageId="diagram" coords="5159, 57, 5179, 77" coords2="5159, 57, 5179, 77" shape="rect" alt=":End Event" id="areadiagram_map_ExA4a1aGAqAC7ypr_default" href="BPEndEvent_ExA4a1aGAqAC7yps.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 165, 5388, 315" coords2="17, 165, 5388, 315" shape="rect" alt="SOFie:Lane" id="areadiagram_map_MQU4a1aGAqAC7yqX_default" href="BPLane_sQU4a1aGAqAC7yqY.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 2, 5388, 165" coords2="17, 2, 5388, 165" shape="rect" alt="OBF:Lane" id="areadiagram_map_6gk4a1aGAqAC7yqP_default" href="BPLane_6gk4a1aGAqAC7yqQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 5388, 315" coords2="2, 2, 5388, 315" shape="rect" alt="Pool2:Pool" id="areadiagram_map_nbg4a1aGAqAC7ypv_default" href="BPPool_nbg4a1aGAqAC7ypw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_7Z84a1aGAqAC7yrU.html" class="ItemLink">Authenticate : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_QxA4a1aGAqAC7ypo.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_6gk4a1aGAqAC7yqQ.html" class="ItemLink">OBF : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_KXM4a1aGAqAC7yq4.html" class="ItemLink">Login to SOFie : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_sQU4a1aGAqAC7yqY.html" class="ItemLink">SOFie : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_jyG4a1aGAqAC7ysX.html" class="ItemLink">Return SOFie main page : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_nbg4a1aGAqAC7ypw.html" class="ItemLink">Pool2 : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactGroup.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactGroup.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGroup_v9tEa1aGAqAC7yu9.html" class="ItemLink">N/A : Group</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_51kka1aGAqAC7ywS.html" class="ItemLink">Display New CAN Form : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_89q4a1aGAqAC7yr3.html" class="ItemLink">Choose Administration Tab : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP06</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Nvl4a1aGAqAC7ytN.html" class="ItemLink">Choose Views : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_pwHka1aGAqAC7yyi.html" class="ItemLink">Add CAN To Proper Folder : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP08</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_7rj4a1aGAqAC7yto.html" class="ItemLink">Choose Master : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP09</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_pmfUa1aGAqAC7y2Q.html" class="ItemLink">Return up Division View : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP10</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_IqH4a1aGAqAC7yuS.html" class="ItemLink">Click Edit Items : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP11</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_ejy2a1aGAqAC7y4e.html" class="ItemLink">Return view with record : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP12</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_UHHEa1aGAqAC7yvW.html" class="ItemLink">Select the right Division and Mechanism and Thrust : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP13</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask__usOa1aGAqAC7y8U.html" class="ItemLink">Return Budget Mechanism View : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP15</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_ACJOa1aGAqAC7y_N.html" class="ItemLink">Return View With Record : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP15</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_07ska1aGAqAC7yw0.html" class="ItemLink">Fill in CAN Values, Press insert : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP16</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_XVnOa1aGAqAC7zAk.html" class="ItemLink">Return Daily Status View : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP17</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_SAZka1aGAqAC7yxj.html" class="ItemLink">Display CAN List : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP20</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_yLWUa1aGAqAC7y0d.html" class="ItemLink">Click on Views Tab : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP21</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_vxZUa1aGAqAC7y1D.html" class="ItemLink">Find the proper Division (where the new requested CAN to be established), then click on “Edit Items” : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP24</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_ZMk0a1aGAqAC7y3O.html" class="ItemLink"> input the new CAN number (which you have established on the “Master’s view”) in the blank field and click the “FIND ACCOUNT OR CAN” : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP26</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_hU_2a1aGAqAC7y5X.html" class="ItemLink">Direct Fund : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP28</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_h012a1aGAqAC7y6b.html" class="ItemLink">Click on Views Tab : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP30</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask__0H2a1aGAqAC7y7K.html" class="ItemLink">Find the proper Budget Mechinism (where the new requested CAN to be established), then click on “Edit Items” : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP33</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_zraOa1aGAqAC7y9b.html" class="ItemLink"> input the new CAN number (which you have established on the “Master’s view”) in the blank field and click the “FIND ACCOUNT OR CAN” : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP35</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_RZNOa1aGAqAC7y_M.html" class="ItemLink">Click Views Tab : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP37</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_rd2ua1aGAqAC7zDc.html" class="ItemLink">Return View With Record : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP37</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_v8TOa1aGAqAC7y_8.html" class="ItemLink">Find the proper Daily's Status(where the new requested CAN to be established), then click on “Edit Items” : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP39</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_lcr7wNaAU0xuAtYz.html" class="ItemLink">Does Record Exist : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP40</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_4D0ua1aGAqAC7zCO.html" class="ItemLink"> input the new CAN number (which you have established on the “Master’s view”) in the blank field and click the “FIND ACCOUNT OR CAN” : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP42</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_ExA4a1aGAqAC7yps.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP44</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_KwQ_a1aGAqAC7zIo.html" class="ItemLink">View Successful CAN : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP45</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_FVtHwNaAU0xuAtb2.html" class="ItemLink">Does Record Exist : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP46</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Evk7wNaAU0xuAtXX.html" class="ItemLink">Choose Add new CAN : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP48</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway__MSnwNaAU0xuAtdv.html" class="ItemLink">Does Can Exist : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

@@ -1,0 +1,689 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - nSight ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_IN4IjoaAUhQsPklM.html" class="PageParentTitle">nVision : System Software</a> (in <a href="ArchiMateDiagram_IN4IjoaAUhQsPklM.html" class="PageParentTitle">HR Systems diagram</a> / <a href="ArchiMateDiagram_GTPgXUaAUhQsMcX2.html" class="PageParentTitle">QlikView ArchiMate Diagram</a> / <a href="ArchiMateDiagram_AIsPXUaAUhQsMWqX.html" class="PageParentTitle">nSight ArchiMate Diagram</a> / <a href="ArchiMateDiagram_2w854MaAUrAy_BJ2.html" class="PageParentTitle">NCI Business Applications Archimate Diagram</a> / <a href="ArchiMateDiagram_KCte8saAUrCskEtq.html" class="PageParentTitle">ITRC</a> / <a href="ArchiMateDiagram_yktLI2aAUrD2QpQa.html" class="PageParentTitle">NCI Email Group Generator Archimate Diagram</a> / <a href="ArchiMateDiagram_XFu7I2aAUrD2Qp7F.html" class="PageParentTitle">NED Census Validation ArchiMate Diagram</a> / <a href="ArchiMateDiagram_qCIM_RaAU8y45cJI.html" class="PageParentTitle">OBF Directors's Reserve Tool ArchiMate Diagram</a> / <a href="ArchiMateDiagram_okVQ4JaAUhQELi8s.html" class="PageParentTitle">CBIIT DOC-centric ArchiMate Diagram</a> / <a href="ArchiMateDiagram_zYrv0JaAUhQELmEV.html" class="PageParentTitle">GFET ArchiMate Diagram</a> / <a href="ArchiMateDiagram_7WTpMJaAUhQELtem.html" class="PageParentTitle">OA DOC-centric ArchiMate Diagram</a> / <a href="ArchiMateDiagram_QYkjMJaAUhQELpgg.html" class="PageParentTitle">FCAS ArchiMate Diagram</a> / <a href="ArchiMateDiagram_aDH7nUaAUhQsMUzk.html" class="PageParentTitle">COPP ArchiMate Diagram</a> / <a href="ArchiMateDiagram_fnxdMJaAUhQELpZn.html" class="PageParentTitle">eContracts ArchiMate Diagram</a> / <a href="ArchiMateDiagram_B8Vp1JaAUhQELokm.html" class="PageParentTitle">OASYS ArchiMate Diagram</a> / <a href="ArchiMateDiagram_ENbrrUaAUhQsMVXN.html" class="PageParentTitle">DFAS (aka mypay) ArchiMate Diagram</a> / <a href="ArchiMateDiagram_60P3rUaAUhQsMVGR.html" class="PageParentTitle">BIIS ArchiMate Diagram</a> / <a href="ArchiMateDiagram__fTPnUaAUhQsMRZw.html" class="PageParentTitle">SMART HR ArchiMate Diagram</a> / <a href="ArchiMateDiagram__2sfnUaAUhQsMXDP.html" class="PageParentTitle">ITAS ArchiMate Diagram</a> / <a href="ArchiMateDiagram_OjkoXUaAUhQsMTfF.html" class="PageParentTitle">WiTS ArchiMate Diagram</a> / <a href="ArchiMateDiagram_nl2YXUaAUhQsMZRn.html" class="PageParentTitle">NED ArchiMate Diagram</a> / <a href="ArchiMateDiagram_VFXnXUaAUhQsMVar.html" class="PageParentTitle">EMIS ArchiMate Diagram</a> / <a href="ArchiMateDiagram_jEZ3XUaAUhQsMRWv.html" class="PageParentTitle">ePMAP ArchiMate Diagram</a> / <a href="ArchiMateDiagram_5J4vXUaAUhQsMc89.html" class="PageParentTitle">nVision HR ArchiMate Diagram</a> / <a href="ArchiMateDiagram_nx3I3UaAUhQsMT2c.html" class="PageParentTitle">e-HARTS ArchiMate Diagram</a> / <a href="ArchiMateDiagram_H0Do3UaAUhQsMZEu.html" class="PageParentTitle">FPS II ArchiMate Diagram</a> / <a href="ArchiMateDiagram_AWI43UaAUhQsMeUR.html" class="PageParentTitle">HRDB ArchiMate Diagram</a> / <a href="ArchiMateDiagram_zMfE3UaAUhQsMVbp.html" class="PageParentTitle">Sunapsis ArchiMate Diagram</a> / <a href="ArchiMateDiagram_2IhnI2aAUrD2QqEL.html" class="PageParentTitle">Admin Actions ArchiMate Diagram3</a> / <a href="ArchiMateDiagram_2NTh_RaAUhQELlcf.html" class="PageParentTitle">OHAM AIDS Tracker ArchiMate Diagram</a> / <a href="ArchiMateDiagram_SjpdauaAUhQA0k6D.html" class="PageParentTitle">Budget Analytical Dashboard ArchiMate Diagram</a> / <a href="ArchiMateDiagram_yj09nuaAUhQA0i_O.html" class="PageParentTitle">CCR Closeout Dashboard ArchiMate Diagram</a> / <a href="ArchiMateDiagram_baRNA5aAUhQELmZ8.html" class="PageParentTitle">CCR CRTA Renewal ArchiMate Diagram</a> / <a href="ArchiMateDiagram_MeOHg5aAUhQELtXT.html" class="PageParentTitle">CCR Title 42 Batch Renewal ArchiMate Diagram</a> / <a href="ArchiMateDiagram_WEZpo5aAUhQELmXq.html" class="PageParentTitle">ITRC DOC-centric ArchiMate Diagram</a> / <a href="ArchiMateDiagram_iaHRuhaAUhQELkxg.html" class="PageParentTitle">Qlikview Budget Data Model ArchiMate Diagram</a> / <a href="ArchiMateDiagram_NpBZuhaAUhQELlfY.html" class="PageParentTitle">QlikView HR Data Model ArchiMate Diagram</a> / <a href="ArchiMateDiagram_56Ny9BaAUhQELlvT.html" class="PageParentTitle">CBIIT Report Builder ArchiMate Diagram</a> / <a href="ArchiMateDiagram_FxstauaAUhQA0kz2.html" class="PageParentTitle">NED AO validation Report ArchiMate Diagram</a> / <a href="ArchiMateDiagram_uLEziuaAUhQA0j_S.html" class="PageParentTitle">NED Report Builder ArchiMate Diagram</a> / <a href="ArchiMateDiagram_uSOROhaAUhQELk04.html" class="PageParentTitle">OBF Closeout Dashboard ArchiMate Diagram</a> / <a href="ArchiMateDiagram_2DP2uhaAUhQELlQb.html" class="PageParentTitle">OBF Closeout Summary ArchiMate Diagram</a> / <a href="ArchiMateDiagram_QxoO9BaAUhQELgYQ.html" class="PageParentTitle">CBIIT Receiveing Dashboard ArchiMate Diagram</a> / <a href="ArchiMateDiagram_FVWS05aAUhQELm6H.html" class="PageParentTitle">Admin Actions ArchiMate Diagram</a> / <a href="ArchiMateDiagram__9lff5aAUhQELk9y.html" class="PageParentTitle">STEPS Dashboard ArchiMate Diagram</a> / <a href="ArchiMateDiagram_DFwMZ5aAU80E1Kmg.html" class="PageParentTitle">Admin Actions Dashboard ArchiMate Diagram</a> / <a href="ArchiMateDiagram_noE6WpaAUrDqrtjK.html" class="PageParentTitle">DCEG DOC-centric ArchiMate Diagram</a> / <a href="ArchiMateDiagram_KcwDLJaAUhQELk2c.html" class="PageParentTitle">CAS ArchiMate Diagram</a> / <a href="ArchiMateDiagram_kYbjZFaAUrCUaFyk.html" class="PageParentTitle">&gt;$3K Checklist ArchiMate Diagram</a> / <a href="ArchiMateDiagram_r0RSjFaAUhQEsT4w.html" class="PageParentTitle">AC Systems Diagram</a>)<span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="ArchiMateDiagram_IN4IjoaAUhQsPklM.html" class="PageParentTitle">nSight : Application Component</a> (in <a href="ArchiMateDiagram_IN4IjoaAUhQsPklM.html" class="PageParentTitle">HR Systems diagram</a> / <a href="ArchiMateDiagram_GTPgXUaAUhQsMcX2.html" class="PageParentTitle">QlikView ArchiMate Diagram</a> / <a href="ArchiMateDiagram_AIsPXUaAUhQsMWqX.html" class="PageParentTitle">nSight ArchiMate Diagram</a> / <a href="ArchiMateDiagram_2w854MaAUrAy_BJ2.html" class="PageParentTitle">NCI Business Applications Archimate Diagram</a> / <a href="ArchiMateDiagram_KCte8saAUrCskEtq.html" class="PageParentTitle">ITRC</a> / <a href="ArchiMateDiagram_WEZpo5aAUhQELmXq.html" class="PageParentTitle">ITRC DOC-centric ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - nSight ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/AIsPXUaAUhQsMWqX', 'nSight ArchiMate Diagram\nNCI Buisness Architecture.vpp://diagram/AIsPXUaAUhQsMWqX', 'nSight ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|287.0|93.0|219.0|40.0|ArchiMateDataObject_DlnPz2aAUrD8PI6z.html|ArchiMateDataObject_DlnPz2aAUrD8PI6z.html|MEG7H2aAUhQuHzxZ" id="optionMEG7H2aAUhQuHzxZ">Finance,Acquisitions,Travel, Property, HR, TechTransfer and NED Data : Data Object</option>
+<option value="shape|266.0|62.0|275.0|111.0|ArchiMateSystemSoftware_24JsnjqAUhQsEhqe.html|ArchiMateSystemSoftware_24JsnjqAUhQsEhqe.html|8dRPXUaAUhQsMXC." id="option8dRPXUaAUhQsMXC.">nVision : System Software</option>
+<option value="shape|78.0|133.0|96.0|40.0|ArchiMateApplicationComponent_Csl0wTqAUhQsLA2y.html|ArchiMateApplicationComponent_Csl0wTqAUhQsLA2y.html|GeiPXUaAUhQsMWqy" id="optionGeiPXUaAUhQsMWqy">nSight : Application Component</option>
+<option value="shape|334.0|235.0|96.0|40.0|ArchiMateApplicationComponent_BdXkwTqAUhQsLA1Q.html|ArchiMateApplicationComponent_BdXkwTqAUhQsLA1Q.html|xsKPXUaAUhQsMWq5" id="optionxsKPXUaAUhQsMWq5">QlikView : Application Component</option>
+<option value="shape|2.0|2.0|607.0|368.0|ArchiMateGrouping_n_qPXUaAUhQsMWrP.html|ArchiMateGrouping_n_qPXUaAUhQsMWrP.html|n.qPXUaAUhQsMWrO" id="optionn.qPXUaAUhQsMWrO">NIH : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/nSight_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="613" height="374"/>
+					<map name="diagram_map">
+<area coords="430,118,452,132" coords2="430,118,452,132" shape="rect" alt="NED" href="Glossary_0wOEWEaAUhQCoQ3N.html"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      The extractor is processing information from nVision and leaving it for 
+      QlikView to pick up. &amp;nbsp;Adam will send the drive location extracted to.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="389.0, 133.0, 389.0, 235.0, 403.0, 235.0, 403.0, 133.0" coords2="389.0, 133.0, 389.0, 235.0, 403.0, 235.0, 403.0, 133.0" shape="poly" alt="NED to QlikView:Access" id="areadiagram_map_sEG7H2aAUhQuHzxd_default" href="ArchiMateAccess_5HD1L2aAUrD8POSQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="119.0, 103.0, 119.0, 106.0, 116.0, 106.0, 116.0, 120.0, 119.0, 120.0, 119.0, 133.0, 133.0, 133.0, 133.0, 120.0, 287.0, 120.0, 287.0, 106.0, 133.0, 106.0, 133.0, 103.0" coords2="119.0, 103.0, 119.0, 106.0, 116.0, 106.0, 116.0, 120.0, 119.0, 120.0, 119.0, 133.0, 133.0, 133.0, 133.0, 120.0, 287.0, 120.0, 287.0, 106.0, 133.0, 106.0, 133.0, 103.0" shape="poly" alt=":Access" id="areadiagram_map_sEG7H2aAUhQuHzxf_default" href="ArchiMateAccess__SfTH2aAUhQuH0yR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Connections to database is provided by TNS connection rows a user is 
+      allowed to see is limited by VPD by there institute.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      HR data - Pay Biweekly, Demographics daily, Commission COR pay and 
+      FELLOWS is monthly
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Finance data - is daily accept for commitments and obligation which is 
+      once an hour.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Travel - nightly
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Property - nightly
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      - nightly
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_0wOEWEaAUhQCoQ3N.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NED&amp;lt;/a&amp;gt; 
+      - daily
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Tech transfer - ?
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Acquisitions - nightly.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      FPS - is months
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      NOTES :
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Source data from POTS and AMBIS (acquisitions related). &amp;nbsp;NBS only gets 
+      financial's from pots. &amp;nbsp;Approvals, and specifics(vendors quantity) are 
+      gotten directly from POTS.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      AMBIS only used by MIAID NBS gets just enugh for a requisitions
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="287, 93, 506, 133" coords2="287, 93, 506, 133" shape="rect" alt="Finance,Acquisitions,Travel, Property, HR, TechTransfer and NED Data:Data Object" id="areadiagram_map_MEG7H2aAUhQuHzxZ_default" href="ArchiMateDataObject_DlnPz2aAUrD8PI6z.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      https://nvision.&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;.gov/nvision_registration/registration_guide.html#IntroductiontonVision
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      HR Data
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;nVision to K2 Process Script
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      nVision data can be received by K2 by means of a K2 Process Script.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="266, 62, 541, 173" coords2="266, 62, 541, 173" shape="rect" alt="nVision:System Software" id="areadiagram_map_8dRPXUaAUhQsMXC._default" href="ArchiMateSystemSoftware_24JsnjqAUhQsEhqe.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','266, 62, 541, 173',new Array('NBS to nVision data flow diagram.JPG*file:////Users/woodpm/Desktop/ITRC deep dive 01232019/NBS to nVision data flow diagram.JPG'),new Array(),new Array(),new Array(),new Array(),new Array('ERDiagram_lAI3AzqAUrAYHw6m.html/nVision Entity Relationship Diagram/ERDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '266, 62, 541, 173'),showSubdiagramIcon('diagram', '266, 62, 541, 173'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;nSight &amp;lt;/b&amp;gt;&amp;#8211; The nVision &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_fL0EWEaAUhQCoQ2g.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;nSIGHT 
+      HR&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      is a workforce planning and analytics &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      that will allow ICs to track, manage and plan their staffing needs for 
+      all staff types using a web based enterprise &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      while maintaining enterprise standards. nSight provides a full picture 
+      of an &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt;&amp;#8217;s 
+      workforce which enables the planning and management of personnel, 
+      including tracking different types of staff and forecasting future 
+      staffing needs. In addition, nSight provides
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      System link - https://ccrod.cancergov/confluence/display/OMIT/nSight
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="78, 133, 174, 173" coords2="78, 133, 174, 173" shape="rect" alt="nSight:Application Component" id="areadiagram_map_GeiPXUaAUhQsMWqy_default" href="ArchiMateApplicationComponent_Csl0wTqAUhQsLA2y.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','78, 133, 174, 173',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_AIsPXUaAUhQsMWqX.html/nSight ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '78, 133, 174, 173'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;QlikView &amp;lt;/b&amp;gt;&amp;#8211; COTs &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      for business intelligence, data discovery and dashboards. &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt;-led 
+      effort to provide dynamic reporting of enterprise and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt;-owned 
+      data that complements the suite of reporting tools already provided by 
+      nVision Data Warehouse and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ohutsgaC48kYAij9.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;QVR&amp;lt;/a&amp;gt;. 
+      Can use data from ODBC(oracle,db2 sql server, access), QVDS,Excel, 
+      ACCESS, XML
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Sources
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ol class=&amp;quot;decimal&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;list-style-type:none;margin-top:0px;margin-left:40pt;margin-bottom:0px;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        IRDB &amp;#8211; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        nVision - HR Data
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_fL0EWEaAUhQCoQ2g.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;nSIGHT 
+        HR&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ryuEWEaAUhQCoQ3V.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Edie&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Aef5CUaAUhQCoQiQ.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Sofie&amp;lt;/a&amp;gt; 
+        - HR Data
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_0wOEWEaAUhQCoQ3N.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NED&amp;lt;/a&amp;gt; 
+        -
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;&amp;quot;&amp;gt;
+        K2 - HR Data
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ol&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="334, 235, 430, 275" coords2="334, 235, 430, 275" shape="rect" alt="QlikView:Application Component" id="areadiagram_map_xsKPXUaAUhQsMWq5_default" href="ArchiMateApplicationComponent_BdXkwTqAUhQsLA1Q.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','334, 235, 430, 275',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_GTPgXUaAUhQsMcX2.html/QlikView ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '334, 235, 430, 275'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="2, 2, 609, 370" coords2="2, 2, 609, 370" shape="rect" alt="NIH:Grouping" id="areadiagram_map_n.qPXUaAUhQsMWrO_default" href="ArchiMateGrouping_n_qPXUaAUhQsMWrP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/DataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/DataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateDataObject_DlnPz2aAUrD8PI6z.html" class="ItemLink">Finance,Acquisitions,Travel, Property, HR, TechTransfer and NED Data : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Connections to database is provided by TNS connection rows a user is 
+      allowed to see is limited by VPD by there institute.
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Contains:
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      HR data - Pay Biweekly, Demographics daily, Commission COR pay and 
+      FELLOWS is monthly
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Finance data - is daily accept for commitments and obligation which is 
+      once an hour.
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Travel - nightly
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Property - nightly
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a> 
+      - nightly
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_0wOEWEaAUhQCoQ3N.html" name="">NED</a> 
+      - daily
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Tech transfer - ?
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Acquisitions - nightly.
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      FPS - is months
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      NOTES :
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Source data from POTS and AMBIS (acquisitions related). &nbsp;NBS only gets 
+      financial's from pots. &nbsp;Approvals, and specifics(vendors quantity) are 
+      gotten directly from POTS.
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      AMBIS only used by MIAID NBS gets just enugh for a requisitions
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SystemSoftware.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SystemSoftware.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateSystemSoftware_24JsnjqAUhQsEhqe.html" class="ItemLink">nVision : System Software</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      https://nvision.<a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a>.gov/nvision_registration/registration_guide.html#IntroductiontonVision
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      HR Data
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;nVision to K2 Process Script
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      nVision data can be received by K2 by means of a K2 Process Script.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_Csl0wTqAUhQsLA2y.html" class="ItemLink">nSight : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      <b>nSight </b>&#8211; The nVision <a class="ItemLink" href="Glossary_fL0EWEaAUhQCoQ2g.html" name="">nSIGHT 
+      HR</a>&nbsp;<a class="ItemLink" href="Glossary_MEn3sgaC48kYAjBT.html" name="">Application</a> 
+      is a workforce planning and analytics <a class="ItemLink" href="Glossary_MEn3sgaC48kYAjBT.html" name="">Application</a> 
+      that will allow ICs to track, manage and plan their staffing needs for 
+      all staff types using a web based enterprise <a class="ItemLink" href="Glossary_MEn3sgaC48kYAjBT.html" name="">Application</a> 
+      while maintaining enterprise standards. nSight provides a full picture 
+      of an <a class="ItemLink" href="Glossary_cvKYigaC48kYAjPI.html" name="">IC</a>&#8217;s 
+      workforce which enables the planning and management of personnel, 
+      including tracking different types of staff and forecasting future 
+      staffing needs. In addition, nSight provides
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      System link - https://ccrod.cancergov/confluence/display/OMIT/nSight
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_BdXkwTqAUhQsLA1Q.html" class="ItemLink">QlikView : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Courier New;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      <b>QlikView </b>&#8211; COTs <a class="ItemLink" href="Glossary_MEn3sgaC48kYAjBT.html" name="">Application</a> 
+      for business intelligence, data discovery and dashboards. <a class="ItemLink" href="Glossary_cvKYigaC48kYAjPI.html" name="">IC</a>-led 
+      effort to provide dynamic reporting of enterprise and <a class="ItemLink" href="Glossary_cvKYigaC48kYAjPI.html" name="">IC</a>-owned 
+      data that complements the suite of reporting tools already provided by 
+      nVision Data Warehouse and <a class="ItemLink" href="Glossary_ohutsgaC48kYAij9.html" name="">QVR</a>. 
+      Can use data from ODBC(oracle,db2 sql server, access), QVDS,Excel, 
+      ACCESS, XML
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Sources
+    </p>
+    <ol class="decimal" margin-left-ltr="50" margin-right-rtl="50" style="list-style-type:none;margin-top:0px;margin-left:40pt;margin-bottom:0px;">
+      <li style="margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;">
+        IRDB &#8211; <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a>
+      </li>
+      <li style="margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;">
+        nVision - HR Data
+      </li>
+      <li style="margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;">
+        <a class="ItemLink" href="Glossary_fL0EWEaAUhQCoQ2g.html" name="">nSIGHT 
+        HR</a>
+      </li>
+      <li style="margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;">
+        <a class="ItemLink" href="Glossary_ryuEWEaAUhQCoQ3V.html" name="">Edie</a>
+      </li>
+      <li style="margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;">
+        <a class="ItemLink" href="Glossary_Aef5CUaAUhQCoQiQ.html" name="">Sofie</a> 
+        - HR Data
+      </li>
+      <li style="margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;">
+        <a class="ItemLink" href="Glossary_0wOEWEaAUhQCoQ3N.html" name="">NED</a> 
+        -
+      </li>
+      <li style="margin-right:0;margin-top:0;margin-left:0;margin-bottom:0;">
+        K2 - HR Data
+      </li>
+    </ol>
+    <p style="margin-right:0pt;margin-top:0;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_n_qPXUaAUhQsMWrP.html" class="ItemLink">NIH : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

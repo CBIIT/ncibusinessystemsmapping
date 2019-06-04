@@ -1,0 +1,462 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Breakdown Structure Diagram - Company Move</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="Model_o_wmhGaAUhQI5BQ2.html" class="PageParentTitle">Breakdown Structure - Generic Work Breakdown Structure : Model</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Breakdown Structure Diagram - Company Move		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/x.wmhGaAUhQI5BRN', 'Company Move\nNCI Buisness Architecture.vpp://diagram/x.wmhGaAUhQI5BRN', 'Company Move', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|511.0|209.0|96.0|51.0|BSElement_MJLRhGaAUhQI5BeJ.html|BSElement_MJLRhGaAUhQI5BeJ.html|0JLRhGaAUhQI5BeI" id="option0JLRhGaAUhQI5BeI">Notify External Partners : Element</option>
+<option value="shape|511.0|149.0|96.0|40.0|BSElement_SrjRhGaAUhQI5Bd7.html|BSElement_SrjRhGaAUhQI5Bd7.html|irjRhGaAUhQI5Bd6" id="optionirjRhGaAUhQI5Bd6">Notify Employees : Element</option>
+<option value="shape|199.0|216.0|96.0|86.0|BSElement_PEhRhGaAUhQI5BdV.html|BSElement_PEhRhGaAUhQI5BdV.html|PEhRhGaAUhQI5BdU" id="optionPEhRhGaAUhQI5BdU">Decommission Infrastructure and Business Services : Element</option>
+<option value="shape|471.0|82.0|118.0|47.0|BSElement_nRJhhGaAUhQI5BcZ.html|BSElement_nRJhhGaAUhQI5BcZ.html|nRJhhGaAUhQI5BcY" id="optionnRJhhGaAUhQI5BcY">Communicate : Element</option>
+<option value="shape|42.0|351.0|97.0|70.0|BSElement_axE_hGaAUhQI5Bb7.html|BSElement_axE_hGaAUhQI5Bb7.html|axE.hGaAUhQI5Bb6" id="optionaxE.hGaAUhQI5Bb6">Close Current Lease/Other Contract : Element</option>
+<option value="shape|42.0|291.0|96.0|40.0|BSElement_YMw_hGaAUhQI5BbV.html|BSElement_YMw_hGaAUhQI5BbV.html|YMw.hGaAUhQI5BbU" id="optionYMw.hGaAUhQI5BbU">Sign New Lease : Element</option>
+<option value="shape|355.0|216.0|96.0|55.0|BSElement_R_wmhGaAUhQI5BRL.html|BSElement_R_wmhGaAUhQI5BRL.html|F.wmhGaAUhQI5BRQ" id="optionF.wmhGaAUhQI5BRQ">Move Employees In : Element</option>
+<option value="shape|199.0|322.0|96.0|45.0|BSElement___wmhGaAUhQI5BRF.html|BSElement___wmhGaAUhQI5BRF.html|.BwmhGaAUhQI5BVa" id="option.BwmhGaAUhQI5BVa">Plan Move : Element</option>
+<option value="shape|355.0|142.0|96.0|54.0|BSElement_h_wmhGaAUhQI5BRJ.html|BSElement_h_wmhGaAUhQI5BRJ.html|BBwmhGaAUhQI5BVd" id="optionBBwmhGaAUhQI5BVd">Set Up Infrastructure  : Element</option>
+<option value="shape|199.0|142.0|96.0|54.0|BSElement_u_wmhGaAUhQI5BRD.html|BSElement_u_wmhGaAUhQI5BRD.html|RBwmhGaAUhQI5BVg" id="optionRBwmhGaAUhQI5BVg">Hire Moving Company : Element</option>
+<option value="shape|42.0|216.0|96.0|55.0|BSElement_G_wmhGaAUhQI5BQ_.html|BSElement_G_wmhGaAUhQI5BQ_.html|RBwmhGaAUhQI5BVj" id="optionRBwmhGaAUhQI5BVj">Find Ideal Space in Building : Element</option>
+<option value="shape|42.0|142.0|96.0|54.0|BSElement_a_wmhGaAUhQI5BQ9.html|BSElement_a_wmhGaAUhQI5BQ9.html|xBwmhGaAUhQI5BVm" id="optionxBwmhGaAUhQI5BVm">Gather New Requirements : Element</option>
+<option value="shape|315.0|82.0|132.0|40.0|BSElement_B_wmhGaAUhQI5BRH.html|BSElement_B_wmhGaAUhQI5BRH.html|JBwmhGaAUhQI5BVp" id="optionJBwmhGaAUhQI5BVp">Move Into New Location  : Element</option>
+<option value="shape|159.0|82.0|125.0|40.0|BSElement_2_wmhGaAUhQI5BRB.html|BSElement_2_wmhGaAUhQI5BRB.html|pBwmhGaAUhQI5BVs" id="optionpBwmhGaAUhQI5BVs">Pack Up Existing Office : Element</option>
+<option value="shape|2.0|82.0|101.0|40.0|BSElement_y_wmhGaAUhQI5BQ7.html|BSElement_y_wmhGaAUhQI5BQ7.html|ZBwmhGaAUhQI5BVv" id="optionZBwmhGaAUhQI5BVv">Pick New Location : Element</option>
+<option value="shape|218.0|2.0|173.0|40.0|BSElement_C_wmhGaAUhQI5BQ4.html|BSElement_C_wmhGaAUhQI5BQ4.html|5BwmhGaAUhQI5BVy" id="option5BwmhGaAUhQI5BVy">Company Move To New Location : Element</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Company_Move.png" usemap="#diagram_map" class="Image" width="611" height="425"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="511, 209, 607, 260" coords2="511, 209, 607, 260" shape="rect" alt="Notify External Partners:Element" id="areadiagram_map_0JLRhGaAUhQI5BeI_default" href="BSElement_MJLRhGaAUhQI5BeJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="511, 149, 607, 189" coords2="511, 149, 607, 189" shape="rect" alt="Notify Employees:Element" id="areadiagram_map_irjRhGaAUhQI5Bd6_default" href="BSElement_SrjRhGaAUhQI5Bd7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="199, 216, 295, 302" coords2="199, 216, 295, 302" shape="rect" alt="Decommission Infrastructure and Business Services:Element" id="areadiagram_map_PEhRhGaAUhQI5BdU_default" href="BSElement_PEhRhGaAUhQI5BdV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="471, 82, 589, 129" coords2="471, 82, 589, 129" shape="rect" alt="Communicate:Element" id="areadiagram_map_nRJhhGaAUhQI5BcY_default" href="BSElement_nRJhhGaAUhQI5BcZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="42, 351, 139, 421" coords2="42, 351, 139, 421" shape="rect" alt="Close Current Lease/Other Contract:Element" id="areadiagram_map_axE.hGaAUhQI5Bb6_default" href="BSElement_axE_hGaAUhQI5Bb7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="42, 291, 138, 331" coords2="42, 291, 138, 331" shape="rect" alt="Sign New Lease:Element" id="areadiagram_map_YMw.hGaAUhQI5BbU_default" href="BSElement_YMw_hGaAUhQI5BbV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="355, 216, 451, 271" coords2="355, 216, 451, 271" shape="rect" alt="Move Employees In:Element" id="areadiagram_map_F.wmhGaAUhQI5BRQ_default" href="BSElement_R_wmhGaAUhQI5BRL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="199, 322, 295, 367" coords2="199, 322, 295, 367" shape="rect" alt="Plan Move:Element" id="areadiagram_map_.BwmhGaAUhQI5BVa_default" href="BSElement___wmhGaAUhQI5BRF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="355, 142, 451, 196" coords2="355, 142, 451, 196" shape="rect" alt="Set Up Infrastructure :Element" id="areadiagram_map_BBwmhGaAUhQI5BVd_default" href="BSElement_h_wmhGaAUhQI5BRJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="199, 142, 295, 196" coords2="199, 142, 295, 196" shape="rect" alt="Hire Moving Company:Element" id="areadiagram_map_RBwmhGaAUhQI5BVg_default" href="BSElement_u_wmhGaAUhQI5BRD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="42, 216, 138, 271" coords2="42, 216, 138, 271" shape="rect" alt="Find Ideal Space in Building:Element" id="areadiagram_map_RBwmhGaAUhQI5BVj_default" href="BSElement_G_wmhGaAUhQI5BQ_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="42, 142, 138, 196" coords2="42, 142, 138, 196" shape="rect" alt="Gather New Requirements:Element" id="areadiagram_map_xBwmhGaAUhQI5BVm_default" href="BSElement_a_wmhGaAUhQI5BQ9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="315, 82, 447, 122" coords2="315, 82, 447, 122" shape="rect" alt="Move Into New Location :Element" id="areadiagram_map_JBwmhGaAUhQI5BVp_default" href="BSElement_B_wmhGaAUhQI5BRH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="159, 82, 284, 122" coords2="159, 82, 284, 122" shape="rect" alt="Pack Up Existing Office:Element" id="areadiagram_map_pBwmhGaAUhQI5BVs_default" href="BSElement_2_wmhGaAUhQI5BRB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 82, 103, 122" coords2="2, 82, 103, 122" shape="rect" alt="Pick New Location:Element" id="areadiagram_map_ZBwmhGaAUhQI5BVv_default" href="BSElement_y_wmhGaAUhQI5BQ7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="218, 2, 391, 42" coords2="218, 2, 391, 42" shape="rect" alt="Company Move To New Location:Element" id="areadiagram_map_5BwmhGaAUhQI5BVy_default" href="BSElement_C_wmhGaAUhQI5BQ4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_MJLRhGaAUhQI5BeJ.html" class="ItemLink">Notify External Partners : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_SrjRhGaAUhQI5Bd7.html" class="ItemLink">Notify Employees : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_PEhRhGaAUhQI5BdV.html" class="ItemLink">Decommission Infrastructure and Business Services : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_nRJhhGaAUhQI5BcZ.html" class="ItemLink">Communicate : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_axE_hGaAUhQI5Bb7.html" class="ItemLink">Close Current Lease/Other Contract : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_YMw_hGaAUhQI5BbV.html" class="ItemLink">Sign New Lease : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_R_wmhGaAUhQI5BRL.html" class="ItemLink">Move Employees In : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement___wmhGaAUhQI5BRF.html" class="ItemLink">Plan Move : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_h_wmhGaAUhQI5BRJ.html" class="ItemLink">Set Up Infrastructure  : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_u_wmhGaAUhQI5BRD.html" class="ItemLink">Hire Moving Company : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_G_wmhGaAUhQI5BQ_.html" class="ItemLink">Find Ideal Space in Building : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_a_wmhGaAUhQI5BQ9.html" class="ItemLink">Gather New Requirements : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_B_wmhGaAUhQI5BRH.html" class="ItemLink">Move Into New Location  : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_2_wmhGaAUhQI5BRB.html" class="ItemLink">Pack Up Existing Office : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_y_wmhGaAUhQI5BQ7.html" class="ItemLink">Pick New Location : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BSElement.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BSElement.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BSElement_C_wmhGaAUhQI5BQ4.html" class="ItemLink">Company Move To New Location : Element</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

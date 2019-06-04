@@ -1,0 +1,1309 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - ICRP Process Map</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - <a href="Glossary_R8HJlwaC48kYAi2D.html" class="ItemLink">ICRP</a> Process Map		</span>
+<a onclick="javascript: showVpLink('NCI Funding Research Ecosystem.vpp://diagram/V4SSNUaGAqAC3w1t', 'ICRP Process Map\nNCI Funding Research Ecosystem.vpp://diagram/V4SSNUaGAqAC3w1t', 'ICRP Process Map', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|17.0|604.0|164.0|88.0|Callout_6hO_HUaGAqAC3yvZ.html|Callout_6hO_HUaGAqAC3yvZ.html|6hO.HUaGAqAC3yvY" id="option6hO.HUaGAqAC3yvY">Unnamed Callout : Callout</option>
+<option value="shape|1846.0|75.0|295.0|386.0|Callout_xVGeHUaGAqAC3yEr.html|Callout_xVGeHUaGAqAC3yEr.html|RVGeHUaGAqAC3yEq" id="optionRVGeHUaGAqAC3yEq">Unnamed Callout : Callout</option>
+<option value="shape|2426.0|286.0|188.0|94.0|Callout_A0T9bUaGAqAC3xL8.html|Callout_A0T9bUaGAqAC3xL8.html|A0T9bUaGAqAC3xL7" id="optionA0T9bUaGAqAC3xL7">Unnamed Callout : Callout</option>
+<option value="shape|291.0|290.0|198.0|115.0|Callout_35WZbUaGAqAC3wsp.html|Callout_35WZbUaGAqAC3wsp.html|35WZbUaGAqAC3wso" id="option35WZbUaGAqAC3wso">Unnamed Callout : Callout</option>
+<option value="shape|300.0|2.0|223.0|231.0|Callout_X4GWbUaGAqAC3xNH.html|Callout_X4GWbUaGAqAC3xNH.html|X4GWbUaGAqAC3xNG" id="optionX4GWbUaGAqAC3xNG">Unnamed Callout : Callout</option>
+<option value="shape|1201.0|2.0|248.0|64.0|Callout_70X1tUaGAqAC3xBD.html|Callout_70X1tUaGAqAC3xBD.html|70X1tUaGAqAC3xBC" id="option70X1tUaGAqAC3xBC">Unnamed Callout : Callout</option>
+<option value="shape|882.0|338.0|152.0|116.0|Callout_rGNJtUaGAqAC3xoj.html|Callout_rGNJtUaGAqAC3xoj.html|rGNJtUaGAqAC3xoi" id="optionrGNJtUaGAqAC3xoi">Unnamed Callout : Callout</option>
+<option value="shape|272.0|503.0|251.0|142.0|Callout_2ogJtUaGAqAC3xoO.html|Callout_2ogJtUaGAqAC3xoO.html|WogJtUaGAqAC3xoN" id="optionWogJtUaGAqAC3xoN">Unnamed Callout : Callout</option>
+<option value="shape|702.0|506.0|343.0|162.0|Callout_38YxtUaGAqAC3xnt.html|Callout_38YxtUaGAqAC3xnt.html|38YxtUaGAqAC3xns" id="option38YxtUaGAqAC3xns">Unnamed Callout : Callout</option>
+<option value="shape|717.0|2.0|317.0|133.0|Callout_7jjhtUaGAqAC3xm1.html|Callout_7jjhtUaGAqAC3xm1.html|7jjhtUaGAqAC3xm0" id="option7jjhtUaGAqAC3xm0">Unnamed Callout : Callout</option>
+<option value="shape|75.0|469.0|20.0|20.0|BPStartEvent_uXirNUaGAqAC3w5G.html|BPStartEvent_uXirNUaGAqAC3w5G.html|OXirNUaGAqAC3w5F" id="optionOXirNUaGAqAC3w5F">Data Collection Start : Start Event</option>
+<option value="shape|1443.0|36.0|150.0|51.0|BPTask_sqfWtUaGAqAC3xWG.html|BPTask_sqfWtUaGAqAC3xWG.html|MqfWtUaGAqAC3xWF" id="optionMqfWtUaGAqAC3xWF">Provide Manually Assigned SITE &amp; CSO Code to ICRP : Task</option>
+<option value="shape|907.0|135.0|150.0|50.0|BPTask_J_ubNUaGAqAC3w7n.html|BPTask_J_ubNUaGAqAC3w7n.html|J_ubNUaGAqAC3w7m" id="optionJ_ubNUaGAqAC3w7m">Provide International Research Collaboration Data to CSR : Task</option>
+<option value="shape|17.0|678.0|2620.0|170.0|BPLane_rVWNNUaGAqAC3w22.html|BPLane_rVWNNUaGAqAC3w22.html|rVWNNUaGAqAC3w21" id="optionrVWNNUaGAqAC3w21">Funding Institution : Lane</option>
+<option value="shape|17.0|206.0|2620.0|113.0|BPLane_oGoNNUaGAqAC3w2P.html|BPLane_oGoNNUaGAqAC3w2P.html|oGoNNUaGAqAC3w2O" id="optionoGoNNUaGAqAC3w2O">CRS : Lane</option>
+<option value="shape|17.0|426.0|2620.0|132.0|BPLane_yKCUbUaGAqAC32FU.html|BPLane_yKCUbUaGAqAC32FU.html|yKCUbUaGAqAC32FT" id="optionyKCUbUaGAqAC32FT">ICRP : Lane</option>
+<option value="shape|317.0|238.0|158.0|51.0|BPTask_asarNUaGAqAC3w5S.html|BPTask_asarNUaGAqAC3w5S.html|asarNUaGAqAC3w5R" id="optionasarNUaGAqAC3w5R">Download all NIH Cancer Research Projects from
+RePORTer : Task</option>
+<option value="shape|321.0|720.0|141.0|50.0|BPTask_1siMtUaGAqAC3xC6.html|BPTask_1siMtUaGAqAC3xC6.html|1siMtUaGAqAC3xC5" id="option1siMtUaGAqAC3xC5">Collect Cancer Research Project Data : Task</option>
+<option value="shape|17.0|109.0|2620.0|97.0|BPLane_zGAtNUaGAqAC3w4N.html|BPLane_zGAtNUaGAqAC3w4N.html|zGAtNUaGAqAC3w4M" id="optionzGAtNUaGAqAC3w4M">CGH : Lane</option>
+<option value="shape|17.0|12.0|2620.0|97.0|BPLane_ZHystUaGAqAC3xEg.html|BPLane_ZHystUaGAqAC3xEg.html|ZHystUaGAqAC3xEf" id="optionZHystUaGAqAC3xEf">RAEB : Lane</option>
+<option value="shape|759.0|240.0|158.0|51.0|BPTask_jeLrNUaGAqAC3w6Y.html|BPTask_jeLrNUaGAqAC3w6Y.html|jeLrNUaGAqAC3w6X" id="optionjeLrNUaGAqAC3w6X">Request International Research Collaboration Data from CGH : Task</option>
+<option value="shape|1061.0|720.0|158.0|50.0|BPTask_1puMtUaGAqAC3xDW.html|BPTask_1puMtUaGAqAC3xDW.html|1puMtUaGAqAC3xDV" id="option1puMtUaGAqAC3xDV">Add International Research Collaboration Data into UberResearch System : Task</option>
+<option value="shape|1559.0|720.0|150.0|50.0|BPTask_Q1wstUaGAqAC3xD6.html|BPTask_Q1wstUaGAqAC3xD6.html|Q1wstUaGAqAC3xD5" id="optionQ1wstUaGAqAC3xD5">Enter CSO &amp; SITE Codes into UberResearch System : Task</option>
+<option value="shape|1381.0|725.0|40.0|40.0|BPGateway_JNrstUaGAqAC3xE_.html|BPGateway_JNrstUaGAqAC3xE_.html|JNrstUaGAqAC3xE9" id="optionJNrstUaGAqAC3xE9">Manual Coding? : Gateway</option>
+<option value="shape|1057.0|241.0|165.0|51.0|BPTask_nuzbNUaGAqAC3w8X.html|BPTask_nuzbNUaGAqAC3w8X.html|nuzbNUaGAqAC3w8W" id="optionnuzbNUaGAqAC3w8W">Enter CGH International Research Collaboration Data into UberResearch System : Task</option>
+<option value="shape|539.0|239.0|141.0|52.0|BPTask_YQ0_NUaGAqAC3xBL.html|BPTask_YQ0_NUaGAqAC3xBL.html|YQ0_NUaGAqAC3xBK" id="optionYQ0_NUaGAqAC3xBK">Load Project Data [Title, Abstract, AIMS] into UberResearch System : Task</option>
+<option value="shape|2032.0|735.0|20.0|20.0|BPIntermediateEvent_fcKutUaGAqAC3xcL.html|BPIntermediateEvent_fcKutUaGAqAC3xcL.html|5ur1bUaGAqAC3xAR" id="option5ur1bUaGAqAC3xAR">Invitation Received : Intermediate Event</option>
+<option value="shape|2032.0|254.0|20.0|20.0|BPIntermediateEvent_fcKutUaGAqAC3xcL.html|BPIntermediateEvent_fcKutUaGAqAC3xcL.html|fcKutUaGAqAC3xcK" id="optionfcKutUaGAqAC3xcK">Invitation Received : Intermediate Event</option>
+<option value="shape|2123.0|725.0|40.0|40.0|BPGateway_94OutUaGAqAC3xc_.html|BPGateway_94OutUaGAqAC3xc_.html|94OutUaGAqAC3xc." id="option94OutUaGAqAC3xc.">Accept As Is? : Gateway</option>
+<option value="shape|2538.0|735.0|20.0|20.0|BPEndEvent_IA5utUaGAqAC3xdt.html|BPEndEvent_IA5utUaGAqAC3xdt.html|IA5utUaGAqAC3xds" id="optionIA5utUaGAqAC3xds">End : End Event</option>
+<option value="shape|741.0|453.0|194.0|52.0|BPTask_hYZmtUaGAqAC3xRw.html|BPTask_hYZmtUaGAqAC3xRw.html|hYZmtUaGAqAC3xRv" id="optionhYZmtUaGAqAC3xRv">Autocode CSO and SITE Codes in UberResearch System based on Title, Abstract &amp; AIM of Projects : Task</option>
+<option value="shape|1325.0|237.0|150.0|51.0|BPTask_NMTWtUaGAqAC3xVi.html|BPTask_NMTWtUaGAqAC3xVi.html|1MTWtUaGAqAC3xVh" id="option1MTWtUaGAqAC3xVh">Request Manually Coded Data from RAEB : Task</option>
+<option value="shape|540.0|720.0|141.0|50.0|BPTask_mcR6bUaGAqAC3xJB.html|BPTask_mcR6bUaGAqAC3xJB.html|mcR6bUaGAqAC3xJA" id="optionmcR6bUaGAqAC3xJA">Load Project Data [Title, Abstract, AIMS] into UberResearch System : Task</option>
+<option value="shape|1724.0|455.0|187.0|51.0|BPTask_kf32tUaGAqAC3xYA.html|BPTask_kf32tUaGAqAC3xYA.html|kf32tUaGAqAC3xX_" id="optionkf32tUaGAqAC3xX_">Quality Control of Autocoding by ICRP Curators based on Title, Abstract &amp; AIMS of Projects : Task</option>
+<option value="shape|1962.0|456.0|161.0|50.0|BPTask_hSFOtUaGAqAC3xZ0.html|BPTask_hSFOtUaGAqAC3xZ0.html|hSFOtUaGAqAC3xZz" id="optionhSFOtUaGAqAC3xZz">Invite Source Institution to Review AutoCoding in UberResearch System : Task</option>
+<option value="shape|2234.0|455.0|229.0|50.0|BPTask_5iR_tUaGAqAC3xjX.html|BPTask_5iR_tUaGAqAC3xjX.html|ZiR.tUaGAqAC3xjW" id="optionZiR.tUaGAqAC3xjW">Finalizing Data in UberResearch System in Collaboration with Partner Organization (Project Data Source) : Task</option>
+<option value="shape|2538.0|469.0|20.0|20.0|BPEndEvent_lyOBtUaGAqAC3xmG.html|BPEndEvent_lyOBtUaGAqAC3xmG.html|FyOBtUaGAqAC3xmF" id="optionFyOBtUaGAqAC3xmF">Data Ready for Reporting : End Event</option>
+<option value="shape|210.0|735.0|20.0|20.0|BPIntermediateEvent_hV7cbUaGAqAC3w4Q.html|BPIntermediateEvent_hV7cbUaGAqAC3w4Q.html|6jclbUaGAqAC3w3G" id="option6jclbUaGAqAC3w3G">Request Received : Intermediate Event</option>
+<option value="shape|210.0|254.0|20.0|20.0|BPIntermediateEvent_hV7cbUaGAqAC3w4Q.html|BPIntermediateEvent_hV7cbUaGAqAC3w4Q.html|BV7cbUaGAqAC3w4P" id="optionBV7cbUaGAqAC3w4P">Request Received : Intermediate Event</option>
+<option value="shape|168.0|461.0|104.0|40.0|BPTask_UpasbUaGAqAC32Gl.html|BPTask_UpasbUaGAqAC32Gl.html|UpasbUaGAqAC32Gk" id="optionUpasbUaGAqAC32Gk">Poll Partner Organizations : Task</option>
+<option value="shape|599.0|471.0|20.0|20.0|BPIntermediateEvent_40qybUaGAqAC3xAn.html|BPIntermediateEvent_40qybUaGAqAC3xAn.html|40qybUaGAqAC3xAm" id="option40qybUaGAqAC3xAm">Project Data Ready for AutoCoding : Intermediate Event</option>
+<option value="shape|1623.0|469.0|20.0|20.0|BPIntermediateEvent_Tf9BbUaGAqAC3xRV.html|BPIntermediateEvent_Tf9BbUaGAqAC3xRV.html|Tf9BbUaGAqAC3xRU" id="optionTf9BbUaGAqAC3xRU">Manual Coding Available : Intermediate Event</option>
+<option value="shape|1129.0|469.0|20.0|20.0|BPIntermediateEvent_ZI5RbUaGAqAC3xVl.html|BPIntermediateEvent_ZI5RbUaGAqAC3xVl.html|pI5RbUaGAqAC3xVk" id="optionpI5RbUaGAqAC3xVk">International Collaboration Data Ready : Intermediate Event</option>
+<option value="shape|1558.0|239.0|150.0|49.0|BPTask_j3QabUaGAqAC3xGY.html|BPTask_j3QabUaGAqAC3xGY.html|j3QabUaGAqAC3xGX" id="optionj3QabUaGAqAC3xGX">Enter REAB curated SITE &amp; CSO Codes into UberResearch System : Task</option>
+<option value="shape|2538.0|249.0|20.0|20.0|BPEndEvent_8U0VbUaGAqAC3w7X.html|BPEndEvent_8U0VbUaGAqAC3w7X.html|8U0VbUaGAqAC3w7W" id="option8U0VbUaGAqAC3w7W">End : End Event</option>
+<option value="shape|2234.0|721.0|229.0|48.0|BPTask_vwhNbUaGAqAC3xCP.html|BPTask_vwhNbUaGAqAC3xCP.html|y5ttbUaGAqAC3xFJ" id="optiony5ttbUaGAqAC3xFJ">Review and Correct Coding and other ProjectData in Collaboration with ICRP in UberResearch System : Task</option>
+<option value="shape|2234.0|240.0|229.0|48.0|BPTask_vwhNbUaGAqAC3xCP.html|BPTask_vwhNbUaGAqAC3xCP.html|vwhNbUaGAqAC3xCO" id="optionvwhNbUaGAqAC3xCO">Review and Correct Coding and other ProjectData in Collaboration with ICRP in UberResearch System : Task</option>
+<option value="shape|2.0|12.0|2635.0|307.0|BPPool_ChgNNUaGAqAC3w2J.html|BPPool_ChgNNUaGAqAC3w2J.html|8hgNNUaGAqAC3w2I" id="option8hgNNUaGAqAC3w2I">NCI : Pool</option>
+<option value="shape|2.0|678.0|2635.0|170.0|BPPool_Y1iNNUaGAqAC3w2s.html|BPPool_Y1iNNUaGAqAC3w2s.html|Y1iNNUaGAqAC3w2r" id="optionY1iNNUaGAqAC3w2r">ICRP Partner Organization : Pool</option>
+<option value="shape|2022.0|577.0|40.0|50.0|BPDataObject_ybQutUaGAqAC3xbA.html|BPDataObject_ybQutUaGAqAC3xbA.html|z011bUaGAqAC3w_c" id="optionz011bUaGAqAC3w_c">Invitation to Review AutoCoding : Data Object</option>
+<option value="shape|2022.0|330.0|40.0|50.0|BPDataObject_ybQutUaGAqAC3xbA.html|BPDataObject_ybQutUaGAqAC3xbA.html|ybQutUaGAqAC3xa_" id="optionybQutUaGAqAC3xa_">Invitation to Review AutoCoding : Data Object</option>
+<option value="shape|200.0|577.0|40.0|50.0|BPDataObject_0ZFcbUaGAqAC3w2n.html|BPDataObject_0ZFcbUaGAqAC3w2n.html|Ql3FbUaGAqAC3w2D" id="optionQl3FbUaGAqAC3w2D">Data  Request : Data Object</option>
+<option value="shape|200.0|330.0|40.0|50.0|BPDataObject_0ZFcbUaGAqAC3w2n.html|BPDataObject_0ZFcbUaGAqAC3w2n.html|0ZFcbUaGAqAC3w2m" id="option0ZFcbUaGAqAC3w2m">Data  Request : Data Object</option>
+<option value="shape|589.0|577.0|40.0|50.0|BPDataObject_3XwybUaGAqAC3w__.html|BPDataObject_3XwybUaGAqAC3w__.html|jnHFbUaGAqAC3w10" id="optionjnHFbUaGAqAC3w10">Project Data Available in UberResearch : Data Object</option>
+<option value="shape|589.0|330.0|40.0|50.0|BPDataObject_3XwybUaGAqAC3w__.html|BPDataObject_3XwybUaGAqAC3w__.html|3XwybUaGAqAC3w_." id="option3XwybUaGAqAC3w_.">Project Data Available in UberResearch : Data Object</option>
+<option value="shape|2.0|426.0|2635.0|132.0|BPPool_JNukbUaGAqAC32Dy.html|BPPool_JNukbUaGAqAC32Dy.html|JNukbUaGAqAC32Dx" id="optionJNukbUaGAqAC32Dx">Pool : Pool</option>
+<option value="shape|1613.0|577.0|40.0|50.0|BPDataObject_zZ6BbUaGAqAC3xQf.html|BPDataObject_zZ6BbUaGAqAC3xQf.html|GA.lbUaGAqAC3w4T" id="optionGA.lbUaGAqAC3w4T">Manual Coding Available in UberResearch : Data Object</option>
+<option value="shape|1613.0|330.0|40.0|50.0|BPDataObject_zZ6BbUaGAqAC3xQf.html|BPDataObject_zZ6BbUaGAqAC3xQf.html|zZ6BbUaGAqAC3xQe" id="optionzZ6BbUaGAqAC3xQe">Manual Coding Available in UberResearch : Data Object</option>
+<option value="shape|1119.0|577.0|40.0|50.0|BPDataObject_hg2FbUaGAqAC3wza.html|BPDataObject_hg2FbUaGAqAC3wza.html|0drFbUaGAqAC3w1l" id="option0drFbUaGAqAC3w1l">International Collaboration Data Available in UberResearch : Data Object</option>
+<option value="shape|1119.0|330.0|40.0|50.0|BPDataObject_hg2FbUaGAqAC3wza.html|BPDataObject_hg2FbUaGAqAC3wza.html|hg2FbUaGAqAC3wzZ" id="optionhg2FbUaGAqAC3wzZ">International Collaboration Data Available in UberResearch : Data Object</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/ICRP_Process_Map.png" usemap="#diagram_map" class="Image" width="2641" height="852"/>
+					<map name="diagram_map">
+<area coords="3,144,17,163" coords2="3,144,17,163" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="18,468,32,492" coords2="18,468,32,492" shape="rect" alt="ICRP" href="Glossary_R8HJlwaC48kYAi2D.html"/>
+<area coords="803,458,825,472" coords2="803,458,825,472" shape="rect" alt="CSO" href="Glossary_EiTOGgaC48kYAgqI.html"/>
+<area coords="852,458,874,472" coords2="852,458,874,472" shape="rect" alt="SITE" href="Glossary_gPlYFwaC48kYAn7B.html"/>
+<area coords="1746,473,1770,487" coords2="1746,473,1770,487" shape="rect" alt="ICRP" href="Glossary_R8HJlwaC48kYAi2D.html"/>
+<area coords="18,241,32,261" coords2="18,241,32,261" shape="rect" alt="CRS" href="Glossary_ZfykGgaC48kYAkG5.html"/>
+<area coords="1414,262,1441,276" coords2="1414,262,1441,276" shape="rect" alt="RAEB" href="Glossary_mPPwGgaC48kYAiT0.html"/>
+<area coords="3,796,17,820" coords2="3,796,17,820" shape="rect" alt="ICRP" href="Glossary_R8HJlwaC48kYAi2D.html"/>
+<area coords="18,134,32,158" coords2="18,134,32,158" shape="rect" alt="CGH" href="Glossary_9eFkGgaC48kYAkHu.html"/>
+<area coords="992,167,1012,181" coords2="992,167,1012,181" shape="rect" alt="CSR" href="Glossary_D91qagaC48kYAg1H.html"/>
+<area coords="1601,731,1623,745" coords2="1601,731,1623,745" shape="rect" alt="CSO" href="Glossary_EiTOGgaC48kYAgqI.html"/>
+<area coords="1638,731,1660,745" coords2="1638,731,1660,745" shape="rect" alt="SITE" href="Glossary_gPlYFwaC48kYAn7B.html"/>
+<area coords="18,35,32,62" coords2="18,35,32,62" shape="rect" alt="RAEB" href="Glossary_mPPwGgaC48kYAiT0.html"/>
+<area coords="1514,54,1536,68" coords2="1514,54,1536,68" shape="rect" alt="SITE" href="Glossary_gPlYFwaC48kYAn7B.html"/>
+<area coords="1551,54,1573,68" coords2="1551,54,1573,68" shape="rect" alt="CSO" href="Glossary_EiTOGgaC48kYAgqI.html"/>
+<area coords="1528,68,1552,82" coords2="1528,68,1552,82" shape="rect" alt="ICRP" href="Glossary_R8HJlwaC48kYAi2D.html"/>
+<area coords="1107,245,1131,259" coords2="1107,245,1131,259" shape="rect" alt="CGH" href="Glossary_9eFkGgaC48kYAkHu.html"/>
+<area coords="854,272,878,286" coords2="854,272,878,286" shape="rect" alt="CGH" href="Glossary_9eFkGgaC48kYAkHu.html"/>
+<area coords="402,242,421,256" coords2="402,242,421,256" shape="rect" alt="NIH" href="Glossary_i_pPCgaC48kYAjIW.html"/>
+<area coords="369,270,421,284" coords2="369,270,421,284" shape="rect" alt="RePORT" href="Glossary_B31tsgaC48kYAikc.html"/>
+<area coords="1673,242,1695,256" coords2="1673,242,1695,256" shape="rect" alt="SITE" href="Glossary_gPlYFwaC48kYAn7B.html"/>
+<area coords="1596,256,1618,270" coords2="1596,256,1618,270" shape="rect" alt="CSO" href="Glossary_EiTOGgaC48kYAgqI.html"/>
+<area coords="2354,243,2392,257" coords2="2354,243,2392,257" shape="rect" alt="Coding" href="Glossary_6WhOlwaC48kYAiyj.html"/>
+<area coords="2426,257,2450,271" coords2="2426,257,2450,271" shape="rect" alt="ICRP" href="Glossary_R8HJlwaC48kYAi2D.html"/>
+<area coords="2354,724,2392,738" coords2="2354,724,2392,738" shape="rect" alt="Coding" href="Glossary_6WhOlwaC48kYAiyj.html"/>
+<area coords="2426,738,2450,752" coords2="2426,738,2450,752" shape="rect" alt="ICRP" href="Glossary_R8HJlwaC48kYAi2D.html"/>
+<area imageId="diagram" coords="462.0, 737.0, 462.0, 751.0, 540.0, 751.0, 540.0, 737.0" coords2="462.0, 737.0, 462.0, 751.0, 540.0, 751.0, 540.0, 737.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_kZuMtUaGAqAC3xDe_default" href="BPSequenceFlow_oZuMtUaGAqAC3xDd.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1219.0, 738.0, 1219.0, 752.0, 1381.0, 752.0, 1381.0, 738.0" coords2="1219.0, 738.0, 1219.0, 752.0, 1381.0, 752.0, 1381.0, 738.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_x1wstUaGAqAC3xEC_default" href="BPSequenceFlow__1wstUaGAqAC3xEB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1421.0, 738.0, 1421.0, 752.0, 1559.0, 752.0, 1559.0, 738.0" coords2="1421.0, 738.0, 1421.0, 752.0, 1559.0, 752.0, 1559.0, 738.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_zNrstUaGAqAC3xFE_default" href="BPSequenceFlow_dNrstUaGAqAC3xFD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1911.0, 474.0, 1911.0, 488.0, 1962.0, 488.0, 1962.0, 474.0" coords2="1911.0, 474.0, 1911.0, 488.0, 1962.0, 488.0, 1962.0, 474.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_3SFOtUaGAqAC3xZ8_default" href="BPSequenceFlow_7SFOtUaGAqAC3xZ7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2035.0, 380.0, 2035.0, 456.0, 2049.0, 456.0, 2049.0, 380.0" coords2="2035.0, 380.0, 2035.0, 456.0, 2049.0, 456.0, 2049.0, 380.0" shape="poly" alt=":Association" id="areadiagram_map_VbQutUaGAqAC3xbG_default" href="BPAssociation_pbQutUaGAqAC3xbF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2463.0, 472.0, 2463.0, 486.0, 2538.0, 486.0, 2538.0, 472.0" coords2="2463.0, 472.0, 2463.0, 486.0, 2538.0, 486.0, 2538.0, 472.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_IKOBtUaGAqAC3xmM_default" href="BPSequenceFlow_AKOBtUaGAqAC3xmL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="95.0, 473.0, 95.0, 487.0, 168.0, 487.0, 168.0, 473.0" coords2="95.0, 473.0, 95.0, 487.0, 168.0, 487.0, 168.0, 473.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_JpasbUaGAqAC32Gr_default" href="BPSequenceFlow_hpasbUaGAqAC32Gq.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="213.0, 380.0, 213.0, 461.0, 227.0, 461.0, 227.0, 380.0" coords2="213.0, 380.0, 213.0, 461.0, 227.0, 461.0, 227.0, 380.0" shape="poly" alt=":Association" id="areadiagram_map_zZFcbUaGAqAC3w20_default" href="BPAssociation_9ZFcbUaGAqAC3w2z.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="213.0, 274.0, 213.0, 330.0, 227.0, 330.0, 227.0, 274.0" coords2="213.0, 274.0, 213.0, 330.0, 227.0, 330.0, 227.0, 274.0" shape="poly" alt=":Association" id="areadiagram_map_g17cbUaGAqAC3w4W_default" href="BPAssociation_fV7cbUaGAqAC3w4V.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="829.0, 148.0, 829.0, 151.0, 826.0, 151.0, 826.0, 165.0, 829.0, 165.0, 829.0, 240.0, 843.0, 240.0, 843.0, 165.0, 907.0, 165.0, 907.0, 151.0, 843.0, 151.0, 843.0, 148.0" coords2="829.0, 148.0, 829.0, 151.0, 826.0, 151.0, 826.0, 165.0, 829.0, 165.0, 829.0, 240.0, 843.0, 240.0, 843.0, 165.0, 907.0, 165.0, 907.0, 151.0, 843.0, 151.0, 843.0, 148.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_jEgCbUaGAqAC3w73_default" href="BPSequenceFlow_9EgCbUaGAqAC3w72.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1131.0, 148.0, 1131.0, 151.0, 1057.0, 151.0, 1057.0, 165.0, 1131.0, 165.0, 1131.0, 241.0, 1145.0, 241.0, 1145.0, 165.0, 1148.0, 165.0, 1148.0, 151.0, 1145.0, 151.0, 1145.0, 148.0" coords2="1131.0, 148.0, 1131.0, 151.0, 1057.0, 151.0, 1057.0, 165.0, 1131.0, 165.0, 1131.0, 241.0, 1145.0, 241.0, 1145.0, 165.0, 1148.0, 165.0, 1148.0, 151.0, 1145.0, 151.0, 1145.0, 148.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_5lwCbUaGAqAC3w8P_default" href="BPSequenceFlow_xlwCbUaGAqAC3w8O.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="475.0, 257.0, 475.0, 271.0, 539.0, 271.0, 539.0, 257.0" coords2="475.0, 257.0, 475.0, 271.0, 539.0, 271.0, 539.0, 257.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_KneSbUaGAqAC3w.H_default" href="BPSequenceFlow_8neSbUaGAqAC3w_G.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="680.0, 259.0, 680.0, 273.0, 759.0, 273.0, 759.0, 259.0" coords2="680.0, 259.0, 680.0, 273.0, 759.0, 273.0, 759.0, 259.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_f4BSbUaGAqAC3w.b_default" href="BPSequenceFlow_v4BSbUaGAqAC3w_a.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="230.0, 256.0, 230.0, 270.0, 317.0, 270.0, 317.0, 256.0" coords2="230.0, 256.0, 230.0, 270.0, 317.0, 270.0, 317.0, 256.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_XPpSbUaGAqAC3w.7_default" href="BPSequenceFlow_nPpSbUaGAqAC3w_6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="602.0, 291.0, 602.0, 330.0, 616.0, 330.0, 616.0, 291.0" coords2="602.0, 291.0, 602.0, 330.0, 616.0, 330.0, 616.0, 291.0" shape="poly" alt=":Association" id="areadiagram_map_K3wybUaGAqAC3xAF_default" href="BPAssociation_C3wybUaGAqAC3xAE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="602.0, 380.0, 602.0, 471.0, 616.0, 471.0, 616.0, 380.0" coords2="602.0, 380.0, 602.0, 471.0, 616.0, 471.0, 616.0, 380.0" shape="poly" alt=":Association" id="areadiagram_map_V0qybUaGAqAC3xAt_default" href="BPAssociation_Z0qybUaGAqAC3xAs.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1222.0, 258.0, 1222.0, 272.0, 1325.0, 272.0, 1325.0, 258.0" coords2="1222.0, 258.0, 1222.0, 272.0, 1325.0, 272.0, 1325.0, 258.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_9SgqbUaGAqAC3xDc_default" href="BPSequenceFlow_NSgqbUaGAqAC3xDb.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1393.0, 47.0, 1393.0, 50.0, 1390.0, 50.0, 1390.0, 64.0, 1393.0, 64.0, 1393.0, 237.0, 1407.0, 237.0, 1407.0, 64.0, 1443.0, 64.0, 1443.0, 50.0, 1407.0, 50.0, 1407.0, 47.0" coords2="1393.0, 47.0, 1393.0, 50.0, 1390.0, 50.0, 1390.0, 64.0, 1393.0, 64.0, 1393.0, 237.0, 1407.0, 237.0, 1407.0, 64.0, 1443.0, 64.0, 1443.0, 50.0, 1407.0, 50.0, 1407.0, 47.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_pz4qbUaGAqAC3xEA_default" href="BPSequenceFlow_Rz4qbUaGAqAC3xD_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1626.0, 51.0, 1626.0, 54.0, 1593.0, 54.0, 1593.0, 68.0, 1626.0, 68.0, 1626.0, 239.0, 1640.0, 239.0, 1640.0, 68.0, 1643.0, 68.0, 1643.0, 54.0, 1640.0, 54.0, 1640.0, 51.0" coords2="1626.0, 51.0, 1626.0, 54.0, 1593.0, 54.0, 1593.0, 68.0, 1626.0, 68.0, 1626.0, 239.0, 1640.0, 239.0, 1640.0, 68.0, 1643.0, 68.0, 1643.0, 54.0, 1640.0, 54.0, 1640.0, 51.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_yPQabUaGAqAC3xGg_default" href="BPSequenceFlow_8PQabUaGAqAC3xGf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="272.0, 473.0, 272.0, 487.0, 599.0, 487.0, 599.0, 473.0" coords2="272.0, 473.0, 272.0, 487.0, 599.0, 487.0, 599.0, 473.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_nSfabUaGAqAC3xHs_default" href="BPSequenceFlow_7SfabUaGAqAC3xHr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="619.0, 473.0, 619.0, 487.0, 741.0, 487.0, 741.0, 473.0" coords2="619.0, 473.0, 619.0, 487.0, 741.0, 487.0, 741.0, 473.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_jWA6bUaGAqAC3xIE_default" href="BPSequenceFlow_dWA6bUaGAqAC3xID.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="681.0, 737.0, 681.0, 751.0, 1061.0, 751.0, 1061.0, 737.0" coords2="681.0, 737.0, 681.0, 751.0, 1061.0, 751.0, 1061.0, 737.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_lcR6bUaGAqAC3xJF_default" href="BPSequenceFlow_pcR6bUaGAqAC3xJE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1626.0, 288.0, 1626.0, 330.0, 1640.0, 330.0, 1640.0, 288.0" coords2="1626.0, 288.0, 1626.0, 330.0, 1640.0, 330.0, 1640.0, 288.0" shape="poly" alt=":Association" id="areadiagram_map_G56BbUaGAqAC3xQl_default" href="BPAssociation_y56BbUaGAqAC3xQk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1626.0, 380.0, 1626.0, 469.0, 1640.0, 469.0, 1640.0, 380.0" coords2="1626.0, 380.0, 1626.0, 469.0, 1640.0, 469.0, 1640.0, 380.0" shape="poly" alt=":Association" id="areadiagram_map_U_9BbUaGAqAC3xRb_default" href="BPAssociation_Y_9BbUaGAqAC3xRa.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="935.0, 472.0, 935.0, 486.0, 1129.0, 486.0, 1129.0, 472.0" coords2="935.0, 472.0, 935.0, 486.0, 1129.0, 486.0, 1129.0, 472.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_8RWRbUaGAqAC3xUl_default" href="BPSequenceFlow_sRWRbUaGAqAC3xUk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1643.0, 472.0, 1643.0, 486.0, 1724.0, 486.0, 1724.0, 472.0" coords2="1643.0, 472.0, 1643.0, 486.0, 1724.0, 486.0, 1724.0, 472.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Ax.RbUaGAqAC3xVJ_default" href="BPSequenceFlow_fR_RbUaGAqAC3xVI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1149.0, 472.0, 1149.0, 486.0, 1623.0, 486.0, 1623.0, 472.0" coords2="1149.0, 472.0, 1149.0, 486.0, 1623.0, 486.0, 1623.0, 472.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_LI5RbUaGAqAC3xVp_default" href="BPSequenceFlow_DI5RbUaGAqAC3xVo.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1132.0, 292.0, 1132.0, 330.0, 1146.0, 330.0, 1146.0, 292.0" coords2="1132.0, 292.0, 1132.0, 330.0, 1146.0, 330.0, 1146.0, 292.0" shape="poly" alt=":Association" id="areadiagram_map_QQ2FbUaGAqAC3wzg_default" href="BPAssociation_fg2FbUaGAqAC3wzf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="213.0, 501.0, 213.0, 577.0, 227.0, 577.0, 227.0, 501.0" coords2="213.0, 501.0, 213.0, 577.0, 227.0, 577.0, 227.0, 501.0" shape="poly" alt=":Association" id="areadiagram_map_.G4lbUaGAqAC3w2h_default" href="BPAssociation_9ZFcbUaGAqAC3w2z.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="213.0, 627.0, 213.0, 735.0, 227.0, 735.0, 227.0, 627.0" coords2="213.0, 627.0, 213.0, 735.0, 227.0, 735.0, 227.0, 627.0" shape="poly" alt=":Association" id="areadiagram_map_W3qlbUaGAqAC3w3l_default" href="BPAssociation_fV7cbUaGAqAC3w4V.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="230.0, 738.0, 230.0, 752.0, 321.0, 752.0, 321.0, 738.0" coords2="230.0, 738.0, 230.0, 752.0, 321.0, 752.0, 321.0, 738.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_086lbUaGAqAC3w38_default" href="BPSequenceFlow_486lbUaGAqAC3w37.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="602.0, 491.0, 602.0, 577.0, 616.0, 577.0, 616.0, 491.0" coords2="602.0, 491.0, 602.0, 577.0, 616.0, 577.0, 616.0, 491.0" shape="poly" alt=":Association" id="areadiagram_map_P0plbUaGAqAC3w4m_default" href="BPAssociation_Z0qybUaGAqAC3xAs.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="602.0, 627.0, 602.0, 720.0, 616.0, 720.0, 616.0, 627.0" coords2="602.0, 627.0, 602.0, 720.0, 616.0, 720.0, 616.0, 627.0" shape="poly" alt=":Association" id="areadiagram_map_B5FlbUaGAqAC3w45_default" href="BPAssociation_O5FlbUaGAqAC3w44.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1132.0, 627.0, 1132.0, 720.0, 1146.0, 720.0, 1146.0, 627.0" coords2="1132.0, 627.0, 1132.0, 720.0, 1146.0, 720.0, 1146.0, 627.0" shape="poly" alt=":Association" id="areadiagram_map_pR1lbUaGAqAC3w5O_default" href="BPAssociation__R1lbUaGAqAC3w5N.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1132.0, 380.0, 1132.0, 469.0, 1146.0, 469.0, 1146.0, 380.0" coords2="1132.0, 380.0, 1132.0, 469.0, 1146.0, 469.0, 1146.0, 380.0" shape="poly" alt=":Association" id="areadiagram_map_bkjlbUaGAqAC3w5w_default" href="BPAssociation_rkjlbUaGAqAC3w5v.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1132.0, 489.0, 1132.0, 577.0, 1146.0, 577.0, 1146.0, 489.0" coords2="1132.0, 489.0, 1132.0, 577.0, 1146.0, 577.0, 1146.0, 489.0" shape="poly" alt=":Association" id="areadiagram_map_0AzlbUaGAqAC3w6A_default" href="BPAssociation_rkjlbUaGAqAC3w5v.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1626.0, 489.0, 1626.0, 577.0, 1640.0, 577.0, 1640.0, 489.0" coords2="1626.0, 489.0, 1626.0, 577.0, 1640.0, 577.0, 1640.0, 489.0" shape="poly" alt=":Association" id="areadiagram_map_0BrlbUaGAqAC3w6S_default" href="BPAssociation_Y_9BbUaGAqAC3xRa.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2035.0, 274.0, 2035.0, 330.0, 2049.0, 330.0, 2049.0, 274.0" coords2="2035.0, 274.0, 2035.0, 330.0, 2049.0, 330.0, 2049.0, 274.0" shape="poly" alt=":Association" id="areadiagram_map_jrF1bUaGAqAC3w_O_default" href="BPAssociation_9rF1bUaGAqAC3w_N.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2035.0, 506.0, 2035.0, 577.0, 2049.0, 577.0, 2049.0, 506.0" coords2="2035.0, 506.0, 2035.0, 577.0, 2049.0, 577.0, 2049.0, 506.0" shape="poly" alt=":Association" id="areadiagram_map_wVd1bUaGAqAC3w_t_default" href="BPAssociation_pbQutUaGAqAC3xbF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2035.0, 627.0, 2035.0, 735.0, 2049.0, 735.0, 2049.0, 627.0" coords2="2035.0, 627.0, 2035.0, 735.0, 2049.0, 735.0, 2049.0, 627.0" shape="poly" alt=":Association" id="areadiagram_map_LhX1bUaGAqAC3xAw_default" href="BPAssociation_9rF1bUaGAqAC3w_N.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1709.0, 738.0, 1709.0, 752.0, 2032.0, 752.0, 2032.0, 738.0" coords2="1709.0, 738.0, 1709.0, 752.0, 2032.0, 752.0, 2032.0, 738.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_chP1bUaGAqAC3xBB_default" href="BPSequenceFlow_shP1bUaGAqAC3xBA.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2123.0, 473.0, 2123.0, 487.0, 2234.0, 487.0, 2234.0, 473.0" coords2="2123.0, 473.0, 2123.0, 487.0, 2234.0, 487.0, 2234.0, 473.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Sv2NbUaGAqAC3xBv_default" href="BPSequenceFlow_iv2NbUaGAqAC3xBu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2052.0, 257.0, 2052.0, 271.0, 2234.0, 271.0, 2234.0, 257.0" coords2="2052.0, 257.0, 2052.0, 271.0, 2234.0, 271.0, 2234.0, 257.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_qIhNbUaGAqAC3xCV_default" href="BPSequenceFlow_iIhNbUaGAqAC3xCU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2052.0, 738.0, 2052.0, 752.0, 2123.0, 752.0, 2123.0, 738.0" coords2="2052.0, 738.0, 2052.0, 752.0, 2123.0, 752.0, 2123.0, 738.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_FhctbUaGAqAC3xDh_default" href="BPSequenceFlow_5hctbUaGAqAC3xDg.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2324.0, 288.0, 2324.0, 455.0, 2338.0, 455.0, 2338.0, 288.0" coords2="2324.0, 288.0, 2324.0, 455.0, 2338.0, 455.0, 2338.0, 288.0" shape="poly" alt=":Message Flow" id="areadiagram_map_AP2tbUaGAqAC3xEN_default" href="BPMessageFlow_f32tbUaGAqAC3xEM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2334.0, 288.0, 2334.0, 455.0, 2348.0, 455.0, 2348.0, 288.0" coords2="2334.0, 288.0, 2334.0, 455.0, 2348.0, 455.0, 2348.0, 288.0" shape="poly" alt=":Message Flow" id="areadiagram_map_DgetbUaGAqAC3xEj_default" href="BPMessageFlow_9getbUaGAqAC3xEi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2163.0, 738.0, 2163.0, 752.0, 2234.0, 752.0, 2234.0, 738.0" coords2="2163.0, 738.0, 2163.0, 752.0, 2234.0, 752.0, 2234.0, 738.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_NhTtbUaGAqAC3xFh_default" href="BPSequenceFlow_FhTtbUaGAqAC3xFg.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2035.0, 755.0, 2035.0, 793.0, 1409.0, 793.0, 1409.0, 765.0, 1395.0, 765.0, 1395.0, 793.0, 1392.0, 793.0, 1392.0, 807.0, 1395.0, 807.0, 1395.0, 810.0, 1409.0, 810.0, 1409.0, 807.0, 2035.0, 807.0, 2035.0, 810.0, 2049.0, 810.0, 2049.0, 807.0, 2052.0, 807.0, 2052.0, 793.0, 2049.0, 793.0, 2049.0, 755.0" coords2="2035.0, 755.0, 2035.0, 793.0, 1409.0, 793.0, 1409.0, 765.0, 1395.0, 765.0, 1395.0, 793.0, 1392.0, 793.0, 1392.0, 807.0, 1395.0, 807.0, 1395.0, 810.0, 1409.0, 810.0, 1409.0, 807.0, 2035.0, 807.0, 2035.0, 810.0, 2049.0, 810.0, 2049.0, 807.0, 2052.0, 807.0, 2052.0, 793.0, 2049.0, 793.0, 2049.0, 755.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_V.XtbUaGAqAC3xGL_default" href="BPSequenceFlow_F_XtbUaGAqAC3xGK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2341.0, 505.0, 2341.0, 721.0, 2355.0, 721.0, 2355.0, 505.0" coords2="2341.0, 505.0, 2341.0, 721.0, 2355.0, 721.0, 2355.0, 505.0" shape="poly" alt=":Message Flow" id="areadiagram_map__NidbUaGAqAC3xHo_default" href="BPMessageFlow_9getbUaGAqAC3xEi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2331.0, 505.0, 2331.0, 721.0, 2345.0, 721.0, 2345.0, 505.0" coords2="2331.0, 505.0, 2331.0, 721.0, 2345.0, 721.0, 2345.0, 505.0" shape="poly" alt=":Message Flow" id="areadiagram_map_QtidbUaGAqAC3xHr_default" href="BPMessageFlow_f32tbUaGAqAC3xEM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2541.0, 755.0, 2541.0, 793.0, 2150.0, 793.0, 2150.0, 765.0, 2136.0, 765.0, 2136.0, 793.0, 2133.0, 793.0, 2133.0, 807.0, 2136.0, 807.0, 2136.0, 810.0, 2150.0, 810.0, 2150.0, 807.0, 2541.0, 807.0, 2541.0, 810.0, 2555.0, 810.0, 2555.0, 807.0, 2558.0, 807.0, 2558.0, 793.0, 2555.0, 793.0, 2555.0, 755.0" coords2="2541.0, 755.0, 2541.0, 793.0, 2150.0, 793.0, 2150.0, 765.0, 2136.0, 765.0, 2136.0, 793.0, 2133.0, 793.0, 2133.0, 807.0, 2136.0, 807.0, 2136.0, 810.0, 2150.0, 810.0, 2150.0, 807.0, 2541.0, 807.0, 2541.0, 810.0, 2555.0, 810.0, 2555.0, 807.0, 2558.0, 807.0, 2558.0, 793.0, 2555.0, 793.0, 2555.0, 755.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_8aadbUaGAqAC3xIC_default" href="BPSequenceFlow_MaadbUaGAqAC3xIB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2463.0, 738.0, 2463.0, 752.0, 2538.0, 752.0, 2538.0, 738.0" coords2="2463.0, 738.0, 2463.0, 752.0, 2538.0, 752.0, 2538.0, 738.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_wYGdbUaGAqAC3xIW_default" href="BPSequenceFlow_QYGdbUaGAqAC3xIV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2463.0, 256.0, 2463.0, 270.0, 2549.0, 270.0, 2549.0, 269.0, 2538.0, 269.0, 2538.0, 256.0" coords2="2463.0, 256.0, 2463.0, 270.0, 2549.0, 270.0, 2549.0, 269.0, 2538.0, 269.0, 2538.0, 256.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_JBXdbUaGAqAC3xKY_default" href="BPSequenceFlow_hBXdbUaGAqAC3xKX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1626.0, 627.0, 1626.0, 720.0, 1640.0, 720.0, 1640.0, 627.0" coords2="1626.0, 627.0, 1626.0, 720.0, 1640.0, 720.0, 1640.0, 627.0" shape="poly" alt=":Association" id="areadiagram_map_oIY9bUaGAqAC3xK6_default" href="BPAssociation_AIY9bUaGAqAC3xK5.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+      is a broken out as a separate pool because we care more about the 
+      details. However beyond that &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+      is just an &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_R8HJlwaC48kYAi2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ICRP&amp;lt;/a&amp;gt; 
+      Partner Organization.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="17, 604, 181, 692" coords2="17, 604, 181, 692" shape="rect" alt="NCI is a broken out as a separate pool because we care more about the details. However beyond that NCI is just an ICRP Partner Organization.:Callout" id="areadiagram_map_6hO.HUaGAqAC3yvY_default" href="Callout_6hO_HUaGAqAC3yvZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;span bgcolor=&amp;quot;#00ffff&amp;quot; style=&amp;quot;background-color:#00ffff;&amp;quot;&amp;gt;&amp;lt;font size=&amp;quot;14px&amp;quot; style=&amp;quot;font-size:14px;&amp;quot;&amp;gt;Lynn 
+      mentioned that only new &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      get coded. &amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;span bgcolor=&amp;quot;#00ffff&amp;quot; style=&amp;quot;background-color:#00ffff;&amp;quot;&amp;gt;&amp;lt;font size=&amp;quot;14px&amp;quot; style=&amp;quot;font-size:14px;&amp;quot;&amp;gt;I 
+      am however not sure whether this referred to the manual &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_6WhOlwaC48kYAiyj.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Coding&amp;lt;/a&amp;gt; 
+      part or the AutoCoding or both?&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1846, 75, 2141, 461" coords2="1846, 75, 2141, 461" shape="rect" alt="Lynn mentioned that only new applications get coded. 
+I am however not sure whether this referred to the manual coding part or the AutoCoding or both?:Callout" id="areadiagram_map_RVGeHUaGAqAC3yEq_default" href="Callout_xVGeHUaGAqAC3yEr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_D91qagaC48kYAg1H.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSR&amp;lt;/a&amp;gt; 
+      Reviewers also check the Project Terms from &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      in addition to Title, Abstract and AIMS of Projects
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="2426, 286, 2614, 380" coords2="2426, 286, 2614, 380" shape="rect" alt="CSR Reviewers also check the Project Terms from RePORTer in addition to Title, Abstract and AIMS of Projects:Callout" id="areadiagram_map_A0T9bUaGAqAC3xL7_default" href="Callout_A0T9bUaGAqAC3xL8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="2234, 721, 2463, 769" coords2="2234, 721, 2463, 769" shape="rect" alt="Review and Correct Coding and other ProjectData in Collaboration with ICRP in UberResearch System:Task" id="areadiagram_map_y5ttbUaGAqAC3xFJ_default" href="BPTask_vwhNbUaGAqAC3xCP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2234, 240, 2463, 288" coords2="2234, 240, 2463, 288" shape="rect" alt="Review and Correct Coding and other ProjectData in Collaboration with ICRP in UberResearch System:Task" id="areadiagram_map_vwhNbUaGAqAC3xCO_default" href="BPTask_vwhNbUaGAqAC3xCP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2032, 735, 2052, 755" coords2="2032, 735, 2052, 755" shape="rect" alt="Invitation Received:Intermediate Event" id="areadiagram_map_5ur1bUaGAqAC3xAR_default" href="BPIntermediateEvent_fcKutUaGAqAC3xcL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2022, 577, 2062, 627" coords2="2022, 577, 2062, 627" shape="rect" alt="Invitation to Review AutoCoding:Data Object" id="areadiagram_map_z011bUaGAqAC3w_c_default" href="BPDataObject_ybQutUaGAqAC3xbA.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2538, 249, 2558, 269" coords2="2538, 249, 2558, 269" shape="rect" alt="End:End Event" id="areadiagram_map_8U0VbUaGAqAC3w7W_default" href="BPEndEvent_8U0VbUaGAqAC3w7X.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1613, 577, 1653, 627" coords2="1613, 577, 1653, 627" shape="rect" alt="Manual Coding Available in UberResearch:Data Object" id="areadiagram_map_GA.lbUaGAqAC3w4T_default" href="BPDataObject_zZ6BbUaGAqAC3xQf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="210, 735, 230, 755" coords2="210, 735, 230, 755" shape="rect" alt="Request Received:Intermediate Event" id="areadiagram_map_6jclbUaGAqAC3w3G_default" href="BPIntermediateEvent_hV7cbUaGAqAC3w4Q.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="200, 577, 240, 627" coords2="200, 577, 240, 627" shape="rect" alt="Data  Request:Data Object" id="areadiagram_map_Ql3FbUaGAqAC3w2D_default" href="BPDataObject_0ZFcbUaGAqAC3w2n.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="589, 577, 629, 627" coords2="589, 577, 629, 627" shape="rect" alt="Project Data Available in UberResearch:Data Object" id="areadiagram_map_jnHFbUaGAqAC3w10_default" href="BPDataObject_3XwybUaGAqAC3w__.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1119, 577, 1159, 627" coords2="1119, 577, 1159, 627" shape="rect" alt="International Collaboration Data Available in UberResearch:Data Object" id="areadiagram_map_0drFbUaGAqAC3w1l_default" href="BPDataObject_hg2FbUaGAqAC3wza.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1119, 330, 1159, 380" coords2="1119, 330, 1159, 380" shape="rect" alt="International Collaboration Data Available in UberResearch:Data Object" id="areadiagram_map_hg2FbUaGAqAC3wzZ_default" href="BPDataObject_hg2FbUaGAqAC3wza.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_R8HJlwaC48kYAi2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ICRP&amp;lt;/a&amp;gt; 
+      reports on All Cancer Research Projects, since it is an International 
+      Organization.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="291, 290, 489, 405" coords2="291, 290, 489, 405" shape="rect" alt="ICRP reports on All Cancer Research Projects, since it is an International Organization.:Callout" id="areadiagram_map_35WZbUaGAqAC3wso_default" href="Callout_35WZbUaGAqAC3wsp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="1129, 469, 1149, 489" coords2="1129, 469, 1149, 489" shape="rect" alt="International Collaboration Data Ready:Intermediate Event" id="areadiagram_map_pI5RbUaGAqAC3xVk_default" href="BPIntermediateEvent_ZI5RbUaGAqAC3xVl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1623, 469, 1643, 489" coords2="1623, 469, 1643, 489" shape="rect" alt="Manual Coding Available:Intermediate Event" id="areadiagram_map_Tf9BbUaGAqAC3xRU_default" href="BPIntermediateEvent_Tf9BbUaGAqAC3xRV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1613, 330, 1653, 380" coords2="1613, 330, 1653, 380" shape="rect" alt="Manual Coding Available in UberResearch:Data Object" id="areadiagram_map_zZ6BbUaGAqAC3xQe_default" href="BPDataObject_zZ6BbUaGAqAC3xQf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Nomenclature:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Within &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      we typically refer to Extramural &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt;, 
+      Intramural Projects and R&amp;amp;D Contracts.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_R8HJlwaC48kYAi2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ICRP&amp;lt;/a&amp;gt; 
+      refers to everything as &amp;quot;Project&amp;quot;.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="300, 2, 523, 233" coords2="300, 2, 523, 233" shape="rect" alt="Nomenclature:
+Within NIH we typically refer to Extramural Grants, Intramural Projects and R&amp;D Contracts.
+ICRP refers to everything as "Project".:Callout" id="areadiagram_map_X4GWbUaGAqAC3xNG_default" href="Callout_X4GWbUaGAqAC3xNH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="540, 720, 681, 770" coords2="540, 720, 681, 770" shape="rect" alt="Load Project Data [Title, Abstract, AIMS] into UberResearch System:Task" id="areadiagram_map_mcR6bUaGAqAC3xJA_default" href="BPTask_mcR6bUaGAqAC3xJB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1558, 239, 1708, 288" coords2="1558, 239, 1708, 288" shape="rect" alt="Enter REAB curated SITE &amp; CSO Codes into UberResearch System:Task" id="areadiagram_map_j3QabUaGAqAC3xGX_default" href="BPTask_j3QabUaGAqAC3xGY.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="599, 471, 619, 491" coords2="599, 471, 619, 491" shape="rect" alt="Project Data Ready for AutoCoding:Intermediate Event" id="areadiagram_map_40qybUaGAqAC3xAm_default" href="BPIntermediateEvent_40qybUaGAqAC3xAn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="589, 330, 629, 380" coords2="589, 330, 629, 380" shape="rect" alt="Project Data Available in UberResearch:Data Object" id="areadiagram_map_3XwybUaGAqAC3w_._default" href="BPDataObject_3XwybUaGAqAC3w__.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="210, 254, 230, 274" coords2="210, 254, 230, 274" shape="rect" alt="Request Received:Intermediate Event" id="areadiagram_map_BV7cbUaGAqAC3w4P_default" href="BPIntermediateEvent_hV7cbUaGAqAC3w4Q.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="200, 330, 240, 380" coords2="200, 330, 240, 380" shape="rect" alt="Data  Request:Data Object" id="areadiagram_map_0ZFcbUaGAqAC3w2m_default" href="BPDataObject_0ZFcbUaGAqAC3w2n.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="168, 461, 272, 501" coords2="168, 461, 272, 501" shape="rect" alt="Poll Partner Organizations:Task" id="areadiagram_map_UpasbUaGAqAC32Gk_default" href="BPTask_UpasbUaGAqAC32Gl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="75, 469, 95, 489" coords2="75, 469, 95, 489" shape="rect" alt="Data Collection Start:Start Event" id="areadiagram_map_OXirNUaGAqAC3w5F_default" href="BPStartEvent_uXirNUaGAqAC3w5G.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="317, 238, 475, 289" coords2="317, 238, 475, 289" shape="rect" alt="Download all NIH Cancer Research Projects from
+RePORTer:Task" id="areadiagram_map_asarNUaGAqAC3w5R_default" href="BPTask_asarNUaGAqAC3w5S.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="759, 240, 917, 291" coords2="759, 240, 917, 291" shape="rect" alt="Request International Research Collaboration Data from CGH:Task" id="areadiagram_map_jeLrNUaGAqAC3w6X_default" href="BPTask_jeLrNUaGAqAC3w6Y.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1057, 241, 1222, 292" coords2="1057, 241, 1222, 292" shape="rect" alt="Enter CGH International Research Collaboration Data into UberResearch System:Task" id="areadiagram_map_nuzbNUaGAqAC3w8W_default" href="BPTask_nuzbNUaGAqAC3w8X.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      For &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_6WhOlwaC48kYAiyj.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Coding&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mPPwGgaC48kYAiT0.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RAEB&amp;lt;/a&amp;gt; 
+      curators read the entire &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      (not just Title, Abstract and AIMS).
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1201, 2, 1449, 66" coords2="1201, 2, 1449, 66" shape="rect" alt="For coding RAEB curators read the entire application (not just Title, Abstract and AIMS).:Callout" id="areadiagram_map_70X1tUaGAqAC3xBC_default" href="Callout_70X1tUaGAqAC3xBD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_R8HJlwaC48kYAi2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ICRP&amp;lt;/a&amp;gt; 
+      has UberResearch &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_VewfsgaC48kYAjFS.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Contract&amp;lt;/a&amp;gt;, 
+      that allows them to use Autocoding. Spring 2018 1st Year
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="882, 338, 1034, 454" coords2="882, 338, 1034, 454" shape="rect" alt="ICRP has UberResearch Contract, that allows them to use Autocoding. Spring 2018 1st Year:Callout" id="areadiagram_map_rGNJtUaGAqAC3xoi_default" href="Callout_rGNJtUaGAqAC3xoj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_R8HJlwaC48kYAi2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ICRP&amp;lt;/a&amp;gt; 
+      Member Partners have different fiscal years and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_R8HJlwaC48kYAi2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ICRP&amp;lt;/a&amp;gt; 
+      accommodates their data when they are ready according to the individual &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_KV6eagaC48kYAg4d.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FY&amp;lt;/a&amp;gt;.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_R8HJlwaC48kYAi2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ICRP&amp;lt;/a&amp;gt; 
+      reports Budgets per Calendar Year calculated from the Project Dates
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="272, 503, 523, 645" coords2="272, 503, 523, 645" shape="rect" alt="ICRP Member Partners have different fiscal years and ICRP accommodates their data when they are ready according to the individual FY.
+
+ICRP reports Budgets per Calendar Year calculated from the Project Dates:Callout" id="areadiagram_map_WogJtUaGAqAC3xoN_default" href="Callout_2ogJtUaGAqAC3xoO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Autocoding Concurrence with Human Curators on average per &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      is for &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gPlYFwaC48kYAn7B.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt;: 
+      85% - 90% &amp;amp; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_EiTOGgaC48kYAgqI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSO&amp;lt;/a&amp;gt;: 
+      80% and similar to Concurrence between different Human Curators.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Typical areas of discrepancy are &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_EiTOGgaC48kYAgqI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSO&amp;lt;/a&amp;gt; 
+      2, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_EiTOGgaC48kYAgqI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSO&amp;lt;/a&amp;gt; 
+      5.1/5.3.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Algorithm gets trained annually with manually coded data or when new &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_EiTOGgaC48kYAgqI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSO&amp;lt;/a&amp;gt; 
+      version is released. Algorithm uses Title and Abstract with Machine 
+      Learning NOT NLP, hence no text markup for terms or phrases that 
+      informed the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_6WhOlwaC48kYAiyj.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Coding&amp;lt;/a&amp;gt;.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="702, 506, 1045, 668" coords2="702, 506, 1045, 668" shape="rect" alt="Autocoding Concurrence with Human Curators on average per Application is for SITE: 85% - 90% &amp; CSO: 80% and similar to Concurrence between different Human Curators.
+Typical areas of discrepancy are CSO 2, CSO 5.1/5.3.
+Algorithm gets trained annually with manually coded data or when new CSO version is released. Algorithm uses Title and Abstract with Machine Learning NOT NLP, hence no text markup for terms or phrases that informed the coding.:Callout" id="areadiagram_map_38YxtUaGAqAC3xns_default" href="Callout_38YxtUaGAqAC3xnt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;margin-right:0;font-size:11px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_R8HJlwaC48kYAi2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ICRP&amp;lt;/a&amp;gt;'s 
+      notion of International Research is different from (having a) &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_AuSwigaC48kYAjMJ.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Foreign 
+      Component&amp;lt;/a&amp;gt; as defined in &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_l_6dsgaC48kYAilS.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FACTS&amp;lt;/a&amp;gt;.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      For &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_R8HJlwaC48kYAi2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ICRP&amp;lt;/a&amp;gt; 
+      International collaboration means the Research Funding Sponsor and the 
+      Research Funding &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_nfIwagaC48kYAgl4.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Recipient&amp;lt;/a&amp;gt; 
+      are located in different countries.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      There are metadata that distinguish between countries where research is 
+      executed and where the funded institution is located.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="717, 2, 1034, 135" coords2="717, 2, 1034, 135" shape="rect" alt="ICRP's notion of International Research is different from (having a) Foreign Component as defined in FACTS.
+For ICRP International collaboration means the Research Funding Sponsor and the Research Funding Recipient are located in different countries.
+There are metadata that distinguish between countries where research is executed and where the funded institution is located.:Callout" id="areadiagram_map_7jjhtUaGAqAC3xm0_default" href="Callout_7jjhtUaGAqAC3xm1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="2538, 735, 2558, 755" coords2="2538, 735, 2558, 755" shape="rect" alt="End:End Event" id="areadiagram_map_IA5utUaGAqAC3xds_default" href="BPEndEvent_IA5utUaGAqAC3xdt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2123, 725, 2163, 765" coords2="2123, 725, 2163, 765" shape="rect" alt="Accept As Is?:Gateway" id="areadiagram_map_94OutUaGAqAC3xc._default" href="BPGateway_94OutUaGAqAC3xc_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2032, 254, 2052, 274" coords2="2032, 254, 2052, 274" shape="rect" alt="Invitation Received:Intermediate Event" id="areadiagram_map_fcKutUaGAqAC3xcK_default" href="BPIntermediateEvent_fcKutUaGAqAC3xcL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2022, 330, 2062, 380" coords2="2022, 330, 2062, 380" shape="rect" alt="Invitation to Review AutoCoding:Data Object" id="areadiagram_map_ybQutUaGAqAC3xa__default" href="BPDataObject_ybQutUaGAqAC3xbA.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1443, 36, 1593, 87" coords2="1443, 36, 1593, 87" shape="rect" alt="Provide Manually Assigned SITE &amp; CSO Code to ICRP:Task" id="areadiagram_map_MqfWtUaGAqAC3xWF_default" href="BPTask_sqfWtUaGAqAC3xWG.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1381, 725, 1421, 765" coords2="1381, 725, 1421, 765" shape="rect" alt="Manual Coding?:Gateway" id="areadiagram_map_JNrstUaGAqAC3xE9_default" href="BPGateway_JNrstUaGAqAC3xE_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 12, 2637, 109" coords2="17, 12, 2637, 109" shape="rect" alt="RAEB:Lane" id="areadiagram_map_ZHystUaGAqAC3xEf_default" href="BPLane_ZHystUaGAqAC3xEg.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1559, 720, 1709, 770" coords2="1559, 720, 1709, 770" shape="rect" alt="Enter CSO &amp; SITE Codes into UberResearch System:Task" id="areadiagram_map_Q1wstUaGAqAC3xD5_default" href="BPTask_Q1wstUaGAqAC3xD6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1061, 720, 1219, 770" coords2="1061, 720, 1219, 770" shape="rect" alt="Add International Research Collaboration Data into UberResearch System:Task" id="areadiagram_map_1puMtUaGAqAC3xDV_default" href="BPTask_1puMtUaGAqAC3xDW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="321, 720, 462, 770" coords2="321, 720, 462, 770" shape="rect" alt="Collect Cancer Research Project Data:Task" id="areadiagram_map_1siMtUaGAqAC3xC5_default" href="BPTask_1siMtUaGAqAC3xC6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="907, 135, 1057, 185" coords2="907, 135, 1057, 185" shape="rect" alt="Provide International Research Collaboration Data to CSR:Task" id="areadiagram_map_J_ubNUaGAqAC3w7m_default" href="BPTask_J_ubNUaGAqAC3w7n.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 109, 2637, 206" coords2="17, 109, 2637, 206" shape="rect" alt="CGH:Lane" id="areadiagram_map_zGAtNUaGAqAC3w4M_default" href="BPLane_zGAtNUaGAqAC3w4N.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 678, 2637, 848" coords2="17, 678, 2637, 848" shape="rect" alt="Funding Institution:Lane" id="areadiagram_map_rVWNNUaGAqAC3w21_default" href="BPLane_rVWNNUaGAqAC3w22.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 678, 2637, 848" coords2="2, 678, 2637, 848" shape="rect" alt="ICRP Partner Organization:Pool" id="areadiagram_map_Y1iNNUaGAqAC3w2r_default" href="BPPool_Y1iNNUaGAqAC3w2s.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="539, 239, 680, 291" coords2="539, 239, 680, 291" shape="rect" alt="Load Project Data [Title, Abstract, AIMS] into UberResearch System:Task" id="areadiagram_map_YQ0_NUaGAqAC3xBK_default" href="BPTask_YQ0_NUaGAqAC3xBL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1325, 237, 1475, 288" coords2="1325, 237, 1475, 288" shape="rect" alt="Request Manually Coded Data from RAEB:Task" id="areadiagram_map_1MTWtUaGAqAC3xVh_default" href="BPTask_NMTWtUaGAqAC3xVi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 206, 2637, 319" coords2="17, 206, 2637, 319" shape="rect" alt="CRS:Lane" id="areadiagram_map_oGoNNUaGAqAC3w2O_default" href="BPLane_oGoNNUaGAqAC3w2P.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2538, 469, 2558, 489" coords2="2538, 469, 2558, 489" shape="rect" alt="Data Ready for Reporting:End Event" id="areadiagram_map_FyOBtUaGAqAC3xmF_default" href="BPEndEvent_lyOBtUaGAqAC3xmG.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2234, 455, 2463, 505" coords2="2234, 455, 2463, 505" shape="rect" alt="Finalizing Data in UberResearch System in Collaboration with Partner Organization (Project Data Source):Task" id="areadiagram_map_ZiR.tUaGAqAC3xjW_default" href="BPTask_5iR_tUaGAqAC3xjX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1962, 456, 2123, 506" coords2="1962, 456, 2123, 506" shape="rect" alt="Invite Source Institution to Review AutoCoding in UberResearch System:Task" id="areadiagram_map_hSFOtUaGAqAC3xZz_default" href="BPTask_hSFOtUaGAqAC3xZ0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1724, 455, 1911, 506" coords2="1724, 455, 1911, 506" shape="rect" alt="Quality Control of Autocoding by ICRP Curators based on Title, Abstract &amp; AIMS of Projects:Task" id="areadiagram_map_kf32tUaGAqAC3xX__default" href="BPTask_kf32tUaGAqAC3xYA.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="741, 453, 935, 505" coords2="741, 453, 935, 505" shape="rect" alt="Autocode CSO and SITE Codes in UberResearch System based on Title, Abstract &amp; AIM of Projects:Task" id="areadiagram_map_hYZmtUaGAqAC3xRv_default" href="BPTask_hYZmtUaGAqAC3xRw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 426, 2637, 558" coords2="17, 426, 2637, 558" shape="rect" alt="ICRP:Lane" id="areadiagram_map_yKCUbUaGAqAC32FT_default" href="BPLane_yKCUbUaGAqAC32FU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 12, 2637, 319" coords2="2, 12, 2637, 319" shape="rect" alt="NCI:Pool" id="areadiagram_map_8hgNNUaGAqAC3w2I_default" href="BPPool_ChgNNUaGAqAC3w2J.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 426, 2637, 558" coords2="2, 426, 2637, 558" shape="rect" alt="Pool:Pool" id="areadiagram_map_JNukbUaGAqAC32Dx_default" href="BPPool_JNukbUaGAqAC32Dy.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_uXirNUaGAqAC3w5G.html" class="ItemLink">Data Collection Start : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_sqfWtUaGAqAC3xWG.html" class="ItemLink">Provide Manually Assigned SITE &amp; CSO Code to ICRP : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_J_ubNUaGAqAC3w7n.html" class="ItemLink">Provide International Research Collaboration Data to CSR : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_rVWNNUaGAqAC3w22.html" class="ItemLink">Funding Institution : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_oGoNNUaGAqAC3w2P.html" class="ItemLink">CRS : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_yKCUbUaGAqAC32FU.html" class="ItemLink">ICRP : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_asarNUaGAqAC3w5S.html" class="ItemLink">Download all NIH Cancer Research Projects from
+RePORTer : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_1siMtUaGAqAC3xC6.html" class="ItemLink">Collect Cancer Research Project Data : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_zGAtNUaGAqAC3w4N.html" class="ItemLink">CGH : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_ZHystUaGAqAC3xEg.html" class="ItemLink">RAEB : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_jeLrNUaGAqAC3w6Y.html" class="ItemLink">Request International Research Collaboration Data from CGH : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_1puMtUaGAqAC3xDW.html" class="ItemLink">Add International Research Collaboration Data into UberResearch System : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP06</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Q1wstUaGAqAC3xD6.html" class="ItemLink">Enter CSO &amp; SITE Codes into UberResearch System : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP08</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_JNrstUaGAqAC3xE_.html" class="ItemLink">Manual Coding? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP11</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_nuzbNUaGAqAC3w8X.html" class="ItemLink">Enter CGH International Research Collaboration Data into UberResearch System : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP15</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_YQ0_NUaGAqAC3xBL.html" class="ItemLink">Load Project Data [Title, Abstract, AIMS] into UberResearch System : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP21</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsIntermediate.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsIntermediate.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPIntermediateEvent_fcKutUaGAqAC3xcL.html" class="ItemLink">Invitation Received : Intermediate Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP22</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_94OutUaGAqAC3xc_.html" class="ItemLink">Accept As Is? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP24</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_IA5utUaGAqAC3xdt.html" class="ItemLink">End : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP25</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_hYZmtUaGAqAC3xRw.html" class="ItemLink">Autocode CSO and SITE Codes in UberResearch System based on Title, Abstract &amp; AIM of Projects : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP29</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_NMTWtUaGAqAC3xVi.html" class="ItemLink">Request Manually Coded Data from RAEB : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP32</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_mcR6bUaGAqAC3xJB.html" class="ItemLink">Load Project Data [Title, Abstract, AIMS] into UberResearch System : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP33</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_kf32tUaGAqAC3xYA.html" class="ItemLink">Quality Control of Autocoding by ICRP Curators based on Title, Abstract &amp; AIMS of Projects : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP35</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_hSFOtUaGAqAC3xZ0.html" class="ItemLink">Invite Source Institution to Review AutoCoding in UberResearch System : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP38</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_5iR_tUaGAqAC3xjX.html" class="ItemLink">Finalizing Data in UberResearch System in Collaboration with Partner Organization (Project Data Source) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP42</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_lyOBtUaGAqAC3xmG.html" class="ItemLink">Data Ready for Reporting : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP44</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsIntermediate.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsIntermediate.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPIntermediateEvent_hV7cbUaGAqAC3w4Q.html" class="ItemLink">Request Received : Message Trigger</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP44</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_UpasbUaGAqAC32Gl.html" class="ItemLink">Poll Partner Organizations : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP47</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsIntermediate.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsIntermediate.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPIntermediateEvent_40qybUaGAqAC3xAn.html" class="ItemLink">Project Data Ready for AutoCoding : Message Trigger</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP50</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsIntermediate.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsIntermediate.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPIntermediateEvent_Tf9BbUaGAqAC3xRV.html" class="ItemLink">Manual Coding Available : Message Trigger</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP53</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsIntermediate.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsIntermediate.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPIntermediateEvent_ZI5RbUaGAqAC3xVl.html" class="ItemLink">International Collaboration Data Ready : Intermediate Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP57</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_j3QabUaGAqAC3xGY.html" class="ItemLink">Enter REAB curated SITE &amp; CSO Codes into UberResearch System : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP61</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_8U0VbUaGAqAC3w7X.html" class="ItemLink">End : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP63</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_vwhNbUaGAqAC3xCP.html" class="ItemLink">Review and Correct Coding and other ProjectData in Collaboration with ICRP in UberResearch System : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP82</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_ChgNNUaGAqAC3w2J.html" class="ItemLink">NCI : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP83</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_Y1iNNUaGAqAC3w2s.html" class="ItemLink">ICRP Partner Organization : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP89</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataObject_ybQutUaGAqAC3xbA.html" class="ItemLink">Invitation to Review AutoCoding : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP93</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataObject_0ZFcbUaGAqAC3w2n.html" class="ItemLink">Data  Request : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP95</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataObject_3XwybUaGAqAC3w__.html" class="ItemLink">Project Data Available in UberResearch : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP95</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_JNukbUaGAqAC32Dy.html" class="ItemLink">Pool : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP99</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataObject_zZ6BbUaGAqAC3xQf.html" class="ItemLink">Manual Coding Available in UberResearch : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP105</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataObject_hg2FbUaGAqAC3wza.html" class="ItemLink">International Collaboration Data Available in UberResearch : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

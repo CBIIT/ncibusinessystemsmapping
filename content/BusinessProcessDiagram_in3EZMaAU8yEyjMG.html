@@ -1,0 +1,598 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - Blanket ODA Process</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - Blanket ODA Process		</span>
+<a onclick="javascript: showVpLink('OfficeOfEthics.vpp://diagram/in3EZMaAU8yEyjMG', 'Blanket ODA Process\nOfficeOfEthics.vpp://diagram/in3EZMaAU8yEyjMG', 'Blanket ODA Process', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|2.0|2.0|1590.0|33.0|ShapeEditorShape_M2kMZMaAU8yEyjZp.html|ShapeEditorShape_M2kMZMaAU8yEyjZp.html|M2kMZMaAU8yEyjZm" id="optionM2kMZMaAU8yEyjZm">Optimize NIH Ethics Official Dities Admin. Team|Revision:2 | Revised 4/25/2018 : Freehand Shape</option>
+<option value="shape|101.0|85.0|60.0|40.0|BPSubProcess_dn3EZMaAU8yEyjNx.html|BPSubProcess_dn3EZMaAU8yEyjNx.html|tn3EZMaAU8yEyjNw" id="optiontn3EZMaAU8yEyjNw">Process2 : Sub-Process</option>
+<option value="shape|1080.0|67.0|60.0|40.0|BPSubProcess_Nn3EZMaAU8yEyjNr.html|BPSubProcess_Nn3EZMaAU8yEyjNr.html|Nn3EZMaAU8yEyjNq" id="optionNn3EZMaAU8yEyjNq">Process : Sub-Process</option>
+<option value="shape|341.0|228.0|216.0|40.0|BPSubProcess_Vn3EZMaAU8yEyjNi.html|BPSubProcess_Vn3EZMaAU8yEyjNi.html|ln3EZMaAU8yEyjNh" id="optionln3EZMaAU8yEyjNh">Reviews for consistency with Template
+2.1 : Sub-Process</option>
+<option value="shape|1522.0|372.0|20.0|20.0|BPStartEvent_Fn3EZMaAU8yEyjNc.html|BPStartEvent_Fn3EZMaAU8yEyjNc.html|Fn3EZMaAU8yEyjNb" id="optionFn3EZMaAU8yEyjNb">End
+3.3 : Start Event</option>
+<option value="shape|1293.0|362.0|107.0|40.0|BPSubProcess_Zn3EZMaAU8yEyjNW.html|BPSubProcess_Zn3EZMaAU8yEyjNW.html|Zn3EZMaAU8yEyjNV" id="optionZn3EZMaAU8yEyjNV">Document in EMIS
+3.2 : Sub-Process</option>
+<option value="shape|1021.0|362.0|178.0|40.0|BPSubProcess_pn3EZMaAU8yEyjNQ.html|BPSubProcess_pn3EZMaAU8yEyjNQ.html|pn3EZMaAU8yEyjNP" id="optionpn3EZMaAU8yEyjNP">Ethics official notifies employee and/or IC Ethics Office.
+3.1 : Sub-Process</option>
+<option value="shape|785.0|362.0|151.0|40.0|BPSubProcess_xn3EZMaAU8yEyjNK.html|BPSubProcess_xn3EZMaAU8yEyjNK.html|xn3EZMaAU8yEyjNJ" id="optionxn3EZMaAU8yEyjNJ">NIH DEC approves request
+3.0 : Sub-Process</option>
+<option value="shape|1021.0|228.0|178.0|40.0|BPSubProcess_Bn3EZMaAU8yEyjNB.html|BPSubProcess_Bn3EZMaAU8yEyjNB.html|Bn3EZMaAU8yEyjNA" id="optionBn3EZMaAU8yEyjNA">Ethics Office notifies employee.
+2.4 : Sub-Process</option>
+<option value="shape|1522.0|238.0|20.0|20.0|BPStartEvent_On3EZMaAU8yEyjMz.html|BPStartEvent_On3EZMaAU8yEyjMz.html|On3EZMaAU8yEyjMy" id="optionOn3EZMaAU8yEyjMy">End
+2.6 : Start Event</option>
+<option value="shape|1293.0|228.0|107.0|40.0|BPSubProcess_2n3EZMaAU8yEyjMw.html|BPSubProcess_2n3EZMaAU8yEyjMw.html|2n3EZMaAU8yEyjMv" id="option2n3EZMaAU8yEyjMv">Document in EMIS
+2.5 : Sub-Process</option>
+<option value="shape|785.0|228.0|142.0|40.0|BPSubProcess_Wn3EZMaAU8yEyjMt.html|BPSubProcess_Wn3EZMaAU8yEyjMt.html|Wn3EZMaAU8yEyjMs" id="optionWn3EZMaAU8yEyjMs">IC DEC approves request
+2.3 : Sub-Process</option>
+<option value="shape|651.0|228.0|40.0|40.0|BPGateway_mn3EZMaAU8yEyjMp.html|BPGateway_mn3EZMaAU8yEyjMp.html|mn3EZMaAU8yEyjMo" id="optionmn3EZMaAU8yEyjMo">Is employee 
+Top 5?
+2.2 : Gateway</option>
+<option value="shape|167.0|238.0|20.0|20.0|BPStartEvent_Gn3EZMaAU8yEyjMm.html|BPStartEvent_Gn3EZMaAU8yEyjMm.html|Gn3EZMaAU8yEyjMl" id="optionGn3EZMaAU8yEyjMl">Blanket ODA w/ Supervisory Signature Received
+2.0 : Start Event</option>
+<option value="shape|7.0|310.0|1581.0|145.0|BPPool_6n3EZMaAU8yEyjMj.html|BPPool_6n3EZMaAU8yEyjMj.html|6n3EZMaAU8yEyjMi" id="option6n3EZMaAU8yEyjMi">NIH Ethics Office (NEO) : Pool</option>
+<option value="shape|7.0|30.0|1580.0|156.0|BPPool_6n3EZMaAU8yEyjMg.html|BPPool_6n3EZMaAU8yEyjMg.html|6n3EZMaAU8yEyjMf" id="option6n3EZMaAU8yEyjMf">Employee : Pool</option>
+<option value="shape|7.0|186.0|1580.0|124.0|BPPool_an3EZMaAU8yEyjMd.html|BPPool_an3EZMaAU8yEyjMd.html|an3EZMaAU8yEyjMc" id="optionan3EZMaAU8yEyjMc">IC Ethics Office : Pool</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Blanket_ODA_Process.png" usemap="#diagram_map" class="Image" width="1596" height="459"/>
+					<map name="diagram_map">
+<area coords="1369,228,1394,242" coords2="1369,228,1394,242" shape="rect" alt="EMIS" href="Glossary_qfnYWEaAUhQCoQzX.html"/>
+<area coords="1369,362,1394,376" coords2="1369,362,1394,376" shape="rect" alt="EMIS" href="Glossary_qfnYWEaAUhQCoQzX.html"/>
+<area imageId="diagram" coords="691.0, 237.0, 691.0, 251.0, 785.0, 251.0, 785.0, 237.0" coords2="691.0, 237.0, 691.0, 251.0, 785.0, 251.0, 785.0, 237.0" shape="poly" alt="NO:Sequence Flow" id="areadiagram_map_en3EZMaAU8yEyjM1_default" href="BPSequenceFlow__n3EZMaAU8yEyjM7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1400.0, 241.0, 1400.0, 255.0, 1522.0, 255.0, 1522.0, 241.0" coords2="1400.0, 241.0, 1400.0, 255.0, 1522.0, 255.0, 1522.0, 241.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Bn3EZMaAU8yEyjM9_default" href="BPSequenceFlow_Bn3EZMaAU8yEyjM_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="927.0, 241.0, 927.0, 255.0, 1021.0, 255.0, 1021.0, 241.0" coords2="927.0, 241.0, 927.0, 255.0, 1021.0, 255.0, 1021.0, 241.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_hn3EZMaAU8yEyjND_default" href="BPSequenceFlow_hn3EZMaAU8yEyjNE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1199.0, 241.0, 1199.0, 255.0, 1293.0, 255.0, 1293.0, 241.0" coords2="1199.0, 241.0, 1199.0, 255.0, 1293.0, 255.0, 1293.0, 241.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Rn3EZMaAU8yEyjNG_default" href="BPSequenceFlow_Rn3EZMaAU8yEyjNH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="664.0, 268.0, 664.0, 375.0, 661.0, 375.0, 661.0, 389.0, 664.0, 389.0, 664.0, 392.0, 678.0, 392.0, 678.0, 389.0, 785.0, 389.0, 785.0, 375.0, 678.0, 375.0, 678.0, 268.0" coords2="664.0, 268.0, 664.0, 375.0, 661.0, 375.0, 661.0, 389.0, 664.0, 389.0, 664.0, 392.0, 678.0, 392.0, 678.0, 389.0, 785.0, 389.0, 785.0, 375.0, 678.0, 375.0, 678.0, 268.0" shape="poly" alt="YES:Sequence Flow" id="areadiagram_map_Jn3EZMaAU8yEyjNM_default" href="BPSequenceFlow_Jn3EZMaAU8yEyjNN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="936.0, 375.0, 936.0, 389.0, 1021.0, 389.0, 1021.0, 375.0" coords2="936.0, 375.0, 936.0, 389.0, 1021.0, 389.0, 1021.0, 375.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Zn3EZMaAU8yEyjNS_default" href="BPSequenceFlow_Zn3EZMaAU8yEyjNT.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1199.0, 375.0, 1199.0, 389.0, 1293.0, 389.0, 1293.0, 375.0" coords2="1199.0, 375.0, 1199.0, 389.0, 1293.0, 389.0, 1293.0, 375.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_5n3EZMaAU8yEyjNY_default" href="BPSequenceFlow_5n3EZMaAU8yEyjNZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1400.0, 375.0, 1400.0, 389.0, 1522.0, 389.0, 1522.0, 375.0" coords2="1400.0, 375.0, 1400.0, 389.0, 1522.0, 389.0, 1522.0, 375.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_ln3EZMaAU8yEyjNe_default" href="BPSequenceFlow_ln3EZMaAU8yEyjNf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="187.0, 241.0, 187.0, 255.0, 341.0, 255.0, 341.0, 241.0" coords2="187.0, 241.0, 187.0, 255.0, 341.0, 255.0, 341.0, 241.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_1n3EZMaAU8yEyjNk_default" href="BPSequenceFlow_1n3EZMaAU8yEyjNl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="557.0, 237.0, 557.0, 251.0, 651.0, 251.0, 651.0, 237.0" coords2="557.0, 237.0, 557.0, 251.0, 651.0, 251.0, 651.0, 237.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_1n3EZMaAU8yEyjNn_default" href="BPSequenceFlow_1n3EZMaAU8yEyjNo.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1103.0, 107.0, 1103.0, 228.0, 1117.0, 228.0, 1117.0, 107.0" coords2="1103.0, 107.0, 1103.0, 228.0, 1117.0, 228.0, 1117.0, 107.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_tn3EZMaAU8yEyjNt_default" href="BPSequenceFlow_tn3EZMaAU8yEyjNu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="124.0, 125.0, 124.0, 241.0, 121.0, 241.0, 121.0, 255.0, 124.0, 255.0, 124.0, 258.0, 138.0, 258.0, 138.0, 255.0, 167.0, 255.0, 167.0, 241.0, 138.0, 241.0, 138.0, 125.0" coords2="124.0, 125.0, 124.0, 241.0, 121.0, 241.0, 121.0, 255.0, 124.0, 255.0, 124.0, 258.0, 138.0, 258.0, 138.0, 255.0, 167.0, 255.0, 167.0, 241.0, 138.0, 241.0, 138.0, 125.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_dn3EZMaAU8yEyjNz_default" href="BPSequenceFlow_dn3EZMaAU8yEyjN0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 1592, 35" coords2="2, 2, 1592, 35" shape="rect" alt="Optimize NIH Ethics Official Dities Admin. Team|Revision:2 | Revised 4/25/2018:Freehand Shape" id="areadiagram_map_M2kMZMaAU8yEyjZm_default" href="ShapeEditorShape_M2kMZMaAU8yEyjZp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="101, 85, 161, 125" coords2="101, 85, 161, 125" shape="rect" alt="Process2:Sub-Process" id="areadiagram_map_tn3EZMaAU8yEyjNw_default" href="BPSubProcess_dn3EZMaAU8yEyjNx.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1080, 67, 1140, 107" coords2="1080, 67, 1140, 107" shape="rect" alt="Process:Sub-Process" id="areadiagram_map_Nn3EZMaAU8yEyjNq_default" href="BPSubProcess_Nn3EZMaAU8yEyjNr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="341, 228, 557, 268" coords2="341, 228, 557, 268" shape="rect" alt="Reviews for consistency with Template
+2.1:Sub-Process" id="areadiagram_map_ln3EZMaAU8yEyjNh_default" href="BPSubProcess_Vn3EZMaAU8yEyjNi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1522, 372, 1542, 392" coords2="1522, 372, 1542, 392" shape="rect" alt="End
+3.3:Start Event" id="areadiagram_map_Fn3EZMaAU8yEyjNb_default" href="BPStartEvent_Fn3EZMaAU8yEyjNc.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1293, 362, 1400, 402" coords2="1293, 362, 1400, 402" shape="rect" alt="Document in EMIS
+3.2:Sub-Process" id="areadiagram_map_Zn3EZMaAU8yEyjNV_default" href="BPSubProcess_Zn3EZMaAU8yEyjNW.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1293, 362, 1400, 402',new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_VFXnXUaAUhQsMVar.html/EMIS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '1293, 362, 1400, 402'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1021, 362, 1199, 402" coords2="1021, 362, 1199, 402" shape="rect" alt="Ethics official notifies employee and/or IC Ethics Office.
+3.1:Sub-Process" id="areadiagram_map_pn3EZMaAU8yEyjNP_default" href="BPSubProcess_pn3EZMaAU8yEyjNQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="785, 362, 936, 402" coords2="785, 362, 936, 402" shape="rect" alt="NIH DEC approves request
+3.0:Sub-Process" id="areadiagram_map_xn3EZMaAU8yEyjNJ_default" href="BPSubProcess_xn3EZMaAU8yEyjNK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1021, 228, 1199, 268" coords2="1021, 228, 1199, 268" shape="rect" alt="Ethics Office notifies employee.
+2.4:Sub-Process" id="areadiagram_map_Bn3EZMaAU8yEyjNA_default" href="BPSubProcess_Bn3EZMaAU8yEyjNB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1522, 238, 1542, 258" coords2="1522, 238, 1542, 258" shape="rect" alt="End
+2.6:Start Event" id="areadiagram_map_On3EZMaAU8yEyjMy_default" href="BPStartEvent_On3EZMaAU8yEyjMz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1293, 228, 1400, 268" coords2="1293, 228, 1400, 268" shape="rect" alt="Document in EMIS
+2.5:Sub-Process" id="areadiagram_map_2n3EZMaAU8yEyjMv_default" href="BPSubProcess_2n3EZMaAU8yEyjMw.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1293, 228, 1400, 268',new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_VFXnXUaAUhQsMVar.html/EMIS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '1293, 228, 1400, 268'),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="785, 228, 927, 268" coords2="785, 228, 927, 268" shape="rect" alt="IC DEC approves request
+2.3:Sub-Process" id="areadiagram_map_Wn3EZMaAU8yEyjMs_default" href="BPSubProcess_Wn3EZMaAU8yEyjMt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="651, 228, 691, 268" coords2="651, 228, 691, 268" shape="rect" alt="Is employee 
+Top 5?
+2.2:Gateway" id="areadiagram_map_mn3EZMaAU8yEyjMo_default" href="BPGateway_mn3EZMaAU8yEyjMp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="167, 238, 187, 258" coords2="167, 238, 187, 258" shape="rect" alt="Blanket ODA w/ Supervisory Signature Received
+2.0:Start Event" id="areadiagram_map_Gn3EZMaAU8yEyjMl_default" href="BPStartEvent_Gn3EZMaAU8yEyjMm.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="7, 310, 1588, 455" coords2="7, 310, 1588, 455" shape="rect" alt="NIH Ethics Office (NEO):Pool" id="areadiagram_map_6n3EZMaAU8yEyjMi_default" href="BPPool_6n3EZMaAU8yEyjMj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="7, 30, 1587, 186" coords2="7, 30, 1587, 186" shape="rect" alt="Employee:Pool" id="areadiagram_map_6n3EZMaAU8yEyjMf_default" href="BPPool_6n3EZMaAU8yEyjMg.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="7, 186, 1587, 310" coords2="7, 186, 1587, 310" shape="rect" alt="IC Ethics Office:Pool" id="areadiagram_map_an3EZMaAU8yEyjMc_default" href="BPPool_an3EZMaAU8yEyjMd.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/FreehandShapes.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/FreehandShapes.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ShapeEditorShape_M2kMZMaAU8yEyjZp.html" class="ItemLink">Optimize NIH Ethics Official Dities Admin. Team|Revision:2 | Revised 4/25/2018 : Freehand Shape</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_dn3EZMaAU8yEyjNx.html" class="ItemLink">Process2 : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Nn3EZMaAU8yEyjNr.html" class="ItemLink">Process : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Vn3EZMaAU8yEyjNi.html" class="ItemLink">Reviews for consistency with Template
+2.1 : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_Fn3EZMaAU8yEyjNc.html" class="ItemLink">End
+3.3 : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Zn3EZMaAU8yEyjNW.html" class="ItemLink">Document in EMIS
+3.2 : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_pn3EZMaAU8yEyjNQ.html" class="ItemLink">Ethics official notifies employee and/or IC Ethics Office.
+3.1 : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_xn3EZMaAU8yEyjNK.html" class="ItemLink">NIH DEC approves request
+3.0 : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Bn3EZMaAU8yEyjNB.html" class="ItemLink">Ethics Office notifies employee.
+2.4 : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_On3EZMaAU8yEyjMz.html" class="ItemLink">End
+2.6 : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_2n3EZMaAU8yEyjMw.html" class="ItemLink">Document in EMIS
+2.5 : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Wn3EZMaAU8yEyjMt.html" class="ItemLink">IC DEC approves request
+2.3 : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_mn3EZMaAU8yEyjMp.html" class="ItemLink">Is employee 
+Top 5?
+2.2 : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_Gn3EZMaAU8yEyjMm.html" class="ItemLink">Blanket ODA w/ Supervisory Signature Received
+2.0 : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_6n3EZMaAU8yEyjMj.html" class="ItemLink">NIH Ethics Office (NEO) : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_6n3EZMaAU8yEyjMg.html" class="ItemLink">Employee : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_an3EZMaAU8yEyjMd.html" class="ItemLink">IC Ethics Office : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>
