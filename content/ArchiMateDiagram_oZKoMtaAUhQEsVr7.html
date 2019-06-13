@@ -1,0 +1,420 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - FOAM ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_EnnmauaAUrCsulL3.html" class="PageParentTitle">FOAM : Application Component</a> (in <a href="ArchiMateDiagram_EnnmauaAUrCsulL3.html" class="PageParentTitle">RF ArchiMate Diagram</a> / <a href="BusinessProcessDiagram_p8i9f1aAUhQEPybV.html" class="PageParentTitle">2 - FOAs/ARAs</a> / <a href="ArchiMateDiagram_oZKoMtaAUhQEsVr7.html" class="PageParentTitle">FOAM ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - FOAM ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('Research Funding Management Archtecture.vpp://diagram/oZKoMtaAUhQEsVr7', 'FOAM ArchiMate Diagram\nResearch Funding Management Archtecture.vpp://diagram/oZKoMtaAUhQEsVr7', 'FOAM ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|253.0|190.0|122.0|40.0|ArchiMateDataObject_g7JGauaAUrCsulIW.html|ArchiMateDataObject_g7JGauaAUrCsulIW.html|yvikMtaAUhQEsV36" id="optionyvikMtaAUhQEsV36">Impact II Transactional : Data Object</option>
+<option value="shape|101.0|190.0|96.0|40.0|ArchiMateApplicationComponent_3k9hQtaAUhQEsUoS.html|ArchiMateApplicationComponent_3k9hQtaAUhQEsUoS.html|CPcEMtaAUhQEsb3f" id="optionCPcEMtaAUhQEsb3f">FOAM : Application Component</option>
+<option value="shape|117.0|707.0|92.0|40.0|ArchiMateBusinessActor_2JEpQtaAUhQEsZWW.html|ArchiMateBusinessActor_2JEpQtaAUhQEsZWW.html|CG0EMtaAUhQEsb3N" id="optionCG0EMtaAUhQEsb3N">Guide Liaison : Business Actor</option>
+<option value="shape|34.0|57.0|352.0|306.0|ArchiMateGrouping_nD72auaAUrCsuubz.html|ArchiMateGrouping_nD72auaAUrCsuubz.html|TkoEMtaAUhQEsb2s" id="optionTkoEMtaAUhQEsb2s">eRA/IIMPAC II : Grouping</option>
+<option value="shape|39.0|603.0|347.0|185.0|ArchiMateGrouping_kBdCojqAUhQsEg44.html|ArchiMateGrouping_kBdCojqAUhQsEg44.html|ivaEMtaAUhQEsb4t" id="optionivaEMtaAUhQEsb4t">DEA : Grouping</option>
+<option value="shape|2.0|2.0|425.0|392.0|ArchiMateGrouping_DOM7rUaAUhQsMVgW.html|ArchiMateGrouping_DOM7rUaAUhQsMVgW.html|QRY4MtaAUhQEsbeL" id="optionQRY4MtaAUhQEsbeL">NIH : Grouping</option>
+<option value="shape|3.0|559.0|424.0|267.0|ArchiMateGrouping_qVgA_UaAUhQsMazG.html|ArchiMateGrouping_qVgA_UaAUhQsMazG.html|f4S4MtaAUhQEsbls" id="optionf4S4MtaAUhQEsbls">NCI : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/FOAM_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="431" height="830"/>
+					<map name="diagram_map">
+<area coords="12,561,31,575" coords2="12,561,31,575" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="10,4,29,18" coords2="10,4,29,18" shape="rect" alt="NIH" href="Glossary_i_pPCgaC48kYAjIW.html"/>
+<area coords="49,605,71,619" coords2="49,605,71,619" shape="rect" alt="DEA" href="Glossary_bZtbsgaC48kYAisp.html"/>
+<area coords="41,59,62,73" coords2="41,59,62,73" shape="rect" alt="eRA" href="Glossary_r3zcMgaC48kYAidB.html"/>
+<area imageId="diagram" coords="142.0, 230.0, 142.0, 707.0, 156.0, 707.0, 156.0, 230.0" coords2="142.0, 230.0, 142.0, 707.0, 156.0, 707.0, 156.0, 230.0" shape="poly" alt=":Triggering" id="areadiagram_map_8PcEMtaAUhQEsb3d_default" href="ArchiMateTriggering_s1qpQtaAUhQEsZX8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="197.0, 194.0, 197.0, 208.0, 253.0, 208.0, 253.0, 194.0" coords2="197.0, 194.0, 197.0, 208.0, 253.0, 208.0, 253.0, 194.0" shape="poly" alt=":Access" id="areadiagram_map_yvikMtaAUhQEsV34_default" href="ArchiMateAccess_darEMtaAUhQEsR23.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;margin-right:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_AAI4FwaC48kYAn7n.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gPlYFwaC48kYAn7B.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      *&amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_D91qagaC48kYAg1H.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSR&amp;lt;/a&amp;gt; 
+      USAGE NOTE-&amp;lt;/b&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ta68MgaC48kYAidX.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IMPAC 
+      II&amp;lt;/a&amp;gt; database transmits scores and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_vs4RGgaC48kYAiS0.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Summary 
+      Statement&amp;lt;/a&amp;gt; to the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_uAf8MgaC48kYAid7.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;eRA 
+      Commons&amp;lt;/a&amp;gt; System.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;* &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+      PROGRAMS USAGE NOTE&amp;lt;/b&amp;gt;- &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ta68MgaC48kYAidX.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IMPAC 
+      II&amp;lt;/a&amp;gt; &amp;#8211; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_b2YXsgaC48kYAi__.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;PI&amp;lt;/a&amp;gt; 
+      can access scores through &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ohutsgaC48kYAij9.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;QVR&amp;lt;/a&amp;gt;, 
+      PMM, or Workbench for example.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="253, 190, 375, 230" coords2="253, 190, 375, 230" shape="rect" alt="Impact II Transactional:Data Object" id="areadiagram_map_yvikMtaAUhQEsV36_default" href="ArchiMateDataObject_g7JGauaAUrCsulIW.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','253, 190, 375, 230',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_z0gWuxaAUhQuH0Es.html/Impact II Transactional ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '253, 190, 375, 230'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;margin-right:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      FOAM belongs to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_r3zcMgaC48kYAidB.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;eRA&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="101, 190, 197, 230" coords2="101, 190, 197, 230" shape="rect" alt="FOAM:Application Component" id="areadiagram_map_CPcEMtaAUhQEsb3f_default" href="ArchiMateApplicationComponent_3k9hQtaAUhQEsUoS.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','101, 190, 197, 230',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_oZKoMtaAUhQEsVr7.html/FOAM ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '101, 190, 197, 230'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="117, 707, 209, 747" coords2="117, 707, 209, 747" shape="rect" alt="Guide Liaison:Business Actor" id="areadiagram_map_CG0EMtaAUhQEsb3N_default" href="ArchiMateBusinessActor_2JEpQtaAUhQEsZWW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="34, 57, 386, 363" coords2="34, 57, 386, 363" shape="rect" alt="eRA/IIMPAC II:Grouping" id="areadiagram_map_TkoEMtaAUhQEsb2s_default" href="ArchiMateGrouping_nD72auaAUrCsuubz.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','34, 57, 386, 363',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_kie_sxaAUhQuH8OM.html/eRA/IIMPAC II ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '34, 57, 386, 363'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="39, 603, 386, 788" coords2="39, 603, 386, 788" shape="rect" alt="DEA:Grouping" id="areadiagram_map_ivaEMtaAUhQEsb4t_default" href="ArchiMateGrouping_kBdCojqAUhQsEg44.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','39, 603, 386, 788',new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_S2msTpaAUrD8SD_0.html/DEA ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array('ArchiMateDiagram_D0ytMFaAUhQELlbc.html/DEA DOC-centric ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '39, 603, 386, 788'),showSubdiagramIcon('diagram', '39, 603, 386, 788'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 427, 394" coords2="2, 2, 427, 394" shape="rect" alt="NIH:Grouping" id="areadiagram_map_QRY4MtaAUhQEsbeL_default" href="ArchiMateGrouping_DOM7rUaAUhQsMVgW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3, 559, 427, 826" coords2="3, 559, 427, 826" shape="rect" alt="NCI:Grouping" id="areadiagram_map_f4S4MtaAUhQEsbls_default" href="ArchiMateGrouping_qVgA_UaAUhQsMazG.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/DataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/DataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateDataObject_g7JGauaAUrCsulIW.html" class="ItemLink">Impact II Transactional : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;margin-right:0;">
+    <p style="margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;">
+      Contains
+    </p>
+    <p style="margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;">
+      <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a>
+    </p>
+    <p style="margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;">
+      <a class="ItemLink" href="Glossary_AAI4FwaC48kYAn7n.html" name="">SIC</a> 
+      Codes
+    </p>
+    <p style="margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;">
+      <a class="ItemLink" href="Glossary_gPlYFwaC48kYAn7B.html" name="">SITE</a> 
+      Codes
+    </p>
+    <p style="margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;">
+      *<b><a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a>&nbsp;<a class="ItemLink" href="Glossary_D91qagaC48kYAg1H.html" name="">CSR</a> 
+      USAGE NOTE-</b>&nbsp;<a class="ItemLink" href="Glossary_ta68MgaC48kYAidX.html" name="">IMPAC 
+      II</a> database transmits scores and <a class="ItemLink" href="Glossary_vs4RGgaC48kYAiS0.html" name="">Summary 
+      Statement</a> to the <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a>&nbsp;<a class="ItemLink" href="Glossary_uAf8MgaC48kYAid7.html" name="">eRA 
+      Commons</a> System.
+    </p>
+    <p style="margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;">
+      <b>* <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a> 
+      PROGRAMS USAGE NOTE</b>- <a class="ItemLink" href="Glossary_ta68MgaC48kYAidX.html" name="">IMPAC 
+      II</a> &#8211; <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>&nbsp;<a class="ItemLink" href="Glossary_b2YXsgaC48kYAi__.html" name="">PI</a> 
+      can access scores through <a class="ItemLink" href="Glossary_ohutsgaC48kYAij9.html" name="">QVR</a>, 
+      PMM, or Workbench for example.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_3k9hQtaAUhQEsUoS.html" class="ItemLink">FOAM : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;margin-right:0;">
+    <p style="margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;">
+      FOAM belongs to <a class="ItemLink" href="Glossary_r3zcMgaC48kYAidB.html" name="">eRA</a>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_2JEpQtaAUhQEsZWW.html" class="ItemLink">Guide Liaison : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_nD72auaAUrCsuubz.html" class="ItemLink">eRA/IIMPAC II : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_kBdCojqAUhQsEg44.html" class="ItemLink">DEA : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_DOM7rUaAUhQsMVgW.html" class="ItemLink">NIH : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_qVgA_UaAUhQsMazG.html" class="ItemLink">NCI : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

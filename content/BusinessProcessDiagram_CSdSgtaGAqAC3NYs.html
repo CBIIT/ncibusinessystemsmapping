@@ -1,0 +1,1214 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - Create a reimbursable CAN Business Process Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - Create a reimbursable CAN Business Process Diagram		</span>
+<a onclick="javascript: showVpLink('OBF mapping project.vpp://diagram/CSdSgtaGAqAC3NYs', 'Create a reimbursable CAN Business Process Diagram\nOBF mapping project.vpp://diagram/CSdSgtaGAqAC3NYs', 'Create a reimbursable CAN Business Process Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|3833.0|231.0|64.0|40.0|BPTask_EaCWQtaGAqAC3KSJ.html|BPTask_EaCWQtaGAqAC3KSJ.html|EaCWQtaGAqAC3KSI" id="optionEaCWQtaGAqAC3KSI">Que Email : Task</option>
+<option value="shape|1090.0|820.0|112.0|40.0|BPTask_EbMKgtaGAqAC3NvS.html|BPTask_EbMKgtaGAqAC3NvS.html|EbMKgtaGAqAC3NvR" id="optionEbMKgtaGAqAC3NvR">SAVE Form To Disk : Task</option>
+<option value="shape|666.0|1330.0|342.0|40.0|BPTask_RkNygtaGAqAC3NtK.html|BPTask_RkNygtaGAqAC3NtK.html|RkNygtaGAqAC3NtJ" id="optionRkNygtaGAqAC3NtJ">Verify the CAN form to confirm if it is completed and accurate : Task</option>
+<option value="shape|403.0|1175.0|194.0|40.0|BPTask_mw6ygtaGAqAC3NsO.html|BPTask_mw6ygtaGAqAC3NsO.html|mw6ygtaGAqAC3NsN" id="optionmw6ygtaGAqAC3NsN">Queue Reimbursable CAN Request : Task</option>
+<option value="shape|104.0|1484.0|20.0|20.0|BPStartEvent_UnYygtaGAqAC3Ncd.html|BPStartEvent_UnYygtaGAqAC3Ncd.html|UnYygtaGAqAC3Ncc" id="optionUnYygtaGAqAC3Ncc">Unnamed Start Event : Start Event</option>
+<option value="shape|17.0|1273.0|6911.0|155.0|BPLane_K5nSgtaGAqAC3NZq.html|BPLane_K5nSgtaGAqAC3NZq.html|K5nSgtaGAqAC3NZp" id="optionK5nSgtaGAqAC3NZp">OBF : Lane</option>
+<option value="shape|1076.0|1330.0|140.0|40.0|BPTask_LJwKgtaGAqAC3Nua.html|BPTask_LJwKgtaGAqAC3Nua.html|LJwKgtaGAqAC3NuZ" id="optionLJwKgtaGAqAC3NuZ">Save CAN Request form  : Task</option>
+<option value="shape|213.0|1474.0|150.0|40.0|BPTask_ZCUygtaGAqAC3Ncp.html|BPTask_ZCUygtaGAqAC3Ncp.html|ZCUygtaGAqAC3Nco" id="optionZCUygtaGAqAC3Nco">Fill out Reimbursable CAN Request : Task</option>
+<option value="shape|17.0|1118.0|6911.0|155.0|BPLane_Po_SgtaGAqAC3Nbb.html|BPLane_Po_SgtaGAqAC3Nbb.html|Po_SgtaGAqAC3Nba" id="optionPo_SgtaGAqAC3Nba">Email - NCICANReuest@mail.nih.gov : Lane</option>
+<option value="shape|3726.0|1189.0|64.0|40.0|BPTask_k4nmQtaGAqAC3KQC.html|BPTask_k4nmQtaGAqAC3KQC.html|k4nmQtaGAqAC3KQB" id="optionk4nmQtaGAqAC3KQB">Que Email : Task</option>
+<option value="shape|17.0|1428.0|6911.0|155.0|BPLane_brQygtaGAqAC3NcR.html|BPLane_brQygtaGAqAC3NcR.html|brQygtaGAqAC3NcQ" id="optionbrQygtaGAqAC3NcQ">Requester : Lane</option>
+<option value="shape|4307.0|1189.0|200.0|40.0|BPTask_9s62QtaGAqAC3KVX.html|BPTask_9s62QtaGAqAC3KVX.html|9s62QtaGAqAC3KVW" id="option9s62QtaGAqAC3KVW">Que New Segment 14 created Email : Task</option>
+<option value="shape|3897.0|414.0|64.0|40.0|BPTask_BzgWQtaGAqAC3KQ4.html|BPTask_BzgWQtaGAqAC3KQ4.html|BzgWQtaGAqAC3KQ3" id="optionBzgWQtaGAqAC3KQ3">Que Email : Task</option>
+<option value="shape|17.0|762.0|6911.0|356.0|BPLane_FmEKgtaGAqAC3Nu2.html|BPLane_FmEKgtaGAqAC3Nu2.html|FmEKgtaGAqAC3Nu1" id="optionFmEKgtaGAqAC3Nu1">FMB/Execution/IAA and DCC/2019/Reimbursable Request/DOC 
+  : Lane</option>
+<option value="shape|452.0|1474.0|97.0|40.0|BPTask_8UKygtaGAqAC3Nru.html|BPTask_8UKygtaGAqAC3Nru.html|8UKygtaGAqAC3Nrt" id="option8UKygtaGAqAC3Nrt">Attach and Send : Task</option>
+<option value="shape|4040.0|414.0|69.0|40.0|BPTask_9a42QtaGAqAC3KTp.html|BPTask_9a42QtaGAqAC3KTp.html|9a42QtaGAqAC3KTo" id="option9a42QtaGAqAC3KTo">Read Email : Task</option>
+<option value="shape|17.0|552.0|6911.0|210.0|BPLane_ABk6QtaGAqAC3KIB.html|BPLane_ABk6QtaGAqAC3KIB.html|ABk6QtaGAqAC3KIA" id="optionABk6QtaGAqAC3KIA">L:\Group\FMB\Execution\IAA : Lane</option>
+<option value="shape|1364.0|2.0|200.0|100.0|BPSubProcess_I_rKgtaGAqAC3NxN.html|BPSubProcess_I_rKgtaGAqAC3NxN.html|I_rKgtaGAqAC3NxM" id="optionI_rKgtaGAqAC3NxM">Create Remunerable CAN IN NBS  : Sub-Process</option>
+<option value="shape|17.0|342.0|6911.0|210.0|BPLane_xdqmQtaGAqAC3KO7.html|BPLane_xdqmQtaGAqAC3KO7.html|xdqmQtaGAqAC3KO6" id="optionxdqmQtaGAqAC3KO6">Lori Forgosh/Deborah Moore : Lane</option>
+<option value="shape|1284.0|1330.0|150.0|40.0|BPTask_4pHaQtaGAqAC3J4t.html|BPTask_4pHaQtaGAqAC3J4t.html|4pHaQtaGAqAC3J4s" id="option4pHaQtaGAqAC3J4s">Fill out Project Request Template : Task</option>
+<option value="shape|4157.0|414.0|137.0|40.0|BPTask_lR02QtaGAqAC3KUL.html|BPTask_lR02QtaGAqAC3KUL.html|lR02QtaGAqAC3KUK" id="optionlR02QtaGAqAC3KUK">Create new Segment 14 : Task</option>
+<option value="shape|1521.0|637.0|50.0|40.0|BPTask_kEF6QtaGAqAC3KJN.html|BPTask_kEF6QtaGAqAC3KJN.html|kEF6QtaGAqAC3KJM" id="optionkEF6QtaGAqAC3KJM">Open LOG : Task</option>
+<option value="shape|17.0|132.0|6911.0|210.0|BPLane_r7BmQtaGAqAC3KPm.html|BPLane_r7BmQtaGAqAC3KPm.html|r7BmQtaGAqAC3KPl" id="optionr7BmQtaGAqAC3KPl">OFM Accountant at GAB : Lane</option>
+<option value="shape|4329.0|414.0|150.0|40.0|BPTask_Tzi2QtaGAqAC3KUx.html|BPTask_Tzi2QtaGAqAC3KUx.html|Tzi2QtaGAqAC3KUw" id="optionTzi2QtaGAqAC3KUw">Email new Segment 14 created : Task</option>
+<option value="shape|1752.0|1329.0|308.0|40.0|BPTask_Zi8GQtaGAqAC3KJ1.html|BPTask_Zi8GQtaGAqAC3KJ1.html|Zi8GQtaGAqAC3KJ0" id="optionZi8GQtaGAqAC3KJ0">Insert a new line by using the shortcut Ctrl + Shift + “+” : Task</option>
+<option value="shape|2140.0|1307.0|382.0|70.0|BPTask_7n2GQtaGAqAC3KLI.html|BPTask_7n2GQtaGAqAC3KLI.html|7n2GQtaGAqAC3KLH" id="option7n2GQtaGAqAC3KLH">Copy (Ctrl + “C”) the line above (the new line) to the new creating line (Ctrl + “V”) and update the information from the fields according to the information from the new IAA except for the column “IAA Order Value (Create in Segment 14) which is automatically updated when you hit the button “Restore Formulas”;  : Task</option>
+<option value="shape|2590.0|1322.0|291.0|40.0|BPTask_EdpGQtaGAqAC3KLz.html|BPTask_EdpGQtaGAqAC3KLz.html|EdpGQtaGAqAC3KLy" id="optionEdpGQtaGAqAC3KLy">Change the field in the column “Pick Account Combinations to Create in NBS” to “Pending”;  : Task</option>
+<option value="shape|2955.0|1322.0|225.0|40.0|BPTask_WATGQtaGAqAC3KMr.html|BPTask_WATGQtaGAqAC3KMr.html|WATGQtaGAqAC3KMq" id="optionWATGQtaGAqAC3KMq">Update the GL Date field to the current date and USERNAME_NIH field;  : Task</option>
+<option value="shape|3254.0|1322.0|371.0|40.0|BPTask_n4HGQtaGAqAC3KNR.html|BPTask_n4HGQtaGAqAC3KNR.html|n4HGQtaGAqAC3KNQ" id="optionn4HGQtaGAqAC3KNQ">Hit the button “Restore Formulas” to obtain the new IAA Order Value (you’d like to “save” the file at the designated folder/place) : Task</option>
+<option value="shape|3688.0|1318.0|315.0|49.0|BPTask_GY_GQtaGAqAC3KOX.html|BPTask_GY_GQtaGAqAC3KOX.html|GY_GQtaGAqAC3KOW" id="optionGY_GQtaGAqAC3KOW">Email to request a Creation of a new Segment using the description fro the requestors submission and the new created IAA number : Task</option>
+<option value="shape|4373.0|1318.0|69.0|40.0|BPTask_b3h2QtaGAqAC3KWB.html|BPTask_b3h2QtaGAqAC3KWB.html|b3h2QtaGAqAC3KWA" id="optionb3h2QtaGAqAC3KWA">Read Email : Task</option>
+<option value="shape|1490.0|1330.0|196.0|40.0|BPTask_wwD2QtaGAqAC3KWr.html|BPTask_wwD2QtaGAqAC3KWr.html|wwD2QtaGAqAC3KWq" id="optionwwD2QtaGAqAC3KWq">Create new line for the new IAA for this fiscal year at the bottom  : Task</option>
+<option value="shape|4622.0|1300.0|206.0|100.0|BPSubProcess_ZASOQtaGAqAC3KYt.html|BPSubProcess_ZASOQtaGAqAC3KYt.html|ZASOQtaGAqAC3KYs" id="optionZASOQtaGAqAC3KYs">Export the new IAA number Into NBS : Sub-Process</option>
+<option value="shape|4905.0|1300.0|200.0|100.0|BPSubProcess_lj5F4taGAqAC3DPu.html|BPSubProcess_lj5F4taGAqAC3DPu.html|lj5F4taGAqAC3DPt" id="optionlj5F4taGAqAC3DPt">Request the IAA Reimbursable CAN : Sub-Process</option>
+<option value="shape|2.0|132.0|6926.0|1451.0|BPPool_Y5nSgtaGAqAC3NZm.html|BPPool_Y5nSgtaGAqAC3NZm.html|g5nSgtaGAqAC3NZU" id="optiong5nSgtaGAqAC3NZU">Create a reimbursable CAN : Pool</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Create_a_reimbursable_CAN_Business_Process_Diagram.png" usemap="#diagram_map" class="Image" width="6932" height="1587"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="124.0, 1487.0, 124.0, 1501.0, 213.0, 1501.0, 213.0, 1487.0" coords2="124.0, 1487.0, 124.0, 1501.0, 213.0, 1501.0, 213.0, 1487.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_vCUygtaGAqAC3Ncv_default" href="BPSequenceFlow_nCUygtaGAqAC3Ncu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="363.0, 1487.0, 363.0, 1501.0, 452.0, 1501.0, 452.0, 1487.0" coords2="363.0, 1487.0, 363.0, 1501.0, 452.0, 1501.0, 452.0, 1487.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_ZUKygtaGAqAC3Nr2_default" href="BPSequenceFlow_RUKygtaGAqAC3Nr1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="493.0, 1215.0, 493.0, 1474.0, 507.0, 1474.0, 507.0, 1215.0" coords2="493.0, 1215.0, 493.0, 1474.0, 507.0, 1474.0, 507.0, 1215.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Dw6ygtaGAqAC3NsW_default" href="BPSequenceFlow_1w6ygtaGAqAC3NsV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="635.0, 1185.0, 635.0, 1188.0, 597.0, 1188.0, 597.0, 1202.0, 635.0, 1202.0, 635.0, 1343.0, 632.0, 1343.0, 632.0, 1357.0, 635.0, 1357.0, 635.0, 1360.0, 649.0, 1360.0, 649.0, 1357.0, 666.0, 1357.0, 666.0, 1343.0, 649.0, 1343.0, 649.0, 1202.0, 652.0, 1202.0, 652.0, 1188.0, 649.0, 1188.0, 649.0, 1185.0" coords2="635.0, 1185.0, 635.0, 1188.0, 597.0, 1188.0, 597.0, 1202.0, 635.0, 1202.0, 635.0, 1343.0, 632.0, 1343.0, 632.0, 1357.0, 635.0, 1357.0, 635.0, 1360.0, 649.0, 1360.0, 649.0, 1357.0, 666.0, 1357.0, 666.0, 1343.0, 649.0, 1343.0, 649.0, 1202.0, 652.0, 1202.0, 652.0, 1188.0, 649.0, 1188.0, 649.0, 1185.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_HkNygtaGAqAC3NtS_default" href="BPSequenceFlow_LkNygtaGAqAC3NtR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1008.0, 1343.0, 1008.0, 1357.0, 1076.0, 1357.0, 1076.0, 1343.0" coords2="1008.0, 1343.0, 1008.0, 1357.0, 1076.0, 1357.0, 1076.0, 1343.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_EpwKgtaGAqAC3Nui_default" href="BPSequenceFlow_opwKgtaGAqAC3Nuh.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1139.0, 860.0, 1139.0, 1330.0, 1153.0, 1330.0, 1153.0, 860.0" coords2="1139.0, 860.0, 1139.0, 1330.0, 1153.0, 1330.0, 1153.0, 860.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_ubMKgtaGAqAC3Nva_default" href="BPSequenceFlow_WbMKgtaGAqAC3NvZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1352.0, 830.0, 1352.0, 833.0, 1202.0, 833.0, 1202.0, 847.0, 1352.0, 847.0, 1352.0, 1330.0, 1366.0, 1330.0, 1366.0, 847.0, 1369.0, 847.0, 1369.0, 833.0, 1366.0, 833.0, 1366.0, 830.0" coords2="1352.0, 830.0, 1352.0, 833.0, 1202.0, 833.0, 1202.0, 847.0, 1352.0, 847.0, 1352.0, 1330.0, 1366.0, 1330.0, 1366.0, 847.0, 1369.0, 847.0, 1369.0, 833.0, 1366.0, 833.0, 1366.0, 830.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_upHaQtaGAqAC3J41_default" href="BPSequenceFlow_WpHaQtaGAqAC3J40.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1458.0, 647.0, 1458.0, 650.0, 1455.0, 650.0, 1455.0, 664.0, 1458.0, 664.0, 1458.0, 1332.0, 1434.0, 1332.0, 1434.0, 1346.0, 1458.0, 1346.0, 1458.0, 1349.0, 1472.0, 1349.0, 1472.0, 1346.0, 1475.0, 1346.0, 1475.0, 1332.0, 1472.0, 1332.0, 1472.0, 664.0, 1521.0, 664.0, 1521.0, 650.0, 1472.0, 650.0, 1472.0, 647.0" coords2="1458.0, 647.0, 1458.0, 650.0, 1455.0, 650.0, 1455.0, 664.0, 1458.0, 664.0, 1458.0, 1332.0, 1434.0, 1332.0, 1434.0, 1346.0, 1458.0, 1346.0, 1458.0, 1349.0, 1472.0, 1349.0, 1472.0, 1346.0, 1475.0, 1346.0, 1475.0, 1332.0, 1472.0, 1332.0, 1472.0, 664.0, 1521.0, 664.0, 1521.0, 650.0, 1472.0, 650.0, 1472.0, 647.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_REF6QtaGAqAC3KJV_default" href="BPSequenceFlow_eEF6QtaGAqAC3KJU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1539.0, 677.0, 1539.0, 1330.0, 1553.0, 1330.0, 1553.0, 677.0" coords2="1539.0, 677.0, 1539.0, 1330.0, 1553.0, 1330.0, 1553.0, 677.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_WS8GQtaGAqAC3KJ9_default" href="BPSequenceFlow_aS8GQtaGAqAC3KJ8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2060.0, 1333.0, 2060.0, 1347.0, 2140.0, 1347.0, 2140.0, 1333.0" coords2="2060.0, 1333.0, 2060.0, 1347.0, 2140.0, 1347.0, 2140.0, 1333.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_MX2GQtaGAqAC3KLQ_default" href="BPSequenceFlow_EX2GQtaGAqAC3KLP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2522.0, 1335.0, 2522.0, 1349.0, 2590.0, 1349.0, 2590.0, 1335.0" coords2="2522.0, 1335.0, 2522.0, 1349.0, 2590.0, 1349.0, 2590.0, 1335.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_udpGQtaGAqAC3KL7_default" href="BPSequenceFlow_mdpGQtaGAqAC3KL6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2881.0, 1335.0, 2881.0, 1349.0, 2955.0, 1349.0, 2955.0, 1335.0" coords2="2881.0, 1335.0, 2881.0, 1349.0, 2955.0, 1349.0, 2955.0, 1335.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_tATGQtaGAqAC3KMz_default" href="BPSequenceFlow_lATGQtaGAqAC3KMy.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3180.0, 1335.0, 3180.0, 1349.0, 3254.0, 1349.0, 3254.0, 1335.0" coords2="3180.0, 1335.0, 3180.0, 1349.0, 3254.0, 1349.0, 3254.0, 1335.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_sEHGQtaGAqAC3KNZ_default" href="BPSequenceFlow_kEHGQtaGAqAC3KNY.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3625.0, 1335.0, 3625.0, 1349.0, 3688.0, 1349.0, 3688.0, 1335.0" coords2="3625.0, 1335.0, 3625.0, 1349.0, 3688.0, 1349.0, 3688.0, 1335.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_tY_GQtaGAqAC3KOf_default" href="BPSequenceFlow_lY_GQtaGAqAC3KOe.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3744.0, 1229.0, 3744.0, 1318.0, 3758.0, 1318.0, 3758.0, 1229.0" coords2="3744.0, 1229.0, 3744.0, 1318.0, 3758.0, 1318.0, 3758.0, 1229.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_.4nmQtaGAqAC3KQK_default" href="BPSequenceFlow_24nmQtaGAqAC3KQJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3921.0, 454.0, 3921.0, 1318.0, 3935.0, 1318.0, 3935.0, 454.0" coords2="3921.0, 454.0, 3921.0, 1318.0, 3935.0, 1318.0, 3935.0, 454.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_nzgWQtaGAqAC3KRA_default" href="BPSequenceFlow_rzgWQtaGAqAC3KQ_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3851.0, 271.0, 3851.0, 1318.0, 3865.0, 1318.0, 3865.0, 271.0" coords2="3851.0, 271.0, 3851.0, 1318.0, 3865.0, 1318.0, 3865.0, 271.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_BaCWQtaGAqAC3KSR_default" href="BPSequenceFlow_OaCWQtaGAqAC3KSQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3961.0, 427.0, 3961.0, 441.0, 4040.0, 441.0, 4040.0, 427.0" coords2="3961.0, 427.0, 3961.0, 441.0, 4040.0, 441.0, 4040.0, 427.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_k642QtaGAqAC3KTx_default" href="BPSequenceFlow_o642QtaGAqAC3KTw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4109.0, 427.0, 4109.0, 441.0, 4157.0, 441.0, 4157.0, 427.0" coords2="4109.0, 427.0, 4109.0, 441.0, 4157.0, 441.0, 4157.0, 427.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_wx02QtaGAqAC3KUT_default" href="BPSequenceFlow_fR02QtaGAqAC3KUS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4294.0, 427.0, 4294.0, 441.0, 4329.0, 441.0, 4329.0, 427.0" coords2="4294.0, 427.0, 4294.0, 441.0, 4329.0, 441.0, 4329.0, 427.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_YLi2QtaGAqAC3KU5_default" href="BPSequenceFlow_gLi2QtaGAqAC3KU4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4399.0, 454.0, 4399.0, 1189.0, 4413.0, 1189.0, 4413.0, 454.0" coords2="4399.0, 454.0, 4399.0, 1189.0, 4413.0, 1189.0, 4413.0, 454.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Yc62QtaGAqAC3KVf_default" href="BPSequenceFlow_Qc62QtaGAqAC3KVe.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4400.0, 1229.0, 4400.0, 1318.0, 4414.0, 1318.0, 4414.0, 1229.0" coords2="4400.0, 1229.0, 4400.0, 1318.0, 4414.0, 1318.0, 4414.0, 1229.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_UPh2QtaGAqAC3KWJ_default" href="BPSequenceFlow_YPh2QtaGAqAC3KWI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1686.0, 1342.0, 1686.0, 1356.0, 1752.0, 1356.0, 1752.0, 1342.0" coords2="1686.0, 1342.0, 1686.0, 1356.0, 1752.0, 1356.0, 1752.0, 1342.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_AKYOQtaGAqAC3KYP_default" href="BPSequenceFlow__yYOQtaGAqAC3KYO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4442.0, 1331.0, 4442.0, 1345.0, 4622.0, 1345.0, 4622.0, 1331.0" coords2="4442.0, 1331.0, 4442.0, 1345.0, 4622.0, 1345.0, 4622.0, 1331.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_3ASOQtaGAqAC3KY1_default" href="BPSequenceFlow_7ASOQtaGAqAC3KY0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4828.0, 1331.0, 4828.0, 1345.0, 4905.0, 1345.0, 4905.0, 1331.0" coords2="4828.0, 1331.0, 4828.0, 1345.0, 4905.0, 1345.0, 4905.0, 1331.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_3j5F4taGAqAC3DP2_default" href="BPSequenceFlow_7j5F4taGAqAC3DP1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4905, 1300, 5105, 1400" coords2="4905, 1300, 5105, 1400" shape="rect" alt="Request the IAA Reimbursable CAN:Sub-Process" id="areadiagram_map_lj5F4taGAqAC3DPt_default" href="BPSubProcess_lj5F4taGAqAC3DPu.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','4905, 1300, 5105, 1400',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('BusinessProcessDiagram_QU1F4taGAqAC3DQI.html/Request the IAA Reimbursable CAN/BusinessProcessDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '4905, 1300, 5105, 1400'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4622, 1300, 4828, 1400" coords2="4622, 1300, 4828, 1400" shape="rect" alt="Export the new IAA number Into NBS:Sub-Process" id="areadiagram_map_ZASOQtaGAqAC3KYs_default" href="BPSubProcess_ZASOQtaGAqAC3KYt.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','4622, 1300, 4828, 1400',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('BusinessProcessDiagram_FP1uQtaGAqAC3KZH.html/Export the new IAA number Into NBS/BusinessProcessDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '4622, 1300, 4828, 1400'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1490, 1330, 1686, 1370" coords2="1490, 1330, 1686, 1370" shape="rect" alt="Create new line for the new IAA for this fiscal year at the bottom :Task" id="areadiagram_map_wwD2QtaGAqAC3KWq_default" href="BPTask_wwD2QtaGAqAC3KWr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4373, 1318, 4442, 1358" coords2="4373, 1318, 4442, 1358" shape="rect" alt="Read Email:Task" id="areadiagram_map_b3h2QtaGAqAC3KWA_default" href="BPTask_b3h2QtaGAqAC3KWB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4307, 1189, 4507, 1229" coords2="4307, 1189, 4507, 1229" shape="rect" alt="Que New Segment 14 created Email:Task" id="areadiagram_map_9s62QtaGAqAC3KVW_default" href="BPTask_9s62QtaGAqAC3KVX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4329, 414, 4479, 454" coords2="4329, 414, 4479, 454" shape="rect" alt="Email new Segment 14 created:Task" id="areadiagram_map_Tzi2QtaGAqAC3KUw_default" href="BPTask_Tzi2QtaGAqAC3KUx.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4157, 414, 4294, 454" coords2="4157, 414, 4294, 454" shape="rect" alt="Create new Segment 14:Task" id="areadiagram_map_lR02QtaGAqAC3KUK_default" href="BPTask_lR02QtaGAqAC3KUL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4040, 414, 4109, 454" coords2="4040, 414, 4109, 454" shape="rect" alt="Read Email:Task" id="areadiagram_map_9a42QtaGAqAC3KTo_default" href="BPTask_9a42QtaGAqAC3KTp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3833, 231, 3897, 271" coords2="3833, 231, 3897, 271" shape="rect" alt="Que Email:Task" id="areadiagram_map_EaCWQtaGAqAC3KSI_default" href="BPTask_EaCWQtaGAqAC3KSJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3897, 414, 3961, 454" coords2="3897, 414, 3961, 454" shape="rect" alt="Que Email:Task" id="areadiagram_map_BzgWQtaGAqAC3KQ3_default" href="BPTask_BzgWQtaGAqAC3KQ4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3726, 1189, 3790, 1229" coords2="3726, 1189, 3790, 1229" shape="rect" alt="Que Email:Task" id="areadiagram_map_k4nmQtaGAqAC3KQB_default" href="BPTask_k4nmQtaGAqAC3KQC.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 132, 6928, 342" coords2="17, 132, 6928, 342" shape="rect" alt="OFM Accountant at GAB:Lane" id="areadiagram_map_r7BmQtaGAqAC3KPl_default" href="BPLane_r7BmQtaGAqAC3KPm.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 342, 6928, 552" coords2="17, 342, 6928, 552" shape="rect" alt="Lori Forgosh/Deborah Moore:Lane" id="areadiagram_map_xdqmQtaGAqAC3KO6_default" href="BPLane_xdqmQtaGAqAC3KO7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;margin-right:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;div class=&amp;quot;OutlineElement Ltr SCXW204481277 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;p class=&amp;quot;Paragraph SCXW204481277 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{4b358827-0959-4921-8505-92b1059a7a57}{19}&amp;quot; paraid=&amp;quot;1776158311&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;#8220;Subject: 
+        Segment 14 Requests: NRC17002001 &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_nfvxmwaAU82ImBQu.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CCR&amp;lt;/a&amp;gt; 
+        CAUS REIM IH-LM-Gonzales &amp;#8211; ODS &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_lNyo_gaAUsSyFws4.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IAA&amp;lt;/a&amp;gt; 
+        Support&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW204481277 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;134233279&amp;quot;:true,&amp;quot;201341983&amp;quot;:0,&amp;quot;335559685&amp;quot;:1080,&amp;quot;335559739&amp;quot;:200,&amp;quot;335559740&amp;quot;:240}&amp;quot; line-height=&amp;quot;18px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+      &amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;OutlineElement Ltr SCXW204481277 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;p class=&amp;quot;Paragraph SCXW204481277 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{4b358827-0959-4921-8505-92b1059a7a57}{25}&amp;quot; paraid=&amp;quot;1513733091&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;EOP SCXW204481277 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;134233279&amp;quot;:true,&amp;quot;201341983&amp;quot;:0,&amp;quot;335559685&amp;quot;:1080,&amp;quot;335559739&amp;quot;:200,&amp;quot;335559740&amp;quot;:240}&amp;quot; line-height=&amp;quot;18px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+      &amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;OutlineElement Ltr SCXW204481277 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;p class=&amp;quot;Paragraph SCXW204481277 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{4b358827-0959-4921-8505-92b1059a7a57}{29}&amp;quot; paraid=&amp;quot;1903507657&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;color:rgb(0, 112, 192);font-size:11pt;&amp;quot;&amp;gt;Hi&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;color:rgb(0, 112, 192);font-size:11pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;Lori/&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;Deborah,&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW204481277 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;201341983&amp;quot;:0,&amp;quot;335559685&amp;quot;:1080,&amp;quot;335559739&amp;quot;:0,&amp;quot;335559740&amp;quot;:240}&amp;quot; line-height=&amp;quot;18px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+      &amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;OutlineElement Ltr SCXW204481277 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;p class=&amp;quot;Paragraph SCXW204481277 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{4b358827-0959-4921-8505-92b1059a7a57}{39}&amp;quot; paraid=&amp;quot;1103688598&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;EOP SCXW204481277 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;201341983&amp;quot;:0,&amp;quot;335559685&amp;quot;:1080,&amp;quot;335559739&amp;quot;:0,&amp;quot;335559740&amp;quot;:240}&amp;quot; line-height=&amp;quot;18px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+      &amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;OutlineElement Ltr SCXW204481277 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;p class=&amp;quot;Paragraph SCXW204481277 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{4b358827-0959-4921-8505-92b1059a7a57}{43}&amp;quot; paraid=&amp;quot;1969996717&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;color:rgb(0, 112, 192);font-size:11pt;&amp;quot;&amp;gt;Please 
+        create a new segment 14 using the description and segment below.&amp;nbsp;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW204481277 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;201341983&amp;quot;:0,&amp;quot;335559685&amp;quot;:1080,&amp;quot;335559739&amp;quot;:0,&amp;quot;335559740&amp;quot;:240}&amp;quot; line-height=&amp;quot;18px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+      &amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;OutlineElement Ltr SCXW204481277 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;p class=&amp;quot;Paragraph SCXW204481277 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{4b358827-0959-4921-8505-92b1059a7a57}{49}&amp;quot; paraid=&amp;quot;1535638828&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;color:rgb(0, 112, 192);font-size:11pt;&amp;quot;&amp;gt;Please 
+        use the Description:&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;#8239;&amp;#8239; 
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_nfvxmwaAU82ImBQu.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CCR&amp;lt;/a&amp;gt; 
+        CAUS REIM IH-LM-Gonzalez - ODS &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_lNyo_gaAUsSyFws4.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IAA&amp;lt;/a&amp;gt; 
+        Support&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW204481277 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;134233279&amp;quot;:true,&amp;quot;201341983&amp;quot;:0,&amp;quot;335559685&amp;quot;:1080,&amp;quot;335559739&amp;quot;:200,&amp;quot;335559740&amp;quot;:276}&amp;quot; line-height=&amp;quot;20.7px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+      &amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;OutlineElement Ltr SCXW204481277 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;p class=&amp;quot;Paragraph SCXW204481277 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{4b358827-0959-4921-8505-92b1059a7a57}{57}&amp;quot; paraid=&amp;quot;1594577801&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;color:rgb(0, 112, 192);font-size:11pt;&amp;quot;&amp;gt;Segment 
+        14 &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_lNyo_gaAUsSyFws4.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IAA&amp;lt;/a&amp;gt; 
+        number:&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;color:rgb(0, 112, 192);font-size:11pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;NRC1&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;9&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;00&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;8&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;001&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW204481277 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;#8221;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW204481277 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;134233279&amp;quot;:true,&amp;quot;201341983&amp;quot;:0,&amp;quot;335559685&amp;quot;:1080,&amp;quot;335559739&amp;quot;:200,&amp;quot;335559740&amp;quot;:276}&amp;quot; line-height=&amp;quot;20.7px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+      &amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;OutlineElement Ltr SCXW204481277 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;p class=&amp;quot;Paragraph SCXW204481277 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{4b358827-0959-4921-8505-92b1059a7a57}{75}&amp;quot; paraid=&amp;quot;1923339244&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;EOP SCXW204481277 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;134233279&amp;quot;:true,&amp;quot;201341983&amp;quot;:0,&amp;quot;335559685&amp;quot;:1080,&amp;quot;335559739&amp;quot;:200,&amp;quot;335559740&amp;quot;:240}&amp;quot; line-height=&amp;quot;18px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+      &amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;nbsp;
+  &amp;lt;/body&amp;gt;" coords="3688, 1318, 4003, 1367" coords2="3688, 1318, 4003, 1367" shape="rect" alt="Email to request a Creation of a new Segment using the description fro the requestors submission and the new created IAA number:Task" id="areadiagram_map_GY_GQtaGAqAC3KOW_default" href="BPTask_GY_GQtaGAqAC3KOX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="3254, 1322, 3625, 1362" coords2="3254, 1322, 3625, 1362" shape="rect" alt="Hit the button “Restore Formulas” to obtain the new IAA Order Value (you’d like to “save” the file at the designated folder/place):Task" id="areadiagram_map_n4HGQtaGAqAC3KNQ_default" href="BPTask_n4HGQtaGAqAC3KNR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2955, 1322, 3180, 1362" coords2="2955, 1322, 3180, 1362" shape="rect" alt="Update the GL Date field to the current date and USERNAME_NIH field; :Task" id="areadiagram_map_WATGQtaGAqAC3KMq_default" href="BPTask_WATGQtaGAqAC3KMr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2590, 1322, 2881, 1362" coords2="2590, 1322, 2881, 1362" shape="rect" alt="Change the field in the column “Pick Account Combinations to Create in NBS” to “Pending”; :Task" id="areadiagram_map_EdpGQtaGAqAC3KLy_default" href="BPTask_EdpGQtaGAqAC3KLz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2140, 1307, 2522, 1377" coords2="2140, 1307, 2522, 1377" shape="rect" alt="Copy (Ctrl + “C”) the line above (the new line) to the new creating line (Ctrl + “V”) and update the information from the fields according to the information from the new IAA except for the column “IAA Order Value (Create in Segment 14) which is automatically updated when you hit the button “Restore Formulas”; :Task" id="areadiagram_map_7n2GQtaGAqAC3KLH_default" href="BPTask_7n2GQtaGAqAC3KLI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1752, 1329, 2060, 1369" coords2="1752, 1329, 2060, 1369" shape="rect" alt="Insert a new line by using the shortcut Ctrl + Shift + “+”:Task" id="areadiagram_map_Zi8GQtaGAqAC3KJ0_default" href="BPTask_Zi8GQtaGAqAC3KJ1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1521, 637, 1571, 677" coords2="1521, 637, 1571, 677" shape="rect" alt="Open LOG:Task" id="areadiagram_map_kEF6QtaGAqAC3KJM_default" href="BPTask_kEF6QtaGAqAC3KJN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 552, 6928, 762" coords2="17, 552, 6928, 762" shape="rect" alt="L:\Group\FMB\Execution\IAA:Lane" id="areadiagram_map_ABk6QtaGAqAC3KIA_default" href="BPLane_ABk6QtaGAqAC3KIB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;margin-right:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;div class=&amp;quot;SCXW23120354 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;font-size:14.666666984558105px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-right:0px;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;div class=&amp;quot;ListContainerWrapper SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;
+        &amp;lt;ul class=&amp;quot;BulletListStyle1 SCXW23120354 BCX4&amp;quot; role=&amp;quot;list&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:verdana;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;
+          &amp;lt;li aria-setsize=&amp;quot;-1&amp;quot; class=&amp;quot;OutlineElement Ltr SCXW23120354 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; data-aria-level=&amp;quot;1&amp;quot; data-aria-posinset=&amp;quot;2&amp;quot; data-font=&amp;quot;Symbol&amp;quot; data-leveltext=&amp;quot;&amp;quot; data-listid=&amp;quot;6&amp;quot; display=&amp;quot;block&amp;quot; role=&amp;quot;listitem&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:48px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;
+            &amp;lt;p class=&amp;quot;Paragraph SCXW23120354 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{06d4ab49-3160-4778-b618-3d1ad1f337c1}{254}&amp;quot; paraid=&amp;quot;707567446&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:0px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+              &amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;Fields 
+              that you can immediate fill-in such as:&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW23120354 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;134233279&amp;quot;:true,&amp;quot;201341983&amp;quot;:0,&amp;quot;335559739&amp;quot;:200,&amp;quot;335559740&amp;quot;:240}&amp;quot; line-height=&amp;quot;18px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+            &amp;lt;/p&amp;gt;
+          &amp;lt;/li&amp;gt;
+        &amp;lt;/ul&amp;gt;
+      &amp;lt;/div&amp;gt;
+      &amp;lt;div class=&amp;quot;ListContainerWrapper SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;
+        &amp;lt;ul class=&amp;quot;BulletListStyle3 SCXW23120354 BCX4&amp;quot; role=&amp;quot;list&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:8pt;font-family:verdana;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;
+          &amp;lt;li aria-setsize=&amp;quot;-1&amp;quot; class=&amp;quot;OutlineElement Ltr SCXW23120354 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; data-aria-level=&amp;quot;1&amp;quot; data-aria-posinset=&amp;quot;1&amp;quot; data-font=&amp;quot;Wingdings&amp;quot; data-leveltext=&amp;quot;&amp;quot; data-listid=&amp;quot;8&amp;quot; display=&amp;quot;block&amp;quot; role=&amp;quot;listitem&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:96px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;
+            &amp;lt;p class=&amp;quot;Paragraph SCXW23120354 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{81101ac4-511b-4c71-8b4a-38bc68c3f112}{6}&amp;quot; paraid=&amp;quot;1886982772&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:0px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+              &amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;Project 
+              Description (info from the request&amp;#8217;s email)&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW23120354 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;134233279&amp;quot;:true,&amp;quot;201341983&amp;quot;:0,&amp;quot;335559739&amp;quot;:200,&amp;quot;335559740&amp;quot;:240}&amp;quot; line-height=&amp;quot;18px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+            &amp;lt;/p&amp;gt;
+          &amp;lt;/li&amp;gt;
+          &amp;lt;li aria-setsize=&amp;quot;-1&amp;quot; class=&amp;quot;OutlineElement Ltr SCXW23120354 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; data-aria-level=&amp;quot;1&amp;quot; data-aria-posinset=&amp;quot;2&amp;quot; data-font=&amp;quot;Wingdings&amp;quot; data-leveltext=&amp;quot;&amp;quot; data-listid=&amp;quot;8&amp;quot; display=&amp;quot;block&amp;quot; role=&amp;quot;listitem&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:96px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;
+            &amp;lt;p class=&amp;quot;Paragraph SCXW23120354 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{81101ac4-511b-4c71-8b4a-38bc68c3f112}{13}&amp;quot; paraid=&amp;quot;921893692&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:0px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+              &amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;Organizational 
+              Code (SAC Code)&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW23120354 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;134233279&amp;quot;:true,&amp;quot;201341983&amp;quot;:0,&amp;quot;335559739&amp;quot;:200,&amp;quot;335559740&amp;quot;:240}&amp;quot; line-height=&amp;quot;18px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+            &amp;lt;/p&amp;gt;
+          &amp;lt;/li&amp;gt;
+          &amp;lt;li aria-setsize=&amp;quot;-1&amp;quot; class=&amp;quot;OutlineElement Ltr SCXW23120354 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; data-aria-level=&amp;quot;1&amp;quot; data-aria-posinset=&amp;quot;3&amp;quot; data-font=&amp;quot;Wingdings&amp;quot; data-leveltext=&amp;quot;&amp;quot; data-listid=&amp;quot;8&amp;quot; display=&amp;quot;block&amp;quot; role=&amp;quot;listitem&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:96px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;
+            &amp;lt;p class=&amp;quot;Paragraph SCXW23120354 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{81101ac4-511b-4c71-8b4a-38bc68c3f112}{20}&amp;quot; paraid=&amp;quot;1553735716&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:0px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+              &amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;Project 
+              Start/End Date (during the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_KV6eagaC48kYAg4d.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FY&amp;lt;/a&amp;gt; 
+              such as 01-OCT-201&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;8&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;/09-OCT-201&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;9&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW23120354 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;134233279&amp;quot;:true,&amp;quot;201341983&amp;quot;:0,&amp;quot;335559739&amp;quot;:200,&amp;quot;335559740&amp;quot;:240}&amp;quot; line-height=&amp;quot;18px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+            &amp;lt;/p&amp;gt;
+          &amp;lt;/li&amp;gt;
+        &amp;lt;/ul&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;SCXW23120354 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;margin-bottom:0px;color:black;font-weight:normal;font-size:14.666666984558105px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-right:0px;text-align:left;&amp;quot; text-decoration=&amp;quot;none&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;div class=&amp;quot;ListContainerWrapper SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;
+        &amp;lt;ul class=&amp;quot;BulletListStyle3 SCXW23120354 BCX4&amp;quot; role=&amp;quot;list&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:8pt;font-family:verdana;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;
+          &amp;lt;li aria-setsize=&amp;quot;-1&amp;quot; class=&amp;quot;OutlineElement Ltr SCXW23120354 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; data-aria-level=&amp;quot;1&amp;quot; data-aria-posinset=&amp;quot;1&amp;quot; data-font=&amp;quot;Wingdings&amp;quot; data-leveltext=&amp;quot;&amp;quot; data-listid=&amp;quot;8&amp;quot; display=&amp;quot;block&amp;quot; role=&amp;quot;listitem&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:96px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;
+            &amp;lt;p class=&amp;quot;Paragraph SCXW23120354 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{81101ac4-511b-4c71-8b4a-38bc68c3f112}{33}&amp;quot; paraid=&amp;quot;864882003&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:0px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+              &amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;Accounting 
+              Flex Field fo&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;r&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;m 
+              for GL Accounting String (can&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;also&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;obtain 
+              from the&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;previous 
+              templates&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;): 
+              such as FUND (&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;08024920171RA0&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;) 
+              for Reimbursable, FUND LIMIT (01), ALLOT ORG (C100) for &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;; 
+              ORG (HNC7000000C) for &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_nfvxmwaAU82ImBQu.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CCR&amp;lt;/a&amp;gt;, 
+              &amp;#8220;R&amp;#8221; for Reimbursable&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;, 
+              &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LzdPsgaC48kYAjDp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+              ACT (00011) for &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+              GNRL, MECH (902) for Agreements, LINE ITEM (9999) as default, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_lNyo_gaAUsSyFws4.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IAA&amp;lt;/a&amp;gt; 
+              ORDER (the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_u2Vr6gaC48kYAhG_.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;R29&amp;lt;/a&amp;gt; 
+              11 digits of the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_lNyo_gaAUsSyFws4.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IAA&amp;lt;/a&amp;gt; 
+              number without space e.g. NRC1&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;9&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;00&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;8&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;001)&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW23120354 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;134233279&amp;quot;:true,&amp;quot;201341983&amp;quot;:0,&amp;quot;335559739&amp;quot;:200,&amp;quot;335559740&amp;quot;:240}&amp;quot; line-height=&amp;quot;18px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+            &amp;lt;/p&amp;gt;
+          &amp;lt;/li&amp;gt;
+          &amp;lt;li aria-setsize=&amp;quot;-1&amp;quot; class=&amp;quot;OutlineElement Ltr SCXW23120354 BCX4&amp;quot; clear=&amp;quot;both&amp;quot; data-aria-level=&amp;quot;1&amp;quot; data-aria-posinset=&amp;quot;2&amp;quot; data-font=&amp;quot;Wingdings&amp;quot; data-leveltext=&amp;quot;&amp;quot; data-listid=&amp;quot;8&amp;quot; display=&amp;quot;block&amp;quot; role=&amp;quot;listitem&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:96px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;
+            &amp;lt;p class=&amp;quot;Paragraph SCXW23120354 BCX4&amp;quot; font-style=&amp;quot;normal&amp;quot; paraeid=&amp;quot;{81101ac4-511b-4c71-8b4a-38bc68c3f112}{66}&amp;quot; paraid=&amp;quot;1899063923&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:0px;padding-left:0px;margin-right:0px;text-align:left;&amp;quot; text-indent=&amp;quot;0px&amp;quot;&amp;gt;
+              &amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;Please 
+              note that when you open the GL Accounting String and fill-in the 
+              required fields, after completing and&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman, Times New Roman_MSFontService, serif&amp;quot; size=&amp;quot;11pt&amp;quot; style=&amp;quot;font-size:11pt;&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;get 
+              out to the &amp;#8220;Projects&amp;#8221; window, you need for fill in the Buyer&amp;#8217;s 
+              Fund Expiration Date (e.g. 30-&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_WMG25waC48kYAlY6.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SEP&amp;lt;/a&amp;gt;-201&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;9&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;NormalTextRun SCXW23120354 BCX4&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;)&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;EOP SCXW23120354 BCX4&amp;quot; data-ccp-props=&amp;quot;{&amp;quot;134233279&amp;quot;:true,&amp;quot;201341983&amp;quot;:0,&amp;quot;335559739&amp;quot;:200,&amp;quot;335559740&amp;quot;:240}&amp;quot; line-height=&amp;quot;18px&amp;quot; style=&amp;quot;margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+            &amp;lt;/p&amp;gt;
+          &amp;lt;/li&amp;gt;
+        &amp;lt;/ul&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;nbsp;
+
+    &amp;lt;p style=&amp;quot;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1284, 1330, 1434, 1370" coords2="1284, 1330, 1434, 1370" shape="rect" alt="Fill out Project Request Template:Task" id="areadiagram_map_4pHaQtaGAqAC3J4s_default" href="BPTask_4pHaQtaGAqAC3J4t.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="1364, 2, 1564, 102" coords2="1364, 2, 1564, 102" shape="rect" alt="Create Remunerable CAN IN NBS :Sub-Process" id="areadiagram_map_I_rKgtaGAqAC3NxM_default" href="BPSubProcess_I_rKgtaGAqAC3NxN.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1364, 2, 1564, 102',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('BusinessProcessDiagram_82QqgtaGAqAC3Nxl.html/Create Remunerable CAN IN NBS /BusinessProcessDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '1364, 2, 1564, 102'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1090, 820, 1202, 860" coords2="1090, 820, 1202, 860" shape="rect" alt="SAVE Form To Disk:Task" id="areadiagram_map_EbMKgtaGAqAC3NvR_default" href="BPTask_EbMKgtaGAqAC3NvS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 762, 6928, 1118" coords2="17, 762, 6928, 1118" shape="rect" alt="FMB/Execution/IAA and DCC/2019/Reimbursable Request/DOC 
+ :Lane" id="areadiagram_map_FmEKgtaGAqAC3Nu1_default" href="BPLane_FmEKgtaGAqAC3Nu2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1076, 1330, 1216, 1370" coords2="1076, 1330, 1216, 1370" shape="rect" alt="Save CAN Request form :Task" id="areadiagram_map_LJwKgtaGAqAC3NuZ_default" href="BPTask_LJwKgtaGAqAC3Nua.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="666, 1330, 1008, 1370" coords2="666, 1330, 1008, 1370" shape="rect" alt="Verify the CAN form to confirm if it is completed and accurate:Task" id="areadiagram_map_RkNygtaGAqAC3NtJ_default" href="BPTask_RkNygtaGAqAC3NtK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="403, 1175, 597, 1215" coords2="403, 1175, 597, 1215" shape="rect" alt="Queue Reimbursable CAN Request:Task" id="areadiagram_map_mw6ygtaGAqAC3NsN_default" href="BPTask_mw6ygtaGAqAC3NsO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="452, 1474, 549, 1514" coords2="452, 1474, 549, 1514" shape="rect" alt="Attach and Send:Task" id="areadiagram_map_8UKygtaGAqAC3Nrt_default" href="BPTask_8UKygtaGAqAC3Nru.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="213, 1474, 363, 1514" coords2="213, 1474, 363, 1514" shape="rect" alt="Fill out Reimbursable CAN Request:Task" id="areadiagram_map_ZCUygtaGAqAC3Nco_default" href="BPTask_ZCUygtaGAqAC3Ncp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="104, 1484, 124, 1504" coords2="104, 1484, 124, 1504" shape="rect" alt=":Start Event" id="areadiagram_map_UnYygtaGAqAC3Ncc_default" href="BPStartEvent_UnYygtaGAqAC3Ncd.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 1428, 6928, 1583" coords2="17, 1428, 6928, 1583" shape="rect" alt="Requester:Lane" id="areadiagram_map_brQygtaGAqAC3NcQ_default" href="BPLane_brQygtaGAqAC3NcR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 1118, 6928, 1273" coords2="17, 1118, 6928, 1273" shape="rect" alt="Email - NCICANReuest@mail.nih.gov:Lane" id="areadiagram_map_Po_SgtaGAqAC3Nba_default" href="BPLane_Po_SgtaGAqAC3Nbb.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 1273, 6928, 1428" coords2="17, 1273, 6928, 1428" shape="rect" alt="OBF:Lane" id="areadiagram_map_K5nSgtaGAqAC3NZp_default" href="BPLane_K5nSgtaGAqAC3NZq.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 132, 6928, 1583" coords2="2, 132, 6928, 1583" shape="rect" alt="Create a reimbursable CAN:Pool" id="areadiagram_map_g5nSgtaGAqAC3NZU_default" href="BPPool_Y5nSgtaGAqAC3NZm.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_EaCWQtaGAqAC3KSJ.html" class="ItemLink">Que Email : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_EbMKgtaGAqAC3NvS.html" class="ItemLink">SAVE Form To Disk : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_RkNygtaGAqAC3NtK.html" class="ItemLink">Verify the CAN form to confirm if it is completed and accurate : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_mw6ygtaGAqAC3NsO.html" class="ItemLink">Queue Reimbursable CAN Request : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_UnYygtaGAqAC3Ncd.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_K5nSgtaGAqAC3NZq.html" class="ItemLink">OBF : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_LJwKgtaGAqAC3Nua.html" class="ItemLink">Save CAN Request form  : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_ZCUygtaGAqAC3Ncp.html" class="ItemLink">Fill out Reimbursable CAN Request : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_Po_SgtaGAqAC3Nbb.html" class="ItemLink">Email - NCICANReuest@mail.nih.gov : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_k4nmQtaGAqAC3KQC.html" class="ItemLink">Que Email : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_brQygtaGAqAC3NcR.html" class="ItemLink">Requester : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_9s62QtaGAqAC3KVX.html" class="ItemLink">Que New Segment 14 created Email : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_BzgWQtaGAqAC3KQ4.html" class="ItemLink">Que Email : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_FmEKgtaGAqAC3Nu2.html" class="ItemLink">FMB/Execution/IAA and DCC/2019/Reimbursable Request/DOC 
+  : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_8UKygtaGAqAC3Nru.html" class="ItemLink">Attach and Send : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_9a42QtaGAqAC3KTp.html" class="ItemLink">Read Email : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_ABk6QtaGAqAC3KIB.html" class="ItemLink">L:\Group\FMB\Execution\IAA : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_I_rKgtaGAqAC3NxN.html" class="ItemLink">Create Remunerable CAN IN NBS  : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP06</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_xdqmQtaGAqAC3KO7.html" class="ItemLink">Lori Forgosh/Deborah Moore : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP06</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_4pHaQtaGAqAC3J4t.html" class="ItemLink">Fill out Project Request Template : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;margin-right:0;">
+    <p style="margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;">
+      &nbsp;
+    </p>
+    <div class="SCXW23120354 BCX4" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:black;font-weight:normal;font-size:14.666666984558105px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-right:0px;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <div class="ListContainerWrapper SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">
+        <ul class="BulletListStyle1 SCXW23120354 BCX4" role="list" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:verdana;margin-left:0px;padding-left:0px;margin-right:0px;">
+          <li aria-setsize="-1" class="OutlineElement Ltr SCXW23120354 BCX4" clear="both" data-aria-level="1" data-aria-posinset="2" data-font="Symbol" data-leveltext="" data-listid="6" display="block" role="listitem" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:48px;padding-left:0px;margin-right:0px;">
+            <p class="Paragraph SCXW23120354 BCX4" font-style="normal" paraeid="{06d4ab49-3160-4778-b618-3d1ad1f337c1}{254}" paraid="707567446" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:0px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+              <span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">Fields 
+              that you can immediate fill-in such as:</font></span><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;"><span class="EOP SCXW23120354 BCX4" data-ccp-props="{&quot;134233279&quot;:true,&quot;201341983&quot;:0,&quot;335559739&quot;:200,&quot;335559740&quot;:240}" line-height="18px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;">&nbsp;</span></font>
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div class="ListContainerWrapper SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">
+        <ul class="BulletListStyle3 SCXW23120354 BCX4" role="list" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:8pt;font-family:verdana;margin-left:0px;padding-left:0px;margin-right:0px;">
+          <li aria-setsize="-1" class="OutlineElement Ltr SCXW23120354 BCX4" clear="both" data-aria-level="1" data-aria-posinset="1" data-font="Wingdings" data-leveltext="" data-listid="8" display="block" role="listitem" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:96px;padding-left:0px;margin-right:0px;">
+            <p class="Paragraph SCXW23120354 BCX4" font-style="normal" paraeid="{81101ac4-511b-4c71-8b4a-38bc68c3f112}{6}" paraid="1886982772" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:0px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+              <span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">Project 
+              Description (info from the request&#8217;s email)</font></span><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;"><span class="EOP SCXW23120354 BCX4" data-ccp-props="{&quot;134233279&quot;:true,&quot;201341983&quot;:0,&quot;335559739&quot;:200,&quot;335559740&quot;:240}" line-height="18px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;">&nbsp;</span></font>
+            </p>
+          </li>
+          <li aria-setsize="-1" class="OutlineElement Ltr SCXW23120354 BCX4" clear="both" data-aria-level="1" data-aria-posinset="2" data-font="Wingdings" data-leveltext="" data-listid="8" display="block" role="listitem" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:96px;padding-left:0px;margin-right:0px;">
+            <p class="Paragraph SCXW23120354 BCX4" font-style="normal" paraeid="{81101ac4-511b-4c71-8b4a-38bc68c3f112}{13}" paraid="921893692" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:0px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+              <span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">Organizational 
+              Code (SAC Code)</font></span><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;"><span class="EOP SCXW23120354 BCX4" data-ccp-props="{&quot;134233279&quot;:true,&quot;201341983&quot;:0,&quot;335559739&quot;:200,&quot;335559740&quot;:240}" line-height="18px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;">&nbsp;</span></font>
+            </p>
+          </li>
+          <li aria-setsize="-1" class="OutlineElement Ltr SCXW23120354 BCX4" clear="both" data-aria-level="1" data-aria-posinset="3" data-font="Wingdings" data-leveltext="" data-listid="8" display="block" role="listitem" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:96px;padding-left:0px;margin-right:0px;">
+            <p class="Paragraph SCXW23120354 BCX4" font-style="normal" paraeid="{81101ac4-511b-4c71-8b4a-38bc68c3f112}{20}" paraid="1553735716" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:0px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+              <span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">Project 
+              Start/End Date (during the <a class="ItemLink" href="Glossary_KV6eagaC48kYAg4d.html" name="">FY</a> 
+              such as 01-OCT-201</font></span><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;"><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">8</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">/09-OCT-201</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">9</span><span class="EOP SCXW23120354 BCX4" data-ccp-props="{&quot;134233279&quot;:true,&quot;201341983&quot;:0,&quot;335559739&quot;:200,&quot;335559740&quot;:240}" line-height="18px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;">&nbsp;</span></font>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="SCXW23120354 BCX4" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:black;font-weight:normal;font-size:14.666666984558105px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-right:0px;text-align:left;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <div class="ListContainerWrapper SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">
+        <ul class="BulletListStyle3 SCXW23120354 BCX4" role="list" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:8pt;font-family:verdana;margin-left:0px;padding-left:0px;margin-right:0px;">
+          <li aria-setsize="-1" class="OutlineElement Ltr SCXW23120354 BCX4" clear="both" data-aria-level="1" data-aria-posinset="1" data-font="Wingdings" data-leveltext="" data-listid="8" display="block" role="listitem" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:96px;padding-left:0px;margin-right:0px;">
+            <p class="Paragraph SCXW23120354 BCX4" font-style="normal" paraeid="{81101ac4-511b-4c71-8b4a-38bc68c3f112}{33}" paraid="864882003" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:0px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+              <span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">Accounting 
+              Flex Field fo</font></span><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;"><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">r</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">m 
+              for GL Accounting String (can</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">also</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">obtain 
+              from the</span><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">previous 
+              templates</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">): 
+              such as FUND (</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">08024920171RA0</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">) 
+              for Reimbursable, FUND LIMIT (01), ALLOT ORG (C100) for <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>; 
+              ORG (HNC7000000C) for <a class="ItemLink" href="Glossary_nfvxmwaAU82ImBQu.html" name="">CCR</a>, 
+              &#8220;R&#8221; for Reimbursable</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">, 
+              <a class="ItemLink" href="Glossary_LzdPsgaC48kYAjDp.html" name="">Budget</a> 
+              ACT (00011) for <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a> 
+              GNRL, MECH (902) for Agreements, LINE ITEM (9999) as default, <a class="ItemLink" href="Glossary_lNyo_gaAUsSyFws4.html" name="">IAA</a> 
+              ORDER (the <a class="ItemLink" href="Glossary_u2Vr6gaC48kYAhG_.html" name="">R29</a> 
+              11 digits of the <a class="ItemLink" href="Glossary_lNyo_gaAUsSyFws4.html" name="">IAA</a> 
+              number without space e.g. NRC1</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">9</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">00</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">8</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">001)</span><span class="EOP SCXW23120354 BCX4" data-ccp-props="{&quot;134233279&quot;:true,&quot;201341983&quot;:0,&quot;335559739&quot;:200,&quot;335559740&quot;:240}" line-height="18px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;">&nbsp;</span></font>
+            </p>
+          </li>
+          <li aria-setsize="-1" class="OutlineElement Ltr SCXW23120354 BCX4" clear="both" data-aria-level="1" data-aria-posinset="2" data-font="Wingdings" data-leveltext="" data-listid="8" display="block" role="listitem" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;vertical-align:baseline;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:96px;padding-left:0px;margin-right:0px;">
+            <p class="Paragraph SCXW23120354 BCX4" font-style="normal" paraeid="{81101ac4-511b-4c71-8b4a-38bc68c3f112}{66}" paraid="1899063923" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:0px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+              <span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">Please 
+              note that when you open the GL Accounting String and fill-in the 
+              required fields, after completing and</font></span><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;"><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">get 
+              out to the &#8220;Projects&#8221; window, you need for fill in the Buyer&#8217;s 
+              Fund Expiration Date (e.g. 30-<a class="ItemLink" href="Glossary_WMG25waC48kYAlY6.html" name="">SEP</a>-201</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">9</span><span class="NormalTextRun SCXW23120354 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">)</span><span class="EOP SCXW23120354 BCX4" data-ccp-props="{&quot;134233279&quot;:true,&quot;201341983&quot;:0,&quot;335559739&quot;:200,&quot;335559740&quot;:240}" line-height="18px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;">&nbsp;</span></font>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    &nbsp;
+
+    <p style="margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_lR02QtaGAqAC3KUL.html" class="ItemLink">Create new Segment 14 : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_kEF6QtaGAqAC3KJN.html" class="ItemLink">Open LOG : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP08</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_r7BmQtaGAqAC3KPm.html" class="ItemLink">OFM Accountant at GAB : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP09</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Tzi2QtaGAqAC3KUx.html" class="ItemLink">Email new Segment 14 created : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP09</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Zi8GQtaGAqAC3KJ1.html" class="ItemLink">Insert a new line by using the shortcut Ctrl + Shift + “+” : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP12</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_7n2GQtaGAqAC3KLI.html" class="ItemLink">Copy (Ctrl + “C”) the line above (the new line) to the new creating line (Ctrl + “V”) and update the information from the fields according to the information from the new IAA except for the column “IAA Order Value (Create in Segment 14) which is automatically updated when you hit the button “Restore Formulas”;  : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP14</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_EdpGQtaGAqAC3KLz.html" class="ItemLink">Change the field in the column “Pick Account Combinations to Create in NBS” to “Pending”;  : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP16</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_WATGQtaGAqAC3KMr.html" class="ItemLink">Update the GL Date field to the current date and USERNAME_NIH field;  : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP18</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_n4HGQtaGAqAC3KNR.html" class="ItemLink">Hit the button “Restore Formulas” to obtain the new IAA Order Value (you’d like to “save” the file at the designated folder/place) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP22</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_GY_GQtaGAqAC3KOX.html" class="ItemLink">Email to request a Creation of a new Segment using the description fro the requestors submission and the new created IAA number : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;margin-right:0;">
+    <p style="margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;margin-right:0pt;">
+      &nbsp;
+    </p>
+    <div class="OutlineElement Ltr SCXW204481277 BCX4" clear="both" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <p class="Paragraph SCXW204481277 BCX4" font-style="normal" paraeid="{4b358827-0959-4921-8505-92b1059a7a57}{19}" paraid="1776158311" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+        <span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">&#8220;Subject: 
+        Segment 14 Requests: NRC17002001 <a class="ItemLink" href="Glossary_nfvxmwaAU82ImBQu.html" name="">CCR</a> 
+        CAUS REIM IH-LM-Gonzales &#8211; ODS <a class="ItemLink" href="Glossary_lNyo_gaAUsSyFws4.html" name="">IAA</a> 
+        Support</font></span><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;"><span class="EOP SCXW204481277 BCX4" data-ccp-props="{&quot;134233279&quot;:true,&quot;201341983&quot;:0,&quot;335559685&quot;:1080,&quot;335559739&quot;:200,&quot;335559740&quot;:240}" line-height="18px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;">&nbsp;</span></font>
+      </p>
+    </div>
+    <div class="OutlineElement Ltr SCXW204481277 BCX4" clear="both" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <p class="Paragraph SCXW204481277 BCX4" font-style="normal" paraeid="{4b358827-0959-4921-8505-92b1059a7a57}{25}" paraid="1513733091" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+        <span class="EOP SCXW204481277 BCX4" data-ccp-props="{&quot;134233279&quot;:true,&quot;201341983&quot;:0,&quot;335559685&quot;:1080,&quot;335559739&quot;:200,&quot;335559740&quot;:240}" line-height="18px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">&nbsp;</font></span>
+      </p>
+    </div>
+    <div class="OutlineElement Ltr SCXW204481277 BCX4" clear="both" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <p class="Paragraph SCXW204481277 BCX4" font-style="normal" paraeid="{4b358827-0959-4921-8505-92b1059a7a57}{29}" paraid="1903507657" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+        <span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="color:rgb(0, 112, 192);font-size:11pt;">Hi</font></span><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="color:rgb(0, 112, 192);font-size:11pt;"><span class="Apple-converted-space">&nbsp;</span><span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">Lori/</span><span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">Deborah,</span></font><span class="EOP SCXW204481277 BCX4" data-ccp-props="{&quot;201341983&quot;:0,&quot;335559685&quot;:1080,&quot;335559739&quot;:0,&quot;335559740&quot;:240}" line-height="18px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">&nbsp;</font></span>
+      </p>
+    </div>
+    <div class="OutlineElement Ltr SCXW204481277 BCX4" clear="both" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <p class="Paragraph SCXW204481277 BCX4" font-style="normal" paraeid="{4b358827-0959-4921-8505-92b1059a7a57}{39}" paraid="1103688598" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+        <span class="EOP SCXW204481277 BCX4" data-ccp-props="{&quot;201341983&quot;:0,&quot;335559685&quot;:1080,&quot;335559739&quot;:0,&quot;335559740&quot;:240}" line-height="18px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">&nbsp;</font></span>
+      </p>
+    </div>
+    <div class="OutlineElement Ltr SCXW204481277 BCX4" clear="both" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <p class="Paragraph SCXW204481277 BCX4" font-style="normal" paraeid="{4b358827-0959-4921-8505-92b1059a7a57}{43}" paraid="1969996717" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+        <span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="color:rgb(0, 112, 192);font-size:11pt;">Please 
+        create a new segment 14 using the description and segment below.&nbsp;</font></span><span class="EOP SCXW204481277 BCX4" data-ccp-props="{&quot;201341983&quot;:0,&quot;335559685&quot;:1080,&quot;335559739&quot;:0,&quot;335559740&quot;:240}" line-height="18px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">&nbsp;</font></span>
+      </p>
+    </div>
+    <div class="OutlineElement Ltr SCXW204481277 BCX4" clear="both" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <p class="Paragraph SCXW204481277 BCX4" font-style="normal" paraeid="{4b358827-0959-4921-8505-92b1059a7a57}{49}" paraid="1535638828" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+        <span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="color:rgb(0, 112, 192);font-size:11pt;">Please 
+        use the Description:</font></span><span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">&#8239;&#8239; 
+        <a class="ItemLink" href="Glossary_nfvxmwaAU82ImBQu.html" name="">CCR</a> 
+        CAUS REIM IH-LM-Gonzalez - ODS <a class="ItemLink" href="Glossary_lNyo_gaAUsSyFws4.html" name="">IAA</a> 
+        Support</font></span><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;"><span class="EOP SCXW204481277 BCX4" data-ccp-props="{&quot;134233279&quot;:true,&quot;201341983&quot;:0,&quot;335559685&quot;:1080,&quot;335559739&quot;:200,&quot;335559740&quot;:276}" line-height="20.7px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;">&nbsp;</span></font>
+      </p>
+    </div>
+    <div class="OutlineElement Ltr SCXW204481277 BCX4" clear="both" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <p class="Paragraph SCXW204481277 BCX4" font-style="normal" paraeid="{4b358827-0959-4921-8505-92b1059a7a57}{57}" paraid="1594577801" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+        <span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="color:rgb(0, 112, 192);font-size:11pt;">Segment 
+        14 <a class="ItemLink" href="Glossary_lNyo_gaAUsSyFws4.html" name="">IAA</a> 
+        number:</font></span><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="color:rgb(0, 112, 192);font-size:11pt;"><span class="Apple-converted-space">&nbsp;</span></font><span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">NRC1</font></span><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;"><span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">9</span><span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">00</span><span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">8</span><span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">001</span><span class="NormalTextRun SCXW204481277 BCX4" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-left:0px;padding-left:0px;margin-right:0px;">&#8221;</span><span class="EOP SCXW204481277 BCX4" data-ccp-props="{&quot;134233279&quot;:true,&quot;201341983&quot;:0,&quot;335559685&quot;:1080,&quot;335559739&quot;:200,&quot;335559740&quot;:276}" line-height="20.7px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;">&nbsp;</span></font>
+      </p>
+    </div>
+    <div class="OutlineElement Ltr SCXW204481277 BCX4" clear="both" font-style="normal" letter-spacing="normal" style="margin-bottom:0px;color:black;font-weight:normal;font-size:12px;margin-left:0px;padding-left:0px;margin-top:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-family:Segoe UI, Segoe UI Web, Arial, Verdana, sans-serif;margin-right:0px;text-align:start;" text-decoration="none" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">
+      <p class="Paragraph SCXW204481277 BCX4" font-style="normal" paraeid="{4b358827-0959-4921-8505-92b1059a7a57}{75}" paraid="1923339244" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;color:black;font-weight:normal;vertical-align:baseline;margin-left:72px;padding-left:0px;margin-right:0px;text-align:left;" text-indent="0px">
+        <span class="EOP SCXW204481277 BCX4" data-ccp-props="{&quot;134233279&quot;:true,&quot;201341983&quot;:0,&quot;335559685&quot;:1080,&quot;335559739&quot;:200,&quot;335559740&quot;:240}" line-height="18px" style="margin-top:0px;margin-bottom:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;font-size:11pt;font-family:Times New Roman, Times New Roman_MSFontService, serif;margin-left:0px;padding-left:0px;margin-right:0px;"><font face="Times New Roman, Times New Roman_MSFontService, serif" size="11pt" style="font-size:11pt;">&nbsp;</font></span>
+      </p>
+    </div>
+    &nbsp;
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP28</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_b3h2QtaGAqAC3KWB.html" class="ItemLink">Read Email : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP29</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_wwD2QtaGAqAC3KWr.html" class="ItemLink">Create new line for the new IAA for this fiscal year at the bottom  : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP31</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_ZASOQtaGAqAC3KYt.html" class="ItemLink">Export the new IAA number Into NBS : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP33</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_lj5F4taGAqAC3DPu.html" class="ItemLink">Request the IAA Reimbursable CAN : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP48</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_Y5nSgtaGAqAC3NZm.html" class="ItemLink">Create a reimbursable CAN : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>
