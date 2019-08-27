@@ -1,0 +1,726 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - Wire Transfer</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="BusinessProcessDiagram_wD_HTdaAUrAKMS54.html" class="PageParentTitle">Conditional Gift Process for New Package with Formal Agreement  : Pool</a> (in <a href="BusinessProcessDiagram_wD_HTdaAUrAKMS54.html" class="PageParentTitle">Conditional Gift Process for New Package with Formal Agreement Business Process Diagram</a> / <a href="BusinessProcessDiagram_XmW7O9aAU8wAHkV1.html" class="PageParentTitle">Process for Conditional gift with Existing Gift Package Business Process Diagram</a> / <a href="BusinessProcessDiagram_HQ13O9aAU8wAHk90.html" class="PageParentTitle">Process for Conditional Gift Existing Package with Formal Agreement and funds exceed approved amount  Buisness Process Diagram</a> / <a href="BusinessProcessDiagram_v_L_O9aAU8wAHlVJ.html" class="PageParentTitle">Process for Large Conditional Gift without Formal Agreement  Process Diagram</a> / <a href="BusinessProcessDiagram_T4pVr9aAUhQuH_jn.html" class="PageParentTitle">Process for Unconditional Gift Business Process Diagram</a>)<span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_wD_HTdaAUrAKMS54.html" class="PageParentTitle">Donor : Lane</a> (in <a href="BusinessProcessDiagram_wD_HTdaAUrAKMS54.html" class="PageParentTitle">Conditional Gift Process for New Package with Formal Agreement Business Process Diagram</a> / <a href="BusinessProcessDiagram_XmW7O9aAU8wAHkV1.html" class="PageParentTitle">Process for Conditional gift with Existing Gift Package Business Process Diagram</a> / <a href="BusinessProcessDiagram_HQ13O9aAU8wAHk90.html" class="PageParentTitle">Process for Conditional Gift Existing Package with Formal Agreement and funds exceed approved amount  Buisness Process Diagram</a> / <a href="BusinessProcessDiagram_v_L_O9aAU8wAHlVJ.html" class="PageParentTitle">Process for Large Conditional Gift without Formal Agreement  Process Diagram</a> / <a href="BusinessProcessDiagram_T4pVr9aAUhQuH_jn.html" class="PageParentTitle">Process for Unconditional Gift Business Process Diagram</a>)<span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_wD_HTdaAUrAKMS54.html" class="PageParentTitle">Donor makes payment : Sub-Process</a> (in <a href="BusinessProcessDiagram_wD_HTdaAUrAKMS54.html" class="PageParentTitle">Conditional Gift Process for New Package with Formal Agreement Business Process Diagram</a> / <a href="BusinessProcessDiagram_XmW7O9aAU8wAHkV1.html" class="PageParentTitle">Process for Conditional gift with Existing Gift Package Business Process Diagram</a> / <a href="BusinessProcessDiagram_HQ13O9aAU8wAHk90.html" class="PageParentTitle">Process for Conditional Gift Existing Package with Formal Agreement and funds exceed approved amount  Buisness Process Diagram</a>)<span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram__ONY69aAUrCSyRQq.html" class="PageParentTitle">Payment made business process diagram : Pool</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram__ONY69aAUrCSyRQq.html" class="PageParentTitle">OBF Gift coordinator? : Lane</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram__ONY69aAUrCSyRQq.html" class="PageParentTitle">Wire Transfer : Sub-Process</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - Wire Transfer		</span>
+<a onclick="javascript: showVpLink('OBF mapping project.vpp://diagram/uoZ069aAUrCSyR.2', 'Wire Transfer\nOBF mapping project.vpp://diagram/uoZ069aAUrCSyR.2', 'Wire Transfer', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|1358.0|321.0|471.0|121.0|Package_97e3TdaAUrAKMTBI.html|Package_97e3TdaAUrAKMTBI.html|Yd2s69aAUrCSySH4" id="optionYd2s69aAUrCSySH4">Gift Package : Package</option>
+<option value="shape|2026.0|44.0|150.0|40.0|BPTask_DiSc69aAUrCSySKe.html|BPTask_DiSc69aAUrCSySKe.html|DiSc69aAUrCSySKd" id="optionDiSc69aAUrCSySKd">Queue Copy of Wire Transfer : Task</option>
+<option value="shape|961.0|781.0|123.0|40.0|BPTask_7G_M69aAUrCSySFa.html|BPTask_7G_M69aAUrCSySFa.html|7G_M69aAUrCSySFZ" id="option7G_M69aAUrCSySFZ">Queue Gift Received  Email : Task</option>
+<option value="shape|73.0|217.0|20.0|20.0|BPStartEvent_u4Z069aAUrCSyR_A.html|BPStartEvent_u4Z069aAUrCSyR_A.html|O4Z069aAUrCSyR._" id="optionO4Z069aAUrCSyR._">Unnamed Start Event : Start Event</option>
+<option value="shape|17.0|604.0|2226.0|149.0|BPLane_cvV069aAUrCSyR_T.html|BPLane_cvV069aAUrCSyR_T.html|cvV069aAUrCSyR_S" id="optioncvV069aAUrCSyR_S">OBF Gift coordinator? : Lane</option>
+<option value="shape|214.0|207.0|131.0|40.0|BPTask_0ZP069aAUrCSySAa.html|BPTask_0ZP069aAUrCSySAa.html|0ZP069aAUrCSySAZ" id="option0ZP069aAUrCSySAZ">Receives Wire Transfer : Task</option>
+<option value="shape|17.0|152.0|2226.0|150.0|BPLane_cfH069aAUrCSyR__.html|BPLane_cfH069aAUrCSyR__.html|cfH069aAUrCSyR_9" id="optioncfH069aAUrCSyR_9">OFM&emsp; : Lane</option>
+<option value="shape|1513.0|371.0|40.0|50.0|BPDataObject_7wU3TdaAUrAKMS_x.html|BPDataObject_7wU3TdaAUrAKMS_x.html|id2s69aAUrCSySH." id="optionid2s69aAUrCSySH.">Routing Slip : Data Object</option>
+<option value="shape|691.0|636.0|146.0|40.0|BPTask_t5_M69aAUrCSySDe.html|BPTask_t5_M69aAUrCSySDe.html|t5.M69aAUrCSySDd" id="optiont5.M69aAUrCSySDd">Read Wire Received email : Task</option>
+<option value="shape|17.0|302.0|2226.0|151.0|BPLane_fjCM69aAUrCSySCK.html|BPLane_fjCM69aAUrCSySCK.html|fjCM69aAUrCSySCJ" id="optionfjCM69aAUrCSySCJ">OBF Gift coordinator Email : Lane</option>
+<option value="shape|2.0|2.0|2241.0|900.0|BPPool_IvV069aAUrCSyR_P.html|BPPool_IvV069aAUrCSyR_P.html|wvV069aAUrCSyR_O" id="optionwvV069aAUrCSyR_O">Wire Transfer Business Process Diagram : Pool</option>
+<option value="shape|1405.0|371.0|40.0|50.0|BPDataObject_tds3TdaAUrAKMTAN.html|BPDataObject_tds3TdaAUrAKMTAN.html|Md2s69aAUrCSySH7" id="optionMd2s69aAUrCSySH7">Draft Acceptance Letter : Data Object</option>
+<option value="shape|365.0|659.0|198.0|49.0|BPTextAnnotation_0QJM69aAUrCSySD2.html|BPTextAnnotation_0QJM69aAUrCSySD2.html|0QJM69aAUrCSySD1" id="option0QJM69aAUrCSySD1">Annotation15 : Text Annotation</option>
+<option value="shape|423.0|207.0|225.0|40.0|BPTask_1hAM69aAUrCSySAu.html|BPTask_1hAM69aAUrCSySAu.html|1hAM69aAUrCSySAt" id="option1hAM69aAUrCSySAt">Email OBF Gift Coordinator wire recieved : Task</option>
+<option value="shape|1580.0|371.0|40.0|50.0|BPDataObject_Vhi3TdaAUrAKMTAl.html|BPDataObject_Vhi3TdaAUrAKMTAl.html|qd2s69aAUrCSySIB" id="optionqd2s69aAUrCSySIB">Agreement : Data Object</option>
+<option value="shape|17.0|753.0|2226.0|149.0|BPLane_1VrM69aAUrCSySFE.html|BPLane_1VrM69aAUrCSySFE.html|1VrM69aAUrCSySFD" id="option1VrM69aAUrCSySFD">CCR Division Email : Lane</option>
+<option value="shape|947.0|636.0|150.0|40.0|BPTask_gVNM69aAUrCSySEa.html|BPTask_gVNM69aAUrCSySEa.html|gVNM69aAUrCSySEZ" id="optiongVNM69aAUrCSySEZ">Email Division that gift was received : Task</option>
+<option value="shape|17.0|453.0|2226.0|151.0|BPLane_JBis69aAUrCSySG4.html|BPLane_JBis69aAUrCSySG4.html|JBis69aAUrCSySG3" id="optionJBis69aAUrCSySG3">OBF Shared Drive : Lane</option>
+<option value="shape|691.0|357.0|117.0|40.0|BPTask_dOKM69aAUrCSySCe.html|BPTask_dOKM69aAUrCSySCe.html|dOKM69aAUrCSySCd" id="optiondOKM69aAUrCSySCd">Queue Wire Received email : Task</option>
+<option value="shape|17.0|2.0|2226.0|150.0|BPLane__UHs69aAUrCSySI5.html|BPLane__UHs69aAUrCSySI5.html|_UHs69aAUrCSySI4" id="option_UHs69aAUrCSySI4">OFM Email : Lane</option>
+<option value="shape|1207.0|636.0|97.0|40.0|BPTask_jl4s69aAUrCSySGS.html|BPTask_jl4s69aAUrCSySGS.html|jl4s69aAUrCSySGR" id="optionjl4s69aAUrCSySGR">Add Receipt To Gift Package : Task</option>
+<option value="shape|1734.0|371.0|40.0|50.0|BPDataObject_fQcc69aAUrCSySKE.html|BPDataObject_fQcc69aAUrCSySKE.html|fQcc69aAUrCSySKD" id="optionfQcc69aAUrCSySKD">Receipt : Data Object</option>
+<option value="shape|1792.0|648.0|150.0|40.0|BPTask_ff3s69aAUrCSySJJ.html|BPTask_ff3s69aAUrCSySJJ.html|ff3s69aAUrCSySJI" id="optionff3s69aAUrCSySJI">Send Copy of Wire Transfer to OFM : Task</option>
+<option value="shape|2201.0|656.0|20.0|20.0|BPEndEvent_x4Z069aAUrCSyR_E.html|BPEndEvent_x4Z069aAUrCSyR_E.html|x4Z069aAUrCSyR_D" id="optionx4Z069aAUrCSyR_D">Unnamed End Event : End Event</option>
+<option value="shape|1657.0|371.0|40.0|50.0|BPDataObject_4iwfTdaAUrAKMUaJ.html|BPDataObject_4iwfTdaAUrAKMUaJ.html|Wd2s69aAUrCSySIE" id="optionWd2s69aAUrCSySIE">Validity Test : Data Object</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Wire_Transfer.png" usemap="#diagram_map" class="Image" width="2247" height="906"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="93.0, 220.0, 93.0, 234.0, 214.0, 234.0, 214.0, 220.0" coords2="93.0, 220.0, 93.0, 234.0, 214.0, 234.0, 214.0, 220.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_hZP069aAUrCSySAg_default" href="BPSequenceFlow_uZP069aAUrCSySAf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="345.0, 220.0, 345.0, 234.0, 423.0, 234.0, 423.0, 220.0" coords2="345.0, 220.0, 345.0, 234.0, 423.0, 234.0, 423.0, 220.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_gRAM69aAUrCSySA2_default" href="BPSequenceFlow_fhAM69aAUrCSySA1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="742.0, 217.0, 742.0, 220.0, 648.0, 220.0, 648.0, 234.0, 742.0, 234.0, 742.0, 357.0, 756.0, 357.0, 756.0, 234.0, 759.0, 234.0, 759.0, 220.0, 756.0, 220.0, 756.0, 217.0" coords2="742.0, 217.0, 742.0, 220.0, 648.0, 220.0, 648.0, 234.0, 742.0, 234.0, 742.0, 357.0, 756.0, 357.0, 756.0, 234.0, 759.0, 234.0, 759.0, 220.0, 756.0, 220.0, 756.0, 217.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_guKM69aAUrCSySCm_default" href="BPSequenceFlow_fOKM69aAUrCSySCl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="742.0, 397.0, 742.0, 636.0, 756.0, 636.0, 756.0, 397.0" coords2="742.0, 397.0, 742.0, 636.0, 756.0, 636.0, 756.0, 397.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_QF.M69aAUrCSySDm_default" href="BPSequenceFlow__5_M69aAUrCSySDl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="553.0, 652.0, 553.0, 659.0, 563.0, 659.0, 563.0, 666.0, 691.0, 666.0, 691.0, 652.0" coords2="553.0, 652.0, 553.0, 659.0, 563.0, 659.0, 563.0, 666.0, 691.0, 666.0, 691.0, 652.0" shape="poly" alt=":Association" id="areadiagram_map_RQJM69aAUrCSySEG_default" href="BPAssociation__QJM69aAUrCSySEF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="837.0, 649.0, 837.0, 663.0, 947.0, 663.0, 947.0, 649.0" coords2="837.0, 649.0, 837.0, 663.0, 947.0, 663.0, 947.0, 649.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_6VNM69aAUrCSySEi_default" href="BPSequenceFlow_KVNM69aAUrCSySEh.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1015.0, 676.0, 1015.0, 781.0, 1029.0, 781.0, 1029.0, 676.0" coords2="1015.0, 676.0, 1015.0, 781.0, 1029.0, 781.0, 1029.0, 676.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Mm_M69aAUrCSySFi_default" href="BPSequenceFlow_km_M69aAUrCSySFh.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1133.0, 646.0, 1133.0, 649.0, 1130.0, 649.0, 1130.0, 663.0, 1133.0, 663.0, 1133.0, 794.0, 1084.0, 794.0, 1084.0, 808.0, 1133.0, 808.0, 1133.0, 811.0, 1147.0, 811.0, 1147.0, 808.0, 1150.0, 808.0, 1150.0, 794.0, 1147.0, 794.0, 1147.0, 663.0, 1207.0, 663.0, 1207.0, 649.0, 1147.0, 649.0, 1147.0, 646.0" coords2="1133.0, 646.0, 1133.0, 649.0, 1130.0, 649.0, 1130.0, 663.0, 1133.0, 663.0, 1133.0, 794.0, 1084.0, 794.0, 1084.0, 808.0, 1133.0, 808.0, 1133.0, 811.0, 1147.0, 811.0, 1147.0, 808.0, 1150.0, 808.0, 1150.0, 794.0, 1147.0, 794.0, 1147.0, 663.0, 1207.0, 663.0, 1207.0, 649.0, 1147.0, 649.0, 1147.0, 646.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_4V4s69aAUrCSySGa_default" href="BPSequenceFlow_wV4s69aAUrCSySGZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1254.0, 379.0, 1254.0, 382.0, 1251.0, 382.0, 1251.0, 396.0, 1254.0, 396.0, 1254.0, 636.0, 1268.0, 636.0, 1268.0, 396.0, 1358.0, 396.0, 1358.0, 382.0, 1268.0, 382.0, 1268.0, 379.0" coords2="1254.0, 379.0, 1254.0, 382.0, 1251.0, 382.0, 1251.0, 396.0, 1254.0, 396.0, 1254.0, 636.0, 1268.0, 636.0, 1268.0, 396.0, 1358.0, 396.0, 1358.0, 382.0, 1268.0, 382.0, 1268.0, 379.0" shape="poly" alt=":Generic Connector" id="areadiagram_map_u4es69aAUrCSySIW_default" href="GenericConnector_O4es69aAUrCSySIV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1860.0, 387.0, 1860.0, 390.0, 1829.0, 390.0, 1829.0, 404.0, 1860.0, 404.0, 1860.0, 648.0, 1874.0, 648.0, 1874.0, 404.0, 1877.0, 404.0, 1877.0, 390.0, 1874.0, 390.0, 1874.0, 387.0" coords2="1860.0, 387.0, 1860.0, 390.0, 1829.0, 390.0, 1829.0, 404.0, 1860.0, 404.0, 1860.0, 648.0, 1874.0, 648.0, 1874.0, 404.0, 1877.0, 404.0, 1877.0, 390.0, 1874.0, 390.0, 1874.0, 387.0" shape="poly" alt=":Generic Connector" id="areadiagram_map_0DEc69aAUrCSySJz_default" href="GenericConnector_EDEc69aAUrCSySJy.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1860.0, 54.0, 1860.0, 57.0, 1857.0, 57.0, 1857.0, 71.0, 1860.0, 71.0, 1860.0, 648.0, 1874.0, 648.0, 1874.0, 71.0, 2026.0, 71.0, 2026.0, 57.0, 1874.0, 57.0, 1874.0, 54.0" coords2="1860.0, 54.0, 1860.0, 57.0, 1857.0, 57.0, 1857.0, 71.0, 1860.0, 71.0, 1860.0, 648.0, 1874.0, 648.0, 1874.0, 71.0, 2026.0, 71.0, 2026.0, 57.0, 1874.0, 57.0, 1874.0, 54.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_YSSc69aAUrCSySKm_default" href="BPSequenceFlow_QSSc69aAUrCSySKl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2204.0, 53.0, 2204.0, 56.0, 2176.0, 56.0, 2176.0, 70.0, 2204.0, 70.0, 2204.0, 656.0, 2218.0, 656.0, 2218.0, 70.0, 2221.0, 70.0, 2221.0, 56.0, 2218.0, 56.0, 2218.0, 53.0" coords2="2204.0, 53.0, 2204.0, 56.0, 2176.0, 56.0, 2176.0, 70.0, 2204.0, 70.0, 2204.0, 656.0, 2218.0, 656.0, 2218.0, 70.0, 2221.0, 70.0, 2221.0, 56.0, 2218.0, 56.0, 2218.0, 53.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_gaGc69aAUrCSySLC_default" href="BPSequenceFlow__qGc69aAUrCSySLB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1734, 371, 1774, 421" coords2="1734, 371, 1774, 421" shape="rect" alt="Receipt:Data Object" id="areadiagram_map_fQcc69aAUrCSySKD_default" href="BPDataObject_fQcc69aAUrCSySKE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1657, 371, 1697, 421" coords2="1657, 371, 1697, 421" shape="rect" alt="Validity Test:Data Object" id="areadiagram_map_Wd2s69aAUrCSySIE_default" href="BPDataObject_4iwfTdaAUrAKMUaJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1580, 371, 1620, 421" coords2="1580, 371, 1620, 421" shape="rect" alt="Agreement:Data Object" id="areadiagram_map_qd2s69aAUrCSySIB_default" href="BPDataObject_Vhi3TdaAUrAKMTAl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1513, 371, 1553, 421" coords2="1513, 371, 1553, 421" shape="rect" alt="Routing Slip:Data Object" id="areadiagram_map_id2s69aAUrCSySH._default" href="BPDataObject_7wU3TdaAUrAKMS_x.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1405, 371, 1445, 421" coords2="1405, 371, 1445, 421" shape="rect" alt="Draft Acceptance Letter:Data Object" id="areadiagram_map_Md2s69aAUrCSySH7_default" href="BPDataObject_tds3TdaAUrAKMTAN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1358, 321, 1829, 442" coords2="1358, 321, 1829, 442" shape="rect" alt="Gift Package:Package" id="areadiagram_map_Yd2s69aAUrCSySH4_default" href="Package_97e3TdaAUrAKMTBI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2026, 44, 2176, 84" coords2="2026, 44, 2176, 84" shape="rect" alt="Queue Copy of Wire Transfer:Task" id="areadiagram_map_DiSc69aAUrCSySKd_default" href="BPTask_DiSc69aAUrCSySKe.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1792, 648, 1942, 688" coords2="1792, 648, 1942, 688" shape="rect" alt="Send Copy of Wire Transfer to OFM:Task" id="areadiagram_map_ff3s69aAUrCSySJI_default" href="BPTask_ff3s69aAUrCSySJJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="365, 659, 563, 708" coords2="365, 659, 563, 708" shape="rect" alt="How do you know what Gift:Text Annotation" id="areadiagram_map_0QJM69aAUrCSySD1_default" href="BPTextAnnotation_0QJM69aAUrCSySD2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 2, 2243, 152" coords2="17, 2, 2243, 152" shape="rect" alt="OFM Email:Lane" id="areadiagram_map__UHs69aAUrCSySI4_default" href="BPLane__UHs69aAUrCSySI5.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2201, 709, 2241, 727" coords2="2201, 709, 2241, 727" shape="rect" alt="Unnamed End Event:End Event" id="areadiagram_map_x4Z069aAUrCSyR_D_sublevelflowitem1" href="BusinessProcessDiagram__ONY69aAUrCSyRQq.html?shapeid=3eNY69aAUrCSyRQ3"/>
+<area imageId="diagram" coords="2201, 656, 2221, 676" coords2="2201, 656, 2221, 676" shape="rect" alt=":End Event" id="areadiagram_map_x4Z069aAUrCSyR_D_default" href="BPEndEvent_x4Z069aAUrCSyR_E.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 453, 2243, 604" coords2="17, 453, 2243, 604" shape="rect" alt="OBF Shared Drive:Lane" id="areadiagram_map_JBis69aAUrCSySG3_default" href="BPLane_JBis69aAUrCSySG4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1207, 636, 1304, 676" coords2="1207, 636, 1304, 676" shape="rect" alt="Add Receipt To Gift Package:Task" id="areadiagram_map_jl4s69aAUrCSySGR_default" href="BPTask_jl4s69aAUrCSySGS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="961, 781, 1084, 821" coords2="961, 781, 1084, 821" shape="rect" alt="Queue Gift Received  Email:Task" id="areadiagram_map_7G_M69aAUrCSySFZ_default" href="BPTask_7G_M69aAUrCSySFa.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 753, 2243, 902" coords2="17, 753, 2243, 902" shape="rect" alt="CCR Division Email:Lane" id="areadiagram_map_1VrM69aAUrCSySFD_default" href="BPLane_1VrM69aAUrCSySFE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="947, 636, 1097, 676" coords2="947, 636, 1097, 676" shape="rect" alt="Email Division that gift was received:Task" id="areadiagram_map_gVNM69aAUrCSySEZ_default" href="BPTask_gVNM69aAUrCSySEa.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="691, 636, 837, 676" coords2="691, 636, 837, 676" shape="rect" alt="Read Wire Received email:Task" id="areadiagram_map_t5.M69aAUrCSySDd_default" href="BPTask_t5_M69aAUrCSySDe.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="691, 357, 808, 397" coords2="691, 357, 808, 397" shape="rect" alt="Queue Wire Received email:Task" id="areadiagram_map_dOKM69aAUrCSySCd_default" href="BPTask_dOKM69aAUrCSySCe.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 302, 2243, 453" coords2="17, 302, 2243, 453" shape="rect" alt="OBF Gift coordinator Email:Lane" id="areadiagram_map_fjCM69aAUrCSySCJ_default" href="BPLane_fjCM69aAUrCSySCK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="423, 207, 648, 247" coords2="423, 207, 648, 247" shape="rect" alt="Email OBF Gift Coordinator wire recieved:Task" id="areadiagram_map_1hAM69aAUrCSySAt_default" href="BPTask_1hAM69aAUrCSySAu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="214, 207, 345, 247" coords2="214, 207, 345, 247" shape="rect" alt="Receives Wire Transfer:Task" id="areadiagram_map_0ZP069aAUrCSySAZ_default" href="BPTask_0ZP069aAUrCSySAa.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="73, 270, 245, 288" coords2="73, 270, 245, 288" shape="rect" alt="Unidentified Wire Transfer:Sub-Process" id="areadiagram_map_O4Z069aAUrCSyR.__sublevelflowitem1" href="BusinessProcessDiagram__ONY69aAUrCSyRQq.html?shapeid=Ghd4NjaAUhQuHzCI"/>
+<area imageId="diagram" coords="73, 288, 245, 306" coords2="73, 288, 245, 306" shape="rect" alt="Wire Transfer Unidentified:Gateway" id="areadiagram_map_O4Z069aAUrCSyR.__sublevelflowitem2" href="BusinessProcessDiagram__ONY69aAUrCSyRQq.html?shapeid=Y6sENjaAUhQuHzEG"/>
+<area imageId="diagram" coords="73, 306, 245, 324" coords2="73, 306, 245, 324" shape="rect" alt="No:Sequence Flow" id="areadiagram_map_O4Z069aAUrCSyR.__sublevelflowitem3" href="BusinessProcessDiagram__ONY69aAUrCSyRQq.html?shapeid=Y6sENjaAUhQuHzEG"/>
+<area imageId="diagram" coords="73, 217, 93, 237" coords2="73, 217, 93, 237" shape="rect" alt=":Start Event" id="areadiagram_map_O4Z069aAUrCSyR.__default" href="BPStartEvent_u4Z069aAUrCSyR_A.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 152, 2243, 302" coords2="17, 152, 2243, 302" shape="rect" alt="OFM&emsp;:Lane" id="areadiagram_map_cfH069aAUrCSyR_9_default" href="BPLane_cfH069aAUrCSyR__.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 604, 2243, 753" coords2="17, 604, 2243, 753" shape="rect" alt="OBF Gift coordinator?:Lane" id="areadiagram_map_cvV069aAUrCSyR_S_default" href="BPLane_cvV069aAUrCSyR_T.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 2243, 902" coords2="2, 2, 2243, 902" shape="rect" alt="Wire Transfer Business Process Diagram:Pool" id="areadiagram_map_wvV069aAUrCSyR_O_default" href="BPPool_IvV069aAUrCSyR_P.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Package.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Package.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Package_97e3TdaAUrAKMTBI.html" class="ItemLink">Gift Package : Package</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_DiSc69aAUrCSySKe.html" class="ItemLink">Queue Copy of Wire Transfer : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_7G_M69aAUrCSySFa.html" class="ItemLink">Queue Gift Received  Email : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_u4Z069aAUrCSyR_A.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_cvV069aAUrCSyR_T.html" class="ItemLink">OBF Gift coordinator? : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_0ZP069aAUrCSySAa.html" class="ItemLink">Receives Wire Transfer : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_cfH069aAUrCSyR__.html" class="ItemLink">OFM&emsp; : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataObject_7wU3TdaAUrAKMS_x.html" class="ItemLink">Routing Slip : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_t5_M69aAUrCSySDe.html" class="ItemLink">Read Wire Received email : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_fjCM69aAUrCSySCK.html" class="ItemLink">OBF Gift coordinator Email : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_IvV069aAUrCSyR_P.html" class="ItemLink">Wire Transfer Business Process Diagram : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataObject_tds3TdaAUrAKMTAN.html" class="ItemLink">Draft Acceptance Letter : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactTextAnnotation.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactTextAnnotation.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTextAnnotation_0QJM69aAUrCSySD2.html" class="ItemLink">Annotation15 : Text Annotation</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_1hAM69aAUrCSySAu.html" class="ItemLink">Email OBF Gift Coordinator wire recieved : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataObject_Vhi3TdaAUrAKMTAl.html" class="ItemLink">Agreement : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_1VrM69aAUrCSySFE.html" class="ItemLink">CCR Division Email : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_gVNM69aAUrCSySEa.html" class="ItemLink">Email Division that gift was received : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP06</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_JBis69aAUrCSySG4.html" class="ItemLink">OBF Shared Drive : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP06</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_dOKM69aAUrCSySCe.html" class="ItemLink">Queue Wire Received email : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP08</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane__UHs69aAUrCSySI5.html" class="ItemLink">OFM Email : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP08</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_jl4s69aAUrCSySGS.html" class="ItemLink">Add Receipt To Gift Package : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP09</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataObject_fQcc69aAUrCSySKE.html" class="ItemLink">Receipt : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP09</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_ff3s69aAUrCSySJJ.html" class="ItemLink">Send Copy of Wire Transfer to OFM : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP10</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_x4Z069aAUrCSyR_E.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP53</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataObject_4iwfTdaAUrAKMUaJ.html" class="ItemLink">Validity Test : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>
