@@ -1,0 +1,1256 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - ePMAP ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_IN4IjoaAUhQsPklM.html" class="PageParentTitle">ePMAP : Application Component</a> (in <a href="ArchiMateDiagram_IN4IjoaAUhQsPklM.html" class="PageParentTitle">HR Systems diagram</a> / <a href="ArchiMateDiagram__fTPnUaAUhQsMRZw.html" class="PageParentTitle">SMART HR ArchiMate Diagram</a> / <a href="ArchiMateDiagram_nl2YXUaAUhQsMZRn.html" class="PageParentTitle">NED ArchiMate Diagram</a> / <a href="ArchiMateDiagram_jEZ3XUaAUhQsMRWv.html" class="PageParentTitle">ePMAP ArchiMate Diagram</a> / <a href="ArchiMateDiagram_5J4vXUaAUhQsMc89.html" class="PageParentTitle">nVision HR ArchiMate Diagram</a> / <a href="ArchiMateDiagram_2w854MaAUrAy_BJ2.html" class="PageParentTitle">NCI Business Applications Archimate Diagram</a> / <a href="ArchiMateDiagram_nFQ4KjaAUhQALpUx.html" class="PageParentTitle">iTrust ArchiMate Diagram</a> / <a href="ArchiMateDiagram_HRwxqPaAUhQuH325.html" class="PageParentTitle">IC DOC-centric ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+<a href="BusinessProcessDiagram_8FFG80aAUrCiGDjF.html"><img style="border: 1px solid #C0C0C0; " src="../images/icons/Breadcrumb_JumpToDiagram.png" alt="Referenced by Business Process Diagram/ePMAP - Establishment"/></a>		<span id="PageTitleText">
+			ArchiMate Diagram - <a href="Glossary_gd7YWEaAUhQCoQzS.html" class="ItemLink">ePMAP</a> ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/jEZ3XUaAUhQsMRWv', 'ePMAP ArchiMate Diagram\nNCI Buisness Architecture.vpp://diagram/jEZ3XUaAUhQsMRWv', 'ePMAP ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|2388.0|524.0|80.0|40.0|ArchiMateBusinessActor_dQXK5jaAUhQALj_i.html|ArchiMateBusinessActor_dQXK5jaAUhQALj_i.html|dQXK5jaAUhQALj.h" id="optiondQXK5jaAUhQALj.h">Super Liaison : Business Actor</option>
+<option value="shape|1808.0|524.0|80.0|40.0|ArchiMateBusinessActor__HtK5jaAUhQALj_O.html|ArchiMateBusinessActor__HtK5jaAUhQALj_O.html|_HtK5jaAUhQALj.N" id="option_HtK5jaAUhQALj.N">Liaison : Business Actor</option>
+<option value="shape|2264.0|524.0|80.0|40.0|ArchiMateBusinessActor_AJSK5jaAUhQALj_G.html|ArchiMateBusinessActor_AJSK5jaAUhQALj_G.html|AJSK5jaAUhQALj.F" id="optionAJSK5jaAUhQALj.F">Proxy : Business Actor</option>
+<option value="shape|172.0|526.0|80.0|40.0|ArchiMateDataObject_DSV05jaAUhQALlpl.html|ArchiMateDataObject_DSV05jaAUhQALlpl.html|DSV05jaAUhQALlpk" id="optionDSV05jaAUhQALlpk">ePMAP DB : Data Object</option>
+<option value="shape|452.0|524.0|80.0|40.0|ArchiMateBusinessActor_aQW05jaAUhQALlpV.html|ArchiMateBusinessActor_aQW05jaAUhQALlpV.html|aQW05jaAUhQALlpU" id="optionaQW05jaAUhQALlpU">ePMAP Administrator : Business Actor</option>
+<option value="shape|2102.0|524.0|103.0|40.0|ArchiMateBusinessActor_nRq05jaAUhQALlpH.html|ArchiMateBusinessActor_nRq05jaAUhQALlpH.html|HRq05jaAUhQALlpG" id="optionHRq05jaAUhQALlpG">NIH Supervisor : Business Actor</option>
+<option value="shape|1946.0|524.0|98.0|40.0|ArchiMateBusinessActor_sNgMstaAU8wCkGe0.html|ArchiMateBusinessActor_sNgMstaAU8wCkGe0.html|HYo05jaAUhQALlnL" id="optionHYo05jaAUhQALlnL">NIH Employee : Business Actor</option>
+<option value="shape|1654.0|524.0|96.0|40.0|ArchiMateApplicationComponent_9jRkDPqAUhQsFiok.html|ArchiMateApplicationComponent_9jRkDPqAUhQsFiok.html|sgVU5jaAUhQALlKg" id="optionsgVU5jaAUhQALlKg">iTrust : Application Component</option>
+<option value="shape|768.0|524.0|420.0|40.0|ArchiMateDataObject_DlnPz2aAUrD8PI6z.html|ArchiMateDataObject_DlnPz2aAUrD8PI6z.html|tUh6dpaAUhQELuNZ" id="optiontUh6dpaAUhQELuNZ">Finance, Acquisitions, Travel, Property, HR, TechTransfer, nSight Finance, nSight HR, and NED Data : Data Object</option>
+<option value="shape|1264.0|524.0|96.0|40.0|ArchiMateApplicationComponent_B1JefjqAUhQsLApD.html|ArchiMateApplicationComponent_B1JefjqAUhQsLApD.html|aLN3XUaAUhQsMRXb" id="optionaLN3XUaAUhQsMRXb">nVision HR : Application Component</option>
+<option value="shape|590.0|524.0|102.0|40.0|ArchiMateApplicationComponent_JSSRnjqAUhQsLAju.html|ArchiMateApplicationComponent_JSSRnjqAUhQsLAju.html|jzN3XUaAUhQsMRXR" id="optionjzN3XUaAUhQsMRXR">SMART HR : Application Component</option>
+<option value="shape|750.0|486.0|692.0|121.0|ArchiMateSystemSoftware_24JsnjqAUhQsEhqe.html|ArchiMateSystemSoftware_24JsnjqAUhQsEhqe.html|kUh6dpaAUhQELuNW" id="optionkUh6dpaAUhQELuNW">nVision : System Software</option>
+<option value="shape|32.0|496.0|362.0|100.0|ArchiMateApplicationComponent_g6AlYwaAUhQsVDBI.html|ArchiMateApplicationComponent_g6AlYwaAUhQsVDBI.html|LNV3XUaAUhQsMRXK" id="optionLNV3XUaAUhQsMRXK">ePMAP : Application Component</option>
+<option value="shape|1500.0|524.0|96.0|40.0|ArchiMateApplicationComponent_ECFBnjqAUhQsLAhs.html|ArchiMateApplicationComponent_ECFBnjqAUhQsLAhs.html|DLN3XUaAUhQsMRXl" id="optionDLN3XUaAUhQsMRXl">NED : Application Component</option>
+<option value="shape|2.0|2.0|2512.0|652.0|ArchiMateGrouping_DOM7rUaAUhQsMVgW.html|ArchiMateGrouping_DOM7rUaAUhQsMVgW.html|2qZ7ZjaAUhQALmxn" id="option2qZ7ZjaAUhQALmxn">del NIH : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/ePMAP_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="2518" height="658"/>
+					<map name="diagram_map">
+<area coords="208,515,245,530" coords2="208,515,245,530" shape="rect" alt="ePMAP" href="Glossary_gd7YWEaAUhQCoQzS.html"/>
+<area coords="623,559,680,574" coords2="623,559,680,574" shape="rect" alt="SMART HR" href="Glossary_xwz4WEaAUhQCoQ1O.html"/>
+<area coords="1294,559,1349,574" coords2="1294,559,1349,574" shape="rect" alt="nVision HR" href="Glossary_GOQrO9aAUhQAJBJs.html"/>
+<area coords="1066,550,1097,565" coords2="1066,550,1097,565" shape="rect" alt="nSight" href="Glossary_owDLO9aAUhQAJBJU.html"/>
+<area coords="1145,550,1176,565" coords2="1145,550,1176,565" shape="rect" alt="nSIGHT HR" href="Glossary_fL0EWEaAUhQCoQ2g.html"/>
+<area coords="931,565,947,580" coords2="931,565,947,580" shape="rect" alt="nSIGHT HR" href="Glossary_fL0EWEaAUhQCoQ2g.html"/>
+<area coords="465,529,502,544" coords2="465,529,502,544" shape="rect" alt="ePMAP" href="Glossary_gd7YWEaAUhQCoQzS.html"/>
+<area coords="184,544,221,559" coords2="184,544,221,559" shape="rect" alt="ePMAP" href="Glossary_gd7YWEaAUhQCoQzS.html"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gd7YWEaAUhQCoQzS.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ePMAP&amp;lt;/a&amp;gt; 
+      gets the Employee/Supervisor relationship from NED.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="299.0, 298.0, 299.0, 301.0, 296.0, 301.0, 296.0, 315.0, 299.0, 315.0, 299.0, 496.0, 313.0, 496.0, 313.0, 315.0, 1541.0, 315.0, 1541.0, 524.0, 1555.0, 524.0, 1555.0, 315.0, 1558.0, 315.0, 1558.0, 301.0, 1555.0, 301.0, 1555.0, 298.0, 1541.0, 298.0, 1541.0, 301.0, 313.0, 301.0, 313.0, 298.0" coords2="299.0, 298.0, 299.0, 301.0, 296.0, 301.0, 296.0, 315.0, 299.0, 315.0, 299.0, 496.0, 313.0, 496.0, 313.0, 315.0, 1541.0, 315.0, 1541.0, 524.0, 1555.0, 524.0, 1555.0, 315.0, 1558.0, 315.0, 1558.0, 301.0, 1555.0, 301.0, 1555.0, 298.0, 1541.0, 298.0, 1541.0, 301.0, 313.0, 301.0, 313.0, 298.0" shape="poly" alt="NED-&gt;ePMAP:Flow" id="areadiagram_map_DLN3XUaAUhQsMRXj_default" href="ArchiMateFlow_2YK1YwaAUhQsVDCE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="333.0, 322.0, 333.0, 325.0, 330.0, 325.0, 330.0, 339.0, 333.0, 339.0, 333.0, 496.0, 347.0, 496.0, 347.0, 339.0, 969.0, 339.0, 969.0, 524.0, 983.0, 524.0, 983.0, 339.0, 986.0, 339.0, 986.0, 325.0, 983.0, 325.0, 983.0, 322.0, 969.0, 322.0, 969.0, 325.0, 347.0, 325.0, 347.0, 322.0" coords2="333.0, 322.0, 333.0, 325.0, 330.0, 325.0, 330.0, 339.0, 333.0, 339.0, 333.0, 496.0, 347.0, 496.0, 347.0, 339.0, 969.0, 339.0, 969.0, 524.0, 983.0, 524.0, 983.0, 339.0, 986.0, 339.0, 986.0, 325.0, 983.0, 325.0, 983.0, 322.0, 969.0, 322.0, 969.0, 325.0, 347.0, 325.0, 347.0, 322.0" shape="poly" alt=":Access" id="areadiagram_map_4nwGdpaAUhQELuOf_default" href="ArchiMateAccess_XHwGdpaAUhQELuOe.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="275.0, 266.0, 275.0, 269.0, 272.0, 269.0, 272.0, 283.0, 275.0, 283.0, 275.0, 496.0, 289.0, 496.0, 289.0, 283.0, 1679.0, 283.0, 1679.0, 524.0, 1693.0, 524.0, 1693.0, 283.0, 1696.0, 283.0, 1696.0, 269.0, 1693.0, 269.0, 1693.0, 266.0, 1679.0, 266.0, 1679.0, 269.0, 289.0, 269.0, 289.0, 266.0" coords2="275.0, 266.0, 275.0, 269.0, 272.0, 269.0, 272.0, 283.0, 275.0, 283.0, 275.0, 496.0, 289.0, 496.0, 289.0, 283.0, 1679.0, 283.0, 1679.0, 524.0, 1693.0, 524.0, 1693.0, 283.0, 1696.0, 283.0, 1696.0, 269.0, 1693.0, 269.0, 1693.0, 266.0, 1679.0, 266.0, 1679.0, 269.0, 289.0, 269.0, 289.0, 266.0" shape="poly" alt="ePMAP to iTrust:Flow" id="areadiagram_map_dAjU5jaAUhQALlLJ_default" href="ArchiMateFlow_eAjU5jaAUhQALlK8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="259.0, 248.0, 259.0, 251.0, 256.0, 251.0, 256.0, 265.0, 259.0, 265.0, 259.0, 496.0, 273.0, 496.0, 273.0, 265.0, 1695.0, 265.0, 1695.0, 524.0, 1709.0, 524.0, 1709.0, 265.0, 1712.0, 265.0, 1712.0, 251.0, 1709.0, 251.0, 1709.0, 248.0, 1695.0, 248.0, 1695.0, 251.0, 273.0, 251.0, 273.0, 248.0" coords2="259.0, 248.0, 259.0, 251.0, 256.0, 251.0, 256.0, 265.0, 259.0, 265.0, 259.0, 496.0, 273.0, 496.0, 273.0, 265.0, 1695.0, 265.0, 1695.0, 524.0, 1709.0, 524.0, 1709.0, 265.0, 1712.0, 265.0, 1712.0, 251.0, 1709.0, 251.0, 1709.0, 248.0, 1695.0, 248.0, 1695.0, 251.0, 273.0, 251.0, 273.0, 248.0" shape="poly" alt="iTrust to ePMAP:Flow" id="areadiagram_map_SLbU5jaAUhQALlgb_default" href="ArchiMateFlow_sLbU5jaAUhQALlga.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="201.0, 196.0, 201.0, 199.0, 198.0, 199.0, 198.0, 213.0, 201.0, 213.0, 201.0, 496.0, 215.0, 496.0, 215.0, 213.0, 1987.0, 213.0, 1987.0, 524.0, 2001.0, 524.0, 2001.0, 213.0, 2004.0, 213.0, 2004.0, 199.0, 2001.0, 199.0, 2001.0, 196.0, 1987.0, 196.0, 1987.0, 199.0, 215.0, 199.0, 215.0, 196.0" coords2="201.0, 196.0, 201.0, 199.0, 198.0, 199.0, 198.0, 213.0, 201.0, 213.0, 201.0, 496.0, 215.0, 496.0, 215.0, 213.0, 1987.0, 213.0, 1987.0, 524.0, 2001.0, 524.0, 2001.0, 213.0, 2004.0, 213.0, 2004.0, 199.0, 2001.0, 199.0, 2001.0, 196.0, 1987.0, 196.0, 1987.0, 199.0, 215.0, 199.0, 215.0, 196.0" shape="poly" alt="NIH Employee to ePMAP:Flow" id="areadiagram_map_VjSM5jaAUhQALlsj_default" href="ArchiMateFlow_JjSM5jaAUhQALlsi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="187.0, 178.0, 187.0, 181.0, 184.0, 181.0, 184.0, 195.0, 187.0, 195.0, 187.0, 496.0, 201.0, 496.0, 201.0, 195.0, 2005.0, 195.0, 2005.0, 524.0, 2019.0, 524.0, 2019.0, 195.0, 2022.0, 195.0, 2022.0, 181.0, 2019.0, 181.0, 2019.0, 178.0, 2005.0, 178.0, 2005.0, 181.0, 201.0, 181.0, 201.0, 178.0" coords2="187.0, 178.0, 187.0, 181.0, 184.0, 181.0, 184.0, 195.0, 187.0, 195.0, 187.0, 496.0, 201.0, 496.0, 201.0, 195.0, 2005.0, 195.0, 2005.0, 524.0, 2019.0, 524.0, 2019.0, 195.0, 2022.0, 195.0, 2022.0, 181.0, 2019.0, 181.0, 2019.0, 178.0, 2005.0, 178.0, 2005.0, 181.0, 201.0, 181.0, 201.0, 178.0" shape="poly" alt="ePMAP to NIH Employee:Flow" id="areadiagram_map_EvmM5jaAUhQALls5_default" href="ArchiMateFlow_IvmM5jaAUhQALls4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="149.0, 148.0, 149.0, 151.0, 146.0, 151.0, 146.0, 165.0, 149.0, 165.0, 149.0, 496.0, 163.0, 496.0, 163.0, 165.0, 2149.0, 165.0, 2149.0, 524.0, 2163.0, 524.0, 2163.0, 165.0, 2166.0, 165.0, 2166.0, 151.0, 2163.0, 151.0, 2163.0, 148.0, 2149.0, 148.0, 2149.0, 151.0, 163.0, 151.0, 163.0, 148.0" coords2="149.0, 148.0, 149.0, 151.0, 146.0, 151.0, 146.0, 165.0, 149.0, 165.0, 149.0, 496.0, 163.0, 496.0, 163.0, 165.0, 2149.0, 165.0, 2149.0, 524.0, 2163.0, 524.0, 2163.0, 165.0, 2166.0, 165.0, 2166.0, 151.0, 2163.0, 151.0, 2163.0, 148.0, 2149.0, 148.0, 2149.0, 151.0, 163.0, 151.0, 163.0, 148.0" shape="poly" alt="ePMAP to NIH Supervisor:Flow" id="areadiagram_map_7c1M5jaAUhQALlt3_default" href="ArchiMateFlow_Tc1M5jaAUhQALlt2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="363.0, 348.0, 363.0, 351.0, 360.0, 351.0, 360.0, 365.0, 363.0, 365.0, 363.0, 496.0, 377.0, 496.0, 377.0, 365.0, 485.0, 365.0, 485.0, 524.0, 499.0, 524.0, 499.0, 365.0, 502.0, 365.0, 502.0, 351.0, 499.0, 351.0, 499.0, 348.0, 485.0, 348.0, 485.0, 351.0, 377.0, 351.0, 377.0, 348.0" coords2="363.0, 348.0, 363.0, 351.0, 360.0, 351.0, 360.0, 365.0, 363.0, 365.0, 363.0, 496.0, 377.0, 496.0, 377.0, 365.0, 485.0, 365.0, 485.0, 524.0, 499.0, 524.0, 499.0, 365.0, 502.0, 365.0, 502.0, 351.0, 499.0, 351.0, 499.0, 348.0, 485.0, 348.0, 485.0, 351.0, 377.0, 351.0, 377.0, 348.0" shape="poly" alt="ePMAP to ePMAP Administrator:Flow" id="areadiagram_map_WHws5jaAUhQALlvn_default" href="ArchiMateFlow_qHws5jaAUhQALlvm.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="22.0, 559.0, 22.0, 573.0, 32.0, 573.0, 32.0, 559.0" coords2="22.0, 559.0, 22.0, 573.0, 32.0, 573.0, 32.0, 559.0" shape="poly" alt=":Access" id="areadiagram_map_auos5jaAUhQALlv0_default" href="ArchiMateAccess_Cuos5jaAUhQALlvz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="375.0, 362.0, 375.0, 365.0, 372.0, 365.0, 372.0, 379.0, 375.0, 379.0, 375.0, 496.0, 389.0, 496.0, 389.0, 379.0, 473.0, 379.0, 473.0, 524.0, 487.0, 524.0, 487.0, 379.0, 490.0, 379.0, 490.0, 365.0, 487.0, 365.0, 487.0, 362.0, 473.0, 362.0, 473.0, 365.0, 389.0, 365.0, 389.0, 362.0" coords2="375.0, 362.0, 375.0, 365.0, 372.0, 365.0, 372.0, 379.0, 375.0, 379.0, 375.0, 496.0, 389.0, 496.0, 389.0, 379.0, 473.0, 379.0, 473.0, 524.0, 487.0, 524.0, 487.0, 379.0, 490.0, 379.0, 490.0, 365.0, 487.0, 365.0, 487.0, 362.0, 473.0, 362.0, 473.0, 365.0, 389.0, 365.0, 389.0, 362.0" shape="poly" alt="ePMAP Administrator to ePMAP:Flow" id="areadiagram_map_vjqs5jaAUhQALlwQ_default" href="ArchiMateFlow_njqs5jaAUhQALlwP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="135.0, 130.0, 135.0, 133.0, 132.0, 133.0, 132.0, 147.0, 135.0, 147.0, 135.0, 496.0, 149.0, 496.0, 149.0, 147.0, 2165.0, 147.0, 2165.0, 524.0, 2179.0, 524.0, 2179.0, 147.0, 2182.0, 147.0, 2182.0, 133.0, 2179.0, 133.0, 2179.0, 130.0, 2165.0, 130.0, 2165.0, 133.0, 149.0, 133.0, 149.0, 130.0" coords2="135.0, 130.0, 135.0, 133.0, 132.0, 133.0, 132.0, 147.0, 135.0, 147.0, 135.0, 496.0, 149.0, 496.0, 149.0, 147.0, 2165.0, 147.0, 2165.0, 524.0, 2179.0, 524.0, 2179.0, 147.0, 2182.0, 147.0, 2182.0, 133.0, 2179.0, 133.0, 2179.0, 130.0, 2165.0, 130.0, 2165.0, 133.0, 149.0, 133.0, 149.0, 130.0" shape="poly" alt="NIH Supervisor to ePMAP:Flow" id="areadiagram_map_Xsds5jaAUhQALlxI_default" href="ArchiMateFlow_Tsds5jaAUhQALlxH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      There is a manual excel spreadsheet file transfer to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_xwz4WEaAUhQCoQ1O.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SMART 
+      HR&amp;lt;/a&amp;gt; from &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gd7YWEaAUhQCoQzS.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ePMAP&amp;lt;/a&amp;gt; 
+      via the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gd7YWEaAUhQCoQzS.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ePMAP&amp;lt;/a&amp;gt; 
+      Administrator. This is due to a sync problem, and the existing API was 
+      deemed not suitable or usable.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="507.0, 348.0, 507.0, 351.0, 504.0, 351.0, 504.0, 365.0, 507.0, 365.0, 507.0, 524.0, 521.0, 524.0, 521.0, 365.0, 633.0, 365.0, 633.0, 524.0, 647.0, 524.0, 647.0, 365.0, 650.0, 365.0, 650.0, 351.0, 647.0, 351.0, 647.0, 348.0, 633.0, 348.0, 633.0, 351.0, 521.0, 351.0, 521.0, 348.0" coords2="507.0, 348.0, 507.0, 351.0, 504.0, 351.0, 504.0, 365.0, 507.0, 365.0, 507.0, 524.0, 521.0, 524.0, 521.0, 365.0, 633.0, 365.0, 633.0, 524.0, 647.0, 524.0, 647.0, 365.0, 650.0, 365.0, 650.0, 351.0, 647.0, 351.0, 647.0, 348.0, 633.0, 348.0, 633.0, 351.0, 521.0, 351.0, 521.0, 348.0" shape="poly" alt="ePMAP Administrator to SMART HR:Flow" id="areadiagram_map_s4ZS5jaAUhQALj9Z_default" href="ArchiMateFlow_k4ZS5jaAUhQALj9Y.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      The Liaison can just see &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ljUH39aAUhQCmxAN.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Status&amp;lt;/a&amp;gt; 
+      reports for a particular SAC code.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="229.0, 222.0, 229.0, 225.0, 226.0, 225.0, 226.0, 239.0, 229.0, 239.0, 229.0, 496.0, 243.0, 496.0, 243.0, 239.0, 1841.0, 239.0, 1841.0, 524.0, 1855.0, 524.0, 1855.0, 239.0, 1858.0, 239.0, 1858.0, 225.0, 1855.0, 225.0, 1855.0, 222.0, 1841.0, 222.0, 1841.0, 225.0, 243.0, 225.0, 243.0, 222.0" coords2="229.0, 222.0, 229.0, 225.0, 226.0, 225.0, 226.0, 239.0, 229.0, 239.0, 229.0, 496.0, 243.0, 496.0, 243.0, 239.0, 1841.0, 239.0, 1841.0, 524.0, 1855.0, 524.0, 1855.0, 239.0, 1858.0, 239.0, 1858.0, 225.0, 1855.0, 225.0, 1855.0, 222.0, 1841.0, 222.0, 1841.0, 225.0, 243.0, 225.0, 243.0, 222.0" shape="poly" alt="ePMAP to Liaison:Flow" id="areadiagram_map_Goiq5jaAUhQALj_E_default" href="ArchiMateFlow_Soiq5jaAUhQALj_D.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      The Super Liaison is assigned by SAC code and can edit all ePMAPs for a 
+      SAC code, but cannot sign. &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="71.0, 60.0, 71.0, 63.0, 68.0, 63.0, 68.0, 77.0, 71.0, 77.0, 71.0, 496.0, 85.0, 496.0, 85.0, 77.0, 2403.0, 77.0, 2403.0, 524.0, 2417.0, 524.0, 2417.0, 77.0, 2420.0, 77.0, 2420.0, 63.0, 2417.0, 63.0, 2417.0, 60.0, 2403.0, 60.0, 2403.0, 63.0, 85.0, 63.0, 85.0, 60.0" coords2="71.0, 60.0, 71.0, 63.0, 68.0, 63.0, 68.0, 77.0, 71.0, 77.0, 71.0, 496.0, 85.0, 496.0, 85.0, 77.0, 2403.0, 77.0, 2403.0, 524.0, 2417.0, 524.0, 2417.0, 77.0, 2420.0, 77.0, 2420.0, 63.0, 2417.0, 63.0, 2417.0, 60.0, 2403.0, 60.0, 2403.0, 63.0, 85.0, 63.0, 85.0, 60.0" shape="poly" alt="ePMAP to Super Liaison:Flow" id="areadiagram_map_hwlq5jaAUhQALj_e_default" href="ArchiMateFlow_2wlq5jaAUhQALj_d.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      The Super Liaison is assigned by SAC code and can edit all ePMAPs for a 
+      SAC code, but cannot sign. &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;nbsp;
+  &amp;lt;/body&amp;gt;" coords="57.0, 42.0, 57.0, 45.0, 54.0, 45.0, 54.0, 59.0, 57.0, 59.0, 57.0, 496.0, 71.0, 496.0, 71.0, 59.0, 2421.0, 59.0, 2421.0, 524.0, 2435.0, 524.0, 2435.0, 59.0, 2438.0, 59.0, 2438.0, 45.0, 2435.0, 45.0, 2435.0, 42.0, 2421.0, 42.0, 2421.0, 45.0, 71.0, 45.0, 71.0, 42.0" coords2="57.0, 42.0, 57.0, 45.0, 54.0, 45.0, 54.0, 59.0, 57.0, 59.0, 57.0, 496.0, 71.0, 496.0, 71.0, 59.0, 2421.0, 59.0, 2421.0, 524.0, 2435.0, 524.0, 2435.0, 59.0, 2438.0, 59.0, 2438.0, 45.0, 2435.0, 45.0, 2435.0, 42.0, 2421.0, 42.0, 2421.0, 45.0, 71.0, 45.0, 71.0, 42.0" shape="poly" alt="Super Liaison to ePMAP:Flow" id="areadiagram_map_qI0a5jaAUhQALj_6_default" href="ArchiMateFlow_8I0a5jaAUhQALj_5.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      The Proxy can do all functions that a particular Supervisor can except 
+      sign. &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="97.0, 84.0, 97.0, 87.0, 94.0, 87.0, 94.0, 101.0, 97.0, 101.0, 97.0, 496.0, 111.0, 496.0, 111.0, 101.0, 2297.0, 101.0, 2297.0, 524.0, 2311.0, 524.0, 2311.0, 101.0, 2314.0, 101.0, 2314.0, 87.0, 2311.0, 87.0, 2311.0, 84.0, 2297.0, 84.0, 2297.0, 87.0, 111.0, 87.0, 111.0, 84.0" coords2="97.0, 84.0, 97.0, 87.0, 94.0, 87.0, 94.0, 101.0, 97.0, 101.0, 97.0, 496.0, 111.0, 496.0, 111.0, 101.0, 2297.0, 101.0, 2297.0, 524.0, 2311.0, 524.0, 2311.0, 101.0, 2314.0, 101.0, 2314.0, 87.0, 2311.0, 87.0, 2311.0, 84.0, 2297.0, 84.0, 2297.0, 87.0, 111.0, 87.0, 111.0, 84.0" shape="poly" alt="Proxy to ePMAP:Flow" id="areadiagram_map_Bjaa5jaAUhQALkAT_default" href="ArchiMateFlow_2jaa5jaAUhQALkAS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      The Proxy can do all functions that a particular Supervisor can except 
+      sign. &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;nbsp;
+  &amp;lt;/body&amp;gt;" coords="111.0, 98.0, 111.0, 101.0, 108.0, 101.0, 108.0, 115.0, 111.0, 115.0, 111.0, 496.0, 125.0, 496.0, 125.0, 115.0, 2275.0, 115.0, 2275.0, 524.0, 2289.0, 524.0, 2289.0, 115.0, 2292.0, 115.0, 2292.0, 101.0, 2289.0, 101.0, 2289.0, 98.0, 2275.0, 98.0, 2275.0, 101.0, 125.0, 101.0, 125.0, 98.0" coords2="111.0, 98.0, 111.0, 101.0, 108.0, 101.0, 108.0, 115.0, 111.0, 115.0, 111.0, 496.0, 125.0, 496.0, 125.0, 115.0, 2275.0, 115.0, 2275.0, 524.0, 2289.0, 524.0, 2289.0, 115.0, 2292.0, 115.0, 2292.0, 101.0, 2289.0, 101.0, 2289.0, 98.0, 2275.0, 98.0, 2275.0, 101.0, 125.0, 101.0, 125.0, 98.0" shape="poly" alt="ePMAP to Proxy:Flow" id="areadiagram_map_DLda5jaAUhQALkAo_default" href="ArchiMateFlow_NLda5jaAUhQALkAn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="2388, 524, 2468, 564" coords2="2388, 524, 2468, 564" shape="rect" alt="Super Liaison:Business Actor" id="areadiagram_map_dQXK5jaAUhQALj.h_default" href="ArchiMateBusinessActor_dQXK5jaAUhQALj_i.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1808, 524, 1888, 564" coords2="1808, 524, 1888, 564" shape="rect" alt="Liaison:Business Actor" id="areadiagram_map__HtK5jaAUhQALj.N_default" href="ArchiMateBusinessActor__HtK5jaAUhQALj_O.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2264, 524, 2344, 564" coords2="2264, 524, 2344, 564" shape="rect" alt="Proxy:Business Actor" id="areadiagram_map_AJSK5jaAUhQALj.F_default" href="ArchiMateBusinessActor_AJSK5jaAUhQALj_G.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="172, 526, 252, 566" coords2="172, 526, 252, 566" shape="rect" alt="ePMAP DB:Data Object" id="areadiagram_map_DSV05jaAUhQALlpk_default" href="ArchiMateDataObject_DSV05jaAUhQALlpl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="452, 524, 532, 564" coords2="452, 524, 532, 564" shape="rect" alt="ePMAP Administrator:Business Actor" id="areadiagram_map_aQW05jaAUhQALlpU_default" href="ArchiMateBusinessActor_aQW05jaAUhQALlpV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2102, 524, 2205, 564" coords2="2102, 524, 2205, 564" shape="rect" alt="NIH Supervisor:Business Actor" id="areadiagram_map_HRq05jaAUhQALlpG_default" href="ArchiMateBusinessActor_nRq05jaAUhQALlpH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1946, 524, 2044, 564" coords2="1946, 524, 2044, 564" shape="rect" alt="NIH Employee:Business Actor" id="areadiagram_map_HYo05jaAUhQALlnL_default" href="ArchiMateBusinessActor_sNgMstaAU8wCkGe0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1654, 524, 1750, 564" coords2="1654, 524, 1750, 564" shape="rect" alt="iTrust:Application Component" id="areadiagram_map_sgVU5jaAUhQALlKg_default" href="ArchiMateApplicationComponent_9jRkDPqAUhQsFiok.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1654, 524, 1750, 564',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_nFQ4KjaAUhQALpUx.html/iTrust ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '1654, 524, 1750, 564'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Connections to database is provided by TNS connection rows a user is 
+      allowed to see is limited by VPD by there institute.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      HR data - Pay Biweekly, Demographics daily, Commission COR pay and 
+      FELLOWS is monthly
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Finance data - is daily accept for commitments and obligation which is 
+      once an hour.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Travel - nightly
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Property - nightly
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      - nightly
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      NED - daily
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Tech transfer - ?
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Acquisitions - nightly.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      FPS - is months
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      NOTES :
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Source data from &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_xAdNO9aAUrBI4hLs.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;POTS&amp;lt;/a&amp;gt; 
+      and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_fzQG3taAUrD4ZQgu.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;AMBIS&amp;lt;/a&amp;gt; 
+      (acquisitions related). &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ilK369aAUrBI4hHn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NBS&amp;lt;/a&amp;gt; 
+      only gets financial's from &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_xAdNO9aAUrBI4hLs.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;POTS&amp;lt;/a&amp;gt;. 
+      Approvals, and specifics(vendors quantity) are gotten directly from &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_xAdNO9aAUrBI4hLs.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;POTS&amp;lt;/a&amp;gt;.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_fzQG3taAUrD4ZQgu.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;AMBIS&amp;lt;/a&amp;gt; 
+      only used by MIAID &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ilK369aAUrBI4hHn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NBS&amp;lt;/a&amp;gt; 
+      gets just enugh for a requisitions
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="768, 524, 1188, 564" coords2="768, 524, 1188, 564" shape="rect" alt="Finance, Acquisitions, Travel, Property, HR, TechTransfer, nSight Finance, nSight HR, and NED Data:Data Object" id="areadiagram_map_tUh6dpaAUhQELuNZ_default" href="ArchiMateDataObject_DlnPz2aAUrD8PI6z.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','768, 524, 1188, 564',new Array('eHARTS data sources.jpeg*file:////Users/woodpm/Desktop/CIT Deep Dive 06182019/eHARTS data sources.jpeg'),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_inPnQbaAUhQOeVtx.html/nVision ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '768, 524, 1188, 564'),showSubdiagramIcon('diagram', '768, 524, 1188, 564'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_GOQrO9aAUhQAJBJs.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;nVision 
+      HR&amp;lt;/a&amp;gt;&amp;lt;/b&amp;gt; &amp;#8211; Consolidated and integrated HR reporting. Facilitates data 
+      driven decision making. Create and share customized reports for FTE and 
+      non-FTE staff including personnel costs, FTE usage, aggregated workforce 
+      demographics, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ljUH39aAUhQCmxAN.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Status&amp;lt;/a&amp;gt; 
+      of personnel actions, fellowship costs and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ljUH39aAUhQCmxAN.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Status&amp;lt;/a&amp;gt;. 
+      NED tracking history movement within directory system from org to org. 
+      Provides Complete staff picture for each &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt;, 
+      develop custom reports, track all staff(contractors, FTEs Fellows), 
+      export to PDF, ability to create planning records to project future 
+      needs, dashboards and alerts.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Sources
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ol class=&amp;quot;decimal&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;list-style-type:none;margin-left:40pt;margin-top:0px;margin-bottom:0px;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Human Resources Database(&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_5xAqO9aAUhQAJA_B.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;HRDB&amp;lt;/a&amp;gt;) 
+        &amp;#8211; is an &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+        system containing employee master recordes, personnel actions, lookup 
+        tables, payroll information. Updated every two weeks.
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_9cwyG9aAUrD4ZRAX.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FPS 
+        II&amp;lt;/a&amp;gt;(&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_9cwyG9aAUrD4ZRAX.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FPS 
+        II&amp;lt;/a&amp;gt;) &amp;#8211; contains information for non-FTE fellows including 
+        personnel, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_4i14agaC48kYAgnp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Stipend&amp;lt;/a&amp;gt;, 
+        payroll, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_pQpPsgaC48kYAjDM.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Award&amp;lt;/a&amp;gt; 
+        data, insurance
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+        Employee Directory(NED) - contains information for all staff including 
+        civilian, Commission Corps, fellows, contractors, volunteers, others. 
+        Information includes work location, contact info, organization, 
+        photographs, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt; 
+        designation and various access clearances.
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Defense Finance and Accounting Services(&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_zr_L69aAUhQAJHcj.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DFAS&amp;lt;/a&amp;gt;) 
+        &amp;#8211; Department of Defense system housing civilian and Commission Corps 
+        personnel payroll information; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_zr_L69aAUhQAJHcj.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DFAS&amp;lt;/a&amp;gt; 
+        includes payroll information for regular, supplemental and 
+        corrections. Sourced via the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Z3GPCgaC48kYAjHp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;HHS&amp;lt;/a&amp;gt; 
+        Accounting for Pay System(&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_fBJa3taAUrD4ZQe_.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;AFPS&amp;lt;/a&amp;gt;). 
+        Update every two weeks.
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        Fogarty Visiting Fellows(&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_evn739aAUhQCmw_v.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Sunapsis&amp;lt;/a&amp;gt;) 
+        &amp;#8211; contains info on foreign fellows, country origin, and visa expiration
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_fPj4WEaAUhQCoQ1G.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ITAS&amp;lt;/a&amp;gt;(&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_fPj4WEaAUhQCoQ1G.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ITAS&amp;lt;/a&amp;gt;) 
+        &amp;#8211; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+        time keeping system for civilian and Commission Corps Officers. The 
+        data source is limited to sick leave. Updated every two weeks
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ilK369aAUrBI4hHn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NBS&amp;lt;/a&amp;gt; 
+        &amp;#8211; payroll obligations and disbusements by object class code and 
+        project/CAN.
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ol&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1264, 524, 1360, 564" coords2="1264, 524, 1360, 564" shape="rect" alt="nVision HR:Application Component" id="areadiagram_map_aLN3XUaAUhQsMRXb_default" href="ArchiMateApplicationComponent_B1JefjqAUhQsLApD.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1264, 524, 1360, 564',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_5J4vXUaAUhQsMc89.html/nVision HR ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '1264, 524, 1360, 564'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;SMARTHR&amp;lt;/b&amp;gt; &amp;#8211; increases efficiency in the use of &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      resources and automates specialized reporting tasks performed by OHR. 
+      SMARTHR also provides the unique ability to bridge reporting gaps across 
+      multiple Human Resource (HR) and non-HR systems. By linking disparate 
+      data-sources, SMARTHR promotes a more complete assessment of the 
+      organization and human capital topics, while facilitating on-demand 
+      business intelligence to OHR and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt; 
+      customers alike. managed by OHR HR Systems Support Helpdesk
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Sources
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ol class=&amp;quot;decimal&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;list-style-type:none;margin-left:40pt;margin-top:0px;margin-bottom:0px;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        nVision &amp;#8211; 3Rs Dashboard. Biweekly refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Q8l4WEaAUhQCoQ0i.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CAPHR&amp;lt;/a&amp;gt;, 
+        NVision, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_FUe23taAUrD4ZQke.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;BIIS&amp;lt;/a&amp;gt; 
+        &amp;#8211; Awards Dashboard. Biweekly refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_seS739aAUhQCmw_D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Survey 
+        Gizmo&amp;lt;/a&amp;gt;, nVision &amp;#8211; Exit Survey. Biweekly refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_seS739aAUhQCmw_D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Survey 
+        Gizmo&amp;lt;/a&amp;gt; &amp;#8211; HRSS Survey. Quarterly refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        nVision &amp;#8211; PMAP data call. Annually refreash
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        nVision &amp;#8211; Workforce Analytics planning. Biweekly refreash
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ol&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="590, 524, 692, 564" coords2="590, 524, 692, 564" shape="rect" alt="SMART HR:Application Component" id="areadiagram_map_jzN3XUaAUhQsMRXR_default" href="ArchiMateApplicationComponent_JSSRnjqAUhQsLAju.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','590, 524, 692, 564',new Array('SMART HR 08222019.jpg*file:////Users/woodpm/Desktop/NIH SmartHR deep dive 08222019/SMART HR 08222019.jpg'),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram__fTPnUaAUhQsMRZw.html/SMART HR ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '590, 524, 692, 564'),showSubdiagramIcon('diagram', '590, 524, 692, 564'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      https://nvision.&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;.gov/nvision_registration/registration_guide.html#IntroductiontonVision
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      HR Data
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;nVision to K2 Process Script
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      nVision data can be received by K2 by means of a K2 Process Script.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="750, 486, 1442, 607" coords2="750, 486, 1442, 607" shape="rect" alt="nVision:System Software" id="areadiagram_map_kUh6dpaAUhQELuNW_default" href="ArchiMateSystemSoftware_24JsnjqAUhQsEhqe.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','750, 486, 1442, 607',new Array('NBS to nVision data flow diagram.JPG*file:////Users/woodpm/Desktop/ITRC deep dive 01232019/NBS to nVision data flow diagram.JPG'),new Array(),new Array(),new Array(),new Array(),new Array('ERDiagram_lAI3AzqAUrAYHw6m.html/nVision Entity Relationship Diagram/ERDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '750, 486, 1442, 607'),showSubdiagramIcon('diagram', '750, 486, 1442, 607'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;span display=&amp;quot;inline !important&amp;quot; float=&amp;quot;none&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;background-color:rgb(238, 238, 238);color:rgb(51, 51, 51);font-weight:normal;font-size:12px;font-family:Tahoma, Helvetica, Arial, sans-serif;text-align:start;&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Tahoma, Helvetica, Arial, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;color:rgb(51, 51, 51);font-size:12px;&amp;quot;&amp;gt;The 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Z3GPCgaC48kYAjHp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;HHS&amp;lt;/a&amp;gt; 
+      Performance Management Appraisal &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Y_ei2gaFKcBauwqK.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CAA&amp;lt;/a&amp;gt; 
+      (PMAP) runs on a calendar year cycle and is applicable to all General 
+      Schedule (GS), Wage Grade (WG, WL, WS), Senior Biomedical Research 
+      Service (SBRS), and Title 42 209(f) and Title-42 209(g) employees who 
+      are not covered under the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Z3GPCgaC48kYAjHp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;HHS&amp;lt;/a&amp;gt; 
+      Executive Performance Management System (EPMS) - which runs on a &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_KV6eagaC48kYAg4d.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FY&amp;lt;/a&amp;gt;.&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;font face=&amp;quot;Tahoma, Helvetica, Arial, sans-serif&amp;quot; size=&amp;quot;12px&amp;quot; style=&amp;quot;color:rgb(51, 51, 51);font-size:12px;&amp;quot;&amp;gt;&amp;lt;br font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;color:rgb(51, 51, 51);font-weight:normal;font-size:12px;font-family:Tahoma, Helvetica, Arial, sans-serif;text-align:start;&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;&amp;lt;br font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;color:rgb(51, 51, 51);font-weight:normal;font-size:12px;font-family:Tahoma, Helvetica, Arial, sans-serif;text-align:start;&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;&amp;lt;span display=&amp;quot;inline !important&amp;quot; float=&amp;quot;none&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;background-color:rgb(238, 238, 238);color:rgb(51, 51, 51);font-weight:normal;font-size:12px;font-family:Tahoma, Helvetica, Arial, sans-serif;text-align:start;&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;The 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Z3GPCgaC48kYAjHp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;HHS&amp;lt;/a&amp;gt; 
+      PMAP policy is one component of the on-going process of performance 
+      management, which also includes frequent informal feedback, recognition 
+      and awards, coaching, skills development, and appropriate corrective 
+      action.&amp;lt;/span&amp;gt;&amp;lt;/font&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="32, 496, 394, 596" coords2="32, 496, 394, 596" shape="rect" alt="ePMAP:Application Component" id="areadiagram_map_LNV3XUaAUhQsMRXK_default" href="ArchiMateApplicationComponent_g6AlYwaAUhQsVDBI.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','32, 496, 394, 596',new Array(),new Array(),new Array(new Array('https://nciconnect.nci.nih.gov/sites/Collaboration/NCIAdminSysMappingProject/_layouts/15/WopiFrame2.aspx?sourcedoc=%7B923A772D-0FD3-4784-BA46-165B561E093B%7D&file=ePMAP%20Architecture%20Documents.docx&action=default','ePMAP architecture doc')),new Array(),new Array(),new Array('ArchiMateDiagram_jEZ3XUaAUhQsMRWv.html/ePMAP ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '32, 496, 394, 596'),showSubdiagramIcon('diagram', '32, 496, 394, 596'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;background-color:rgb(255, 255, 255);margin-right:10px;color:rgb(0, 0, 0);margin-left:12px;margin-top:2px;font-weight:normal;font-size:10pt;font-family:Verdana;margin-bottom:2px;text-align:start;&amp;quot; text-indent=&amp;quot;2px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;The &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_0wOEWEaAUhQCoQ3N.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NED 
+      Portal/NED&amp;lt;/a&amp;gt; (NED)&amp;lt;/b&amp;gt; - is a centrally coordinated, electronic 
+      directory containing identity, contact, and organizational information 
+      for all members of the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      workforce and non-&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      staff using &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      services and facilities. NEDWeb is the custom data content and process 
+      management &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      used by &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      administrative personnel for adding new people to NED, updating existing 
+      records, transferring people between ICs, and deactivating people when 
+      they leave &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;. 
+      NEDWeb is also used for authorizing &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      &amp;quot;services&amp;quot; such as ID badges, Library privileges, Active Directory 
+      accounts, Exchange mailboxes, VPN Remote access, parking permits, and 
+      listing in the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      Telephone and Services Directory. NEDWeb provides the following features 
+      and capabilities:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ul class=&amp;quot;disc&amp;quot; font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;background-color:rgb(255, 255, 255);color:rgb(0, 0, 0);list-style-type:disc;margin-left:40pt;margin-top:10px;font-weight:normal;font-family:Verdana;margin-bottom:10px;text-align:start;&amp;quot; text-indent=&amp;quot;0px&amp;quot; text-transform=&amp;quot;none&amp;quot; type=&amp;quot;disc&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;p class=&amp;quot;InlineP&amp;quot; style=&amp;quot;margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;&amp;quot; text-indent=&amp;quot;2px&amp;quot;&amp;gt;
+          Work flow
+        &amp;lt;/p&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;p class=&amp;quot;InlineP&amp;quot; style=&amp;quot;margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;&amp;quot; text-indent=&amp;quot;2px&amp;quot;&amp;gt;
+          Scheduled tasks (e.g., the ability to schedule registrations, 
+          updates, etc., to occur on a future date)
+        &amp;lt;/p&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;p class=&amp;quot;InlineP&amp;quot; style=&amp;quot;margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;&amp;quot; text-indent=&amp;quot;2px&amp;quot;&amp;gt;
+          Event driven e-mail &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MXeSMgaC48kYAih0.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Notification&amp;lt;/a&amp;gt;
+        &amp;lt;/p&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;p class=&amp;quot;InlineP&amp;quot; style=&amp;quot;margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;&amp;quot; text-indent=&amp;quot;2px&amp;quot;&amp;gt;
+          Ability to save tasks for completion at a later time
+        &amp;lt;/p&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;p class=&amp;quot;InlineP&amp;quot; style=&amp;quot;margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;&amp;quot; text-indent=&amp;quot;2px&amp;quot;&amp;gt;
+          Reporting capabilities
+        &amp;lt;/p&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;p class=&amp;quot;InlineP&amp;quot; style=&amp;quot;margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;&amp;quot; text-indent=&amp;quot;2px&amp;quot;&amp;gt;
+          Business process integration with &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+          and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Z3GPCgaC48kYAjHp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;HHS&amp;lt;/a&amp;gt; 
+          systems (e.g., &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Z3GPCgaC48kYAjHp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;HHS&amp;lt;/a&amp;gt; 
+          Identity Management System, Background Investigation System) to 
+          support the HSPD-12 Personal Identity Verification process
+        &amp;lt;/p&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;&amp;quot;&amp;gt;
+        &amp;lt;p class=&amp;quot;InlineP&amp;quot; style=&amp;quot;margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;&amp;quot; text-indent=&amp;quot;2px&amp;quot;&amp;gt;
+          User Administration
+        &amp;lt;/p&amp;gt;
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ul&amp;gt;
+    &amp;lt;p font-style=&amp;quot;normal&amp;quot; letter-spacing=&amp;quot;normal&amp;quot; style=&amp;quot;background-color:rgb(255, 255, 255);margin-right:10px;color:rgb(0, 0, 0);margin-left:12px;margin-top:2px;font-weight:normal;font-size:10pt;font-family:Verdana;margin-bottom:2px;text-align:start;&amp;quot; text-indent=&amp;quot;2px&amp;quot; text-transform=&amp;quot;none&amp;quot; white-space=&amp;quot;normal&amp;quot; word-spacing=&amp;quot;0px&amp;quot;&amp;gt;
+      This document provides detailed information on the use of NEDWeb and is 
+      intended to serve as a reference guide for system users. &amp;nbsp;Please direct 
+      comments or suggestions to&amp;lt;span class=&amp;quot;Apple-converted-space&amp;quot;&amp;gt;&amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;a href=&amp;quot;mailto:ned@mail.nih.gov&amp;quot; target=&amp;quot;_blank&amp;quot;&amp;gt;ned@mail.&amp;lt;/a&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;&amp;lt;a href=&amp;quot;mailto:ned@mail.nih.gov&amp;quot; target=&amp;quot;_blank&amp;quot;&amp;gt;.gov&amp;lt;/a&amp;gt;.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      System link - &amp;lt;span style=&amp;quot;font-size:12.0pt;font-family:Times New Roman;&amp;quot;&amp;gt;&amp;lt;font face=&amp;quot;Times New Roman&amp;quot; size=&amp;quot;12.0pt&amp;quot; style=&amp;quot;font-size:12.0pt;&amp;quot;&amp;gt;&amp;lt;a href=&amp;quot;https://nedportal.nih.gov/ProcessPortal/dashboards/NED/PIV+NED+Welcome+CS/NED_03_10_2017?isScoreboard=false&amp;quot; target=&amp;quot;_blank&amp;quot;&amp;gt;https://nedportal.&amp;lt;/a&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;&amp;lt;a href=&amp;quot;https://nedportal.nih.gov/ProcessPortal/dashboards/NED/PIV+NED+Welcome+CS/NED_03_10_2017?isScoreboard=false&amp;quot; target=&amp;quot;_blank&amp;quot;&amp;gt;.gov/ProcessPortal/dashboards/NED/PIV+NED+Welcome+CS/NED_03_10_2017?isScoreboard=false&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;/font&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;br class=&amp;quot;Apple-interchange-newline&amp;quot;&amp;gt;
+      
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;...
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1500, 524, 1596, 564" coords2="1500, 524, 1596, 564" shape="rect" alt="NED:Application Component" id="areadiagram_map_DLN3XUaAUhQsMRXl_default" href="ArchiMateApplicationComponent_ECFBnjqAUhQsLAhs.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1500, 524, 1596, 564',new Array('NED Functional Interconnection Diagram v7.pdf*file:////Users/woodpm/Desktop/CIT Deep Dive 06112019/NED Functional Interconnection Diagram v7.pdf','NED notes from deep dive 06112019.jpg*file:////Users/woodpm/Desktop/CIT Deep Dive 06112019/NED notes from deep dive 06112019.jpg'),new Array(),new Array(new Array('https://nihsoa.nih.gov/default.aspx','NIH Web Services Link')),new Array(),new Array(),new Array('ERDiagram_9DVUAzqAUrAYHwx7.html/NED Entity Relationship Diagram/ERDiagram','ArchiMateDiagram_nl2YXUaAUhQsMZRn.html/NED ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '1500, 524, 1596, 564'),showSubdiagramIcon('diagram', '1500, 524, 1596, 564'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="2, 2, 2514, 654" coords2="2, 2, 2514, 654" shape="rect" alt="del NIH:Grouping" id="areadiagram_map_2qZ7ZjaAUhQALmxn_default" href="ArchiMateGrouping_DOM7rUaAUhQsMVgW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_dQXK5jaAUhQALj_i.html" class="ItemLink">Super Liaison : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor__HtK5jaAUhQALj_O.html" class="ItemLink">Liaison : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_AJSK5jaAUhQALj_G.html" class="ItemLink">Proxy : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/DataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/DataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateDataObject_DSV05jaAUhQALlpl.html" class="ItemLink">ePMAP DB : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_aQW05jaAUhQALlpV.html" class="ItemLink">ePMAP Administrator : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_nRq05jaAUhQALlpH.html" class="ItemLink">NIH Supervisor : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_sNgMstaAU8wCkGe0.html" class="ItemLink">NIH Employee : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_9jRkDPqAUhQsFiok.html" class="ItemLink">iTrust : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/DataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/DataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateDataObject_DlnPz2aAUrD8PI6z.html" class="ItemLink">Finance, Acquisitions, Travel, Property, HR, TechTransfer, nSight Finance, nSight HR, and NED Data : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Connections to database is provided by TNS connection rows a user is 
+      allowed to see is limited by VPD by there institute.
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Contains:
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      HR data - Pay Biweekly, Demographics daily, Commission COR pay and 
+      FELLOWS is monthly
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Finance data - is daily accept for commitments and obligation which is 
+      once an hour.
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Travel - nightly
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Property - nightly
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a> 
+      - nightly
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      NED - daily
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Tech transfer - ?
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Acquisitions - nightly.
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      FPS - is months
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      NOTES :
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Source data from <a class="ItemLink" href="Glossary_xAdNO9aAUrBI4hLs.html" name="">POTS</a> 
+      and <a class="ItemLink" href="Glossary_fzQG3taAUrD4ZQgu.html" name="">AMBIS</a> 
+      (acquisitions related). <a class="ItemLink" href="Glossary_ilK369aAUrBI4hHn.html" name="">NBS</a> 
+      only gets financial's from <a class="ItemLink" href="Glossary_xAdNO9aAUrBI4hLs.html" name="">POTS</a>. 
+      Approvals, and specifics(vendors quantity) are gotten directly from <a class="ItemLink" href="Glossary_xAdNO9aAUrBI4hLs.html" name="">POTS</a>.
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_fzQG3taAUrD4ZQgu.html" name="">AMBIS</a> 
+      only used by MIAID <a class="ItemLink" href="Glossary_ilK369aAUrBI4hHn.html" name="">NBS</a> 
+      gets just enugh for a requisitions
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_B1JefjqAUhQsLApD.html" class="ItemLink">nVision HR : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <b><a class="ItemLink" href="Glossary_GOQrO9aAUhQAJBJs.html" name="">nVision 
+      HR</a></b> &#8211; Consolidated and integrated HR reporting. Facilitates data 
+      driven decision making. Create and share customized reports for FTE and 
+      non-FTE staff including personnel costs, FTE usage, aggregated workforce 
+      demographics, <a class="ItemLink" href="Glossary_ljUH39aAUhQCmxAN.html" name="">Status</a> 
+      of personnel actions, fellowship costs and <a class="ItemLink" href="Glossary_ljUH39aAUhQCmxAN.html" name="">Status</a>. 
+      NED tracking history movement within directory system from org to org. 
+      Provides Complete staff picture for each <a class="ItemLink" href="Glossary_cvKYigaC48kYAjPI.html" name="">IC</a>, 
+      develop custom reports, track all staff(contractors, FTEs Fellows), 
+      export to PDF, ability to create planning records to project future 
+      needs, dashboards and alerts.
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Sources
+    </p>
+    <ol class="decimal" margin-left-ltr="50" margin-right-rtl="50" style="list-style-type:none;margin-left:40pt;margin-top:0px;margin-bottom:0px;">
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        Human Resources Database(<a class="ItemLink" href="Glossary_5xAqO9aAUhQAJA_B.html" name="">HRDB</a>) 
+        &#8211; is an <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+        system containing employee master recordes, personnel actions, lookup 
+        tables, payroll information. Updated every two weeks.
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <a class="ItemLink" href="Glossary_9cwyG9aAUrD4ZRAX.html" name="">FPS 
+        II</a>(<a class="ItemLink" href="Glossary_9cwyG9aAUrD4ZRAX.html" name="">FPS 
+        II</a>) &#8211; contains information for non-FTE fellows including 
+        personnel, <a class="ItemLink" href="Glossary_4i14agaC48kYAgnp.html" name="">Stipend</a>, 
+        payroll, <a class="ItemLink" href="Glossary_pQpPsgaC48kYAjDM.html" name="">Award</a> 
+        data, insurance
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+        Employee Directory(NED) - contains information for all staff including 
+        civilian, Commission Corps, fellows, contractors, volunteers, others. 
+        Information includes work location, contact info, organization, 
+        photographs, <a class="ItemLink" href="Glossary_cvKYigaC48kYAjPI.html" name="">IC</a> 
+        designation and various access clearances.
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        Defense Finance and Accounting Services(<a class="ItemLink" href="Glossary_zr_L69aAUhQAJHcj.html" name="">DFAS</a>) 
+        &#8211; Department of Defense system housing civilian and Commission Corps 
+        personnel payroll information; <a class="ItemLink" href="Glossary_zr_L69aAUhQAJHcj.html" name="">DFAS</a> 
+        includes payroll information for regular, supplemental and 
+        corrections. Sourced via the <a class="ItemLink" href="Glossary_Z3GPCgaC48kYAjHp.html" name="">HHS</a> 
+        Accounting for Pay System(<a class="ItemLink" href="Glossary_fBJa3taAUrD4ZQe_.html" name="">AFPS</a>). 
+        Update every two weeks.
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        Fogarty Visiting Fellows(<a class="ItemLink" href="Glossary_evn739aAUhQCmw_v.html" name="">Sunapsis</a>) 
+        &#8211; contains info on foreign fellows, country origin, and visa expiration
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <a class="ItemLink" href="Glossary_fPj4WEaAUhQCoQ1G.html" name="">ITAS</a>(<a class="ItemLink" href="Glossary_fPj4WEaAUhQCoQ1G.html" name="">ITAS</a>) 
+        &#8211; <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+        time keeping system for civilian and Commission Corps Officers. The 
+        data source is limited to sick leave. Updated every two weeks
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <a class="ItemLink" href="Glossary_ilK369aAUrBI4hHn.html" name="">NBS</a> 
+        &#8211; payroll obligations and disbusements by object class code and 
+        project/CAN.
+      </li>
+    </ol>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_JSSRnjqAUhQsLAju.html" class="ItemLink">SMART HR : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <b>SMARTHR</b> &#8211; increases efficiency in the use of <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      resources and automates specialized reporting tasks performed by OHR. 
+      SMARTHR also provides the unique ability to bridge reporting gaps across 
+      multiple Human Resource (HR) and non-HR systems. By linking disparate 
+      data-sources, SMARTHR promotes a more complete assessment of the 
+      organization and human capital topics, while facilitating on-demand 
+      business intelligence to OHR and <a class="ItemLink" href="Glossary_cvKYigaC48kYAjPI.html" name="">IC</a> 
+      customers alike. managed by OHR HR Systems Support Helpdesk
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Sources
+    </p>
+    <ol class="decimal" margin-left-ltr="50" margin-right-rtl="50" style="list-style-type:none;margin-left:40pt;margin-top:0px;margin-bottom:0px;">
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        nVision &#8211; 3Rs Dashboard. Biweekly refreash
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a>&nbsp;<a class="ItemLink" href="Glossary_Q8l4WEaAUhQCoQ0i.html" name="">CAPHR</a>, 
+        NVision, <a class="ItemLink" href="Glossary_FUe23taAUrD4ZQke.html" name="">BIIS</a> 
+        &#8211; Awards Dashboard. Biweekly refreash
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <a class="ItemLink" href="Glossary_seS739aAUhQCmw_D.html" name="">Survey 
+        Gizmo</a>, nVision &#8211; Exit Survey. Biweekly refreash
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <a class="ItemLink" href="Glossary_seS739aAUhQCmw_D.html" name="">Survey 
+        Gizmo</a> &#8211; HRSS Survey. Quarterly refreash
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        nVision &#8211; PMAP data call. Annually refreash
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        nVision &#8211; Workforce Analytics planning. Biweekly refreash
+      </li>
+    </ol>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SystemSoftware.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SystemSoftware.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateSystemSoftware_24JsnjqAUhQsEhqe.html" class="ItemLink">nVision : System Software</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      https://nvision.<a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a>.gov/nvision_registration/registration_guide.html#IntroductiontonVision
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      HR Data
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;nVision to K2 Process Script
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      nVision data can be received by K2 by means of a K2 Process Script.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_g6AlYwaAUhQsVDBI.html" class="ItemLink">ePMAP : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <span display="inline !important" float="none" font-style="normal" letter-spacing="normal" style="background-color:rgb(238, 238, 238);color:rgb(51, 51, 51);font-weight:normal;font-size:12px;font-family:Tahoma, Helvetica, Arial, sans-serif;text-align:start;" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px"><font face="Tahoma, Helvetica, Arial, sans-serif" size="12px" style="color:rgb(51, 51, 51);font-size:12px;">The 
+      <a class="ItemLink" href="Glossary_Z3GPCgaC48kYAjHp.html" name="">HHS</a> 
+      Performance Management Appraisal <a class="ItemLink" href="Glossary_Y_ei2gaFKcBauwqK.html" name="">CAA</a> 
+      (PMAP) runs on a calendar year cycle and is applicable to all General 
+      Schedule (GS), Wage Grade (WG, WL, WS), Senior Biomedical Research 
+      Service (SBRS), and Title 42 209(f) and Title-42 209(g) employees who 
+      are not covered under the <a class="ItemLink" href="Glossary_Z3GPCgaC48kYAjHp.html" name="">HHS</a> 
+      Executive Performance Management System (EPMS) - which runs on a <a class="ItemLink" href="Glossary_KV6eagaC48kYAg4d.html" name="">FY</a>.</font></span><font face="Tahoma, Helvetica, Arial, sans-serif" size="12px" style="color:rgb(51, 51, 51);font-size:12px;"><br font-style="normal" letter-spacing="normal" style="color:rgb(51, 51, 51);font-weight:normal;font-size:12px;font-family:Tahoma, Helvetica, Arial, sans-serif;text-align:start;" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px"><br font-style="normal" letter-spacing="normal" style="color:rgb(51, 51, 51);font-weight:normal;font-size:12px;font-family:Tahoma, Helvetica, Arial, sans-serif;text-align:start;" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px"><span display="inline !important" float="none" font-style="normal" letter-spacing="normal" style="background-color:rgb(238, 238, 238);color:rgb(51, 51, 51);font-weight:normal;font-size:12px;font-family:Tahoma, Helvetica, Arial, sans-serif;text-align:start;" text-indent="0px" text-transform="none" white-space="normal" word-spacing="0px">The 
+      <a class="ItemLink" href="Glossary_Z3GPCgaC48kYAjHp.html" name="">HHS</a> 
+      PMAP policy is one component of the on-going process of performance 
+      management, which also includes frequent informal feedback, recognition 
+      and awards, coaching, skills development, and appropriate corrective 
+      action.</span></font>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_ECFBnjqAUhQsLAhs.html" class="ItemLink">NED : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p font-style="normal" letter-spacing="normal" style="background-color:rgb(255, 255, 255);margin-right:10px;color:rgb(0, 0, 0);margin-left:12px;margin-top:2px;font-weight:normal;font-size:10pt;font-family:Verdana;margin-bottom:2px;text-align:start;" text-indent="2px" text-transform="none" white-space="normal" word-spacing="0px">
+      <b>The <a class="ItemLink" href="Glossary_0wOEWEaAUhQCoQ3N.html" name="">NED 
+      Portal/NED</a> (NED)</b> - is a centrally coordinated, electronic 
+      directory containing identity, contact, and organizational information 
+      for all members of the <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      workforce and non-<a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      staff using <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      services and facilities. NEDWeb is the custom data content and process 
+      management <a class="ItemLink" href="Glossary_MEn3sgaC48kYAjBT.html" name="">Application</a> 
+      used by <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      administrative personnel for adding new people to NED, updating existing 
+      records, transferring people between ICs, and deactivating people when 
+      they leave <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a>. 
+      NEDWeb is also used for authorizing <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      &quot;services&quot; such as ID badges, Library privileges, Active Directory 
+      accounts, Exchange mailboxes, VPN Remote access, parking permits, and 
+      listing in the <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      Telephone and Services Directory. NEDWeb provides the following features 
+      and capabilities:
+    </p>
+    <ul class="disc" font-style="normal" letter-spacing="normal" margin-left-ltr="50" margin-right-rtl="50" style="background-color:rgb(255, 255, 255);color:rgb(0, 0, 0);list-style-type:disc;margin-left:40pt;margin-top:10px;font-weight:normal;font-family:Verdana;margin-bottom:10px;text-align:start;" text-indent="0px" text-transform="none" type="disc" white-space="normal" word-spacing="0px">
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <p class="InlineP" style="margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;" text-indent="2px">
+          Work flow
+        </p>
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <p class="InlineP" style="margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;" text-indent="2px">
+          Scheduled tasks (e.g., the ability to schedule registrations, 
+          updates, etc., to occur on a future date)
+        </p>
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <p class="InlineP" style="margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;" text-indent="2px">
+          Event driven e-mail <a class="ItemLink" href="Glossary_MXeSMgaC48kYAih0.html" name="">Notification</a>
+        </p>
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <p class="InlineP" style="margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;" text-indent="2px">
+          Ability to save tasks for completion at a later time
+        </p>
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <p class="InlineP" style="margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;" text-indent="2px">
+          Reporting capabilities
+        </p>
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <p class="InlineP" style="margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;" text-indent="2px">
+          Business process integration with <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+          and <a class="ItemLink" href="Glossary_Z3GPCgaC48kYAjHp.html" name="">HHS</a> 
+          systems (e.g., <a class="ItemLink" href="Glossary_Z3GPCgaC48kYAjHp.html" name="">HHS</a> 
+          Identity Management System, Background Investigation System) to 
+          support the HSPD-12 Personal Identity Verification process
+        </p>
+      </li>
+      <li style="margin-right:0;margin-left:0;margin-top:0;margin-bottom:0;">
+        <p class="InlineP" style="margin-right:10px;margin-left:12px;margin-top:2px;font-size:10pt;font-family:Verdana;margin-bottom:2px;" text-indent="2px">
+          User Administration
+        </p>
+      </li>
+    </ul>
+    <p font-style="normal" letter-spacing="normal" style="background-color:rgb(255, 255, 255);margin-right:10px;color:rgb(0, 0, 0);margin-left:12px;margin-top:2px;font-weight:normal;font-size:10pt;font-family:Verdana;margin-bottom:2px;text-align:start;" text-indent="2px" text-transform="none" white-space="normal" word-spacing="0px">
+      This document provides detailed information on the use of NEDWeb and is 
+      intended to serve as a reference guide for system users. &nbsp;Please direct 
+      comments or suggestions to<span class="Apple-converted-space">&nbsp;</span><a href="mailto:ned@mail.nih.gov" target="_blank">ned@mail.</a><a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a><a href="mailto:ned@mail.nih.gov" target="_blank">.gov</a>.
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      System link - <span style="font-size:12.0pt;font-family:Times New Roman;"><font face="Times New Roman" size="12.0pt" style="font-size:12.0pt;"><a href="https://nedportal.nih.gov/ProcessPortal/dashboards/NED/PIV+NED+Welcome+CS/NED_03_10_2017?isScoreboard=false" target="_blank">https://nedportal.</a><a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a><a href="https://nedportal.nih.gov/ProcessPortal/dashboards/NED/PIV+NED+Welcome+CS/NED_03_10_2017?isScoreboard=false" target="_blank">.gov/ProcessPortal/dashboards/NED/PIV+NED+Welcome+CS/NED_03_10_2017?isScoreboard=false</a>&nbsp;</font></span>
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <br class="Apple-interchange-newline">
+      
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;...
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_DOM7rUaAUhQsMVgW.html" class="ItemLink">del NIH : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

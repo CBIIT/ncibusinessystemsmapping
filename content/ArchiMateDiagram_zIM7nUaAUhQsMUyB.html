@@ -1,0 +1,351 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - OM ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_2w854MaAUrAy_BJ2.html" class="PageParentTitle">OM : Grouping</a> (in <a href="ArchiMateDiagram_2w854MaAUrAy_BJ2.html" class="PageParentTitle">NCI Business Applications Archimate Diagram</a> / <a href="ArchiMateDiagram_1p4prJaAUhQELjpK.html" class="PageParentTitle">CRADA ArchiMate Diagram</a> / <a href="ArchiMateDiagram_nFQ4KjaAUhQALpUx.html" class="PageParentTitle">iTrust ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - <a href="Glossary_3YfIZwaC48kYAhAo.html" class="ItemLink">OM</a> ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/zIM7nUaAUhQsMUyB', 'OM ArchiMate Diagram\nNCI Buisness Architecture.vpp://diagram/zIM7nUaAUhQsMUyB', 'OM ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|343.0|239.0|96.0|40.0|ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html|ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html|SJq7nUaAUhQsMUyk" id="optionSJq7nUaAUhQsMUyk">eOPF : Application Component</option>
+<option value="shape|124.0|163.0|95.0|40.0|ArchiMateApplicationComponent_gzu_WUaAUhQsGigB.html|ArchiMateApplicationComponent_gzu_WUaAUhQsGigB.html|lbS7nUaAUhQsMUyT" id="optionlbS7nUaAUhQsMUyT">OM : Application Component</option>
+<option value="shape|343.0|89.0|96.0|40.0|ArchiMateApplicationComponent_fdyPaUaAUhQsGjsR.html|ArchiMateApplicationComponent_fdyPaUaAUhQsGjsR.html|0pq7nUaAUhQsMUyu" id="option0pq7nUaAUhQsMUyu">USAS : Application Component</option>
+<option value="shape|2.0|2.0|585.0|380.0|ArchiMateGrouping_9Ih7nUaAUhQsMUy4.html|ArchiMateGrouping_9Ih7nUaAUhQsMUy4.html|9Ih7nUaAUhQsMUy3" id="option9Ih7nUaAUhQsMUy3">HHS : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/OM_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="591" height="386"/>
+					<map name="diagram_map">
+<area coords="387,124,417,139" coords2="387,124,417,139" shape="rect" alt="USAS" href="Glossary_vd6239aAUhQCmw5A.html"/>
+<area coords="174,198,192,213" coords2="174,198,192,213" shape="rect" alt="OM" href="Glossary_uHUeh9aAUhQAJM8h.html"/>
+<area coords="387,274,416,289" coords2="387,274,416,289" shape="rect" alt="eOPF" href="Glossary_1xV4WEaAUhQCoQ0m.html"/>
+<area imageId="diagram" coords="286.0, 182.0, 286.0, 185.0, 219.0, 185.0, 219.0, 199.0, 286.0, 199.0, 286.0, 260.0, 283.0, 260.0, 283.0, 274.0, 286.0, 274.0, 286.0, 277.0, 300.0, 277.0, 300.0, 274.0, 343.0, 274.0, 343.0, 260.0, 300.0, 260.0, 300.0, 199.0, 303.0, 199.0, 303.0, 185.0, 300.0, 185.0, 300.0, 182.0" coords2="286.0, 182.0, 286.0, 185.0, 219.0, 185.0, 219.0, 199.0, 286.0, 199.0, 286.0, 260.0, 283.0, 260.0, 283.0, 274.0, 286.0, 274.0, 286.0, 277.0, 300.0, 277.0, 300.0, 274.0, 343.0, 274.0, 343.0, 260.0, 300.0, 260.0, 300.0, 199.0, 303.0, 199.0, 303.0, 185.0, 300.0, 185.0, 300.0, 182.0" shape="poly" alt="OM-&gt;eOPF:Flow" id="areadiagram_map_iJq7nUaAUhQsMUyi_default" href="ArchiMateFlow_96gA2UaAUhQsGihn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="287.0, 93.0, 287.0, 96.0, 284.0, 96.0, 284.0, 110.0, 287.0, 110.0, 287.0, 170.0, 219.0, 170.0, 219.0, 184.0, 287.0, 184.0, 287.0, 187.0, 301.0, 187.0, 301.0, 184.0, 304.0, 184.0, 304.0, 170.0, 301.0, 170.0, 301.0, 110.0, 343.0, 110.0, 343.0, 96.0, 301.0, 96.0, 301.0, 93.0" coords2="287.0, 93.0, 287.0, 96.0, 284.0, 96.0, 284.0, 110.0, 287.0, 110.0, 287.0, 170.0, 219.0, 170.0, 219.0, 184.0, 287.0, 184.0, 287.0, 187.0, 301.0, 187.0, 301.0, 184.0, 304.0, 184.0, 304.0, 170.0, 301.0, 170.0, 301.0, 110.0, 343.0, 110.0, 343.0, 96.0, 301.0, 96.0, 301.0, 93.0" shape="poly" alt="OM-&gt;USAS:Flow" id="areadiagram_map_0pq7nUaAUhQsMUys_default" href="ArchiMateFlow_iAaA2UaAUhQsGih8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;Office of Personnel Management (&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_1xV4WEaAUhQCoQ0m.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;eOPF&amp;lt;/a&amp;gt;)&amp;lt;/b&amp;gt; 
+      - The &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_1xV4WEaAUhQCoQ0m.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;eOPF&amp;lt;/a&amp;gt; 
+      is an electronic version of the paper OPF and a system for accessing the 
+      electronic folder online. The &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_1xV4WEaAUhQCoQ0m.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;eOPF&amp;lt;/a&amp;gt; 
+      system combines document management with workflow capabilities. The &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_1xV4WEaAUhQCoQ0m.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;eOPF&amp;lt;/a&amp;gt; 
+      allows each employee to have an electronic personnel folder instead of a 
+      paper folder. Benefits of &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_1xV4WEaAUhQCoQ0m.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;eOPF&amp;lt;/a&amp;gt; 
+      include: * Immediate access to personnel forms and information for a 
+      geographically dispersed workforce. * E-mail &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MXeSMgaC48kYAih0.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Notification&amp;lt;/a&amp;gt; 
+      to employee when documents are added to their &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_1xV4WEaAUhQCoQ0m.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;eOPF&amp;lt;/a&amp;gt;. 
+      * Multi-level secure environment with security rules for sensitive 
+      information. * No loss of official personnel documents due to filing and 
+      routing errors. * Reduced costs associated with storage, maintenance, 
+      and retrieval of records. * Electronic transfer of human resources (HR) 
+      data. * Integration with agency&amp;#8217;s human resources information systems 
+      (HRIS). * Compliance with OPM and federally mandated HR employee record 
+      management regulations.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="343, 239, 439, 279" coords2="343, 239, 439, 279" shape="rect" alt="eOPF:Application Component" id="areadiagram_map_SJq7nUaAUhQsMUyk_default" href="ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','343, 239, 439, 279',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_REq_rUaAUhQsMcX8.html/eOPF ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '343, 239, 439, 279'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;font size=&amp;quot;20px&amp;quot; style=&amp;quot;font-size:20px;&amp;quot;&amp;gt;Onboarding manager&amp;lt;/font&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="124, 163, 219, 203" coords2="124, 163, 219, 203" shape="rect" alt="OM:Application Component" id="areadiagram_map_lbS7nUaAUhQsMUyT_default" href="ArchiMateApplicationComponent_gzu_WUaAUhQsGigB.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','124, 163, 219, 203',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_EdZopDaAUhQEP4ic.html/OM, centric diagram /ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '124, 163, 219, 203'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Z3GPCgaC48kYAjHp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;HHS&amp;lt;/a&amp;gt; 
+      Careers &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_vd6239aAUhQCmw5A.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;USAS&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="343, 89, 439, 129" coords2="343, 89, 439, 129" shape="rect" alt="USAS:Application Component" id="areadiagram_map_0pq7nUaAUhQsMUyu_default" href="ArchiMateApplicationComponent_fdyPaUaAUhQsGjsR.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','343, 89, 439, 129',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_ue3HnUaAUhQsMaAb.html/USAS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '343, 89, 439, 129'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="2, 2, 587, 382" coords2="2, 2, 587, 382" shape="rect" alt="HHS:Grouping" id="areadiagram_map_9Ih7nUaAUhQsMUy3_default" href="ArchiMateGrouping_9Ih7nUaAUhQsMUy4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_Z8L2njqAUhQsEh2g.html" class="ItemLink">eOPF : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <b>Office of Personnel Management (<a class="ItemLink" href="Glossary_1xV4WEaAUhQCoQ0m.html" name="">eOPF</a>)</b> 
+      - The <a class="ItemLink" href="Glossary_1xV4WEaAUhQCoQ0m.html" name="">eOPF</a> 
+      is an electronic version of the paper OPF and a system for accessing the 
+      electronic folder online. The <a class="ItemLink" href="Glossary_1xV4WEaAUhQCoQ0m.html" name="">eOPF</a> 
+      system combines document management with workflow capabilities. The <a class="ItemLink" href="Glossary_1xV4WEaAUhQCoQ0m.html" name="">eOPF</a> 
+      allows each employee to have an electronic personnel folder instead of a 
+      paper folder. Benefits of <a class="ItemLink" href="Glossary_1xV4WEaAUhQCoQ0m.html" name="">eOPF</a> 
+      include: * Immediate access to personnel forms and information for a 
+      geographically dispersed workforce. * E-mail <a class="ItemLink" href="Glossary_MXeSMgaC48kYAih0.html" name="">Notification</a> 
+      to employee when documents are added to their <a class="ItemLink" href="Glossary_1xV4WEaAUhQCoQ0m.html" name="">eOPF</a>. 
+      * Multi-level secure environment with security rules for sensitive 
+      information. * No loss of official personnel documents due to filing and 
+      routing errors. * Reduced costs associated with storage, maintenance, 
+      and retrieval of records. * Electronic transfer of human resources (HR) 
+      data. * Integration with agency&#8217;s human resources information systems 
+      (HRIS). * Compliance with OPM and federally mandated HR employee record 
+      management regulations.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_gzu_WUaAUhQsGigB.html" class="ItemLink">OM : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <font size="20px" style="font-size:20px;">Onboarding manager</font>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_fdyPaUaAUhQsGjsR.html" class="ItemLink">USAS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_Z3GPCgaC48kYAjHp.html" name="">HHS</a> 
+      Careers <a class="ItemLink" href="Glossary_vd6239aAUhQCmw5A.html" name="">USAS</a>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_9Ih7nUaAUhQsMUy4.html" class="ItemLink">HHS : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

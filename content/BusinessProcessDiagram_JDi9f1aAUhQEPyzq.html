@@ -1,0 +1,1305 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - 8 - Official Public Data Reporting</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - 8 - Official Public Data Reporting		</span>
+<a onclick="javascript: showVpLink('Research Funding Management Archtecture.vpp://diagram/JDi9f1aAUhQEPyzq', '8 - Official Public Data Reporting\nResearch Funding Management Archtecture.vpp://diagram/JDi9f1aAUhQEPyzq', '8 - Official Public Data Reporting', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|1923.0|289.0|96.0|40.0|ArchiMateApplicationComponent_7ob_U2aAUrD0PhWr.html|ArchiMateApplicationComponent_7ob_U2aAUrD0PhWr.html|Kccd0taAUhQEsT.W" id="optionKccd0taAUhQEsT.W">BI : Application Component</option>
+<option value="shape|1640.0|678.0|96.0|40.0|ArchiMateApplicationComponent_KObWGeaAUrAmX1tQ.html|ArchiMateApplicationComponent_KObWGeaAUrAmX1tQ.html|uFoiEtaAU8iGFC57" id="optionuFoiEtaAU8iGFC57">Factbook : Application Component</option>
+<option value="shape|1185.0|84.0|96.0|40.0|ArchiMateApplicationComponent_TYGTGeaAUrAmX1wJ.html|ArchiMateApplicationComponent_TYGTGeaAUrAmX1wJ.html|guTt9NaAU8mGOsuk" id="optionguTt9NaAU8mGOsuk">NFRP : Application Component</option>
+<option value="shape|392.0|117.0|96.0|40.0|ArchiMateApplicationComponent_TYGTGeaAUrAmX1wJ.html|ArchiMateApplicationComponent_TYGTGeaAUrAmX1wJ.html|fnat9NaAU8mGOsRK" id="optionfnat9NaAU8mGOsRK">NFRP : Application Component</option>
+<option value="shape|1493.0|2.0|14.0|1185.0|ShapeEditorShape_4Y9jkNaGAqACCyqL.html|ShapeEditorShape_4Y9jkNaGAqACCyqL.html|4Y9jkNaGAqACCyqK" id="option4Y9jkNaGAqACCyqK">Unnamed Freehand Shape : Freehand Shape</option>
+<option value="shape|996.0|2.0|19.0|1184.0|ShapeEditorShape_9QwjkNaGAqACCyoH.html|ShapeEditorShape_9QwjkNaGAqACCyoH.html|dQwjkNaGAqACCyoG" id="optiondQwjkNaGAqACCyoG">Unnamed Freehand Shape : Freehand Shape</option>
+<option value="shape|1508.0|1069.0|116.0|100.0|BPSubProcess_fTi9f1aAUhQEPy2m.html|BPSubProcess_fTi9f1aAUhQEPy2m.html|vTi9f1aAUhQEPy2l" id="optionvTi9f1aAUhQEPy2l">H : Sub-Process</option>
+<option value="shape|1640.0|867.0|125.0|75.0|BPSubProcess_nTi9f1aAUhQEPy2g.html|BPSubProcess_nTi9f1aAUhQEPy2g.html|nTi9f1aAUhQEPy2f" id="optionnTi9f1aAUhQEPy2f">OBF receives extramural data from OEFIA and intramural data from... : Sub-Process</option>
+<option value="shape|1662.0|994.0|81.0|33.0|BPSubProcess_rTi9f1aAUhQEPy2a.html|BPSubProcess_rTi9f1aAUhQEPy2a.html|LTi9f1aAUhQEPy2Z" id="optionLTi9f1aAUhQEPy2Z">Spreadsheets : Sub-Process</option>
+<option value="shape|1645.0|1091.0|127.0|78.0|BPSubProcess_DTi9f1aAUhQEPy2U.html|BPSubProcess_DTi9f1aAUhQEPy2U.html|DTi9f1aAUhQEPy2T" id="optionDTi9f1aAUhQEPy2T">OEFIA pulls extramural grant data from FAM and sends the data via spreadsheet to OBF. : Sub-Process</option>
+<option value="shape|26.0|433.0|60.0|65.0|BPDataStore_tTi9f1aAUhQEPy2O.html|BPDataStore_tTi9f1aAUhQEPy2O.html|NTi9f1aAUhQEPy2N" id="optionNTi9f1aAUhQEPy2N">I2E : Data Store</option>
+<option value="shape|26.0|331.0|82.0|65.0|BPSubProcess_FTi9f1aAUhQEPy2I.html|BPSubProcess_FTi9f1aAUhQEPy2I.html|FTi9f1aAUhQEPy2H" id="optionFTi9f1aAUhQEPy2H">F : Sub-Process</option>
+<option value="shape|1654.0|771.0|96.0|60.0|BPSubProcess_3ji9f1aAUhQEPy1b.html|BPSubProcess_3ji9f1aAUhQEPy1b.html|Xji9f1aAUhQEPy1a" id="optionXji9f1aAUhQEPy1a">OBF annually publishes the NCI Factbook. : Sub-Process</option>
+<option value="shape|1026.0|62.0|108.0|84.0|BPSubProcess_Vji9f1aAUhQEPy1J.html|BPSubProcess_Vji9f1aAUhQEPy1J.html|Vji9f1aAUhQEPy1I" id="optionVji9f1aAUhQEPy1I">KMSP provides reports of the working FY data for OBF to validate. : Sub-Process</option>
+<option value="shape|572.0|657.0|96.0|72.0|BPSubProcess_PDi9f1aAUhQEPy0K.html|BPSubProcess_PDi9f1aAUhQEPy0K.html|PDi9f1aAUhQEPy0J" id="optionPDi9f1aAUhQEPy0J">OBF sends RMS and Leidos data to KMSP via spreadsheets. : Sub-Process</option>
+<option value="shape|1104.0|622.0|199.0|158.0|BPSubProcess_pji9f1aAUhQEPy1A.html|BPSubProcess_pji9f1aAUhQEPy1A.html|pji9f1aAUhQEPy0_" id="optionpji9f1aAUhQEPy0_">The total NCI budget is validated by OBF as the ‘Cancer’ category on NFRP. During the validation process, OBF staff have access to the NFRP development system where data are loaded as they are received. They can use the development system as an automated aid in their validation process. : Sub-Process</option>
+<option value="shape|862.0|662.0|118.0|142.0|BPSubProcess_Rji9f1aAUhQEPy09.html|BPSubProcess_Rji9f1aAUhQEPy09.html|Rji9f1aAUhQEPy08" id="optionRji9f1aAUhQEPy08">OBF validates and approves project and disease category data before that data is made public on NFRP. : Sub-Process</option>
+<option value="shape|885.0|56.0|111.0|90.0|BPSubProcess__ji9f1aAUhQEPy06.html|BPSubProcess__ji9f1aAUhQEPy06.html|2ji9f1aAUhQEPy05" id="option2ji9f1aAUhQEPy05">KMSP performs the first level QA-QC of NFRP data as it is being loaded to the NFRP database. : Sub-Process</option>
+<option value="shape|584.0|780.0|91.0|40.0|BPSubProcess_iji9f1aAUhQEPy0u.html|BPSubProcess_iji9f1aAUhQEPy0u.html|iji9f1aAUhQEPy0t" id="optioniji9f1aAUhQEPy0t">Spreadsheets : Sub-Process</option>
+<option value="shape|305.0|780.0|90.0|40.0|BPSubProcess_kji9f1aAUhQEPy0f.html|BPSubProcess_kji9f1aAUhQEPy0f.html|kji9f1aAUhQEPy0e" id="optionkji9f1aAUhQEPy0e">Spreadsheets : Sub-Process</option>
+<option value="shape|635.0|223.0|142.0|72.0|BPSubProcess_gji9f1aAUhQEPy0Q.html|BPSubProcess_gji9f1aAUhQEPy0Q.html|gji9f1aAUhQEPy0P" id="optiongji9f1aAUhQEPy0P">KMSP runs scripts to load the RMS and Leidos data to the NFRP database. : Sub-Process</option>
+<option value="shape|393.0|215.0|108.0|88.0|BPSubProcess_fDi9f1aAUhQEPy0N.html|BPSubProcess_fDi9f1aAUhQEPy0N.html|fDi9f1aAUhQEPy0M" id="optionfDi9f1aAUhQEPy0M">KMSP runs scripts to load the Intramural data to the NFRP database. : Sub-Process</option>
+<option value="shape|272.0|638.0|156.0|103.0|BPSubProcess_XDi9f1aAUhQEPy0H.html|BPSubProcess_XDi9f1aAUhQEPy0H.html|XDi9f1aAUhQEPy0G" id="optionXDi9f1aAUhQEPy0G">OBF collects data from Intramural groups and sends it via spreadsheets to KMSP. (OBF reconciles scientific coding with funding data before transmitting information to NFRP.) : Sub-Process</option>
+<option value="shape|272.0|215.0|108.0|88.0|BPSubProcess_HDi9f1aAUhQEPy0E.html|BPSubProcess_HDi9f1aAUhQEPy0E.html|HDi9f1aAUhQEPy0D" id="optionHDi9f1aAUhQEPy0D">KMSP accesses that data and runs scripts to load/copy it into the NFRP database. : Sub-Process</option>
+<option value="shape|218.0|413.0|136.0|87.0|BPSubProcess_rDi9f1aAUhQEPy0B.html|BPSubProcess_rDi9f1aAUhQEPy0B.html|rDi9f1aAUhQEPy0A" id="optionrDi9f1aAUhQEPy0A">At the end of each fiscal year, DEA RAEB images final FY data and transfers it to an NFRP schema in I2E. : Sub-Process</option>
+<option value="shape|256.0|331.0|60.0|54.0|BPDataStore_zDi9f1aAUhQEPyz_.html|BPDataStore_zDi9f1aAUhQEPyz_.html|zDi9f1aAUhQEPyz9" id="optionzDi9f1aAUhQEPyz9">I2E : Data Store</option>
+<option value="shape|2.0|955.0|1849.0|224.0|BPPool_DDi9f1aAUhQEPyz5.html|BPPool_DDi9f1aAUhQEPyz5.html|DDi9f1aAUhQEPyz4" id="optionDDi9f1aAUhQEPyz4">OEFIA : Pool</option>
+<option value="shape|2.0|321.0|1849.0|199.0|BPPool_tDi9f1aAUhQEPyz2.html|BPPool_tDi9f1aAUhQEPyz2.html|NDi9f1aAUhQEPyz1" id="optionNDi9f1aAUhQEPyz1">DEA : Pool</option>
+<option value="shape|2.0|36.0|1849.0|285.0|BPPool_VDi9f1aAUhQEPyzz.html|BPPool_VDi9f1aAUhQEPyzz.html|VDi9f1aAUhQEPyzy" id="optionVDi9f1aAUhQEPyzy">CSSI/KMSP : Pool</option>
+<option value="shape|2.0|517.0|1849.0|443.0|BPPool_5Di9f1aAUhQEPyzw.html|BPPool_5Di9f1aAUhQEPyzw.html|5Di9f1aAUhQEPyzv" id="option5Di9f1aAUhQEPyzv">OBF : Pool</option>
+<option value="shape|1939.0|28.0|60.0|50.0|BPTask_hd8_wNaAUhQEsSbM.html|BPTask_hd8_wNaAUhQEsSbM.html|tAcd0taAUhQEsT93" id="optiontAcd0taAUhQEsT93">Unnamed Task : Task</option>
+<option value="shape|1939.0|109.0|60.0|52.0|BPGateway_2Du_wNaAUhQEsSgp.html|BPGateway_2Du_wNaAUhQEsSgp.html|Agcd0taAUhQEsT96" id="optionAgcd0taAUhQEsT96">Unnamed Gateway : Gateway</option>
+<option value="shape|1943.0|193.0|57.0|57.0|BPStartEvent_OQF_wNaAUhQEsSjB.html|BPStartEvent_OQF_wNaAUhQEsSjB.html|agcd0taAUhQEsT99" id="optionagcd0taAUhQEsT99">Unnamed Start Event : Start Event</option>
+<option value="shape|1937.0|458.0|62.0|58.0|BPTask_INaAINaAUhQEsSux.html|BPTask_INaAINaAUhQEsSux.html|ywcd0taAUhQEsT.C" id="optionywcd0taAUhQEsT.C">Unnamed Task : Task</option>
+<option value="shape|1936.0|548.0|69.0|62.0|BPTask_hW4eRNaAUhQEsXzi.html|BPTask_hW4eRNaAUhQEsXzi.html|FMcd0taAUhQEsT.R" id="optionFMcd0taAUhQEsT.R">Unnamed Task : Task</option>
+<option value="shape|1196.0|831.0|50.0|36.0|BPEndEvent_lcwd9NaAU8mGOtIW.html|BPEndEvent_lcwd9NaAU8mGOtIW.html|lcwd9NaAU8mGOtIV" id="optionlcwd9NaAU8mGOtIV">STOP : End Event</option>
+<option value="shape|1776.0|678.0|47.0|40.0|BPEndEvent_Zz899NaAU8mGOuFP.html|BPEndEvent_Zz899NaAU8mGOuFP.html|Zz899NaAU8mGOuFO" id="optionZz899NaAU8mGOuFO">STOP : End Event</option>
+<option value="shape|1944.0|772.0|61.0|71.0|BPEndEvent_I2tt0taAUhQEsTkv.html|BPEndEvent_I2tt0taAUhQEsTkv.html|ricd0taAUhQEsT.d" id="optionricd0taAUhQEsT.d">Unnamed End Event : End Event</option>
+<option value="shape|135.0|656.0|69.0|67.0|BPSubProcess_SGDzddaAUAAAWZ7F.html|BPSubProcess_SGDzddaAUAAAWZ7F.html|SGDzddaAUAAAWZ7E" id="optionSGDzddaAUAAAWZ7E">G : Sub-Process</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/8_Official_Public_Data_Reporting.png" usemap="#diagram_map" class="Image" width="2326" height="1191"/>
+					<map name="diagram_map">
+<area coords="3,718,18,741" coords2="3,718,18,741" shape="rect" alt="OBF" href="Glossary_oBFYGgaC48kYAjqp.html"/>
+<area coords="3,173,18,199" coords2="3,173,18,199" shape="rect" alt="CSSI" href="Glossary_bVqEGgaC48kYAj_K.html"/>
+<area coords="3,139,18,170" coords2="3,139,18,170" shape="rect" alt="KMSP" href="Glossary_mALEGgaC48kYAkEl.html"/>
+<area coords="3,400,18,423" coords2="3,400,18,423" shape="rect" alt="DEA" href="Glossary_bZtbsgaC48kYAisp.html"/>
+<area coords="3,1042,18,1075" coords2="3,1042,18,1075" shape="rect" alt="OEFIA" href="Glossary_fyK4GgaC48kYAjrB.html"/>
+<area coords="318,413,343,428" coords2="318,413,343,428" shape="rect" alt="FY" href="Glossary_KV6eagaC48kYAg4d.html"/>
+<area coords="224,428,245,443" coords2="224,428,245,443" shape="rect" alt="FY" href="Glossary_KV6eagaC48kYAg4d.html"/>
+<area coords="251,428,274,443" coords2="251,428,274,443" shape="rect" alt="DEA" href="Glossary_bZtbsgaC48kYAisp.html"/>
+<area coords="277,428,307,443" coords2="277,428,307,443" shape="rect" alt="RAEB" href="Glossary_mPPwGgaC48kYAiT0.html"/>
+<area coords="266,443,280,458" coords2="266,443,280,458" shape="rect" alt="FY" href="Glossary_KV6eagaC48kYAg4d.html"/>
+<area coords="311,458,341,473" coords2="311,458,341,473" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="302,473,319,488" coords2="302,473,319,488" shape="rect" alt="I2E" href="Glossary_YJQsMgaC48kYAicn.html"/>
+<area coords="285,215,316,230" coords2="285,215,316,230" shape="rect" alt="KMSP" href="Glossary_mALEGgaC48kYAkEl.html"/>
+<area coords="334,260,364,275" coords2="334,260,364,275" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="294,638,317,653" coords2="294,638,317,653" shape="rect" alt="OBF" href="Glossary_oBFYGgaC48kYAjqp.html"/>
+<area coords="386,668,417,683" coords2="386,668,417,683" shape="rect" alt="KMSP" href="Glossary_mALEGgaC48kYAkEl.html"/>
+<area coords="291,683,314,698" coords2="291,683,314,698" shape="rect" alt="OBF" href="Glossary_oBFYGgaC48kYAjqp.html"/>
+<area coords="370,683,412,698" coords2="370,683,412,698" shape="rect" alt="Research Coding" href="Glossary_8hHrmQaAUsSyF0r3.html"/>
+<area coords="290,698,322,713" coords2="290,698,322,713" shape="rect" alt="Research Coding" href="Glossary_8hHrmQaAUsSyF0r3.html"/>
+<area coords="401,215,432,230" coords2="401,215,432,230" shape="rect" alt="KMSP" href="Glossary_mALEGgaC48kYAkEl.html"/>
+<area coords="440,260,470,275" coords2="440,260,470,275" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="642,230,673,245" coords2="642,230,673,245" shape="rect" alt="KMSP" href="Glossary_mALEGgaC48kYAkEl.html"/>
+<area coords="661,245,685,260" coords2="661,245,685,260" shape="rect" alt="RMS" href="Glossary_ybLdmQaAUsSyF0ka.html"/>
+<area coords="681,260,711,275" coords2="681,260,711,275" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="892,57,923,72" coords2="892,57,923,72" shape="rect" alt="KMSP" href="Glossary_mALEGgaC48kYAkEl.html"/>
+<area coords="893,72,911,87" coords2="893,72,911,87" shape="rect" alt="R29" href="Glossary_u2Vr6gaC48kYAhG_.html"/>
+<area coords="896,87,926,102" coords2="896,87,926,102" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="899,117,929,132" coords2="899,117,929,132" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="875,682,898,697" coords2="875,682,898,697" shape="rect" alt="OBF" href="Glossary_oBFYGgaC48kYAjqp.html"/>
+<area coords="904,757,934,772" coords2="904,757,934,772" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="1161,627,1180,642" coords2="1161,627,1180,642" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="1183,627,1217,642" coords2="1183,627,1217,642" shape="rect" alt="Budget" href="Glossary_LzdPsgaC48kYAjDp.html"/>
+<area coords="1123,642,1146,657" coords2="1123,642,1146,657" shape="rect" alt="OBF" href="Glossary_oBFYGgaC48kYAjqp.html"/>
+<area coords="1112,657,1142,672" coords2="1112,657,1142,672" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="1115,672,1138,687" coords2="1115,672,1138,687" shape="rect" alt="OBF" href="Glossary_oBFYGgaC48kYAjqp.html"/>
+<area coords="1260,672,1290,687" coords2="1260,672,1290,687" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="578,657,601,672" coords2="578,657,601,672" shape="rect" alt="OBF" href="Glossary_oBFYGgaC48kYAjqp.html"/>
+<area coords="636,657,660,672" coords2="636,657,660,672" shape="rect" alt="RMS" href="Glossary_ybLdmQaAUsSyF0ka.html"/>
+<area coords="601,687,632,702" coords2="601,687,632,702" shape="rect" alt="KMSP" href="Glossary_mALEGgaC48kYAkEl.html"/>
+<area coords="1042,68,1073,83" coords2="1042,68,1073,83" shape="rect" alt="KMSP" href="Glossary_mALEGgaC48kYAkEl.html"/>
+<area coords="1073,98,1087,113" coords2="1073,98,1087,113" shape="rect" alt="FY" href="Glossary_KV6eagaC48kYAg4d.html"/>
+<area coords="1040,113,1063,128" coords2="1040,113,1063,128" shape="rect" alt="OBF" href="Glossary_oBFYGgaC48kYAjqp.html"/>
+<area coords="1668,772,1691,787" coords2="1668,772,1691,787" shape="rect" alt="OBF" href="Glossary_oBFYGgaC48kYAjqp.html"/>
+<area coords="1666,802,1733,817" coords2="1666,802,1733,817" shape="rect" alt="Budget Fact Book" href="Glossary_Fyn0ZwaC48kYAhGT.html"/>
+<area coords="1651,1094,1684,1109" coords2="1651,1094,1684,1109" shape="rect" alt="OEFIA" href="Glossary_fyK4GgaC48kYAjrB.html"/>
+<area coords="1658,1109,1683,1124" coords2="1658,1109,1683,1124" shape="rect" alt="Grant" href="Glossary_bYdIigaC48kYAjNH.html"/>
+<area coords="1736,1109,1759,1124" coords2="1736,1109,1759,1124" shape="rect" alt="FAM" href="Glossary_xY1i2gaFKcBauwqo.html"/>
+<area coords="1733,1139,1756,1154" coords2="1733,1139,1756,1154" shape="rect" alt="OBF" href="Glossary_oBFYGgaC48kYAjqp.html"/>
+<area coords="1669,868,1692,883" coords2="1669,868,1692,883" shape="rect" alt="OBF" href="Glossary_oBFYGgaC48kYAjqp.html"/>
+<area coords="1649,898,1682,913" coords2="1649,898,1682,913" shape="rect" alt="OEFIA" href="Glossary_fyK4GgaC48kYAjrB.html"/>
+<area coords="813,12,856,33" coords2="813,12,856,33" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="860,12,879,33" coords2="860,12,879,33" shape="rect" alt="FY" href="Glossary_KV6eagaC48kYAg4d.html"/>
+<area coords="1310,13,1353,34" coords2="1310,13,1353,34" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="1357,13,1376,34" coords2="1357,13,1376,34" shape="rect" alt="FY" href="Glossary_KV6eagaC48kYAg4d.html"/>
+<area coords="436,167,466,182" coords2="436,167,466,182" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="536,57,707,73" coords2="536,57,707,73" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="714,57,747,73" coords2="714,57,747,73" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="827,57,848,73" coords2="827,57,848,73" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="607,73,628,89" coords2="607,73,628,89" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="631,73,719,89" coords2="631,73,719,89" shape="rect" alt="Research Coding" href="Glossary_8hHrmQaAUsSyF0r3.html"/>
+<area coords="536,89,564,105" coords2="536,89,564,105" shape="rect" alt="CSSI" href="Glossary_bVqEGgaC48kYAj_K.html"/>
+<area coords="567,89,600,105" coords2="567,89,600,105" shape="rect" alt="KMSP" href="Glossary_mALEGgaC48kYAkEl.html"/>
+<area coords="606,89,639,105" coords2="606,89,639,105" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="841,89,862,105" coords2="841,89,862,105" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="679,105,700,121" coords2="679,105,700,121" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="703,105,742,121" coords2="703,105,742,121" shape="rect" alt="Budget" href="Glossary_LzdPsgaC48kYAjDp.html"/>
+<area coords="638,121,671,137" coords2="638,121,671,137" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="698,121,730,137" coords2="698,121,730,137" shape="rect" alt="RAEB" href="Glossary_mPPwGgaC48kYAiT0.html"/>
+<area coords="799,121,836,137" coords2="799,121,836,137" shape="rect" alt="Grant" href="Glossary_bYdIigaC48kYAjNH.html"/>
+<area coords="656,137,691,153" coords2="656,137,691,153" shape="rect" alt="DCEG" href="Glossary_Qo34GgaC48kYAj4o.html"/>
+<area coords="811,137,838,153" coords2="811,137,838,153" shape="rect" alt="CCR" href="Glossary_nfvxmwaAU82ImBQu.html"/>
+<area coords="680,153,704,169" coords2="680,153,704,169" shape="rect" alt="OBF" href="Glossary_oBFYGgaC48kYAjqp.html"/>
+<area coords="711,153,737,169" coords2="711,153,737,169" shape="rect" alt="RMS" href="Glossary_ybLdmQaAUsSyF0ka.html"/>
+<area coords="1229,134,1259,149" coords2="1229,134,1259,149" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="1303,69,1474,85" coords2="1303,69,1474,85" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="1307,85,1340,101" coords2="1307,85,1340,101" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="1420,85,1441,101" coords2="1420,85,1441,101" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="1374,101,1395,117" coords2="1374,101,1395,117" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="1398,101,1486,117" coords2="1398,101,1486,117" shape="rect" alt="Research Coding" href="Glossary_8hHrmQaAUsSyF0r3.html"/>
+<area coords="1411,117,1439,133" coords2="1411,117,1439,133" shape="rect" alt="CSSI" href="Glossary_bVqEGgaC48kYAj_K.html"/>
+<area coords="1442,117,1475,133" coords2="1442,117,1475,133" shape="rect" alt="KMSP" href="Glossary_mALEGgaC48kYAkEl.html"/>
+<area coords="1303,133,1336,149" coords2="1303,133,1336,149" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="1384,149,1405,165" coords2="1384,149,1405,165" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="1373,165,1394,181" coords2="1373,165,1394,181" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="1397,165,1436,181" coords2="1397,165,1436,181" shape="rect" alt="Budget" href="Glossary_LzdPsgaC48kYAjDp.html"/>
+<area coords="1316,197,1349,213" coords2="1316,197,1349,213" shape="rect" alt="NFRP" href="Glossary_UU8XiUaAUhQCoQtP.html"/>
+<area coords="1376,197,1408,213" coords2="1376,197,1408,213" shape="rect" alt="RAEB" href="Glossary_mPPwGgaC48kYAiT0.html"/>
+<area coords="1303,213,1340,229" coords2="1303,213,1340,229" shape="rect" alt="Grant" href="Glossary_bYdIigaC48kYAjNH.html"/>
+<area coords="1303,229,1338,245" coords2="1303,229,1338,245" shape="rect" alt="DCEG" href="Glossary_Qo34GgaC48kYAj4o.html"/>
+<area coords="1458,229,1485,245" coords2="1458,229,1485,245" shape="rect" alt="CCR" href="Glossary_nfvxmwaAU82ImBQu.html"/>
+<area coords="1447,245,1471,261" coords2="1447,245,1471,261" shape="rect" alt="OBF" href="Glossary_oBFYGgaC48kYAjqp.html"/>
+<area coords="1307,261,1333,277" coords2="1307,261,1333,277" shape="rect" alt="RMS" href="Glossary_ybLdmQaAUsSyF0ka.html"/>
+<area coords="1675,728,1720,743" coords2="1675,728,1720,743" shape="rect" alt="Budget Fact Book" href="Glossary_Fyn0ZwaC48kYAhGT.html"/>
+<area coords="1573,532,1650,548" coords2="1573,532,1650,548" shape="rect" alt="Budget Fact Book" href="Glossary_Fyn0ZwaC48kYAhGT.html"/>
+<area coords="1726,532,1747,548" coords2="1726,532,1747,548" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="1750,532,1789,548" coords2="1750,532,1789,548" shape="rect" alt="Budget" href="Glossary_LzdPsgaC48kYAjDp.html"/>
+<area coords="1623,548,1644,564" coords2="1623,548,1644,564" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="1625,564,1653,580" coords2="1625,564,1653,580" shape="rect" alt="Grant" href="Glossary_bYdIigaC48kYAjNH.html"/>
+<area coords="1703,564,1780,580" coords2="1703,564,1780,580" shape="rect" alt="Budget Fact Book" href="Glossary_Fyn0ZwaC48kYAhGT.html"/>
+<area coords="1759,580,1780,596" coords2="1759,580,1780,596" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area imageId="diagram" coords="1624.0, 1113.0, 1624.0, 1127.0, 1645.0, 1127.0, 1645.0, 1113.0" coords2="1624.0, 1113.0, 1624.0, 1127.0, 1645.0, 1127.0, 1645.0, 1113.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Azi9f1aAUhQEPy2o_default" href="BPSequenceFlow_Azi9f1aAUhQEPy2p.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1695.0, 831.0, 1695.0, 867.0, 1709.0, 867.0, 1709.0, 831.0" coords2="1695.0, 831.0, 1695.0, 867.0, 1709.0, 867.0, 1709.0, 831.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_PTi9f1aAUhQEPy2i_default" href="BPSequenceFlow_PTi9f1aAUhQEPy2j.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1695.0, 942.0, 1695.0, 994.0, 1709.0, 994.0, 1709.0, 942.0" coords2="1695.0, 942.0, 1695.0, 994.0, 1709.0, 994.0, 1709.0, 942.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_7Ti9f1aAUhQEPy2c_default" href="BPSequenceFlow_7Ti9f1aAUhQEPy2d.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1695.0, 1027.0, 1695.0, 1091.0, 1709.0, 1091.0, 1709.0, 1027.0" coords2="1695.0, 1027.0, 1695.0, 1091.0, 1709.0, 1091.0, 1709.0, 1027.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_zTi9f1aAUhQEPy2W_default" href="BPSequenceFlow_zTi9f1aAUhQEPy2X.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="86.0, 433.0, 86.0, 447.0, 218.0, 447.0, 218.0, 433.0" coords2="86.0, 433.0, 86.0, 447.0, 218.0, 447.0, 218.0, 433.0" shape="poly" alt=":Data Association" id="areadiagram_map_dTi9f1aAUhQEPy2Q_default" href="BPDataAssociation_9Ti9f1aAUhQEPy2R.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="49.0, 396.0, 49.0, 433.0, 63.0, 433.0, 63.0, 396.0" coords2="49.0, 396.0, 49.0, 433.0, 63.0, 433.0, 63.0, 396.0" shape="poly" alt=":Data Association" id="areadiagram_map_VTi9f1aAUhQEPy2K_default" href="BPDataAssociation_1Ti9f1aAUhQEPy2L.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1073.0, 146.0, 1073.0, 697.0, 980.0, 697.0, 980.0, 711.0, 1073.0, 711.0, 1073.0, 714.0, 1087.0, 714.0, 1087.0, 711.0, 1090.0, 711.0, 1090.0, 697.0, 1087.0, 697.0, 1087.0, 146.0" coords2="1073.0, 146.0, 1073.0, 697.0, 980.0, 697.0, 980.0, 711.0, 1073.0, 711.0, 1073.0, 714.0, 1087.0, 714.0, 1087.0, 711.0, 1090.0, 711.0, 1090.0, 697.0, 1087.0, 697.0, 1087.0, 146.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Fji9f1aAUhQEPy1F_default" href="BPSequenceFlow_Fji9f1aAUhQEPy1G.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="928.0, 146.0, 928.0, 662.0, 942.0, 662.0, 942.0, 146.0" coords2="928.0, 146.0, 928.0, 662.0, 942.0, 662.0, 942.0, 146.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_5ji9f1aAUhQEPy1C_default" href="BPSequenceFlow_5ji9f1aAUhQEPy1D.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="699.0, 295.0, 699.0, 793.0, 675.0, 793.0, 675.0, 807.0, 699.0, 807.0, 699.0, 810.0, 713.0, 810.0, 713.0, 807.0, 716.0, 807.0, 716.0, 793.0, 713.0, 793.0, 713.0, 295.0" coords2="699.0, 295.0, 699.0, 793.0, 675.0, 793.0, 675.0, 807.0, 699.0, 807.0, 699.0, 810.0, 713.0, 810.0, 713.0, 807.0, 716.0, 807.0, 716.0, 793.0, 713.0, 793.0, 713.0, 295.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_qji9f1aAUhQEPy0z_default" href="BPSequenceFlow_qji9f1aAUhQEPy00.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="613.0, 729.0, 613.0, 780.0, 627.0, 780.0, 627.0, 729.0" coords2="613.0, 729.0, 613.0, 780.0, 627.0, 780.0, 627.0, 729.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Kji9f1aAUhQEPy0w_default" href="BPSequenceFlow_Kji9f1aAUhQEPy0x.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="356.0, 303.0, 356.0, 638.0, 370.0, 638.0, 370.0, 303.0" coords2="356.0, 303.0, 356.0, 638.0, 370.0, 638.0, 370.0, 303.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_8ji9f1aAUhQEPy0q_default" href="BPSequenceFlow_Cji9f1aAUhQEPy0r.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="613.0, 241.0, 613.0, 244.0, 501.0, 244.0, 501.0, 258.0, 613.0, 258.0, 613.0, 657.0, 627.0, 657.0, 627.0, 258.0, 630.0, 258.0, 630.0, 244.0, 627.0, 244.0, 627.0, 241.0" coords2="613.0, 241.0, 613.0, 244.0, 501.0, 244.0, 501.0, 258.0, 613.0, 258.0, 613.0, 657.0, 627.0, 657.0, 627.0, 258.0, 630.0, 258.0, 630.0, 244.0, 627.0, 244.0, 627.0, 241.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_cji9f1aAUhQEPy0n_default" href="BPSequenceFlow_cji9f1aAUhQEPy0o.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="448.0, 303.0, 448.0, 793.0, 395.0, 793.0, 395.0, 807.0, 448.0, 807.0, 448.0, 810.0, 462.0, 810.0, 462.0, 807.0, 465.0, 807.0, 465.0, 793.0, 462.0, 793.0, 462.0, 303.0" coords2="448.0, 303.0, 448.0, 793.0, 395.0, 793.0, 395.0, 807.0, 448.0, 807.0, 448.0, 810.0, 462.0, 810.0, 462.0, 807.0, 465.0, 807.0, 465.0, 793.0, 462.0, 793.0, 462.0, 303.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_0ji9f1aAUhQEPy0h_default" href="BPSequenceFlow_0ji9f1aAUhQEPy0i.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="356.0, 741.0, 356.0, 780.0, 370.0, 780.0, 370.0, 741.0" coords2="356.0, 741.0, 356.0, 780.0, 370.0, 780.0, 370.0, 741.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Yji9f1aAUhQEPy0Y_default" href="BPSequenceFlow_Yji9f1aAUhQEPy0Z.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="279.0, 303.0, 279.0, 331.0, 293.0, 331.0, 293.0, 303.0" coords2="279.0, 303.0, 279.0, 331.0, 293.0, 331.0, 293.0, 303.0" shape="poly" alt=":Data Association" id="areadiagram_map_oji9f1aAUhQEPy0V_default" href="BPDataAssociation_oji9f1aAUhQEPy0W.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="279.0, 385.0, 279.0, 413.0, 293.0, 413.0, 293.0, 385.0" coords2="279.0, 385.0, 279.0, 413.0, 293.0, 413.0, 293.0, 385.0" shape="poly" alt=":Data Association" id="areadiagram_map_wji9f1aAUhQEPy0S_default" href="BPDataAssociation_wji9f1aAUhQEPy0T.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1134.0, 97.0, 1134.0, 111.0, 1185.0, 111.0, 1185.0, 97.0" coords2="1134.0, 97.0, 1134.0, 111.0, 1185.0, 111.0, 1185.0, 97.0" shape="poly" alt=":Generic Connector" id="areadiagram_map_Bnzt9NaAU8mGOswa_default" href="GenericConnector_ynzt9NaAU8mGOswZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1222.0, 124.0, 1222.0, 622.0, 1236.0, 622.0, 1236.0, 124.0" coords2="1222.0, 124.0, 1222.0, 622.0, 1236.0, 622.0, 1236.0, 124.0" shape="poly" alt=":Generic Connector" id="areadiagram_map_AgHt9NaAU8mGOs7B_default" href="GenericConnector_PAHt9NaAU8mGOs7A.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1214.0, 780.0, 1214.0, 831.0, 1228.0, 831.0, 1228.0, 780.0" coords2="1214.0, 780.0, 1214.0, 831.0, 1228.0, 831.0, 1228.0, 780.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_2wad9NaAU8mGOtg5_default" href="BPSequenceFlow_Iwad9NaAU8mGOtg4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="433.0, 157.0, 433.0, 180.0, 364.0, 180.0, 364.0, 177.0, 350.0, 177.0, 350.0, 180.0, 347.0, 180.0, 347.0, 194.0, 350.0, 194.0, 350.0, 215.0, 364.0, 215.0, 364.0, 194.0, 433.0, 194.0, 433.0, 197.0, 447.0, 197.0, 447.0, 194.0, 450.0, 194.0, 450.0, 180.0, 447.0, 180.0, 447.0, 157.0" coords2="433.0, 157.0, 433.0, 180.0, 364.0, 180.0, 364.0, 177.0, 350.0, 177.0, 350.0, 180.0, 347.0, 180.0, 347.0, 194.0, 350.0, 194.0, 350.0, 215.0, 364.0, 215.0, 364.0, 194.0, 433.0, 194.0, 433.0, 197.0, 447.0, 197.0, 447.0, 194.0, 450.0, 194.0, 450.0, 180.0, 447.0, 180.0, 447.0, 157.0" shape="poly" alt=":Generic Connector" id="areadiagram_map_xw599NaAU8mGOuTk_default" href="GenericConnector_Bw599NaAU8mGOuTj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="433.0, 157.0, 433.0, 215.0, 447.0, 215.0, 447.0, 157.0" coords2="433.0, 157.0, 433.0, 215.0, 447.0, 215.0, 447.0, 157.0" shape="poly" alt=":Generic Connector" id="areadiagram_map_DNl99NaAU8mGOuWS_default" href="GenericConnector_tNl99NaAU8mGOuWR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="433.0, 157.0, 433.0, 197.0, 430.0, 197.0, 430.0, 211.0, 433.0, 211.0, 433.0, 214.0, 447.0, 214.0, 447.0, 211.0, 699.0, 211.0, 699.0, 223.0, 713.0, 223.0, 713.0, 211.0, 716.0, 211.0, 716.0, 197.0, 713.0, 197.0, 713.0, 194.0, 699.0, 194.0, 699.0, 197.0, 447.0, 197.0, 447.0, 157.0" coords2="433.0, 157.0, 433.0, 197.0, 430.0, 197.0, 430.0, 211.0, 433.0, 211.0, 433.0, 214.0, 447.0, 214.0, 447.0, 211.0, 699.0, 211.0, 699.0, 223.0, 713.0, 223.0, 713.0, 211.0, 716.0, 211.0, 716.0, 197.0, 713.0, 197.0, 713.0, 194.0, 699.0, 194.0, 699.0, 197.0, 447.0, 197.0, 447.0, 157.0" shape="poly" alt=":Generic Connector" id="areadiagram_map_FvD99NaAU8mGOuc8_default" href="GenericConnector_pvD99NaAU8mGOuc7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="916.0, 146.0, 916.0, 180.0, 462.0, 180.0, 462.0, 157.0, 448.0, 157.0, 448.0, 180.0, 445.0, 180.0, 445.0, 194.0, 448.0, 194.0, 448.0, 197.0, 462.0, 197.0, 462.0, 194.0, 916.0, 194.0, 916.0, 197.0, 930.0, 197.0, 930.0, 194.0, 933.0, 194.0, 933.0, 180.0, 930.0, 180.0, 930.0, 146.0" coords2="916.0, 146.0, 916.0, 180.0, 462.0, 180.0, 462.0, 157.0, 448.0, 157.0, 448.0, 180.0, 445.0, 180.0, 445.0, 194.0, 448.0, 194.0, 448.0, 197.0, 462.0, 197.0, 462.0, 194.0, 916.0, 194.0, 916.0, 197.0, 930.0, 197.0, 930.0, 194.0, 933.0, 194.0, 933.0, 180.0, 930.0, 180.0, 930.0, 146.0" shape="poly" alt=":Generic Connector" id="areadiagram_map_Waf99NaAU8mGOum6_default" href="GenericConnector_6af99NaAU8mGOum5.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="488.0, 130.0, 488.0, 144.0, 533.0, 144.0, 533.0, 130.0" coords2="488.0, 130.0, 488.0, 144.0, 533.0, 144.0, 533.0, 130.0" shape="poly" alt=":Generic Connector" id="areadiagram_map_23oD9NaAU8mGOgEg_default" href="GenericConnector_63oD9NaAU8mGOgEf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1243.0, 124.0, 1243.0, 230.0, 1240.0, 230.0, 1240.0, 244.0, 1243.0, 244.0, 1243.0, 247.0, 1257.0, 247.0, 1257.0, 244.0, 1300.0, 244.0, 1300.0, 230.0, 1257.0, 230.0, 1257.0, 124.0" coords2="1243.0, 124.0, 1243.0, 230.0, 1240.0, 230.0, 1240.0, 244.0, 1243.0, 244.0, 1243.0, 247.0, 1257.0, 247.0, 1257.0, 244.0, 1300.0, 244.0, 1300.0, 230.0, 1257.0, 230.0, 1257.0, 124.0" shape="poly" alt=":Generic Connector" id="areadiagram_map_4JD4QtaAUrDgrFU7_default" href="GenericConnector_AJD4QtaAUrDgrFU6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1690.0, 718.0, 1690.0, 771.0, 1704.0, 771.0, 1704.0, 718.0" coords2="1690.0, 718.0, 1690.0, 771.0, 1704.0, 771.0, 1704.0, 718.0" shape="poly" alt=":Generic Connector" id="areadiagram_map_bOMiEtaAU8iGFDLF_default" href="GenericConnector_TOMiEtaAU8iGFDLE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1736.0, 691.0, 1736.0, 705.0, 1776.0, 705.0, 1776.0, 691.0" coords2="1736.0, 691.0, 1736.0, 705.0, 1776.0, 705.0, 1776.0, 691.0" shape="poly" alt=":Generic Connector" id="areadiagram_map_vOciEtaAU8iGFDNi_default" href="GenericConnector_XOciEtaAU8iGFDNh.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1690.0, 622.0, 1690.0, 678.0, 1704.0, 678.0, 1704.0, 622.0" coords2="1690.0, 622.0, 1690.0, 678.0, 1704.0, 678.0, 1704.0, 622.0" shape="poly" alt=":Generic Connector" id="areadiagram_map_yjCiEtaAU8iGFDQx_default" href="GenericConnector_CjCiEtaAU8iGFDQw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="204.0, 682.0, 204.0, 696.0, 272.0, 696.0, 272.0, 682.0" coords2="204.0, 682.0, 204.0, 696.0, 272.0, 696.0, 272.0, 682.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_iALzddaAUAAAWZ8D_default" href="BPSequenceFlow_MALzddaAUAAAWZ8C.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="135, 656, 204, 723" coords2="135, 656, 204, 723" shape="rect" alt="G:Sub-Process" id="areadiagram_map_SGDzddaAUAAAWZ7E_default" href="BPSubProcess_SGDzddaAUAAAWZ7F.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1944, 772, 2005, 843" coords2="1944, 772, 2005, 843" shape="rect" alt=":End Event" id="areadiagram_map_ricd0taAUhQEsT.d_default" href="BPEndEvent_I2tt0taAUhQEsTkv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1923, 289, 2019, 329" coords2="1923, 289, 2019, 329" shape="rect" alt="BI:Application Component" id="areadiagram_map_Kccd0taAUhQEsT.W_default" href="ArchiMateApplicationComponent_7ob_U2aAUrD0PhWr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1936, 548, 2005, 610" coords2="1936, 548, 2005, 610" shape="rect" alt=":Task" id="areadiagram_map_FMcd0taAUhQEsT.R_default" href="BPTask_hW4eRNaAUhQEsXzi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1937, 458, 1999, 516" coords2="1937, 458, 1999, 516" shape="rect" alt=":Task" id="areadiagram_map_ywcd0taAUhQEsT.C_default" href="BPTask_INaAINaAUhQEsSux.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1943, 193, 2000, 250" coords2="1943, 193, 2000, 250" shape="rect" alt=":Start Event" id="areadiagram_map_agcd0taAUhQEsT99_default" href="BPStartEvent_OQF_wNaAUhQEsSjB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1939, 109, 1999, 161" coords2="1939, 109, 1999, 161" shape="rect" alt=":Gateway" id="areadiagram_map_Agcd0taAUhQEsT96_default" href="BPGateway_2Du_wNaAUhQEsSgp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1939, 28, 1999, 78" coords2="1939, 28, 1999, 78" shape="rect" alt=":Task" id="areadiagram_map_tAcd0taAUhQEsT93_default" href="BPTask_hd8_wNaAUhQEsSbM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_oBFYGgaC48kYAjqp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;OBF&amp;lt;/a&amp;gt; 
+      USAGE NOTE&amp;lt;/b&amp;gt; - &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Fyn0ZwaC48kYAhGT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget 
+      Fact Book&amp;lt;/a&amp;gt; &amp;#8211; Reports on &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LzdPsgaC48kYAjDp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      and provides &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+      funding policies related to research &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      awards. &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Fyn0ZwaC48kYAhGT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget 
+      Fact Book&amp;lt;/a&amp;gt; is considered Official Public Data by &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1640, 678, 1736, 718" coords2="1640, 678, 1736, 718" shape="rect" alt="Factbook:Application Component" id="areadiagram_map_uFoiEtaAU8iGFC57_default" href="ArchiMateApplicationComponent_KObWGeaAUrAmX1tQ.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1640, 678, 1736, 718',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_DAshJ5aAUrDKU9_I.html/Factbook ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '1640, 678, 1736, 718'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="1776, 678, 1823, 718" coords2="1776, 678, 1823, 718" shape="rect" alt="STOP:End Event" id="areadiagram_map_Zz899NaAU8mGOuFO_default" href="BPEndEvent_Zz899NaAU8mGOuFP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1196, 831, 1246, 867" coords2="1196, 831, 1246, 867" shape="rect" alt="STOP:End Event" id="areadiagram_map_lcwd9NaAU8mGOtIV_default" href="BPEndEvent_lcwd9NaAU8mGOtIW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Intramural &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_6WhOlwaC48kYAiyj.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Coding&amp;lt;/a&amp;gt;, 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ybLdmQaAUsSyF0ka.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RMS&amp;lt;/a&amp;gt;, 
+      Ledios
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_AAI4FwaC48kYAn7n.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gPlYFwaC48kYAn7B.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_EiTOGgaC48kYAgqI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSO&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_d4pyagaC48kYAgzf.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CA&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary__upsJwaC48kYAg2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Activity 
+      Code&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      *&amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bVqEGgaC48kYAj_K.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSSI&amp;lt;/a&amp;gt;/&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mALEGgaC48kYAkEl.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;KMSP&amp;lt;/a&amp;gt; 
+      USAGE NOTE&amp;lt;/b&amp;gt;- &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_4VVrsgaC48kYAirJ.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NFRP&amp;lt;/a&amp;gt; 
+      (&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_4VVrsgaC48kYAirJ.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NFRP&amp;lt;/a&amp;gt;) 
+      &amp;#8211; Reports on &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+      projects and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_8hHrmQaAUsSyF0r3.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Research 
+      Coding&amp;lt;/a&amp;gt; and is managed by &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bVqEGgaC48kYAj_K.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSSI&amp;lt;/a&amp;gt;/&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mALEGgaC48kYAkEl.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;KMSP&amp;lt;/a&amp;gt;. 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_4VVrsgaC48kYAirJ.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NFRP&amp;lt;/a&amp;gt; 
+      is considered Official Public Data by &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;, 
+      because it is vetted by the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LzdPsgaC48kYAjDp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      Office. Primary groups that supply data to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_4VVrsgaC48kYAirJ.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NFRP&amp;lt;/a&amp;gt; 
+      are: &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mPPwGgaC48kYAiT0.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RAEB&amp;lt;/a&amp;gt; 
+      (Extramural &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      and Research Contracts); &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Qo34GgaC48kYAj4o.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DCEG&amp;lt;/a&amp;gt; 
+      (Intramural projects); &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_nfvxmwaAU82ImBQu.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CCR&amp;lt;/a&amp;gt; 
+      (Intramural projects); and, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_oBFYGgaC48kYAjqp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;OBF&amp;lt;/a&amp;gt; 
+      (&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ybLdmQaAUsSyF0ka.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RMS&amp;lt;/a&amp;gt; 
+      and Leidos projects).
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1185, 84, 1281, 124" coords2="1185, 84, 1281, 124" shape="rect" alt="NFRP:Application Component" id="areadiagram_map_guTt9NaAU8mGOsuk_default" href="ArchiMateApplicationComponent_TYGTGeaAUrAmX1wJ.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1185, 84, 1281, 124',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_lRJpJ5aAUrDKU5Ay.html/NFRP ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '1185, 84, 1281, 124'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Intramural &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_6WhOlwaC48kYAiyj.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Coding&amp;lt;/a&amp;gt;, 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ybLdmQaAUsSyF0ka.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RMS&amp;lt;/a&amp;gt;, 
+      Ledios
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_AAI4FwaC48kYAn7n.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gPlYFwaC48kYAn7B.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_EiTOGgaC48kYAgqI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSO&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_d4pyagaC48kYAgzf.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CA&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary__upsJwaC48kYAg2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Activity 
+      Code&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      *&amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bVqEGgaC48kYAj_K.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSSI&amp;lt;/a&amp;gt;/&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mALEGgaC48kYAkEl.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;KMSP&amp;lt;/a&amp;gt; 
+      USAGE NOTE&amp;lt;/b&amp;gt;- &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_4VVrsgaC48kYAirJ.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NFRP&amp;lt;/a&amp;gt; 
+      (&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_4VVrsgaC48kYAirJ.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NFRP&amp;lt;/a&amp;gt;) 
+      &amp;#8211; Reports on &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+      projects and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_8hHrmQaAUsSyF0r3.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Research 
+      Coding&amp;lt;/a&amp;gt; and is managed by &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bVqEGgaC48kYAj_K.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSSI&amp;lt;/a&amp;gt;/&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mALEGgaC48kYAkEl.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;KMSP&amp;lt;/a&amp;gt;. 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_4VVrsgaC48kYAirJ.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NFRP&amp;lt;/a&amp;gt; 
+      is considered Official Public Data by &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;, 
+      because it is vetted by the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LzdPsgaC48kYAjDp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      Office. Primary groups that supply data to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_4VVrsgaC48kYAirJ.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NFRP&amp;lt;/a&amp;gt; 
+      are: &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mPPwGgaC48kYAiT0.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RAEB&amp;lt;/a&amp;gt; 
+      (Extramural &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      and Research Contracts); &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Qo34GgaC48kYAj4o.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DCEG&amp;lt;/a&amp;gt; 
+      (Intramural projects); &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_nfvxmwaAU82ImBQu.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CCR&amp;lt;/a&amp;gt; 
+      (Intramural projects); and, &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_oBFYGgaC48kYAjqp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;OBF&amp;lt;/a&amp;gt; 
+      (&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ybLdmQaAUsSyF0ka.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RMS&amp;lt;/a&amp;gt; 
+      and Leidos projects).
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="392, 117, 488, 157" coords2="392, 117, 488, 157" shape="rect" alt="NFRP:Application Component" id="areadiagram_map_fnat9NaAU8mGOsRK_default" href="ArchiMateApplicationComponent_TYGTGeaAUrAmX1wJ.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','392, 117, 488, 157',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_lRJpJ5aAUrDKU5Ay.html/NFRP ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '392, 117, 488, 157'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="1493, 2, 1507, 1187" coords2="1493, 2, 1507, 1187" shape="rect" alt=":Freehand Shape" id="areadiagram_map_4Y9jkNaGAqACCyqK_default" href="ShapeEditorShape_4Y9jkNaGAqACCyqL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="996, 2, 1015, 1186" coords2="996, 2, 1015, 1186" shape="rect" alt=":Freehand Shape" id="areadiagram_map_dQwjkNaGAqACCyoG_default" href="ShapeEditorShape_9QwjkNaGAqACCyoH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1508, 1069, 1624, 1169" coords2="1508, 1069, 1624, 1169" shape="rect" alt="H:Sub-Process" id="areadiagram_map_vTi9f1aAUhQEPy2l_default" href="BPSubProcess_fTi9f1aAUhQEPy2m.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1640, 867, 1765, 942" coords2="1640, 867, 1765, 942" shape="rect" alt="OBF receives extramural data from OEFIA and intramural data from...:Sub-Process" id="areadiagram_map_nTi9f1aAUhQEPy2f_default" href="BPSubProcess_nTi9f1aAUhQEPy2g.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1662, 994, 1743, 1027" coords2="1662, 994, 1743, 1027" shape="rect" alt="Spreadsheets:Sub-Process" id="areadiagram_map_LTi9f1aAUhQEPy2Z_default" href="BPSubProcess_rTi9f1aAUhQEPy2a.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1645, 1091, 1772, 1169" coords2="1645, 1091, 1772, 1169" shape="rect" alt="OEFIA pulls extramural grant data from FAM and sends the data via spreadsheet to OBF.:Sub-Process" id="areadiagram_map_DTi9f1aAUhQEPy2T_default" href="BPSubProcess_DTi9f1aAUhQEPy2U.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="26, 433, 86, 498" coords2="26, 433, 86, 498" shape="rect" alt="I2E:Data Store" id="areadiagram_map_NTi9f1aAUhQEPy2N_default" href="BPDataStore_tTi9f1aAUhQEPy2O.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="26, 331, 108, 396" coords2="26, 331, 108, 396" shape="rect" alt="F:Sub-Process" id="areadiagram_map_FTi9f1aAUhQEPy2H_default" href="BPSubProcess_FTi9f1aAUhQEPy2I.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1654, 771, 1750, 831" coords2="1654, 771, 1750, 831" shape="rect" alt="OBF annually publishes the NCI Factbook.:Sub-Process" id="areadiagram_map_Xji9f1aAUhQEPy1a_default" href="BPSubProcess_3ji9f1aAUhQEPy1b.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1026, 62, 1134, 146" coords2="1026, 62, 1134, 146" shape="rect" alt="KMSP provides reports of the working FY data for OBF to validate.:Sub-Process" id="areadiagram_map_Vji9f1aAUhQEPy1I_default" href="BPSubProcess_Vji9f1aAUhQEPy1J.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="572, 657, 668, 729" coords2="572, 657, 668, 729" shape="rect" alt="OBF sends RMS and Leidos data to KMSP via spreadsheets.:Sub-Process" id="areadiagram_map_PDi9f1aAUhQEPy0J_default" href="BPSubProcess_PDi9f1aAUhQEPy0K.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1104, 622, 1303, 780" coords2="1104, 622, 1303, 780" shape="rect" alt="The total NCI budget is validated by OBF as the ‘Cancer’ category on NFRP. During the validation process, OBF staff have access to the NFRP development system where data are loaded as they are received. They can use the development system as an automated aid in their validation process.:Sub-Process" id="areadiagram_map_pji9f1aAUhQEPy0__default" href="BPSubProcess_pji9f1aAUhQEPy1A.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="862, 662, 980, 804" coords2="862, 662, 980, 804" shape="rect" alt="OBF validates and approves project and disease category data before that data is made public on NFRP.:Sub-Process" id="areadiagram_map_Rji9f1aAUhQEPy08_default" href="BPSubProcess_Rji9f1aAUhQEPy09.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="885, 56, 996, 146" coords2="885, 56, 996, 146" shape="rect" alt="KMSP performs the first level QA-QC of NFRP data as it is being loaded to the NFRP database.:Sub-Process" id="areadiagram_map_2ji9f1aAUhQEPy05_default" href="BPSubProcess__ji9f1aAUhQEPy06.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="584, 780, 675, 820" coords2="584, 780, 675, 820" shape="rect" alt="Spreadsheets:Sub-Process" id="areadiagram_map_iji9f1aAUhQEPy0t_default" href="BPSubProcess_iji9f1aAUhQEPy0u.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="305, 780, 395, 820" coords2="305, 780, 395, 820" shape="rect" alt="Spreadsheets:Sub-Process" id="areadiagram_map_kji9f1aAUhQEPy0e_default" href="BPSubProcess_kji9f1aAUhQEPy0f.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="635, 223, 777, 295" coords2="635, 223, 777, 295" shape="rect" alt="KMSP runs scripts to load the RMS and Leidos data to the NFRP database.:Sub-Process" id="areadiagram_map_gji9f1aAUhQEPy0P_default" href="BPSubProcess_gji9f1aAUhQEPy0Q.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="393, 215, 501, 303" coords2="393, 215, 501, 303" shape="rect" alt="KMSP runs scripts to load the Intramural data to the NFRP database.:Sub-Process" id="areadiagram_map_fDi9f1aAUhQEPy0M_default" href="BPSubProcess_fDi9f1aAUhQEPy0N.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="272, 638, 428, 741" coords2="272, 638, 428, 741" shape="rect" alt="OBF collects data from Intramural groups and sends it via spreadsheets to KMSP. (OBF reconciles scientific coding with funding data before transmitting information to NFRP.):Sub-Process" id="areadiagram_map_XDi9f1aAUhQEPy0G_default" href="BPSubProcess_XDi9f1aAUhQEPy0H.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="272, 215, 380, 303" coords2="272, 215, 380, 303" shape="rect" alt="KMSP accesses that data and runs scripts to load/copy it into the NFRP database.:Sub-Process" id="areadiagram_map_HDi9f1aAUhQEPy0D_default" href="BPSubProcess_HDi9f1aAUhQEPy0E.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="218, 413, 354, 500" coords2="218, 413, 354, 500" shape="rect" alt="At the end of each fiscal year, DEA RAEB images final FY data and transfers it to an NFRP schema in I2E.:Sub-Process" id="areadiagram_map_rDi9f1aAUhQEPy0A_default" href="BPSubProcess_rDi9f1aAUhQEPy0B.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="256, 331, 316, 385" coords2="256, 331, 316, 385" shape="rect" alt="I2E:Data Store" id="areadiagram_map_zDi9f1aAUhQEPyz9_default" href="BPDataStore_zDi9f1aAUhQEPyz_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 955, 1851, 1179" coords2="2, 955, 1851, 1179" shape="rect" alt="OEFIA:Pool" id="areadiagram_map_DDi9f1aAUhQEPyz4_default" href="BPPool_DDi9f1aAUhQEPyz5.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 321, 1851, 520" coords2="2, 321, 1851, 520" shape="rect" alt="DEA:Pool" id="areadiagram_map_NDi9f1aAUhQEPyz1_default" href="BPPool_tDi9f1aAUhQEPyz2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 36, 1851, 321" coords2="2, 36, 1851, 321" shape="rect" alt="CSSI/KMSP:Pool" id="areadiagram_map_VDi9f1aAUhQEPyzy_default" href="BPPool_VDi9f1aAUhQEPyzz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 517, 1851, 960" coords2="2, 517, 1851, 960" shape="rect" alt="OBF:Pool" id="areadiagram_map_5Di9f1aAUhQEPyzv_default" href="BPPool_5Di9f1aAUhQEPyzw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_7ob_U2aAUrD0PhWr.html" class="ItemLink">BI : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_KObWGeaAUrAmX1tQ.html" class="ItemLink">Factbook : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <b><a class="ItemLink" href="Glossary_oBFYGgaC48kYAjqp.html" name="">OBF</a> 
+      USAGE NOTE</b> - <a class="ItemLink" href="Glossary_Fyn0ZwaC48kYAhGT.html" name="">Budget 
+      Fact Book</a> &#8211; Reports on <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>&nbsp;<a class="ItemLink" href="Glossary_LzdPsgaC48kYAjDp.html" name="">Budget</a> 
+      and provides <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a> 
+      funding policies related to research <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a> 
+      awards. <a class="ItemLink" href="Glossary_Fyn0ZwaC48kYAhGT.html" name="">Budget 
+      Fact Book</a> is considered Official Public Data by <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_TYGTGeaAUrAmX1wJ.html" class="ItemLink">NFRP : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Intramural <a class="ItemLink" href="Glossary_6WhOlwaC48kYAiyj.html" name="">Coding</a>, 
+      <a class="ItemLink" href="Glossary_ybLdmQaAUsSyF0ka.html" name="">RMS</a>, 
+      Ledios
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a>
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_AAI4FwaC48kYAn7n.html" name="">SIC</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_gPlYFwaC48kYAn7B.html" name="">SITE</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_EiTOGgaC48kYAgqI.html" name="">CSO</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_d4pyagaC48kYAgzf.html" name="">CA</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary__upsJwaC48kYAg2D.html" name="">Activity 
+      Code</a>
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      *<b><a class="ItemLink" href="Glossary_bVqEGgaC48kYAj_K.html" name="">CSSI</a>/<a class="ItemLink" href="Glossary_mALEGgaC48kYAkEl.html" name="">KMSP</a> 
+      USAGE NOTE</b>- <a class="ItemLink" href="Glossary_4VVrsgaC48kYAirJ.html" name="">NFRP</a> 
+      (<a class="ItemLink" href="Glossary_4VVrsgaC48kYAirJ.html" name="">NFRP</a>) 
+      &#8211; Reports on <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a> 
+      projects and <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>&nbsp;<a class="ItemLink" href="Glossary_8hHrmQaAUsSyF0r3.html" name="">Research 
+      Coding</a> and is managed by <a class="ItemLink" href="Glossary_bVqEGgaC48kYAj_K.html" name="">CSSI</a>/<a class="ItemLink" href="Glossary_mALEGgaC48kYAkEl.html" name="">KMSP</a>. 
+      <a class="ItemLink" href="Glossary_4VVrsgaC48kYAirJ.html" name="">NFRP</a> 
+      is considered Official Public Data by <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>, 
+      because it is vetted by the <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>&nbsp;<a class="ItemLink" href="Glossary_LzdPsgaC48kYAjDp.html" name="">Budget</a> 
+      Office. Primary groups that supply data to <a class="ItemLink" href="Glossary_4VVrsgaC48kYAirJ.html" name="">NFRP</a> 
+      are: <a class="ItemLink" href="Glossary_mPPwGgaC48kYAiT0.html" name="">RAEB</a> 
+      (Extramural <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a> 
+      and Research Contracts); <a class="ItemLink" href="Glossary_Qo34GgaC48kYAj4o.html" name="">DCEG</a> 
+      (Intramural projects); <a class="ItemLink" href="Glossary_nfvxmwaAU82ImBQu.html" name="">CCR</a> 
+      (Intramural projects); and, <a class="ItemLink" href="Glossary_oBFYGgaC48kYAjqp.html" name="">OBF</a> 
+      (<a class="ItemLink" href="Glossary_ybLdmQaAUsSyF0ka.html" name="">RMS</a> 
+      and Leidos projects).
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/FreehandShapes.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/FreehandShapes.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ShapeEditorShape_4Y9jkNaGAqACCyqL.html" class="ItemLink">N/A : Freehand Shape</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/FreehandShapes.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/FreehandShapes.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ShapeEditorShape_9QwjkNaGAqACCyoH.html" class="ItemLink">N/A : Freehand Shape</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_fTi9f1aAUhQEPy2m.html" class="ItemLink">H : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_nTi9f1aAUhQEPy2g.html" class="ItemLink">OBF receives extramural data from OEFIA and intramural data from... : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_rTi9f1aAUhQEPy2a.html" class="ItemLink">Spreadsheets : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_DTi9f1aAUhQEPy2U.html" class="ItemLink">OEFIA pulls extramural grant data from FAM and sends the data via spreadsheet to OBF. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_tTi9f1aAUhQEPy2O.html" class="ItemLink">I2E : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_FTi9f1aAUhQEPy2I.html" class="ItemLink">F : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_3ji9f1aAUhQEPy1b.html" class="ItemLink">OBF annually publishes the NCI Factbook. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Vji9f1aAUhQEPy1J.html" class="ItemLink">KMSP provides reports of the working FY data for OBF to validate. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_PDi9f1aAUhQEPy0K.html" class="ItemLink">OBF sends RMS and Leidos data to KMSP via spreadsheets. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_pji9f1aAUhQEPy1A.html" class="ItemLink">The total NCI budget is validated by OBF as the ‘Cancer’ category on NFRP. During the validation process, OBF staff have access to the NFRP development system where data are loaded as they are received. They can use the development system as an automated aid in their validation process. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Rji9f1aAUhQEPy09.html" class="ItemLink">OBF validates and approves project and disease category data before that data is made public on NFRP. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess__ji9f1aAUhQEPy06.html" class="ItemLink">KMSP performs the first level QA-QC of NFRP data as it is being loaded to the NFRP database. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_iji9f1aAUhQEPy0u.html" class="ItemLink">Spreadsheets : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_kji9f1aAUhQEPy0f.html" class="ItemLink">Spreadsheets : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_gji9f1aAUhQEPy0Q.html" class="ItemLink">KMSP runs scripts to load the RMS and Leidos data to the NFRP database. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_fDi9f1aAUhQEPy0N.html" class="ItemLink">KMSP runs scripts to load the Intramural data to the NFRP database. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_XDi9f1aAUhQEPy0H.html" class="ItemLink">OBF collects data from Intramural groups and sends it via spreadsheets to KMSP. (OBF reconciles scientific coding with funding data before transmitting information to NFRP.) : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_HDi9f1aAUhQEPy0E.html" class="ItemLink">KMSP accesses that data and runs scripts to load/copy it into the NFRP database. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_rDi9f1aAUhQEPy0B.html" class="ItemLink">At the end of each fiscal year, DEA RAEB images final FY data and transfers it to an NFRP schema in I2E. : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactDataStore.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactDataStore.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPDataStore_zDi9f1aAUhQEPyz_.html" class="ItemLink">I2E : Data Store</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_DDi9f1aAUhQEPyz5.html" class="ItemLink">OEFIA : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_tDi9f1aAUhQEPyz2.html" class="ItemLink">DEA : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_VDi9f1aAUhQEPyzz.html" class="ItemLink">CSSI/KMSP : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent"></span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_5Di9f1aAUhQEPyzw.html" class="ItemLink">OBF : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP15</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_hd8_wNaAUhQEsSbM.html" class="ItemLink">N/A : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP16</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_2Du_wNaAUhQEsSgp.html" class="ItemLink">N/A : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP17</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_OQF_wNaAUhQEsSjB.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP19</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_INaAINaAUhQEsSux.html" class="ItemLink">N/A : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP27</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_hW4eRNaAUhQEsXzi.html" class="ItemLink">N/A : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP35</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_lcwd9NaAU8mGOtIW.html" class="ItemLink">STOP : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP37</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_Zz899NaAU8mGOuFP.html" class="ItemLink">STOP : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP39</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_I2tt0taAUhQEsTkv.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP44</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_SGDzddaAUAAAWZ7F.html" class="ItemLink">G : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

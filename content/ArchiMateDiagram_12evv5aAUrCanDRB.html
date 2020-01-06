@@ -1,0 +1,1160 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - FAM ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_EnnmauaAUrCsulL3.html" class="PageParentTitle">FAM : Application Component</a> (in <a href="ArchiMateDiagram_EnnmauaAUrCsulL3.html" class="PageParentTitle">RF ArchiMate Diagram</a> / <a href="ArchiMateDiagram_kie_sxaAUhQuH8OM.html" class="PageParentTitle">eRA/IIMPAC II ArchiMate Diagram</a> / <a href="ArchiMateDiagram_z0gWuxaAUhQuH0Es.html" class="PageParentTitle">Impact II Transactional ArchiMate Diagram</a> / <a href="ArchiMateDiagram_JSOyaZaAUhQuHycY.html" class="PageParentTitle">CBIIT Grants ArchMate Diagram</a> / <a href="ArchiMateDiagram_FL0Ko5aFS_l_E0qx.html" class="PageParentTitle">GPMATS ArchiMate Diagram</a> / <a href="ArchiMateDiagram_12evv5aAUrCanDRB.html" class="PageParentTitle">FAM ArchiMate Diagram</a> / <a href="ArchiMateDiagram_M6Ofv5aAUrCanFBo.html" class="PageParentTitle">OEFIA ArchiMate Diagram</a> / <a href="ArchiMateDiagram_Gwcw3ZaFS_l_E0vA.html" class="PageParentTitle">Program Funding Request 1 ArchiMate Diagram</a> / <a href="BusinessProcessDiagram_m2i9f1aAUhQEPyji.html" class="PageParentTitle">4 - Scores, Summaries, NCAB &amp; Payline</a> / <a href="BusinessProcessDiagram_tNi9f1aAUhQEPywh.html" class="PageParentTitle">7 - Reporting</a> / <a href="ArchiMateDiagram_j1ZSuxaAUhQuHx8K.html" class="PageParentTitle">ECB ArchiMate Diagram</a> / <a href="ArchiMateDiagram_yND6uxaAUhQuH7ee.html" class="PageParentTitle">NIDB ArchiMate Diagram</a> / <a href="ArchiMateDiagram_QqQ5uxaAUhQuH6gu.html" class="PageParentTitle">IRDB Reporting ArchiMate Diagram</a> / <a href="ArchiMateDiagram_tWljI5aFS_l_E7_S.html" class="PageParentTitle">I2E DataMart Reporting ArchiMate Diagram</a> / <a href="ArchiMateDiagram_zeAFJ5aAUrDKUz3_.html" class="PageParentTitle">PMA ArchiMate Diagram</a> / <a href="ArchiMateDiagram_wLdeTpaAUrD8SHeI.html" class="PageParentTitle">BSA Reports ArchiMate Diagram</a> / <a href="ArchiMateDiagram_CbcH0TaAUhQuH469.html" class="PageParentTitle">PFR ArchiMate Diagram</a> / <a href="ArchiMateDiagram_S9hyn7aAU8wQ4X_S.html" class="PageParentTitle">HITS ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - <a href="Glossary_xY1i2gaFKcBauwqo.html" class="ItemLink">FAM</a> ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('Research Funding Management Archtecture.vpp://diagram/12evv5aAUrCanDRB', 'FAM ArchiMate Diagram\nResearch Funding Management Archtecture.vpp://diagram/12evv5aAUrCanDRB', 'FAM ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|696.0|585.0|145.0|47.0|ArchiMateApplicationComponent_J_8qjWaAUrCs4Byo.html|ArchiMateApplicationComponent_J_8qjWaAUrCs4Byo.html|yyXv0TaAUhQuH5aZ" id="optionyyXv0TaAUhQuH5aZ">PFR : Application Component</option>
+<option value="shape|1447.0|586.0|145.0|47.0|ArchiMateApplicationComponent_n0yI2uaAUrCsugvb.html|ArchiMateApplicationComponent_n0yI2uaAUrCsugvb.html|d2gJYTaAUhQuH1RL" id="optiond2gJYTaAUhQuH1RL">BSA Reports : Application Component</option>
+<option value="shape|1415.0|475.0|210.0|167.0|ArchiMateGrouping_kBdCojqAUhQsEg44.html|ArchiMateGrouping_kBdCojqAUhQsEg44.html|zl4JYTaAUhQuH4IO" id="optionzl4JYTaAUhQuH4IO">DEA : Grouping</option>
+<option value="shape|1147.0|586.0|145.0|47.0|ArchiMateApplicationComponent_xDCbGeaAUrAmX4Ji.html|ArchiMateApplicationComponent_xDCbGeaAUrAmX4Ji.html|vKsRYTaAUhQuH0sV" id="optionvKsRYTaAUhQuH0sV">PMA : Application Component</option>
+<option value="shape|1109.0|475.0|221.0|170.0|ArchiMateGrouping_Ck0bGeaAUrAmX4JS.html|ArchiMateGrouping_Ck0bGeaAUrAmX4JS.html|uDlRYTaAUhQuH03y" id="optionuDlRYTaAUhQuH03y">DCCPS : Grouping</option>
+<option value="shape|880.0|579.0|134.0|53.0|ArchiMateDataObject_ln8p2uaAUrCsuhU4.html|ArchiMateDataObject_ln8p2uaAUrCsuhU4.html|Y23.YTaAUhQuH0Ro" id="optionY23.YTaAUhQuH0Ro">I2E DataMart Reporting : Data Object</option>
+<option value="shape|536.0|89.0|91.0|53.0|ArchiMateDataObject_qUepWuaAUrCsuhmR.html|ArchiMateDataObject_qUepWuaAUrCsuhmR.html|95WeYTaAUhQuH0CH" id="option95WeYTaAUhQuH0CH">IRDB Reporting : Data Object</option>
+<option value="shape|372.0|95.0|145.0|47.0|ArchiMateApplicationComponent_dgfpU2aAUrD0Ppt1.html|ArchiMateApplicationComponent_dgfpU2aAUrD0Ppt1.html|1PluYTaAUhQuHzjA" id="option1PluYTaAUhQuHzjA">NIDB : Application Component</option>
+<option value="shape|203.0|95.0|145.0|47.0|ArchiMateApplicationComponent_N9EZWuaAUrCsuhnZ.html|ArchiMateApplicationComponent_N9EZWuaAUrCsuhnZ.html|vlhMYTaAUrD6TYAZ" id="optionvlhMYTaAUrD6TYAZ">ECB : Application Component</option>
+<option value="shape|512.0|585.0|145.0|47.0|ArchiMateApplicationComponent_PxtJypaAUhQuH7RW.html|ArchiMateApplicationComponent_PxtJypaAUhQuH7RW.html|Lppvv5aAUrCanDTD" id="optionLppvv5aAUrCanDTD">GPMATS : Application Component</option>
+<option value="shape|293.0|592.0|96.0|40.0|ArchiMateApplicationComponent_rwL5weaAUrC0fJxq.html|ArchiMateApplicationComponent_rwL5weaAUrC0fJxq.html|xppvv5aAUrCanDS4" id="optionxppvv5aAUrCanDS4">HITS : Application Component</option>
+<option value="shape|49.0|89.0|132.0|53.0|ArchiMateDataObject_g7JGauaAUrCsulIW.html|ArchiMateDataObject_g7JGauaAUrCsulIW.html|Qppvv5aAUrCanDSu" id="optionQppvv5aAUrCanDSu">Impact II Transactional : Data Object</option>
+<option value="shape|481.0|475.0|543.0|170.0|ArchiMateGrouping_GpLgojqAUhQsEgn8.html|ArchiMateGrouping_GpLgojqAUhQsEgn8.html|Ubbvv5aAUrCanEog" id="optionUbbvv5aAUrCanEog">CBIIT : Grouping</option>
+<option value="shape|107.0|585.0|145.0|47.0|ArchiMateApplicationComponent_w5bSXuaAUrC0fJhI.html|ArchiMateApplicationComponent_w5bSXuaAUrC0fJhI.html|n2Jvv5aAUrCanDSg" id="optionn2Jvv5aAUrCanDSg">FAM : Application Component</option>
+<option value="shape|88.0|475.0|318.0|170.0|ArchiMateGrouping_YY7iXuaAUrC0fJdT.html|ArchiMateGrouping_YY7iXuaAUrC0fJdT.html|dJtvv5aAUrCanDUA" id="optiondJtvv5aAUrCanDUA">OEFIA : Grouping</option>
+<option value="shape|30.0|43.0|643.0|132.0|ArchiMateGrouping_nD72auaAUrCsuubz.html|ArchiMateGrouping_nD72auaAUrCsuubz.html|N2Ufv5aAUrCanE8P" id="optionN2Ufv5aAUrCanE8P">eRA/IIMPAC II : Grouping</option>
+<option value="shape|2.0|2.0|710.0|195.0|ArchiMateGrouping_Pjem2UaAUhQsGoBP.html|ArchiMateGrouping_Pjem2UaAUhQsGoBP.html|9BQfv5aAUrCanE7u" id="option9BQfv5aAUrCanE7u">NIH : Grouping</option>
+<option value="shape|2.0|312.0|1682.0|376.0|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|kjvvv5aAUrCanEo9" id="optionkjvvv5aAUrCanEo9">NCI : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/FAM_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="1688" height="692"/>
+					<map name="diagram_map">
+<area coords="49,328,68,343" coords2="49,328,68,343" shape="rect" alt="NCI" href="Glossary_mi7PCgaC48kYAjIt.html"/>
+<area coords="49,18,68,33" coords2="49,18,68,33" shape="rect" alt="NIH" href="Glossary_i_pPCgaC48kYAjIW.html"/>
+<area coords="36,44,57,59" coords2="36,44,57,59" shape="rect" alt="eRA" href="Glossary_r3zcMgaC48kYAidB.html"/>
+<area coords="93,476,122,491" coords2="93,476,122,491" shape="rect" alt="OEFIA" href="Glossary_fyK4GgaC48kYAjrB.html"/>
+<area coords="181,620,204,635" coords2="181,620,204,635" shape="rect" alt="FAM" href="Glossary_xY1i2gaFKcBauwqo.html"/>
+<area coords="503,476,527,491" coords2="503,476,527,491" shape="rect" alt="DOC" href="Glossary_8jPfsgaC48kYAjGS.html"/>
+<area coords="501,491,529,506" coords2="501,491,529,506" shape="rect" alt="CBIIT" href="Glossary_mYeIGgaC48kYAilB.html"/>
+<area coords="58,130,100,145" coords2="58,130,100,145" shape="rect" alt="IMPACT II" href="Glossary_jO2hO9aAUhQAJGhA.html"/>
+<area coords="339,607,364,622" coords2="339,607,364,622" shape="rect" alt="HITS" href="Glossary_CY7ZlwaC48kYAi3y.html"/>
+<area coords="575,620,621,635" coords2="575,620,621,635" shape="rect" alt="GPMATS" href="Glossary_Vd_YCkaGAqAC308X.html"/>
+<area coords="278,130,301,145" coords2="278,130,301,145" shape="rect" alt="ECB" href="Glossary_0TfNsgaC48kYAijL.html"/>
+<area coords="445,130,471,145" coords2="445,130,471,145" shape="rect" alt="NIDB" href="Glossary_COqhGgaC48kYAheO.html"/>
+<area coords="889,620,906,635" coords2="889,620,906,635" shape="rect" alt="I2E" href="Glossary_YJQsMgaC48kYAicn.html"/>
+<area coords="909,620,954,635" coords2="909,620,954,635" shape="rect" alt="Datamart" href="Glossary_gsGoGgaC48kYAiwp.html"/>
+<area coords="1115,476,1145,491" coords2="1115,476,1145,491" shape="rect" alt="DCCPS" href="Glossary_J4NmagaC48kYAg1y.html"/>
+<area coords="1222,621,1246,636" coords2="1222,621,1246,636" shape="rect" alt="PMA" href="Glossary_OCBJlwaC48kYAi1o.html"/>
+<area coords="1437,476,1461,491" coords2="1437,476,1461,491" shape="rect" alt="DOC" href="Glossary_8jPfsgaC48kYAjGS.html"/>
+<area coords="1438,491,1461,506" coords2="1438,491,1461,506" shape="rect" alt="DEA" href="Glossary_bZtbsgaC48kYAisp.html"/>
+<area coords="1502,621,1566,636" coords2="1502,621,1566,636" shape="rect" alt="BSA Reports" href="Glossary_hgUO2gaFKcBauwrn.html"/>
+<area coords="772,620,794,635" coords2="772,620,794,635" shape="rect" alt="PFR" href="Glossary__aKiMgaC48kYAif2.html"/>
+<area imageId="diagram" coords="140.0, 142.0, 140.0, 585.0, 154.0, 585.0, 154.0, 142.0" coords2="140.0, 142.0, 140.0, 585.0, 154.0, 585.0, 154.0, 142.0" shape="poly" alt=":Access" id="areadiagram_map_gppvv5aAUrCanDSs_default" href="ArchiMateAccess__pgyXuaAUrC0fJhs.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="227.0, 520.0, 227.0, 523.0, 224.0, 523.0, 224.0, 537.0, 227.0, 537.0, 227.0, 585.0, 241.0, 585.0, 241.0, 537.0, 334.0, 537.0, 334.0, 592.0, 348.0, 592.0, 348.0, 537.0, 351.0, 537.0, 351.0, 523.0, 348.0, 523.0, 348.0, 520.0, 334.0, 520.0, 334.0, 523.0, 241.0, 523.0, 241.0, 520.0" coords2="227.0, 520.0, 227.0, 523.0, 224.0, 523.0, 224.0, 537.0, 227.0, 537.0, 227.0, 585.0, 241.0, 585.0, 241.0, 537.0, 334.0, 537.0, 334.0, 592.0, 348.0, 592.0, 348.0, 537.0, 351.0, 537.0, 351.0, 523.0, 348.0, 523.0, 348.0, 520.0, 334.0, 520.0, 334.0, 523.0, 241.0, 523.0, 241.0, 520.0" shape="poly" alt=":Flow" id="areadiagram_map_xppvv5aAUrCanDS2_default" href="ArchiMateFlow_lAgFweaAUrC0fJyG.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="185.0, 429.0, 185.0, 432.0, 182.0, 432.0, 182.0, 446.0, 185.0, 446.0, 185.0, 585.0, 199.0, 585.0, 199.0, 446.0, 578.0, 446.0, 578.0, 585.0, 592.0, 585.0, 592.0, 446.0, 595.0, 446.0, 595.0, 432.0, 592.0, 432.0, 592.0, 429.0, 578.0, 429.0, 578.0, 432.0, 199.0, 432.0, 199.0, 429.0" coords2="185.0, 429.0, 185.0, 432.0, 182.0, 432.0, 182.0, 446.0, 185.0, 446.0, 185.0, 585.0, 199.0, 585.0, 199.0, 446.0, 578.0, 446.0, 578.0, 585.0, 592.0, 585.0, 592.0, 446.0, 595.0, 446.0, 595.0, 432.0, 592.0, 432.0, 592.0, 429.0, 578.0, 429.0, 578.0, 432.0, 199.0, 432.0, 199.0, 429.0" shape="poly" alt=":Flow" id="areadiagram_map_Lppvv5aAUrCanDTA_default" href="ArchiMateFlow_rPSlypaAUhQuH7ZH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="248.0, 142.0, 248.0, 260.0, 155.0, 260.0, 155.0, 257.0, 141.0, 257.0, 141.0, 260.0, 138.0, 260.0, 138.0, 274.0, 141.0, 274.0, 141.0, 585.0, 155.0, 585.0, 155.0, 274.0, 248.0, 274.0, 248.0, 277.0, 262.0, 277.0, 262.0, 274.0, 265.0, 274.0, 265.0, 260.0, 262.0, 260.0, 262.0, 142.0" coords2="248.0, 142.0, 248.0, 260.0, 155.0, 260.0, 155.0, 257.0, 141.0, 257.0, 141.0, 260.0, 138.0, 260.0, 138.0, 274.0, 141.0, 274.0, 141.0, 585.0, 155.0, 585.0, 155.0, 274.0, 248.0, 274.0, 248.0, 277.0, 262.0, 277.0, 262.0, 274.0, 265.0, 274.0, 265.0, 260.0, 262.0, 260.0, 262.0, 142.0" shape="poly" alt=":Triggering" id="areadiagram_map_PlhMYTaAUrD6TYAX_default" href="ArchiMateTriggering_8kBHtNaGAqACC13Y.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="417.0, 142.0, 417.0, 260.0, 155.0, 260.0, 155.0, 257.0, 141.0, 257.0, 141.0, 260.0, 138.0, 260.0, 138.0, 274.0, 141.0, 274.0, 141.0, 585.0, 155.0, 585.0, 155.0, 274.0, 417.0, 274.0, 417.0, 277.0, 431.0, 277.0, 431.0, 274.0, 434.0, 274.0, 434.0, 260.0, 431.0, 260.0, 431.0, 142.0" coords2="417.0, 142.0, 417.0, 260.0, 155.0, 260.0, 155.0, 257.0, 141.0, 257.0, 141.0, 260.0, 138.0, 260.0, 138.0, 274.0, 141.0, 274.0, 141.0, 585.0, 155.0, 585.0, 155.0, 274.0, 417.0, 274.0, 417.0, 277.0, 431.0, 277.0, 431.0, 274.0, 434.0, 274.0, 434.0, 260.0, 431.0, 260.0, 431.0, 142.0" shape="poly" alt=":Triggering" id="areadiagram_map_VPluYTaAUhQuHzi._default" href="ArchiMateTriggering_HZCl9NaAU8mGOl_H.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="573.0, 142.0, 573.0, 260.0, 155.0, 260.0, 155.0, 257.0, 141.0, 257.0, 141.0, 260.0, 138.0, 260.0, 138.0, 274.0, 141.0, 274.0, 141.0, 585.0, 155.0, 585.0, 155.0, 274.0, 573.0, 274.0, 573.0, 277.0, 587.0, 277.0, 587.0, 274.0, 590.0, 274.0, 590.0, 260.0, 587.0, 260.0, 587.0, 142.0" coords2="573.0, 142.0, 573.0, 260.0, 155.0, 260.0, 155.0, 257.0, 141.0, 257.0, 141.0, 260.0, 138.0, 260.0, 138.0, 274.0, 141.0, 274.0, 141.0, 585.0, 155.0, 585.0, 155.0, 274.0, 573.0, 274.0, 573.0, 277.0, 587.0, 277.0, 587.0, 274.0, 590.0, 274.0, 590.0, 260.0, 587.0, 260.0, 587.0, 142.0" shape="poly" alt=":Association" id="areadiagram_map_95WeYTaAUhQuH0CF_default" href="ArchiMateAssociation_XIIcEtaAU8iGFKnt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="185.0, 401.0, 185.0, 404.0, 182.0, 404.0, 182.0, 418.0, 185.0, 418.0, 185.0, 585.0, 199.0, 585.0, 199.0, 418.0, 940.0, 418.0, 940.0, 579.0, 954.0, 579.0, 954.0, 418.0, 957.0, 418.0, 957.0, 404.0, 954.0, 404.0, 954.0, 401.0, 940.0, 401.0, 940.0, 404.0, 199.0, 404.0, 199.0, 401.0" coords2="185.0, 401.0, 185.0, 404.0, 182.0, 404.0, 182.0, 418.0, 185.0, 418.0, 185.0, 585.0, 199.0, 585.0, 199.0, 418.0, 940.0, 418.0, 940.0, 579.0, 954.0, 579.0, 954.0, 418.0, 957.0, 418.0, 957.0, 404.0, 954.0, 404.0, 954.0, 401.0, 940.0, 401.0, 940.0, 404.0, 199.0, 404.0, 199.0, 401.0" shape="poly" alt=":Association" id="areadiagram_map_Y23.YTaAUhQuH0Rm_default" href="ArchiMateAssociation_8QX0EtaAU8iGFJp1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="165.0, 371.0, 165.0, 374.0, 162.0, 374.0, 162.0, 388.0, 165.0, 388.0, 165.0, 585.0, 179.0, 585.0, 179.0, 388.0, 1212.0, 388.0, 1212.0, 586.0, 1226.0, 586.0, 1226.0, 388.0, 1229.0, 388.0, 1229.0, 374.0, 1226.0, 374.0, 1226.0, 371.0, 1212.0, 371.0, 1212.0, 374.0, 179.0, 374.0, 179.0, 371.0" coords2="165.0, 371.0, 165.0, 374.0, 162.0, 374.0, 162.0, 388.0, 165.0, 388.0, 165.0, 585.0, 179.0, 585.0, 179.0, 388.0, 1212.0, 388.0, 1212.0, 586.0, 1226.0, 586.0, 1226.0, 388.0, 1229.0, 388.0, 1229.0, 374.0, 1226.0, 374.0, 1226.0, 371.0, 1212.0, 371.0, 1212.0, 374.0, 179.0, 374.0, 179.0, 371.0" shape="poly" alt=":Triggering" id="areadiagram_map_vKsRYTaAUhQuH0sT_default" href="ArchiMateTriggering_W6xsEtaAU8iGFKY0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="165.0, 358.0, 165.0, 361.0, 162.0, 361.0, 162.0, 375.0, 165.0, 375.0, 165.0, 585.0, 179.0, 585.0, 179.0, 375.0, 1512.0, 375.0, 1512.0, 586.0, 1526.0, 586.0, 1526.0, 375.0, 1529.0, 375.0, 1529.0, 361.0, 1526.0, 361.0, 1526.0, 358.0, 1512.0, 358.0, 1512.0, 361.0, 179.0, 361.0, 179.0, 358.0" coords2="165.0, 358.0, 165.0, 361.0, 162.0, 361.0, 162.0, 375.0, 165.0, 375.0, 165.0, 585.0, 179.0, 585.0, 179.0, 375.0, 1512.0, 375.0, 1512.0, 586.0, 1526.0, 586.0, 1526.0, 375.0, 1529.0, 375.0, 1529.0, 361.0, 1526.0, 361.0, 1526.0, 358.0, 1512.0, 358.0, 1512.0, 361.0, 179.0, 361.0, 179.0, 358.0" shape="poly" alt=":Triggering" id="areadiagram_map_t2gJYTaAUhQuH1RJ_default" href="ArchiMateTriggering_0AesEtaAU8iGFKW_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="185.0, 414.0, 185.0, 417.0, 182.0, 417.0, 182.0, 431.0, 185.0, 431.0, 185.0, 585.0, 199.0, 585.0, 199.0, 431.0, 761.0, 431.0, 761.0, 585.0, 775.0, 585.0, 775.0, 431.0, 778.0, 431.0, 778.0, 417.0, 775.0, 417.0, 775.0, 414.0, 761.0, 414.0, 761.0, 417.0, 199.0, 417.0, 199.0, 414.0" coords2="185.0, 414.0, 185.0, 417.0, 182.0, 417.0, 182.0, 431.0, 185.0, 431.0, 185.0, 585.0, 199.0, 585.0, 199.0, 431.0, 761.0, 431.0, 761.0, 585.0, 775.0, 585.0, 775.0, 431.0, 778.0, 431.0, 778.0, 417.0, 775.0, 417.0, 775.0, 414.0, 761.0, 414.0, 761.0, 417.0, 199.0, 417.0, 199.0, 414.0" shape="poly" alt=":Flow" id="areadiagram_map_yyXv0TaAUhQuH5aX_default" href="ArchiMateFlow_ZXzv0TaAUhQuH5ZI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      *&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary__aKiMgaC48kYAif2.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;PFR&amp;lt;/a&amp;gt; 
+      belongs to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_YJQsMgaC48kYAicn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;I2E&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="696, 585, 841, 632" coords2="696, 585, 841, 632" shape="rect" alt="PFR:Application Component" id="areadiagram_map_yyXv0TaAUhQuH5aZ_default" href="ArchiMateApplicationComponent_J_8qjWaAUrCs4Byo.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','696, 585, 841, 632',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_CbcH0TaAUhQuH469.html/PFR ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '696, 585, 841, 632'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bZtbsgaC48kYAisp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DEA&amp;lt;/a&amp;gt; 
+      USAGE NOTE &amp;lt;/b&amp;gt;- &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_hgUO2gaFKcBauwrn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;BSA 
+      Reports&amp;lt;/a&amp;gt; &amp;#8211; Pulls information from &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_1s0bsgaC48kYAisC.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CATS&amp;lt;/a&amp;gt;, 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_YJQsMgaC48kYAicn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;I2E&amp;lt;/a&amp;gt;, 
+      and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ta68MgaC48kYAidX.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IMPAC 
+      II&amp;lt;/a&amp;gt;. The &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ljUH39aAUhQCmxAN.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Status&amp;lt;/a&amp;gt; 
+      for all concepts presented at the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ltdQGgaC48kYAh2z.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;BSA&amp;lt;/a&amp;gt; 
+      meeting is reflected in &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_hgUO2gaFKcBauwrn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;BSA 
+      Reports&amp;lt;/a&amp;gt;. &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_hgUO2gaFKcBauwrn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;BSA 
+      Reports&amp;lt;/a&amp;gt; provides &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_7y19sgaC48kYAinf.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FOA&amp;lt;/a&amp;gt; 
+      information for each concept through the years. Helps with &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_1hEUdwaC48kYAjMK.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Extramural 
+      Research&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LzdPsgaC48kYAjDp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      and financial planning. It reports all of the cleared concepts and the 
+      funded &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      listing.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1447, 586, 1592, 633" coords2="1447, 586, 1592, 633" shape="rect" alt="BSA Reports:Application Component" id="areadiagram_map_d2gJYTaAUhQuH1RL_default" href="ArchiMateApplicationComponent_n0yI2uaAUrCsugvb.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1447, 586, 1592, 633',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_wLdeTpaAUrD8SHeI.html/BSA Reports ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '1447, 586, 1592, 633'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="1415, 475, 1625, 642" coords2="1415, 475, 1625, 642" shape="rect" alt="DEA:Grouping" id="areadiagram_map_zl4JYTaAUhQuH4IO_default" href="ArchiMateGrouping_kBdCojqAUhQsEg44.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1415, 475, 1625, 642',new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_S2msTpaAUrD8SD_0.html/DEA ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array('ArchiMateDiagram_D0ytMFaAUhQELlbc.html/DEA DOC-centric ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '1415, 475, 1625, 642'),showSubdiagramIcon('diagram', '1415, 475, 1625, 642'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      QC Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_AAI4FwaC48kYAn7n.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gPlYFwaC48kYAn7B.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;*&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_J4NmagaC48kYAg1y.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DCCPS&amp;lt;/a&amp;gt; 
+      USAGE NOTE&amp;lt;/b&amp;gt;- &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_OCBJlwaC48kYAi1o.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;PMA&amp;lt;/a&amp;gt; 
+      &amp;#8211; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_J4NmagaC48kYAg1y.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DCCPS&amp;lt;/a&amp;gt; 
+      applies scientific codes in areas of surveillance, epidemiology, health 
+      services, behavioral science, and cancer survivorship and is also used 
+      for identifying, analyzing, and displaying &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_pQpPsgaC48kYAjDM.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Award&amp;lt;/a&amp;gt; 
+      portfolios by code categories.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      *&amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_J4NmagaC48kYAg1y.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DCCPS&amp;lt;/a&amp;gt; 
+      USAGE NOTE 2 &amp;lt;/b&amp;gt;- &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_OCBJlwaC48kYAi1o.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;PMA&amp;lt;/a&amp;gt; 
+      - Pulls &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      data from &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ta68MgaC48kYAidX.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IMPAC 
+      II&amp;lt;/a&amp;gt; and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_8hHrmQaAUsSyF0r3.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Research 
+      Coding&amp;lt;/a&amp;gt; from &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gsGoGgaC48kYAiwp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Datamart&amp;lt;/a&amp;gt;. 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_J4NmagaC48kYAg1y.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DCCPS&amp;lt;/a&amp;gt; 
+      owns and manages the system. &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_OCBJlwaC48kYAi1o.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;PMA&amp;lt;/a&amp;gt; 
+      not only displays portfolio information, it also enables the addition of &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_J4NmagaC48kYAg1y.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DCCPS&amp;lt;/a&amp;gt;-specific 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_6WhOlwaC48kYAiyj.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Coding&amp;lt;/a&amp;gt; 
+      in order to broaden the scope of &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_6WhOlwaC48kYAiyj.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Coding&amp;lt;/a&amp;gt; 
+      terms associated with research funded by this &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+      division. &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_OCBJlwaC48kYAi1o.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;PMA&amp;lt;/a&amp;gt; 
+      also includes information on international components of &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_J4NmagaC48kYAg1y.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;DCCPS&amp;lt;/a&amp;gt; 
+      awards.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="1147, 586, 1292, 633" coords2="1147, 586, 1292, 633" shape="rect" alt="PMA:Application Component" id="areadiagram_map_vKsRYTaAUhQuH0sV_default" href="ArchiMateApplicationComponent_xDCbGeaAUrAmX4Ji.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1147, 586, 1292, 633',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_zeAFJ5aAUrDKUz3_.html/PMA ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '1147, 586, 1292, 633'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="1109, 475, 1330, 645" coords2="1109, 475, 1330, 645" shape="rect" alt="DCCPS:Grouping" id="areadiagram_map_uDlRYTaAUhQuH03y_default" href="ArchiMateGrouping_Ck0bGeaAUrAmX4JS.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','1109, 475, 1330, 645',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_c_7ZJ5aAUrDKU6xY.html/DCCPS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '1109, 475, 1330, 645'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_AAI4FwaC48kYAn7n.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gPlYFwaC48kYAn7B.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_d4pyagaC48kYAgzf.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CA&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary__upsJwaC48kYAg2D.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Activity 
+      Code&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mYeIGgaC48kYAilB.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CBIIT&amp;lt;/a&amp;gt; 
+      USAGE NOTE&amp;lt;/b&amp;gt; - &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gsGoGgaC48kYAiwp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Datamart&amp;lt;/a&amp;gt; 
+      - &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_YJQsMgaC48kYAicn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;I2E&amp;lt;/a&amp;gt; 
+      Reporting Database that retrieves data from &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ta68MgaC48kYAidX.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IMPAC 
+      II&amp;lt;/a&amp;gt; and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_YJQsMgaC48kYAicn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;I2E&amp;lt;/a&amp;gt; 
+      Database. &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gsGoGgaC48kYAiwp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Datamart&amp;lt;/a&amp;gt; 
+      is a performance-tuned reporting database designed to give the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+      Extramural user community access to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;-specific 
+      IMPAC and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_YJQsMgaC48kYAicn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;I2E&amp;lt;/a&amp;gt; 
+      enterprise information for querying, comprehensive analysis, and 
+      reporting across Extramural areas.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="880, 579, 1014, 632" coords2="880, 579, 1014, 632" shape="rect" alt="I2E DataMart Reporting:Data Object" id="areadiagram_map_Y23.YTaAUhQuH0Ro_default" href="ArchiMateDataObject_ln8p2uaAUrCsuhU4.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','880, 579, 1014, 632',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_tWljI5aFS_l_E7_S.html/I2E DataMart Reporting ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '880, 579, 1014, 632'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      USAGE NOTE&amp;lt;/b&amp;gt;- &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ta68MgaC48kYAidX.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IMPAC 
+      II&amp;lt;/a&amp;gt; Reporting Database (IRDB) &amp;#8211; Provides &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      data for reporting, running queries, and has data for local &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt; 
+      specific systems.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="536, 89, 627, 142" coords2="536, 89, 627, 142" shape="rect" alt="IRDB Reporting:Data Object" id="areadiagram_map_95WeYTaAUhQuH0CH_default" href="ArchiMateDataObject_qUepWuaAUrCsuhmR.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','536, 89, 627, 142',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_QqQ5uxaAUhQuH6gu.html/IRDB Reporting ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '536, 89, 627, 142'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_COqhGgaC48kYAheO.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIDB&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Intramural Information - &amp;nbsp;Updated annually
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Abstracts
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LzdPsgaC48kYAjDp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      data
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      R&amp;amp;D Contracts
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;*&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_nfvxmwaAU82ImBQu.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CCR&amp;lt;/a&amp;gt; 
+      USAGE NOTE&amp;lt;/b&amp;gt;- &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_COqhGgaC48kYAheO.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIDB&amp;lt;/a&amp;gt; 
+      (the official &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      system for &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_XzukdwaC48kYAjLV.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Intramural 
+      Research&amp;lt;/a&amp;gt;) sends a list of projects to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_oBFYGgaC48kYAjqp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;OBF&amp;lt;/a&amp;gt;.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;* &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      USAGE NOTE&amp;lt;/b&amp;gt;- &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_COqhGgaC48kYAheO.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIDB&amp;lt;/a&amp;gt; 
+      &amp;#8211; Reports on all &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      intramural projects, including &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+      projects.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="372, 95, 517, 142" coords2="372, 95, 517, 142" shape="rect" alt="NIDB:Application Component" id="areadiagram_map_1PluYTaAUhQuHzjA_default" href="ArchiMateApplicationComponent_dgfpU2aAUrD0Ppt1.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','372, 95, 517, 142',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_yND6uxaAUhQuH7ee.html/NIDB ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '372, 95, 517, 142'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Election &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_eaufsgaC48kYAjF2.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Council&amp;lt;/a&amp;gt; 
+      Book
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      *&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_0TfNsgaC48kYAijL.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ECB&amp;lt;/a&amp;gt; 
+      belongs to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_r3zcMgaC48kYAidB.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;eRA&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="203, 95, 348, 142" coords2="203, 95, 348, 142" shape="rect" alt="ECB:Application Component" id="areadiagram_map_vlhMYTaAUrD6TYAZ_default" href="ArchiMateApplicationComponent_N9EZWuaAUrCsuhnZ.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','203, 95, 348, 142',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_j1ZSuxaAUhQuHx8K.html/ECB ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '203, 95, 348, 142'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      Portfolio Management and Tracking System
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      *&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Vd_YCkaGAqAC308X.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;GPMATS&amp;lt;/a&amp;gt; 
+      belongs to &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_YJQsMgaC48kYAicn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;I2E&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="512, 585, 657, 632" coords2="512, 585, 657, 632" shape="rect" alt="GPMATS:Application Component" id="areadiagram_map_Lppvv5aAUrCanDTD_default" href="ArchiMateApplicationComponent_PxtJypaAUhQuH7RW.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','512, 585, 657, 632',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_FL0Ko5aFS_l_E0qx.html/GPMATS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '512, 585, 657, 632'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_CY7ZlwaC48kYAi3y.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;HITS&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="293, 592, 389, 632" coords2="293, 592, 389, 632" shape="rect" alt="HITS:Application Component" id="areadiagram_map_xppvv5aAUrCanDS4_default" href="ArchiMateApplicationComponent_rwL5weaAUrC0fJxq.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','293, 592, 389, 632',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_S9hyn7aAU8wQ4X_S.html/HITS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '293, 592, 389, 632'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Contains
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_AAI4FwaC48kYAn7n.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SIC&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_gPlYFwaC48kYAn7B.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;SITE&amp;lt;/a&amp;gt; 
+      Codes
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      *&amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_D91qagaC48kYAg1H.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CSR&amp;lt;/a&amp;gt; 
+      USAGE NOTE-&amp;lt;/b&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ta68MgaC48kYAidX.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IMPAC 
+      II&amp;lt;/a&amp;gt; database transmits scores and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_vs4RGgaC48kYAiS0.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Summary 
+      Statement&amp;lt;/a&amp;gt; to the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_uAf8MgaC48kYAid7.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;eRA 
+      Commons&amp;lt;/a&amp;gt; System.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;* &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+      PROGRAMS USAGE NOTE&amp;lt;/b&amp;gt;- &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ta68MgaC48kYAidX.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IMPAC 
+      II&amp;lt;/a&amp;gt; &amp;#8211; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_b2YXsgaC48kYAi__.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;PI&amp;lt;/a&amp;gt; 
+      can access scores through &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ohutsgaC48kYAij9.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;QVR&amp;lt;/a&amp;gt;, 
+      PMM, or Workbench for example.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="49, 89, 181, 142" coords2="49, 89, 181, 142" shape="rect" alt="Impact II Transactional:Data Object" id="areadiagram_map_Qppvv5aAUrCanDSu_default" href="ArchiMateDataObject_g7JGauaAUrCsulIW.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','49, 89, 181, 142',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_z0gWuxaAUhQuH0Es.html/Impact II Transactional ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '49, 89, 181, 142'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="481, 475, 1024, 645" coords2="481, 475, 1024, 645" shape="rect" alt="CBIIT:Grouping" id="areadiagram_map_Ubbvv5aAUrCanEog_default" href="ArchiMateGrouping_GpLgojqAUhQsEgn8.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','481, 475, 1024, 645',new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_JSOyaZaAUhQuHycY.html/CBIIT Grants ArchMate Diagram/ArchiMateDiagram'),new Array(),new Array('ArchiMateDiagram_okVQ4JaAUhQELi8s.html/CBIIT DOC-centric ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),showReferenceIcon('diagram', '481, 475, 1024, 645'),showSubdiagramIcon('diagram', '481, 475, 1024, 645'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_fyK4GgaC48kYAjrB.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;OEFIA&amp;lt;/a&amp;gt; 
+      USAGE NOTE-&amp;lt;/b&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_xY1i2gaFKcBauwqo.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FAM&amp;lt;/a&amp;gt; 
+      &amp;#8211; Used to perform the budgetary exercises necessary to execute the 
+      extramural &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LzdPsgaC48kYAjDp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      and to preform past trends and future financial analysis and modeling.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_fyK4GgaC48kYAjrB.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;OEFIA&amp;lt;/a&amp;gt; 
+      USAGE NOTE 2&amp;lt;/b&amp;gt;- &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_xY1i2gaFKcBauwqo.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FAM&amp;lt;/a&amp;gt; 
+      &amp;#8211; Pulls data from &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_YJQsMgaC48kYAicn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;I2E&amp;lt;/a&amp;gt;, 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ta68MgaC48kYAidX.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IMPAC 
+      II&amp;lt;/a&amp;gt;, and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ilK369aAUrBI4hHn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NBS&amp;lt;/a&amp;gt; 
+      to monitor and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      on &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      funding. &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_xY1i2gaFKcBauwqo.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FAM&amp;lt;/a&amp;gt; 
+      is a &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      tracking system with multiple modules and functionalities for the sole 
+      purpose of tracking &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt; 
+      awards each year. The information contained in &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_xY1i2gaFKcBauwqo.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FAM&amp;lt;/a&amp;gt; 
+      is also used for financial reporting to the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_oBFYGgaC48kYAjqp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;OBF&amp;lt;/a&amp;gt; 
+      as well as senior level staff within &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+      and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt;. 
+      &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_xY1i2gaFKcBauwqo.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FAM&amp;lt;/a&amp;gt; 
+      provides financial and other pertinent information for &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_fyK4GgaC48kYAjrB.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;OEFIA&amp;lt;/a&amp;gt; 
+      staff to analyze financial data for all budgetary exercises. The data in &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_xY1i2gaFKcBauwqo.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FAM&amp;lt;/a&amp;gt; 
+      is presented as a sub-system or an extension database of the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ta68MgaC48kYAidX.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IMPAC 
+      II&amp;lt;/a&amp;gt; system. &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_xY1i2gaFKcBauwqo.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FAM&amp;lt;/a&amp;gt; 
+      is the primary tool used only by &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_fyK4GgaC48kYAjrB.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;OEFIA&amp;lt;/a&amp;gt; 
+      staff to monitor and execute the &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LzdPsgaC48kYAjDp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      for each &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_KV6eagaC48kYAg4d.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FY&amp;lt;/a&amp;gt;. 
+      At the end of a &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_KV6eagaC48kYAg4d.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FY&amp;lt;/a&amp;gt; 
+      once the data has been reconciled against other &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+      systems the prior year data is available and the new &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_KV6eagaC48kYAg4d.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;FY&amp;lt;/a&amp;gt; 
+      data is generated.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="107, 585, 252, 632" coords2="107, 585, 252, 632" shape="rect" alt="FAM:Application Component" id="areadiagram_map_n2Jvv5aAUrCanDSg_default" href="ArchiMateApplicationComponent_w5bSXuaAUrC0fJhI.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','107, 585, 252, 632',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_12evv5aAUrCanDRB.html/FAM ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '107, 585, 252, 632'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="88, 475, 406, 645" coords2="88, 475, 406, 645" shape="rect" alt="OEFIA:Grouping" id="areadiagram_map_dJtvv5aAUrCanDUA_default" href="ArchiMateGrouping_YY7iXuaAUrC0fJdT.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','88, 475, 406, 645',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_M6Ofv5aAUrCanFBo.html/OEFIA ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '88, 475, 406, 645'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="30, 43, 673, 175" coords2="30, 43, 673, 175" shape="rect" alt="eRA/IIMPAC II:Grouping" id="areadiagram_map_N2Ufv5aAUrCanE8P_default" href="ArchiMateGrouping_nD72auaAUrCsuubz.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','30, 43, 673, 175',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_kie_sxaAUhQuH8OM.html/eRA/IIMPAC II ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '30, 43, 673, 175'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 712, 197" coords2="2, 2, 712, 197" shape="rect" alt="NIH:Grouping" id="areadiagram_map_9BQfv5aAUrCanE7u_default" href="ArchiMateGrouping_Pjem2UaAUhQsGoBP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 312, 1684, 688" coords2="2, 312, 1684, 688" shape="rect" alt="NCI:Grouping" id="areadiagram_map_kjvvv5aAUrCanEo9_default" href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_J_8qjWaAUrCs4Byo.html" class="ItemLink">PFR : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      *<a class="ItemLink" href="Glossary__aKiMgaC48kYAif2.html" name="">PFR</a> 
+      belongs to <a class="ItemLink" href="Glossary_YJQsMgaC48kYAicn.html" name="">I2E</a>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_n0yI2uaAUrCsugvb.html" class="ItemLink">BSA Reports : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <b><a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>&nbsp;<a class="ItemLink" href="Glossary_bZtbsgaC48kYAisp.html" name="">DEA</a> 
+      USAGE NOTE </b>- <a class="ItemLink" href="Glossary_hgUO2gaFKcBauwrn.html" name="">BSA 
+      Reports</a> &#8211; Pulls information from <a class="ItemLink" href="Glossary_1s0bsgaC48kYAisC.html" name="">CATS</a>, 
+      <a class="ItemLink" href="Glossary_YJQsMgaC48kYAicn.html" name="">I2E</a>, 
+      and <a class="ItemLink" href="Glossary_ta68MgaC48kYAidX.html" name="">IMPAC 
+      II</a>. The <a class="ItemLink" href="Glossary_ljUH39aAUhQCmxAN.html" name="">Status</a> 
+      for all concepts presented at the <a class="ItemLink" href="Glossary_ltdQGgaC48kYAh2z.html" name="">BSA</a> 
+      meeting is reflected in <a class="ItemLink" href="Glossary_hgUO2gaFKcBauwrn.html" name="">BSA 
+      Reports</a>. <a class="ItemLink" href="Glossary_hgUO2gaFKcBauwrn.html" name="">BSA 
+      Reports</a> provides <a class="ItemLink" href="Glossary_7y19sgaC48kYAinf.html" name="">FOA</a> 
+      information for each concept through the years. Helps with <a class="ItemLink" href="Glossary_1hEUdwaC48kYAjMK.html" name="">Extramural 
+      Research</a>&nbsp;<a class="ItemLink" href="Glossary_LzdPsgaC48kYAjDp.html" name="">Budget</a> 
+      and financial planning. It reports all of the cleared concepts and the 
+      funded <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a> 
+      listing.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_kBdCojqAUhQsEg44.html" class="ItemLink">DEA : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_xDCbGeaAUrAmX4Ji.html" class="ItemLink">PMA : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_MEn3sgaC48kYAjBT.html" name="">Application</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      QC Codes
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a>
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_AAI4FwaC48kYAn7n.html" name="">SIC</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_gPlYFwaC48kYAn7B.html" name="">SITE</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <b>*<a class="ItemLink" href="Glossary_J4NmagaC48kYAg1y.html" name="">DCCPS</a> 
+      USAGE NOTE</b>- <a class="ItemLink" href="Glossary_OCBJlwaC48kYAi1o.html" name="">PMA</a> 
+      &#8211; <a class="ItemLink" href="Glossary_J4NmagaC48kYAg1y.html" name="">DCCPS</a> 
+      applies scientific codes in areas of surveillance, epidemiology, health 
+      services, behavioral science, and cancer survivorship and is also used 
+      for identifying, analyzing, and displaying <a class="ItemLink" href="Glossary_pQpPsgaC48kYAjDM.html" name="">Award</a> 
+      portfolios by code categories.
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      *<b><a class="ItemLink" href="Glossary_J4NmagaC48kYAg1y.html" name="">DCCPS</a> 
+      USAGE NOTE 2 </b>- <a class="ItemLink" href="Glossary_OCBJlwaC48kYAi1o.html" name="">PMA</a> 
+      - Pulls <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a> 
+      data from <a class="ItemLink" href="Glossary_ta68MgaC48kYAidX.html" name="">IMPAC 
+      II</a> and <a class="ItemLink" href="Glossary_8hHrmQaAUsSyF0r3.html" name="">Research 
+      Coding</a> from <a class="ItemLink" href="Glossary_gsGoGgaC48kYAiwp.html" name="">Datamart</a>. 
+      <a class="ItemLink" href="Glossary_J4NmagaC48kYAg1y.html" name="">DCCPS</a> 
+      owns and manages the system. <a class="ItemLink" href="Glossary_OCBJlwaC48kYAi1o.html" name="">PMA</a> 
+      not only displays portfolio information, it also enables the addition of <a class="ItemLink" href="Glossary_J4NmagaC48kYAg1y.html" name="">DCCPS</a>-specific 
+      <a class="ItemLink" href="Glossary_6WhOlwaC48kYAiyj.html" name="">Coding</a> 
+      in order to broaden the scope of <a class="ItemLink" href="Glossary_6WhOlwaC48kYAiyj.html" name="">Coding</a> 
+      terms associated with research funded by this <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a> 
+      division. <a class="ItemLink" href="Glossary_OCBJlwaC48kYAi1o.html" name="">PMA</a> 
+      also includes information on international components of <a class="ItemLink" href="Glossary_J4NmagaC48kYAg1y.html" name="">DCCPS</a> 
+      awards.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_Ck0bGeaAUrAmX4JS.html" class="ItemLink">DCCPS : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/DataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/DataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateDataObject_ln8p2uaAUrCsuhU4.html" class="ItemLink">I2E DataMart Reporting : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a>
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_AAI4FwaC48kYAn7n.html" name="">SIC</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_gPlYFwaC48kYAn7B.html" name="">SITE</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_d4pyagaC48kYAgzf.html" name="">CA</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary__upsJwaC48kYAg2D.html" name="">Activity 
+      Code</a>
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <b><a class="ItemLink" href="Glossary_mYeIGgaC48kYAilB.html" name="">CBIIT</a> 
+      USAGE NOTE</b> - <a class="ItemLink" href="Glossary_gsGoGgaC48kYAiwp.html" name="">Datamart</a> 
+      - <a class="ItemLink" href="Glossary_YJQsMgaC48kYAicn.html" name="">I2E</a> 
+      Reporting Database that retrieves data from <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a>&nbsp;<a class="ItemLink" href="Glossary_ta68MgaC48kYAidX.html" name="">IMPAC 
+      II</a> and <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>&nbsp;<a class="ItemLink" href="Glossary_YJQsMgaC48kYAicn.html" name="">I2E</a> 
+      Database. <a class="ItemLink" href="Glossary_gsGoGgaC48kYAiwp.html" name="">Datamart</a> 
+      is a performance-tuned reporting database designed to give the <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a> 
+      Extramural user community access to <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>-specific 
+      IMPAC and <a class="ItemLink" href="Glossary_YJQsMgaC48kYAicn.html" name="">I2E</a> 
+      enterprise information for querying, comprehensive analysis, and 
+      reporting across Extramural areas.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/DataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/DataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateDataObject_qUepWuaAUrCsuhmR.html" class="ItemLink">IRDB Reporting : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <b><a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      USAGE NOTE</b>- <a class="ItemLink" href="Glossary_ta68MgaC48kYAidX.html" name="">IMPAC 
+      II</a> Reporting Database (IRDB) &#8211; Provides <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a> 
+      data for reporting, running queries, and has data for local <a class="ItemLink" href="Glossary_cvKYigaC48kYAjPI.html" name="">IC</a> 
+      specific systems.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_dgfpU2aAUrD0Ppt1.html" class="ItemLink">NIDB : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_COqhGgaC48kYAheO.html" name="">NIDB</a>
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Intramural Information - &nbsp;Updated annually
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Abstracts
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_LzdPsgaC48kYAjDp.html" name="">Budget</a> 
+      data
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      R&amp;D Contracts
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <b>*<a class="ItemLink" href="Glossary_nfvxmwaAU82ImBQu.html" name="">CCR</a> 
+      USAGE NOTE</b>- <a class="ItemLink" href="Glossary_COqhGgaC48kYAheO.html" name="">NIDB</a> 
+      (the official <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      system for <a class="ItemLink" href="Glossary_XzukdwaC48kYAjLV.html" name="">Intramural 
+      Research</a>) sends a list of projects to <a class="ItemLink" href="Glossary_oBFYGgaC48kYAjqp.html" name="">OBF</a>.
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <b>* <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      USAGE NOTE</b>- <a class="ItemLink" href="Glossary_COqhGgaC48kYAheO.html" name="">NIDB</a> 
+      &#8211; Reports on all <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      intramural projects, including <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a> 
+      projects.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_N9EZWuaAUrCsuhnZ.html" class="ItemLink">ECB : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Election <a class="ItemLink" href="Glossary_eaufsgaC48kYAjF2.html" name="">Council</a> 
+      Book
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      *<a class="ItemLink" href="Glossary_0TfNsgaC48kYAijL.html" name="">ECB</a> 
+      belongs to <a class="ItemLink" href="Glossary_r3zcMgaC48kYAidB.html" name="">eRA</a>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_PxtJypaAUhQuH7RW.html" class="ItemLink">GPMATS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a> 
+      Portfolio Management and Tracking System
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      *<a class="ItemLink" href="Glossary_Vd_YCkaGAqAC308X.html" name="">GPMATS</a> 
+      belongs to <a class="ItemLink" href="Glossary_YJQsMgaC48kYAicn.html" name="">I2E</a>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_rwL5weaAUrC0fJxq.html" class="ItemLink">HITS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_CY7ZlwaC48kYAi3y.html" name="">HITS</a>
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/DataObject.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/DataObject.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateDataObject_g7JGauaAUrCsulIW.html" class="ItemLink">Impact II Transactional : Data Object</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      Contains
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a>
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_AAI4FwaC48kYAn7n.html" name="">SIC</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <a class="ItemLink" href="Glossary_gPlYFwaC48kYAn7B.html" name="">SITE</a> 
+      Codes
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      *<b><a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a>&nbsp;<a class="ItemLink" href="Glossary_D91qagaC48kYAg1H.html" name="">CSR</a> 
+      USAGE NOTE-</b>&nbsp;<a class="ItemLink" href="Glossary_ta68MgaC48kYAidX.html" name="">IMPAC 
+      II</a> database transmits scores and <a class="ItemLink" href="Glossary_vs4RGgaC48kYAiS0.html" name="">Summary 
+      Statement</a> to the <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a>&nbsp;<a class="ItemLink" href="Glossary_uAf8MgaC48kYAid7.html" name="">eRA 
+      Commons</a> System.
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <b>* <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a> 
+      PROGRAMS USAGE NOTE</b>- <a class="ItemLink" href="Glossary_ta68MgaC48kYAidX.html" name="">IMPAC 
+      II</a> &#8211; <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>&nbsp;<a class="ItemLink" href="Glossary_b2YXsgaC48kYAi__.html" name="">PI</a> 
+      can access scores through <a class="ItemLink" href="Glossary_ohutsgaC48kYAij9.html" name="">QVR</a>, 
+      PMM, or Workbench for example.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_GpLgojqAUhQsEgn8.html" class="ItemLink">CBIIT : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_w5bSXuaAUrC0fJhI.html" class="ItemLink">FAM : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;">
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <b><a class="ItemLink" href="Glossary_fyK4GgaC48kYAjrB.html" name="">OEFIA</a> 
+      USAGE NOTE-</b>&nbsp;<a class="ItemLink" href="Glossary_xY1i2gaFKcBauwqo.html" name="">FAM</a> 
+      &#8211; Used to perform the budgetary exercises necessary to execute the 
+      extramural <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a>&nbsp;<a class="ItemLink" href="Glossary_LzdPsgaC48kYAjDp.html" name="">Budget</a> 
+      and to preform past trends and future financial analysis and modeling.
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-left:0pt;margin-top:0pt;margin-bottom:.0001pt;">
+      <b><a class="ItemLink" href="Glossary_fyK4GgaC48kYAjrB.html" name="">OEFIA</a> 
+      USAGE NOTE 2</b>- <a class="ItemLink" href="Glossary_xY1i2gaFKcBauwqo.html" name="">FAM</a> 
+      &#8211; Pulls data from <a class="ItemLink" href="Glossary_YJQsMgaC48kYAicn.html" name="">I2E</a>, 
+      <a class="ItemLink" href="Glossary_ta68MgaC48kYAidX.html" name="">IMPAC 
+      II</a>, and <a class="ItemLink" href="Glossary_ilK369aAUrBI4hHn.html" name="">NBS</a> 
+      to monitor and <a class="ItemLink" href="Glossary_B31tsgaC48kYAikc.html" name="">RePORT</a> 
+      on <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a> 
+      funding. <a class="ItemLink" href="Glossary_xY1i2gaFKcBauwqo.html" name="">FAM</a> 
+      is a <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a> 
+      tracking system with multiple modules and functionalities for the sole 
+      purpose of tracking <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>&nbsp;<a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a> 
+      awards each year. The information contained in <a class="ItemLink" href="Glossary_xY1i2gaFKcBauwqo.html" name="">FAM</a> 
+      is also used for financial reporting to the <a class="ItemLink" href="Glossary_oBFYGgaC48kYAjqp.html" name="">OBF</a> 
+      as well as senior level staff within <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a> 
+      and <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a>. 
+      <a class="ItemLink" href="Glossary_xY1i2gaFKcBauwqo.html" name="">FAM</a> 
+      provides financial and other pertinent information for <a class="ItemLink" href="Glossary_fyK4GgaC48kYAjrB.html" name="">OEFIA</a> 
+      staff to analyze financial data for all budgetary exercises. The data in <a class="ItemLink" href="Glossary_xY1i2gaFKcBauwqo.html" name="">FAM</a> 
+      is presented as a sub-system or an extension database of the <a class="ItemLink" href="Glossary_ta68MgaC48kYAidX.html" name="">IMPAC 
+      II</a> system. <a class="ItemLink" href="Glossary_xY1i2gaFKcBauwqo.html" name="">FAM</a> 
+      is the primary tool used only by <a class="ItemLink" href="Glossary_fyK4GgaC48kYAjrB.html" name="">OEFIA</a> 
+      staff to monitor and execute the <a class="ItemLink" href="Glossary_LzdPsgaC48kYAjDp.html" name="">Budget</a> 
+      for each <a class="ItemLink" href="Glossary_KV6eagaC48kYAg4d.html" name="">FY</a>. 
+      At the end of a <a class="ItemLink" href="Glossary_KV6eagaC48kYAg4d.html" name="">FY</a> 
+      once the data has been reconciled against other <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a> 
+      systems the prior year data is available and the new <a class="ItemLink" href="Glossary_KV6eagaC48kYAg4d.html" name="">FY</a> 
+      data is generated.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_YY7iXuaAUrC0fJdT.html" class="ItemLink">OEFIA : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_nD72auaAUrCsuubz.html" class="ItemLink">eRA/IIMPAC II : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_Pjem2UaAUhQsGoBP.html" class="ItemLink">NIH : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" class="ItemLink">NCI : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>
