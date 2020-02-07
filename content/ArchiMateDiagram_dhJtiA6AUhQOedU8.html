@@ -1,0 +1,401 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - Section Access ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_KCte8saAUrCskEtq.html" class="PageParentTitle">Admin Actions Dashboard : Application Component</a> (in <a href="ArchiMateDiagram_KCte8saAUrCskEtq.html" class="PageParentTitle">ITRC</a> / <a href="ArchiMateDiagram_meSSf8aAUhQsGDTU.html" class="PageParentTitle">Business Systems Archimate Diagram</a> / <a href="ArchiMateDiagram_WEZpo5aAUhQELmXq.html" class="PageParentTitle">ITRC DOC-centric ArchiMate Diagram</a> / <a href="ArchiMateDiagram_DFwMZ5aAU80E1Kmg.html" class="PageParentTitle">Admin Actions Dashboard ArchiMate Diagram</a> / <a href="ArchiMateDiagram_2w854MaAUrAy_BJ2.html" class="PageParentTitle">NCI Business Applications Archimate Diagram</a> / <a href="ArchiMateDiagram_GTPgXUaAUhQsMcX2.html" class="PageParentTitle">QlikView ArchiMate Diagram</a> / <a href="ArchiMateDiagram_inPnQbaAUhQOeVtx.html" class="PageParentTitle">nVision ArchiMate Diagram</a> / <a href="ArchiMateDiagram____3_PaAUhQOeY8M.html" class="PageParentTitle">NCiConnect DOC-Centric ArchiMate Diagram</a>)<span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="ArchiMateDiagram_dhJtiA6AUhQOedU8.html" class="PageParentTitle">Section Access : Application Component</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - Section Access ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/dhJtiA6AUhQOedU8', 'Section Access ArchiMate Diagram\nNCI Buisness Architecture.vpp://diagram/dhJtiA6AUhQOedU8', 'Section Access ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|178.0|192.0|129.0|40.0|ArchiMateApplicationComponent_z4EF0DaAUhQALld5.html|ArchiMateApplicationComponent_z4EF0DaAUhQALld5.html|sv5tiA6AUhQOedVG" id="optionsv5tiA6AUhQOedVG">Section Access : Application Component</option>
+<option value="shape|101.0|145.0|282.0|108.0|ArchiMateApplicationComponent_BdXkwTqAUhQsLA1Q.html|ArchiMateApplicationComponent_BdXkwTqAUhQsLA1Q.html|BzYdiA6AUhQOedfq" id="optionBzYdiA6AUhQOedfq">QlikView : Application Component</option>
+<option value="shape|73.0|87.0|351.0|197.0|ArchiMateGrouping_XhZbI2aAUrD2Qp6B.html|ArchiMateGrouping_XhZbI2aAUrD2Qp6B.html|2zYdiA6AUhQOedfn" id="option2zYdiA6AUhQOedfn">NCiConnect : Grouping</option>
+<option value="shape|35.0|47.0|421.0|271.0|ArchiMateGrouping_Xp0kojqAUhQsEgtP.html|ArchiMateGrouping_Xp0kojqAUhQsEgtP.html|6zYdiA6AUhQOedfj" id="option6zYdiA6AUhQOedfj">ITRC : Grouping</option>
+<option value="shape|2.0|2.0|483.0|348.0|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|ArchiMateGrouping_DyCO2UaAUhQsGoE4.html|8zYdiA6AUhQOedff" id="option8zYdiA6AUhQOedff">NCI : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Section_Access_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="489" height="354"/>
+					<map name="diagram_map">
+<area coords="112,103,171,118" coords2="112,103,171,118" shape="rect" alt="NCiConnect" href="Glossary_5QUXiUaAUhQCoQs_.html"/>
+<area coords="235,164,278,179" coords2="235,164,278,179" shape="rect" alt="QlikView" href="Glossary_K6lhh9aAUhQAJJbO.html"/>
+<area imageId="diagram" coords="108.0, 284.0, 108.0, 294.0, 122.0, 294.0, 122.0, 284.0" coords2="108.0, 284.0, 108.0, 294.0, 122.0, 294.0, 122.0, 284.0" shape="poly" alt="del QlikView to NCiConnect:Access" id="areadiagram_map_RbYdiA6AUhQOeeI5_default" href="ArchiMateAccess_xu6achaGAqAAHCnx.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;margin-right:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-left:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      Internal file security within &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_K6lhh9aAUhQAJJbO.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;QlikView&amp;lt;/a&amp;gt; 
+      User authentication.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="178, 192, 307, 232" coords2="178, 192, 307, 232" shape="rect" alt="Section Access:Application Component" id="areadiagram_map_sv5tiA6AUhQOedVG_default" href="ArchiMateApplicationComponent_z4EF0DaAUhQALld5.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','178, 192, 307, 232',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_dhJtiA6AUhQOedU8.html/Section Access ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '178, 192, 307, 232'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;margin-right:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-left:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;lt;b&amp;gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_K6lhh9aAUhQAJJbO.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;QlikView&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;/b&amp;gt;&amp;#8211; 
+      COTs &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_MEn3sgaC48kYAjBT.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Application&amp;lt;/a&amp;gt; 
+      for business intelligence, data discovery and dashboards. &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt;-led 
+      effort to provide dynamic reporting of enterprise and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_cvKYigaC48kYAjPI.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;IC&amp;lt;/a&amp;gt;-owned 
+      data that complements the suite of reporting tools already provided by 
+      nVision Data Warehouse and &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ohutsgaC48kYAij9.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;QVR&amp;lt;/a&amp;gt;. 
+      Can use data from ODBC(oracle,db2 sql server, access), QVDS,Excel, 
+      ACCESS, XML
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-left:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-left:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-right:0pt;&amp;quot;&amp;gt;
+      Sources
+    &amp;lt;/p&amp;gt;
+    &amp;lt;ol class=&amp;quot;decimal&amp;quot; margin-left-ltr=&amp;quot;50&amp;quot; margin-right-rtl=&amp;quot;50&amp;quot; style=&amp;quot;margin-left:40pt;margin-bottom:0px;list-style-type:none;margin-top:0px;&amp;quot;&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;&amp;quot;&amp;gt;
+        IRDB &amp;#8211; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_bYdIigaC48kYAjNH.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Grant&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;&amp;quot;&amp;gt;
+        nVision - HR Data
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_fL0EWEaAUhQCoQ2g.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;nSIGHT 
+        HR&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_ryuEWEaAUhQCoQ3V.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Edie&amp;lt;/a&amp;gt;
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;&amp;quot;&amp;gt;
+        &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Aef5CUaAUhQCoQiQ.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Sofie&amp;lt;/a&amp;gt; 
+        - HR Data
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;&amp;quot;&amp;gt;
+        NED -
+      &amp;lt;/li&amp;gt;
+      &amp;lt;li style=&amp;quot;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;&amp;quot;&amp;gt;
+        K2 - HR Data
+      &amp;lt;/li&amp;gt;
+    &amp;lt;/ol&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-left:0pt;margin-bottom:.0001pt;margin-top:0;margin-right:0pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="101, 145, 383, 253" coords2="101, 145, 383, 253" shape="rect" alt="QlikView:Application Component" id="areadiagram_map_BzYdiA6AUhQOedfq_default" href="ArchiMateApplicationComponent_BdXkwTqAUhQsLA1Q.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','101, 145, 383, 253',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_GTPgXUaAUhQsMcX2.html/QlikView ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '101, 145, 383, 253'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="73, 87, 424, 284" coords2="73, 87, 424, 284" shape="rect" alt="NCiConnect:Grouping" id="areadiagram_map_2zYdiA6AUhQOedfn_default" href="ArchiMateGrouping_XhZbI2aAUrD2Qp6B.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','73, 87, 424, 284',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram____3_PaAUhQOeY8M.html/NCiConnect DOC-Centric ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '73, 87, 424, 284'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="35, 47, 456, 318" coords2="35, 47, 456, 318" shape="rect" alt="ITRC:Grouping" id="areadiagram_map_6zYdiA6AUhQOedfj_default" href="ArchiMateGrouping_Xp0kojqAUhQsEgtP.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','35, 47, 456, 318',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_WEZpo5aAUhQELmXq.html/ITRC DOC-centric ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '35, 47, 456, 318'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 485, 350" coords2="2, 2, 485, 350" shape="rect" alt="NCI:Grouping" id="areadiagram_map_8zYdiA6AUhQOedff_default" href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_z4EF0DaAUhQALld5.html" class="ItemLink">Section Access : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;margin-left:0;font-weight:normal;font-size:12px;font-family:Dialog;margin-right:0;">
+    <p style="margin-left:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-right:0pt;">
+      Internal file security within <a class="ItemLink" href="Glossary_K6lhh9aAUhQAJJbO.html" name="">QlikView</a> 
+      User authentication.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_BdXkwTqAUhQsLA1Q.html" class="ItemLink">QlikView : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;margin-left:0;font-weight:normal;font-size:11px;font-family:Courier New;margin-right:0;">
+    <p style="margin-left:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-right:0pt;">
+      <b><a class="ItemLink" href="Glossary_K6lhh9aAUhQAJJbO.html" name="">QlikView</a>&nbsp;</b>&#8211; 
+      COTs <a class="ItemLink" href="Glossary_MEn3sgaC48kYAjBT.html" name="">Application</a> 
+      for business intelligence, data discovery and dashboards. <a class="ItemLink" href="Glossary_cvKYigaC48kYAjPI.html" name="">IC</a>-led 
+      effort to provide dynamic reporting of enterprise and <a class="ItemLink" href="Glossary_cvKYigaC48kYAjPI.html" name="">IC</a>-owned 
+      data that complements the suite of reporting tools already provided by 
+      nVision Data Warehouse and <a class="ItemLink" href="Glossary_ohutsgaC48kYAij9.html" name="">QVR</a>. 
+      Can use data from ODBC(oracle,db2 sql server, access), QVDS,Excel, 
+      ACCESS, XML
+    </p>
+    <p style="margin-left:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-right:0pt;">
+      &nbsp;
+    </p>
+    <p style="margin-left:0pt;margin-bottom:.0001pt;margin-top:0pt;margin-right:0pt;">
+      Sources
+    </p>
+    <ol class="decimal" margin-left-ltr="50" margin-right-rtl="50" style="margin-left:40pt;margin-bottom:0px;list-style-type:none;margin-top:0px;">
+      <li style="margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;">
+        IRDB &#8211; <a class="ItemLink" href="Glossary_bYdIigaC48kYAjNH.html" name="">Grant</a>
+      </li>
+      <li style="margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;">
+        nVision - HR Data
+      </li>
+      <li style="margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;">
+        <a class="ItemLink" href="Glossary_fL0EWEaAUhQCoQ2g.html" name="">nSIGHT 
+        HR</a>
+      </li>
+      <li style="margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;">
+        <a class="ItemLink" href="Glossary_ryuEWEaAUhQCoQ3V.html" name="">Edie</a>
+      </li>
+      <li style="margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;">
+        <a class="ItemLink" href="Glossary_Aef5CUaAUhQCoQiQ.html" name="">Sofie</a> 
+        - HR Data
+      </li>
+      <li style="margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;">
+        NED -
+      </li>
+      <li style="margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;">
+        K2 - HR Data
+      </li>
+    </ol>
+    <p style="margin-left:0pt;margin-bottom:.0001pt;margin-top:0;margin-right:0pt;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_XhZbI2aAUrD2Qp6B.html" class="ItemLink">NCiConnect : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_Xp0kojqAUhQsEgtP.html" class="ItemLink">ITRC : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_DyCO2UaAUhQsGoE4.html" class="ItemLink">NCI : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>
