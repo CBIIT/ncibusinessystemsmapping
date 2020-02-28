@@ -1,0 +1,352 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - YEC Closeout Buisness Process</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - YEC <a href="Glossary_9ZtvsgaC48kYAjE2.html" class="ItemLink">Close Out</a> Buisness Process		</span>
+<a onclick="javascript: showVpLink('OBF mapping project.vpp://diagram/02z.7g6AUhQuHxha', 'YEC Closeout Buisness Process\nOBF mapping project.vpp://diagram/02z.7g6AUhQuHxha', 'YEC Closeout Buisness Process', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|195.0|196.0|200.0|100.0|BPSubProcess__A__7g6AUhQuHxiI.html|BPSubProcess__A__7g6AUhQuHxiI.html|eA_.7g6AUhQuHxiH" id="optioneA_.7g6AUhQuHxiH">YEC Process June : Sub-Process</option>
+<option value="shape|17.0|2.0|2244.0|362.0|BPLane_3xL_7g6AUhQuHxhy.html|BPLane_3xL_7g6AUhQuHxhy.html|3xL.7g6AUhQuHxhx" id="option3xL.7g6AUhQuHxhx">OBF : Lane</option>
+<option value="shape|76.0|236.0|20.0|20.0|BPStartEvent_NoAB7g6AUhQuHxiO.html|BPStartEvent_NoAB7g6AUhQuHxiO.html|NoAB7g6AUhQuHxiN" id="optionNoAB7g6AUhQuHxiN">Unnamed Start Event : Start Event</option>
+<option value="shape|613.0|196.0|200.0|100.0|BPSubProcess_n4kB7g6AUhQuHxjE.html|BPSubProcess_n4kB7g6AUhQuHxjE.html|n4kB7g6AUhQuHxjD" id="optionn4kB7g6AUhQuHxjD">YEC process Septembert : Sub-Process</option>
+<option value="shape|1049.0|236.0|20.0|20.0|BPEndEvent_Hp8B7g6AUhQuHxjj.html|BPEndEvent_Hp8B7g6AUhQuHxjj.html|Hp8B7g6AUhQuHxji" id="optionHp8B7g6AUhQuHxji">Unnamed End Event : End Event</option>
+<option value="shape|613.0|24.0|204.0|100.0|BPSubProcess_ojVz7g6AUhQuH2SS.html|BPSubProcess_ojVz7g6AUhQuH2SS.html|IjVz7g6AUhQuH2SR" id="optionIjVz7g6AUhQuH2SR">NIH OFFICE OF BUDGET updates : Sub-Process</option>
+<option value="shape|2.0|2.0|2259.0|362.0|BPPool__xL_7g6AUhQuHxhr.html|BPPool__xL_7g6AUhQuHxhr.html|.xL.7g6AUhQuHxhq" id="option.xL.7g6AUhQuHxhq">YEC Closeout Business Process : Pool</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/YEC_Closeout_Buisness_Process.png" usemap="#diagram_map" class="Image" width="2265" height="368"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="96.0, 239.0, 96.0, 253.0, 195.0, 253.0, 195.0, 239.0" coords2="96.0, 239.0, 96.0, 253.0, 195.0, 253.0, 195.0, 239.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map__EwB7g6AUhQuHxiw_default" href="BPSequenceFlow_PEwB7g6AUhQuHxiv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="395.0, 239.0, 395.0, 253.0, 613.0, 253.0, 613.0, 239.0" coords2="395.0, 239.0, 395.0, 253.0, 613.0, 253.0, 613.0, 239.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_1EkB7g6AUhQuHxjN_default" href="BPSequenceFlow_ZEkB7g6AUhQuHxjM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="813.0, 239.0, 813.0, 253.0, 1049.0, 253.0, 1049.0, 239.0" coords2="813.0, 239.0, 813.0, 253.0, 1049.0, 253.0, 1049.0, 239.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_JZ8B7g6AUhQuHxjp_default" href="BPSequenceFlow_BZ8B7g6AUhQuHxjo.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="706.0, 124.0, 706.0, 196.0, 720.0, 196.0, 720.0, 124.0" coords2="706.0, 124.0, 706.0, 196.0, 720.0, 196.0, 720.0, 124.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_L_bz7g6AUhQuH2U1_default" href="BPSequenceFlow_T_bz7g6AUhQuH2U0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="613, 24, 817, 124" coords2="613, 24, 817, 124" shape="rect" alt="NIH OFFICE OF BUDGET updates:Sub-Process" id="areadiagram_map_IjVz7g6AUhQuH2SR_default" href="BPSubProcess_ojVz7g6AUhQuH2SS.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','613, 24, 817, 124',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('BusinessProcessDiagram_QLruHg6AUhQuHyqu.html/NIH OFFICE OF BUDGET updates/BusinessProcessDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '613, 24, 817, 124'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1049, 236, 1069, 256" coords2="1049, 236, 1069, 256" shape="rect" alt=":End Event" id="areadiagram_map_Hp8B7g6AUhQuHxji_default" href="BPEndEvent_Hp8B7g6AUhQuHxjj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="613, 196, 813, 296" coords2="613, 196, 813, 296" shape="rect" alt="YEC process Septembert:Sub-Process" id="areadiagram_map_n4kB7g6AUhQuHxjD_default" href="BPSubProcess_n4kB7g6AUhQuHxjE.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','613, 196, 813, 296',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('BusinessProcessDiagram_9ylD7g6AUhQuH2IE.html/YEC process September/BusinessProcessDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '613, 196, 813, 296'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="76, 236, 96, 256" coords2="76, 236, 96, 256" shape="rect" alt=":Start Event" id="areadiagram_map_NoAB7g6AUhQuHxiN_default" href="BPStartEvent_NoAB7g6AUhQuHxiO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="195, 196, 395, 296" coords2="195, 196, 395, 296" shape="rect" alt="YEC Process June:Sub-Process" id="areadiagram_map_eA_.7g6AUhQuHxiH_default" href="BPSubProcess__A__7g6AUhQuHxiI.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','195, 196, 395, 296',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('BusinessProcessDiagram_6Kv97g6AUhQuH1m0.html/YEC Process June/BusinessProcessDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '195, 196, 395, 296'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 2, 2261, 364" coords2="17, 2, 2261, 364" shape="rect" alt="OBF:Lane" id="areadiagram_map_3xL.7g6AUhQuHxhx_default" href="BPLane_3xL_7g6AUhQuHxhy.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 2261, 364" coords2="2, 2, 2261, 364" shape="rect" alt="YEC Closeout Business Process:Pool" id="areadiagram_map_.xL.7g6AUhQuHxhq_default" href="BPPool__xL_7g6AUhQuHxhr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess__A__7g6AUhQuHxiI.html" class="ItemLink">YEC Process June : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_3xL_7g6AUhQuHxhy.html" class="ItemLink">OBF : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_NoAB7g6AUhQuHxiO.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_n4kB7g6AUhQuHxjE.html" class="ItemLink">YEC process Septembert : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP06</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_Hp8B7g6AUhQuHxjj.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP08</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_ojVz7g6AUhQuH2SS.html" class="ItemLink">NIH OFFICE OF BUDGET updates : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP70</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool__xL_7g6AUhQuHxhr.html" class="ItemLink">YEC Closeout Business Process : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>
