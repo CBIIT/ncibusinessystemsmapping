@@ -1,0 +1,390 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - PubMed ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_f_MTLJaAUhQELuM3.html" class="PageParentTitle">PubMed : Application Component</a> (in <a href="ArchiMateDiagram_f_MTLJaAUhQELuM3.html" class="PageParentTitle">DCEG Manuscript Clearance System ArchiMate Diagram</a> / <a href="ArchiMateDiagram_noE6WpaAUrDqrtjK.html" class="PageParentTitle">DCEG DOC-centric ArchiMate Diagram</a> / <a href="ArchiMateDiagram_2w854MaAUrAy_BJ2.html" class="PageParentTitle">NCI Business Applications Archimate Diagram</a> / <a href="ArchiMateDiagram_CxX5Wo6AU80Ux85Q.html" class="PageParentTitle">PubMed ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - PubMed ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/CxX5Wo6AU80Ux85Q', 'PubMed ArchiMate Diagram\nNCI Buisness Architecture.vpp://diagram/CxX5Wo6AU80Ux85Q', 'PubMed ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|502.0|136.0|220.0|40.0|ArchiMateApplicationComponent_1zzd64aAUhQsD26G.html|ArchiMateApplicationComponent_1zzd64aAUhQsD26G.html|ka_5Wo6AU80Ux85d" id="optionka_5Wo6AU80Ux85d">DCEG Manuscript Clearance System : Application Component</option>
+<option value="shape|82.0|136.0|131.0|40.0|ArchiMateApplicationComponent_tOrlhQ6AUrCiUJnT.html|ArchiMateApplicationComponent_tOrlhQ6AUrCiUJnT.html|4GP5Wo6AU80Ux85X" id="option4GP5Wo6AU80Ux85X">PubMed : Application Component</option>
+<option value="shape|465.0|67.0|295.0|174.0|ArchiMateGrouping_WGMSojqAUhQsEg6y.html|ArchiMateGrouping_WGMSojqAUhQsEg6y.html|duYFWo6AU80Ux85v" id="optionduYFWo6AU80Ux85v">DCEG : Grouping</option>
+<option value="shape|440.0|2.0|366.0|309.0|ArchiMateGrouping_J2EFWo6AU80Ux86C.html|ArchiMateGrouping_J2EFWo6AU80Ux86C.html|J2EFWo6AU80Ux86B" id="optionJ2EFWo6AU80Ux86B">NCI : Grouping</option>
+<option value="shape|30.0|67.0|256.0|174.0|ArchiMateGrouping_5XsFWo6AU80Ux86W.html|ArchiMateGrouping_5XsFWo6AU80Ux86W.html|5XsFWo6AU80Ux86V" id="option5XsFWo6AU80Ux86V">Grants Management : Grouping</option>
+<option value="shape|2.0|2.0|401.0|309.0|ArchiMateGrouping_MQ6FWo6AU80Ux864.html|ArchiMateGrouping_MQ6FWo6AU80Ux864.html|MQ6FWo6AU80Ux863" id="optionMQ6FWo6AU80Ux863">NIH : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/PubMed_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="810" height="315"/>
+					<map name="diagram_map">
+<area coords="536,158,718,173" coords2="536,158,718,173" shape="rect" alt="DCEG Manuscript Clearance System" href="Glossary_5d9LiUaAUhQCoQeW.html"/>
+<area imageId="diagram" coords="213.0, 143.0, 213.0, 157.0, 502.0, 157.0, 502.0, 143.0" coords2="213.0, 143.0, 213.0, 157.0, 502.0, 157.0, 502.0, 143.0" shape="poly" alt=":Flow" id="areadiagram_map_Ea_5Wo6AU80Ux85b_default" href="ArchiMateFlow_K0MLpQ6AUhQuH49q.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:11px;margin-right:0;font-family:Courier New;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Data:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Study Code
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Description of Study
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;User access
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;table border-spacing=&amp;quot;0px&amp;quot; style=&amp;quot;border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;border-left-style:solid;border-right-width:1px;border-left-color:#888888;border-bottom-width:1px;border-top-color:#888888;border-bottom-style:solid;border-right-color:#888888;border-left-width:1px;border-top-style:solid;&amp;quot;&amp;gt;
+      &amp;lt;tr style=&amp;quot;text-align:left;&amp;quot;&amp;gt;
+        &amp;lt;td class=&amp;quot;xl66&amp;quot; height=&amp;quot;128.0pt&amp;quot; style=&amp;quot;border-right-style:solid;padding-bottom:3;border-top-width:1px;border-bottom-color:#888888;border-right-width:1px;padding-top:3;border-left-color:#888888;border-right-color:#888888;border-left-width:1px;border-top-style:solid;padding-left:3;border-left-style:solid;border-bottom-width:1px;padding-right:3;border-top-color:#888888;border-bottom-style:solid;&amp;quot; width=&amp;quot;415pt&amp;quot;&amp;gt;
+          The Intramural system is intended to improve the efficiency of &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;lt;span&amp;gt;&amp;nbsp; 
+          &amp;lt;/span&amp;gt;Division by providing a platform to consistently manage the 
+          execution of business processes throughout an &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt; 
+          Intramural &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Y_ei2gaFKcBauwqK.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CAA&amp;lt;/a&amp;gt;.&amp;lt;span&amp;gt;&amp;nbsp; 
+          &amp;lt;/span&amp;gt;The Intramural system centrally collects and correlates 
+          fiscal and narrative project and study data in a manner that 
+          supports accurate and timely reporting and efficient strategic 
+          planning.&amp;lt;span&amp;gt;&amp;nbsp; &amp;lt;/span&amp;gt;The system allows &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_Y_ei2gaFKcBauwqK.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CAA&amp;lt;/a&amp;gt; 
+          staff to reconcile Publications data and process &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+          reporting tasks which inherently &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_HfnW3taAUrD4ZQjn.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;ASSIST&amp;lt;/a&amp;gt; 
+          with compilation of critical reports without direct interaction with 
+          the scientific faculty.
+        &amp;lt;/td&amp;gt;
+      &amp;lt;/tr&amp;gt;
+    &amp;lt;/table&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="502, 136, 722, 176" coords2="502, 136, 722, 176" shape="rect" alt="DCEG Manuscript Clearance System:Application Component" id="areadiagram_map_ka_5Wo6AU80Ux85d_default" href="ArchiMateApplicationComponent_1zzd64aAUhQsD26G.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','502, 136, 722, 176',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_f_MTLJaAUhQELuM3.html/DCEG Manuscript Clearance System ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '502, 136, 722, 176'),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="82, 136, 213, 176" coords2="82, 136, 213, 176" shape="rect" alt="PubMed:Application Component" id="areadiagram_map_4GP5Wo6AU80Ux85X_default" href="ArchiMateApplicationComponent_tOrlhQ6AUrCiUJnT.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','82, 136, 213, 176',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_CxX5Wo6AU80Ux85Q.html/PubMed ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '82, 136, 213, 176'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="465, 67, 760, 241" coords2="465, 67, 760, 241" shape="rect" alt="DCEG:Grouping" id="areadiagram_map_duYFWo6AU80Ux85v_default" href="ArchiMateGrouping_WGMSojqAUhQsEg6y.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','465, 67, 760, 241',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_noE6WpaAUrDqrtjK.html/DCEG DOC-centric ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '465, 67, 760, 241'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="440, 2, 806, 311" coords2="440, 2, 806, 311" shape="rect" alt="NCI:Grouping" id="areadiagram_map_J2EFWo6AU80Ux86B_default" href="ArchiMateGrouping_J2EFWo6AU80Ux86C.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="30, 67, 286, 241" coords2="30, 67, 286, 241" shape="rect" alt="Grants Management:Grouping" id="areadiagram_map_5XsFWo6AU80Ux86V_default" href="ArchiMateGrouping_5XsFWo6AU80Ux86W.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 403, 311" coords2="2, 2, 403, 311" shape="rect" alt="NIH:Grouping" id="areadiagram_map_MQ6FWo6AU80Ux863_default" href="ArchiMateGrouping_MQ6FWo6AU80Ux864.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_1zzd64aAUhQsD26G.html" class="ItemLink">DCEG Manuscript Clearance System : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:11px;margin-right:0;font-family:Courier New;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Data:
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Study Code
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description of Study
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User access
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <table border-spacing="0px" style="border-right-style:solid;border-top-width:1px;border-bottom-color:#888888;border-left-style:solid;border-right-width:1px;border-left-color:#888888;border-bottom-width:1px;border-top-color:#888888;border-bottom-style:solid;border-right-color:#888888;border-left-width:1px;border-top-style:solid;">
+      <tr style="text-align:left;">
+        <td class="xl66" height="128.0pt" style="border-right-style:solid;padding-bottom:3;border-top-width:1px;border-bottom-color:#888888;border-right-width:1px;padding-top:3;border-left-color:#888888;border-right-color:#888888;border-left-width:1px;border-top-style:solid;padding-left:3;border-left-style:solid;border-bottom-width:1px;padding-right:3;border-top-color:#888888;border-bottom-style:solid;" width="415pt">
+          The Intramural system is intended to improve the efficiency of <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a><span>&nbsp; 
+          </span>Division by providing a platform to consistently manage the 
+          execution of business processes throughout an <a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a> 
+          Intramural <a class="ItemLink" href="Glossary_Y_ei2gaFKcBauwqK.html" name="">CAA</a>.<span>&nbsp; 
+          </span>The Intramural system centrally collects and correlates 
+          fiscal and narrative project and study data in a manner that 
+          supports accurate and timely reporting and efficient strategic 
+          planning.<span>&nbsp; </span>The system allows <a class="ItemLink" href="Glossary_Y_ei2gaFKcBauwqK.html" name="">CAA</a> 
+          staff to reconcile Publications data and process <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+          reporting tasks which inherently <a class="ItemLink" href="Glossary_HfnW3taAUrD4ZQjn.html" name="">ASSIST</a> 
+          with compilation of critical reports without direct interaction with 
+          the scientific faculty.
+        </td>
+      </tr>
+    </table>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_tOrlhQ6AUrCiUJnT.html" class="ItemLink">PubMed : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_WGMSojqAUhQsEg6y.html" class="ItemLink">DCEG : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_J2EFWo6AU80Ux86C.html" class="ItemLink">NCI : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_5XsFWo6AU80Ux86W.html" class="ItemLink">Grants Management : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_MQ6FWo6AU80Ux864.html" class="ItemLink">NIH : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

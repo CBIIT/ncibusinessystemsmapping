@@ -1,0 +1,573 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - ARIS ArchiMate Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="ArchiMateDiagram_D2TJhQ6AUrCiUG_a.html" class="PageParentTitle">ARIS : Application Component</a> (in <a href="ArchiMateDiagram_D2TJhQ6AUrCiUG_a.html" class="PageParentTitle">myDCEG ArchiMate Diagram</a> / <a href="ArchiMateDiagram_noE6WpaAUrDqrtjK.html" class="PageParentTitle">DCEG DOC-centric ArchiMate Diagram</a> / <a href="ArchiMateDiagram_2w854MaAUrAy_BJ2.html" class="PageParentTitle">NCI Business Applications Archimate Diagram</a> / <a href="ArchiMateDiagram_hH0B_o6AU80Uxxgo.html" class="PageParentTitle">ARIS ArchiMate Diagram</a>)	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - ARIS ArchiMate Diagram		</span>
+<a onclick="javascript: showVpLink('NCI Buisness Architecture.vpp://diagram/hH0B.o6AU80Uxxgo', 'ARIS ArchiMate Diagram\nNCI Buisness Architecture.vpp://diagram/hH0B.o6AU80Uxxgo', 'ARIS ArchiMate Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|42.0|68.0|170.0|40.0|ArchiMateApplicationComponent_s7hzFw6AU8kCPU_M.html|ArchiMateApplicationComponent_s7hzFw6AU8kCPU_M.html|sCSB.o6AU80Uxxij" id="optionsCSB.o6AU80Uxxij">ARIS : Application Component</option>
+<option value="shape|36.0|407.0|176.0|40.0|ArchiMateBusinessActor_Ad7jFw6AU8kCPU8Y.html|ArchiMateBusinessActor_Ad7jFw6AU8kCPU8Y.html|UCSB.o6AU80Uxxig" id="optionUCSB.o6AU80Uxxig">NIH Office of Aids Research : Business Actor</option>
+<option value="shape|2.0|2.0|248.0|472.0|ArchiMateGrouping_HbjjFw6AU8kCPU72.html|ArchiMateGrouping_HbjjFw6AU8kCPU72.html|4CSB.o6AU80Uxxid" id="option4CSB.o6AU80Uxxid">NIH Office of Aids Research : Grouping</option>
+<option value="shape|402.0|407.0|95.0|40.0|ArchiMateApplicationComponent_JRjPxw6AUhQuH0LG.html|ArchiMateApplicationComponent_JRjPxw6AUhQuH0LG.html|ICSB.o6AU80Uxxia" id="optionICSB.o6AU80Uxxia">Email : Application Component</option>
+<option value="shape|396.0|208.0|121.0|40.0|ArchiMateBusinessActor_CjKthQ6AUrCiUKHQ.html|ArchiMateBusinessActor_CjKthQ6AUrCiUKHQ.html|v8SB.o6AU80UxxiU" id="optionv8SB.o6AU80UxxiU">DCEG Reporting Analyst : Business Actor</option>
+<option value="shape|412.0|318.0|80.0|40.0|ArchiMateProduct_vPM5hQ6AUrCiUJh0.html|ArchiMateProduct_vPM5hQ6AUrCiUJh0.html|L8SB.o6AU80UxxiN" id="optionL8SB.o6AU80UxxiN">Reports : Product</option>
+<option value="shape|396.0|57.0|137.0|40.0|ArchiMateApplicationComponent_zkbJhQ6AUrCiUHCy.html|ArchiMateApplicationComponent_zkbJhQ6AUrCiUHCy.html|t8SB.o6AU80UxxiH" id="optiont8SB.o6AU80UxxiH">myDCEG : Application Component</option>
+<option value="shape|329.0|2.0|284.0|472.0|ArchiMateGrouping_WGMSojqAUhQsEg6y.html|ArchiMateGrouping_WGMSojqAUhQsEg6y.html|a8SB.o6AU80Uxxh4" id="optiona8SB.o6AU80Uxxh4">DCEG : Grouping</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/ARIS_ArchiMate_Diagram.png" usemap="#diagram_map" class="Image" width="617" height="478"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="443.0, 97.0, 443.0, 208.0, 457.0, 208.0, 457.0, 97.0" coords2="443.0, 97.0, 443.0, 208.0, 457.0, 208.0, 457.0, 97.0" shape="poly" alt=":Flow" id="areadiagram_map_1CSB.o6AU80UxxjE_default" href="ArchiMateFlow_kiZPxw6AUhQuH0Kv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Reports:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Special Areas &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LzdPsgaC48kYAjDp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      Office
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Minority &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_hS0UGgaC48kYAkJj.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CRCHD&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ad Hoc Reports
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      AIDS &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      Office of Aids Research
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Biospecimen and Annual &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      Office of Itramural Research
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="445.0, 248.0, 445.0, 318.0, 459.0, 318.0, 459.0, 248.0" coords2="445.0, 248.0, 445.0, 318.0, 459.0, 318.0, 459.0, 248.0" shape="poly" alt=":Flow" id="areadiagram_map_tCSB.o6AU80UxxjH_default" href="ArchiMateFlow_OoFPxw6AUhQuH0K_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="545.0, 218.0, 545.0, 221.0, 517.0, 221.0, 517.0, 235.0, 545.0, 235.0, 545.0, 418.0, 497.0, 418.0, 497.0, 432.0, 545.0, 432.0, 545.0, 435.0, 559.0, 435.0, 559.0, 432.0, 562.0, 432.0, 562.0, 418.0, 559.0, 418.0, 559.0, 235.0, 562.0, 235.0, 562.0, 221.0, 559.0, 221.0, 559.0, 218.0" coords2="545.0, 218.0, 545.0, 221.0, 517.0, 221.0, 517.0, 235.0, 545.0, 235.0, 545.0, 418.0, 497.0, 418.0, 497.0, 432.0, 545.0, 432.0, 545.0, 435.0, 559.0, 435.0, 559.0, 432.0, 562.0, 432.0, 562.0, 418.0, 559.0, 418.0, 559.0, 235.0, 562.0, 235.0, 562.0, 221.0, 559.0, 221.0, 559.0, 218.0" shape="poly" alt=":Flow" id="areadiagram_map_9CSB.o6AU80UxxjK_default" href="ArchiMateFlow_ZVPPxw6AUhQuH0Mu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="445.0, 358.0, 445.0, 407.0, 459.0, 407.0, 459.0, 358.0" coords2="445.0, 358.0, 445.0, 407.0, 459.0, 407.0, 459.0, 358.0" shape="poly" alt=":Flow" id="areadiagram_map_TCSB.o6AU80UxxjN_default" href="ArchiMateFlow_QyiVFw6AU8kCPRcf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="212.0, 418.0, 212.0, 432.0, 402.0, 432.0, 402.0, 418.0" coords2="212.0, 418.0, 212.0, 432.0, 402.0, 432.0, 402.0, 418.0" shape="poly" alt=":Flow" id="areadiagram_map_LCSB.o6AU80UxxjQ_default" href="ArchiMateFlow_1NQTFw6AU8kCPU8x.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="133.0, 108.0, 133.0, 407.0, 147.0, 407.0, 147.0, 108.0" coords2="133.0, 108.0, 133.0, 407.0, 147.0, 407.0, 147.0, 108.0" shape="poly" alt=":Flow" id="areadiagram_map_bCSB.o6AU80UxxjT_default" href="ArchiMateFlow_PFpzFw6AU8kCPVIu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="42, 68, 212, 108" coords2="42, 68, 212, 108" shape="rect" alt="ARIS:Application Component" id="areadiagram_map_sCSB.o6AU80Uxxij_default" href="ArchiMateApplicationComponent_s7hzFw6AU8kCPU_M.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','42, 68, 212, 108',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_hH0B_o6AU80Uxxgo.html/ARIS ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '42, 68, 212, 108'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="36, 407, 212, 447" coords2="36, 407, 212, 447" shape="rect" alt="NIH Office of Aids Research:Business Actor" id="areadiagram_map_UCSB.o6AU80Uxxig_default" href="ArchiMateBusinessActor_Ad7jFw6AU8kCPU8Y.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 250, 474" coords2="2, 2, 250, 474" shape="rect" alt="NIH Office of Aids Research:Grouping" id="areadiagram_map_4CSB.o6AU80Uxxid_default" href="ArchiMateGrouping_HbjjFw6AU8kCPU72.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      spread sheets and xml files to various endpoint
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Reports:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Special Areas &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LzdPsgaC48kYAjDp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      Office
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Minority &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_hS0UGgaC48kYAkJj.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CRCHD&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ad Hoc Reports
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      AIDS &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      Office of Aids Research
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Biospecimen and Annual &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      Office of Itramural Research
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="402, 407, 497, 447" coords2="402, 407, 497, 447" shape="rect" alt="Email:Application Component" id="areadiagram_map_ICSB.o6AU80Uxxia_default" href="ArchiMateApplicationComponent_JRjPxw6AUhQuH0LG.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Reports:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Special Areas &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LzdPsgaC48kYAjDp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      Office
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Minority &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_hS0UGgaC48kYAkJj.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CRCHD&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ad Hoc Reports
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      AIDS &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      Office of Aids Research
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Biospecimen and Annual &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      Office of Itramural Research
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="396, 208, 517, 248" coords2="396, 208, 517, 248" shape="rect" alt="DCEG Reporting Analyst:Business Actor" id="areadiagram_map_v8SB.o6AU80UxxiU_default" href="ArchiMateBusinessActor_CjKthQ6AUrCiUKHQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Actor - runs reports add hoc and emailed to requester.
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Reports:
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Special Areas &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_mi7PCgaC48kYAjIt.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NCI&amp;lt;/a&amp;gt;&amp;nbsp;&amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_LzdPsgaC48kYAjDp.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;Budget&amp;lt;/a&amp;gt; 
+      Office
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Minority &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_hS0UGgaC48kYAkJj.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;CRCHD&amp;lt;/a&amp;gt;
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ad Hoc Reports
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      AIDS &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      Office of Aids Research
+    &amp;lt;/p&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;&amp;quot;&amp;gt;
+      Biospecimen and Annual &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_B31tsgaC48kYAikc.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;RePORT&amp;lt;/a&amp;gt; 
+      -&amp;​gt; &amp;lt;a class=&amp;quot;ItemLink&amp;quot; href=&amp;quot;Glossary_i_pPCgaC48kYAjIW.html&amp;quot; name=&amp;quot;&amp;quot;&amp;gt;NIH&amp;lt;/a&amp;gt; 
+      Office of Itramural Research
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="412, 318, 492, 358" coords2="412, 318, 492, 358" shape="rect" alt="Reports:Product" id="areadiagram_map_L8SB.o6AU80UxxiN_default" href="ArchiMateProduct_vPM5hQ6AUrCiUJh0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="396, 57, 533, 97" coords2="396, 57, 533, 97" shape="rect" alt="myDCEG:Application Component" id="areadiagram_map_t8SB.o6AU80UxxiH_default" href="ArchiMateApplicationComponent_zkbJhQ6AUrCiUHCy.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="329, 2, 613, 474" coords2="329, 2, 613, 474" shape="rect" alt="DCEG:Grouping" id="areadiagram_map_a8SB.o6AU80Uxxh4_default" href="ArchiMateGrouping_WGMSojqAUhQsEg6y.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','329, 2, 613, 474',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('ArchiMateDiagram_noE6WpaAUrDqrtjK.html/DCEG DOC-centric ArchiMate Diagram/ArchiMateDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '329, 2, 613, 474'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_s7hzFw6AU8kCPU_M.html" class="ItemLink">ARIS : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_Ad7jFw6AU8kCPU8Y.html" class="ItemLink">NIH Office of Aids Research : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_HbjjFw6AU8kCPU72.html" class="ItemLink">NIH Office of Aids Research : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_JRjPxw6AUhQuH0LG.html" class="ItemLink">Email : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      spread sheets and xml files to various endpoint
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Reports:
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Special Areas <a class="ItemLink" href="Glossary_B31tsgaC48kYAikc.html" name="">RePORT</a> 
+      -&gt;<a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>&nbsp;<a class="ItemLink" href="Glossary_LzdPsgaC48kYAjDp.html" name="">Budget</a> 
+      Office
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Minority <a class="ItemLink" href="Glossary_B31tsgaC48kYAikc.html" name="">RePORT</a> 
+      -&gt; <a class="ItemLink" href="Glossary_hS0UGgaC48kYAkJj.html" name="">CRCHD</a>
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ad Hoc Reports
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      AIDS <a class="ItemLink" href="Glossary_B31tsgaC48kYAikc.html" name="">RePORT</a> 
+      -&gt; <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      Office of Aids Research
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Biospecimen and Annual <a class="ItemLink" href="Glossary_B31tsgaC48kYAikc.html" name="">RePORT</a> 
+      -&gt; <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      Office of Itramural Research
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/BusinessActor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/BusinessActor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateBusinessActor_CjKthQ6AUrCiUKHQ.html" class="ItemLink">DCEG Reporting Analyst : Business Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Reports:
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Special Areas <a class="ItemLink" href="Glossary_B31tsgaC48kYAikc.html" name="">RePORT</a> 
+      -&gt;<a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>&nbsp;<a class="ItemLink" href="Glossary_LzdPsgaC48kYAjDp.html" name="">Budget</a> 
+      Office
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Minority <a class="ItemLink" href="Glossary_B31tsgaC48kYAikc.html" name="">RePORT</a> 
+      -&gt; <a class="ItemLink" href="Glossary_hS0UGgaC48kYAkJj.html" name="">CRCHD</a>
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ad Hoc Reports
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      AIDS <a class="ItemLink" href="Glossary_B31tsgaC48kYAikc.html" name="">RePORT</a> 
+      -&gt; <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      Office of Aids Research
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Biospecimen and Annual <a class="ItemLink" href="Glossary_B31tsgaC48kYAikc.html" name="">RePORT</a> 
+      -&gt; <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      Office of Itramural Research
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Product.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Product.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateProduct_vPM5hQ6AUrCiUJh0.html" class="ItemLink">Reports : Product</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="color:#000000;font-weight:normal;font-size:12px;margin-right:0;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Actor - runs reports add hoc and emailed to requester.
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Reports:
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Special Areas <a class="ItemLink" href="Glossary_B31tsgaC48kYAikc.html" name="">RePORT</a> 
+      -&gt;<a class="ItemLink" href="Glossary_mi7PCgaC48kYAjIt.html" name="">NCI</a>&nbsp;<a class="ItemLink" href="Glossary_LzdPsgaC48kYAjDp.html" name="">Budget</a> 
+      Office
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Minority <a class="ItemLink" href="Glossary_B31tsgaC48kYAikc.html" name="">RePORT</a> 
+      -&gt; <a class="ItemLink" href="Glossary_hS0UGgaC48kYAkJj.html" name="">CRCHD</a>
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ad Hoc Reports
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      AIDS <a class="ItemLink" href="Glossary_B31tsgaC48kYAikc.html" name="">RePORT</a> 
+      -&gt; <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      Office of Aids Research
+    </p>
+    <p style="margin-right:0pt;margin-top:0pt;margin-left:0pt;margin-bottom:.0001pt;">
+      Biospecimen and Annual <a class="ItemLink" href="Glossary_B31tsgaC48kYAikc.html" name="">RePORT</a> 
+      -&gt; <a class="ItemLink" href="Glossary_i_pPCgaC48kYAjIW.html" name="">NIH</a> 
+      Office of Itramural Research
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ApplicationComponent.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ApplicationComponent.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateApplicationComponent_zkbJhQ6AUrCiUHCy.html" class="ItemLink">myDCEG : Application Component</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Grouping.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Grouping.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="ArchiMateGrouping_WGMSojqAUhQsEg6y.html" class="ItemLink">DCEG : Grouping</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

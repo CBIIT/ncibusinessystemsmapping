@@ -1,0 +1,910 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - Closeout</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="BusinessProcessDiagram_9k_8tE6GAqAC77X6.html" class="PageParentTitle">Contract Post Award Phase : Pool</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_9k_8tE6GAqAC77X6.html" class="PageParentTitle">Closeout : Sub-Process</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - <a href="Glossary_9ZtvsgaC48kYAjE2.html" class="ItemLink">Close Out</a>		</span>
+<a onclick="javascript: showVpLink('Office Of Acquisitions.vpp://diagram/bh3NR06GAqAC7xHB', 'Closeout\nOffice Of Acquisitions.vpp://diagram/bh3NR06GAqAC7xHB', 'Closeout', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|422.0|380.0|316.0|40.0|BPSubProcess_FnxdR06GAqAC7xUy.html|BPSubProcess_FnxdR06GAqAC7xUy.html|FnxdR06GAqAC7xUx" id="optionFnxdR06GAqAC7xUx">Prepare and send notification of expiration of contract : Sub-Process</option>
+<option value="shape|17.0|2.0|3974.0|306.0|BPLane_A0fNR06GAqAC7xHc.html|BPLane_A0fNR06GAqAC7xHc.html|A0fNR06GAqAC7xHb" id="optionA0fNR06GAqAC7xHb">COR : Lane</option>
+<option value="shape|422.0|822.0|316.0|40.0|BPSubProcess_R6vdR06GAqAC7xWi.html|BPSubProcess_R6vdR06GAqAC7xWi.html|R6vdR06GAqAC7xWh" id="optionR6vdR06GAqAC7xWh">Complete and sign royalty statement and patent report : Sub-Process</option>
+<option value="shape|422.0|442.0|316.0|40.0|BPSubProcess_EjLdR06GAqAC7xVm.html|BPSubProcess_EjLdR06GAqAC7xVm.html|EjLdR06GAqAC7xVl" id="optionEjLdR06GAqAC7xVl">Review and approve or reject completion invoice : Sub-Process</option>
+<option value="shape|17.0|308.0|3974.0|430.0|BPLane_CQudR06GAqAC7xUV.html|BPLane_CQudR06GAqAC7xUV.html|CQudR06GAqAC7xUU" id="optionCQudR06GAqAC7xUU">CO/CS : Lane</option>
+<option value="shape|422.0|505.0|316.0|40.0|BPSubProcess_4_y9R06GAqAC7xYL.html|BPSubProcess_4_y9R06GAqAC7xYL.html|4_y9R06GAqAC7xYK" id="option4_y9R06GAqAC7xYK">Obtain and review indirect cost rate agreement : Sub-Process</option>
+<option value="shape|422.0|882.0|316.0|40.0|BPSubProcess__vM9R06GAqAC7xXj.html|BPSubProcess__vM9R06GAqAC7xXj.html|_vM9R06GAqAC7xXi" id="option_vM9R06GAqAC7xXi">Complete and sign patent and copyright infringement report : Sub-Process</option>
+<option value="shape|17.0|738.0|3974.0|557.0|BPLane_JG1dR06GAqAC7xVE.html|BPLane_JG1dR06GAqAC7xVE.html|JG1dR06GAqAC7xVD" id="optionJG1dR06GAqAC7xVD">Contractor/Vendor : Lane</option>
+<option value="shape|422.0|128.0|316.0|40.0|BPSubProcess_T3KdR06GAqAC7xTp.html|BPSubProcess_T3KdR06GAqAC7xTp.html|T3KdR06GAqAC7xTo" id="optionT3KdR06GAqAC7xTo">Review Final Report and/or Final Deliverables : Sub-Process</option>
+<option value="shape|2.0|2.0|3990.0|1294.0|BPPool_dUfNR06GAqAC7xHY.html|BPPool_dUfNR06GAqAC7xHY.html|dUfNR06GAqAC7xHX" id="optiondUfNR06GAqAC7xHX">Closeout : Pool</option>
+<option value="shape|422.0|942.0|316.0|40.0|BPSubProcess_aBcDR06GAqAC7xax.html|BPSubProcess_aBcDR06GAqAC7xax.html|aBcDR06GAqAC7xaw" id="optionaBcDR06GAqAC7xaw">Complete and sign assignment of refunds, rebates and credits, and other amounts : Sub-Process</option>
+<option value="shape|335.0|505.0|40.0|40.0|BPGateway_clO9R06GAqAC7xYh.html|BPGateway_clO9R06GAqAC7xYh.html|clO9R06GAqAC7xYg" id="optionclO9R06GAqAC7xYg">as applicable to cost type contract : Gateway</option>
+<option value="shape|422.0|1002.0|316.0|40.0|BPSubProcess_CnaDR06GAqAC7xbR.html|BPSubProcess_CnaDR06GAqAC7xbR.html|CnaDR06GAqAC7xbQ" id="optionCnaDR06GAqAC7xbQ">Complete and sign release form : Sub-Process</option>
+<option value="shape|781.0|565.0|295.0|40.0|BPSubProcess_2J79R06GAqAC7xZd.html|BPSubProcess_2J79R06GAqAC7xZd.html|2J79R06GAqAC7xZc" id="option2J79R06GAqAC7xZc">Review and approve or reject Completion and/or Final invoice : Sub-Process</option>
+<option value="shape|1129.0|565.0|279.0|40.0|BPSubProcess_Luf9R06GAqAC7xaF.html|BPSubProcess_Luf9R06GAqAC7xaF.html|Luf9R06GAqAC7xaE" id="optionLuf9R06GAqAC7xaE">Complete field audit/desk audit and reconciliation : Sub-Process</option>
+<option value="shape|422.0|1205.0|316.0|40.0|BPSubProcess_Y_eB506GAqAC7zz6.html|BPSubProcess_Y_eB506GAqAC7zz6.html|Y_eB506GAqAC7zz5" id="optionY_eB506GAqAC7zz5">Submit Completion and/or Final Invoice  : Sub-Process</option>
+<option value="shape|2102.0|565.0|295.0|40.0|BPSubProcess_0K3DR06GAqAC7xcl.html|BPSubProcess_0K3DR06GAqAC7xcl.html|0K3DR06GAqAC7xck" id="option0K3DR06GAqAC7xck">Confirm completion and sign CO's Final Certification/Completion Statement : Sub-Process</option>
+<option value="shape|422.0|1060.0|316.0|40.0|BPSubProcess_SF1h506GAqAC7z2b.html|BPSubProcess_SF1h506GAqAC7z2b.html|SF1h506GAqAC7z2a" id="optionSF1h506GAqAC7z2a">Submit Final Indirect Cost Rate Agreement : Sub-Process</option>
+<option value="shape|3259.0|571.0|272.0|40.0|BPSubProcess_2DGjR06GAqAC7xdd.html|BPSubProcess_2DGjR06GAqAC7xdd.html|2DGjR06GAqAC7xdc" id="option2DGjR06GAqAC7xdc">Change status to Administratively closed in FPDS : Sub-Process</option>
+<option value="shape|295.0|1060.0|40.0|40.0|BPGateway_Uvdh506GAqAC7z2r.html|BPGateway_Uvdh506GAqAC7z2r.html|Uvdh506GAqAC7z2q" id="optionUvdh506GAqAC7z2q">As applicable : Gateway</option>
+<option value="shape|772.0|212.0|297.0|40.0|BPSubProcess_F8oh506GAqAC7z1J.html|BPSubProcess_F8oh506GAqAC7z1J.html|F8oh506GAqAC7z1I" id="optionF8oh506GAqAC7z1I">Review and recommend payment or disapproval of Completion and/or Final Invoice : Sub-Process</option>
+<option value="shape|756.0|128.0|239.0|40.0|BPSubProcess_C6HR506GAqAC7z57.html|BPSubProcess_C6HR506GAqAC7z57.html|86HR506GAqAC7z56" id="option86HR506GAqAC7z56">Complete COR Certification of Final Report and requirements met : Sub-Process</option>
+<option value="shape|422.0|1137.0|316.0|40.0|BPSubProcess__Lvh506GAqAC7z3N.html|BPSubProcess__Lvh506GAqAC7z3N.html|.Lvh506GAqAC7z3M" id="option.Lvh506GAqAC7z3M">Submit Final Individual Subcontract Report : Sub-Process</option>
+<option value="shape|3952.0|581.0|20.0|20.0|BPEndEvent_a53NR06GAqAC7xHP.html|BPEndEvent_a53NR06GAqAC7xHP.html|a53NR06GAqAC7xHO" id="optiona53NR06GAqAC7xHO">Unnamed End Event : End Event</option>
+<option value="shape|295.0|1130.0|40.0|40.0|BPGateway_1vkR506GAqAC7z3d.html|BPGateway_1vkR506GAqAC7z3d.html|1vkR506GAqAC7z3c" id="option1vkR506GAqAC7z3c">As applicable : Gateway</option>
+<option value="shape|2593.0|160.0|300.0|40.0|BPSubProcess_gs_J506GAqAC70nX.html|BPSubProcess_gs_J506GAqAC70nX.html|gs_J506GAqAC70nW" id="optiongs_J506GAqAC70nW">Within 120 days of expiration complete Contractor Performance Assessment Record : Sub-Process</option>
+<option value="shape|3575.0|571.0|300.0|40.0|BPSubProcess_Tp1jR06GAqAC7xev.html|BPSubProcess_Tp1jR06GAqAC7xev.html|jp1jR06GAqAC7xeu" id="optionjp1jR06GAqAC7xeu">6 years after final invoice comply with Information and Retention Handling policies : Sub-Process</option>
+<option value="shape|872.0|474.0|116.0|40.0|BPTextAnnotation_JnAAF06GAqAC72P9.html|BPTextAnnotation_JnAAF06GAqAC72P9.html|JnAAF06GAqAC72P8" id="optionJnAAF06GAqAC72P8">Annotation4 : Text Annotation</option>
+<option value="shape|2916.0|571.0|300.0|40.0|BPSubProcess_YakTR06GAqAC7xhp.html|BPSubProcess_YakTR06GAqAC7xhp.html|oakTR06GAqAC7xho" id="optionoakTR06GAqAC7xho">Document final contractor performance : Sub-Process</option>
+<option value="shape|45.0|576.0|20.0|20.0|BPStartEvent_I53NR06GAqAC7xHL.html|BPStartEvent_I53NR06GAqAC7xHL.html|I53NR06GAqAC7xHK" id="optionI53NR06GAqAC7xHK">Unnamed Start Event : Start Event</option>
+<option value="shape|86.0|559.0|147.0|53.0|BPSubProcess_xL7e506GAqAC7zBG.html|BPSubProcess_xL7e506GAqAC7zBG.html|RL7e506GAqAC7zBF" id="optionRL7e506GAqAC7zBF">Send Expiration Letter to Contractor : Sub-Process</option>
+<option value="shape|1364.0|323.0|224.0|40.0|BPSubProcess_Uaqx506GAqAC7z7x.html|BPSubProcess_Uaqx506GAqAC7z7x.html|Uaqx506GAqAC7z7w" id="optionUaqx506GAqAC7z7w">Confirm receipt of Signed COR Certification : Sub-Process</option>
+<option value="shape|1792.0|673.0|256.0|40.0|BPSubProcess_IO5J506GAqAC70gy.html|BPSubProcess_IO5J506GAqAC70gy.html|IO5J506GAqAC70gx" id="optionIO5J506GAqAC70gx">Review Final Individual Subcontract Report and indicate acceptance or rejection in eSRS : Sub-Process</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Closeout.png" usemap="#diagram_map" class="Image" width="3996" height="1300"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="246.0, 138.0, 246.0, 141.0, 243.0, 141.0, 243.0, 155.0, 246.0, 155.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 595.0, 260.0, 595.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 155.0, 422.0, 155.0, 422.0, 141.0, 260.0, 141.0, 260.0, 138.0" coords2="246.0, 138.0, 246.0, 141.0, 243.0, 141.0, 243.0, 155.0, 246.0, 155.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 595.0, 260.0, 595.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 155.0, 422.0, 155.0, 422.0, 141.0, 260.0, 141.0, 260.0, 138.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_LWadR06GAqAC7xUB_default" href="BPSequenceFlow_zWadR06GAqAC7xUA.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="246.0, 389.0, 246.0, 392.0, 243.0, 392.0, 243.0, 406.0, 246.0, 406.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 595.0, 260.0, 595.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 406.0, 422.0, 406.0, 422.0, 392.0, 260.0, 392.0, 260.0, 389.0" coords2="246.0, 389.0, 246.0, 392.0, 243.0, 392.0, 243.0, 406.0, 246.0, 406.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 595.0, 260.0, 595.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 406.0, 422.0, 406.0, 422.0, 392.0, 260.0, 392.0, 260.0, 389.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_WXxdR06GAqAC7xU4_default" href="BPSequenceFlow_aXxdR06GAqAC7xU3.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="246.0, 452.0, 246.0, 455.0, 243.0, 455.0, 243.0, 469.0, 246.0, 469.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 595.0, 260.0, 595.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 469.0, 422.0, 469.0, 422.0, 455.0, 260.0, 455.0, 260.0, 452.0" coords2="246.0, 452.0, 246.0, 455.0, 243.0, 455.0, 243.0, 469.0, 246.0, 469.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 595.0, 260.0, 595.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 469.0, 422.0, 469.0, 422.0, 455.0, 260.0, 455.0, 260.0, 452.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_zjLdR06GAqAC7xVs_default" href="BPSequenceFlow_9jLdR06GAqAC7xVr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 834.0, 243.0, 834.0, 243.0, 848.0, 246.0, 848.0, 246.0, 851.0, 260.0, 851.0, 260.0, 848.0, 422.0, 848.0, 422.0, 834.0, 260.0, 834.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" coords2="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 834.0, 243.0, 834.0, 243.0, 848.0, 246.0, 848.0, 246.0, 851.0, 260.0, 851.0, 260.0, 848.0, 422.0, 848.0, 422.0, 834.0, 260.0, 834.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_cGvdR06GAqAC7xWo_default" href="BPSequenceFlow_UGvdR06GAqAC7xWn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 894.0, 243.0, 894.0, 243.0, 908.0, 246.0, 908.0, 246.0, 911.0, 260.0, 911.0, 260.0, 908.0, 422.0, 908.0, 422.0, 894.0, 260.0, 894.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" coords2="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 894.0, 243.0, 894.0, 243.0, 908.0, 246.0, 908.0, 246.0, 911.0, 260.0, 911.0, 260.0, 908.0, 422.0, 908.0, 422.0, 894.0, 260.0, 894.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_lfM9R06GAqAC7xXp_default" href="BPSequenceFlow_pfM9R06GAqAC7xXo.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="246.0, 515.0, 246.0, 518.0, 243.0, 518.0, 243.0, 532.0, 246.0, 532.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 595.0, 260.0, 595.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 532.0, 335.0, 532.0, 335.0, 518.0, 260.0, 518.0, 260.0, 515.0" coords2="246.0, 515.0, 246.0, 518.0, 243.0, 518.0, 243.0, 532.0, 246.0, 532.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 595.0, 260.0, 595.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 532.0, 335.0, 532.0, 335.0, 518.0, 260.0, 518.0, 260.0, 515.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_9_y9R06GAqAC7xYR_default" href="BPSequenceFlow_N_y9R06GAqAC7xYQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="375.0, 518.0, 375.0, 532.0, 422.0, 532.0, 422.0, 518.0" coords2="375.0, 518.0, 375.0, 532.0, 422.0, 532.0, 422.0, 518.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_J1B9R06GAqAC7xZB_default" href="BPSequenceFlow_R1B9R06GAqAC7xZA.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="65.0, 578.0, 65.0, 592.0, 86.0, 592.0, 86.0, 578.0" coords2="65.0, 578.0, 65.0, 592.0, 86.0, 592.0, 86.0, 578.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_op79R06GAqAC7xZj_default" href="BPSequenceFlow_gp79R06GAqAC7xZi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1076.0, 578.0, 1076.0, 592.0, 1129.0, 592.0, 1129.0, 578.0" coords2="1076.0, 578.0, 1076.0, 592.0, 1129.0, 592.0, 1129.0, 578.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_eef9R06GAqAC7xaN_default" href="BPSequenceFlow_Wef9R06GAqAC7xaM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 954.0, 243.0, 954.0, 243.0, 968.0, 246.0, 968.0, 246.0, 971.0, 260.0, 971.0, 260.0, 968.0, 422.0, 968.0, 422.0, 954.0, 260.0, 954.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" coords2="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 954.0, 243.0, 954.0, 243.0, 968.0, 246.0, 968.0, 246.0, 971.0, 260.0, 971.0, 260.0, 968.0, 422.0, 968.0, 422.0, 954.0, 260.0, 954.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_bBcDR06GAqAC7xa3_default" href="BPSequenceFlow_zBcDR06GAqAC7xa2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 1014.0, 243.0, 1014.0, 243.0, 1028.0, 246.0, 1028.0, 246.0, 1031.0, 260.0, 1031.0, 260.0, 1028.0, 422.0, 1028.0, 422.0, 1014.0, 260.0, 1014.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" coords2="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 1014.0, 243.0, 1014.0, 243.0, 1028.0, 246.0, 1028.0, 246.0, 1031.0, 260.0, 1031.0, 260.0, 1028.0, 422.0, 1028.0, 422.0, 1014.0, 260.0, 1014.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_PnaDR06GAqAC7xbX_default" href="BPSequenceFlow_HnaDR06GAqAC7xbW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1408.0, 584.0, 1408.0, 598.0, 2102.0, 598.0, 2102.0, 584.0" coords2="1408.0, 584.0, 1408.0, 598.0, 2102.0, 598.0, 2102.0, 584.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_zK3DR06GAqAC7xcr_default" href="BPSequenceFlow_DK3DR06GAqAC7xcq.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3216.0, 578.0, 3216.0, 592.0, 3259.0, 592.0, 3259.0, 578.0" coords2="3216.0, 578.0, 3216.0, 592.0, 3259.0, 592.0, 3259.0, 578.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_YjGjR06GAqAC7xdl_default" href="BPSequenceFlow_QjGjR06GAqAC7xdk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3875.0, 583.0, 3875.0, 597.0, 3952.0, 597.0, 3952.0, 583.0" coords2="3875.0, 583.0, 3875.0, 597.0, 3952.0, 597.0, 3952.0, 583.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_foLjR06GAqAC7xff_default" href="BPSequenceFlow_voLjR06GAqAC7xfe.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2869.0, 200.0, 2869.0, 584.0, 2866.0, 584.0, 2866.0, 598.0, 2869.0, 598.0, 2869.0, 601.0, 2883.0, 601.0, 2883.0, 598.0, 2916.0, 598.0, 2916.0, 584.0, 2883.0, 584.0, 2883.0, 200.0" coords2="2869.0, 200.0, 2869.0, 584.0, 2866.0, 584.0, 2866.0, 598.0, 2869.0, 598.0, 2869.0, 601.0, 2883.0, 601.0, 2883.0, 598.0, 2916.0, 598.0, 2916.0, 584.0, 2883.0, 584.0, 2883.0, 200.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_TakTR06GAqAC7xhx_default" href="BPSequenceFlow_dakTR06GAqAC7xhw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="742.0, 575.0, 742.0, 578.0, 739.0, 578.0, 739.0, 592.0, 742.0, 592.0, 742.0, 1217.0, 738.0, 1217.0, 738.0, 1231.0, 742.0, 1231.0, 742.0, 1234.0, 756.0, 1234.0, 756.0, 1231.0, 759.0, 1231.0, 759.0, 1217.0, 756.0, 1217.0, 756.0, 592.0, 781.0, 592.0, 781.0, 578.0, 756.0, 578.0, 756.0, 575.0" coords2="742.0, 575.0, 742.0, 578.0, 739.0, 578.0, 739.0, 592.0, 742.0, 592.0, 742.0, 1217.0, 738.0, 1217.0, 738.0, 1231.0, 742.0, 1231.0, 742.0, 1234.0, 756.0, 1234.0, 756.0, 1231.0, 759.0, 1231.0, 759.0, 1217.0, 756.0, 1217.0, 756.0, 592.0, 781.0, 592.0, 781.0, 578.0, 756.0, 578.0, 756.0, 575.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_VJ9B506GAqAC7z0m_default" href="BPSequenceFlow_5J9B506GAqAC7z0l.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="742.0, 222.0, 742.0, 225.0, 739.0, 225.0, 739.0, 239.0, 742.0, 239.0, 742.0, 1218.0, 738.0, 1218.0, 738.0, 1232.0, 742.0, 1232.0, 742.0, 1235.0, 756.0, 1235.0, 756.0, 1232.0, 759.0, 1232.0, 759.0, 1218.0, 756.0, 1218.0, 756.0, 239.0, 772.0, 239.0, 772.0, 225.0, 756.0, 225.0, 756.0, 222.0" coords2="742.0, 222.0, 742.0, 225.0, 739.0, 225.0, 739.0, 239.0, 742.0, 239.0, 742.0, 1218.0, 738.0, 1218.0, 738.0, 1232.0, 742.0, 1232.0, 742.0, 1235.0, 756.0, 1235.0, 756.0, 1232.0, 759.0, 1232.0, 759.0, 1218.0, 756.0, 1218.0, 756.0, 239.0, 772.0, 239.0, 772.0, 225.0, 756.0, 225.0, 756.0, 222.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Ikih506GAqAC7z1h_default" href="BPSequenceFlow_gkih506GAqAC7z1g.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1091.0, 222.0, 1091.0, 225.0, 1069.0, 225.0, 1069.0, 239.0, 1091.0, 239.0, 1091.0, 578.0, 1088.0, 578.0, 1088.0, 592.0, 1091.0, 592.0, 1091.0, 595.0, 1105.0, 595.0, 1105.0, 592.0, 1129.0, 592.0, 1129.0, 578.0, 1105.0, 578.0, 1105.0, 239.0, 1108.0, 239.0, 1108.0, 225.0, 1105.0, 225.0, 1105.0, 222.0" coords2="1091.0, 222.0, 1091.0, 225.0, 1069.0, 225.0, 1069.0, 239.0, 1091.0, 239.0, 1091.0, 578.0, 1088.0, 578.0, 1088.0, 592.0, 1091.0, 592.0, 1091.0, 595.0, 1105.0, 595.0, 1105.0, 592.0, 1129.0, 592.0, 1129.0, 578.0, 1105.0, 578.0, 1105.0, 239.0, 1108.0, 239.0, 1108.0, 225.0, 1105.0, 225.0, 1105.0, 222.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Rqyh506GAqAC7z15_default" href="BPSequenceFlow__qyh506GAqAC7z14.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="335.0, 1072.0, 335.0, 1086.0, 422.0, 1086.0, 422.0, 1072.0" coords2="335.0, 1072.0, 335.0, 1086.0, 422.0, 1086.0, 422.0, 1072.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_8Ujh506GAqAC7z27_default" href="BPSequenceFlow_MUjh506GAqAC7z26.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="335.0, 1149.0, 335.0, 1163.0, 422.0, 1163.0, 422.0, 1149.0" coords2="335.0, 1149.0, 335.0, 1163.0, 422.0, 1163.0, 422.0, 1149.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_r20R506GAqAC7z3t_default" href="BPSequenceFlow_z20R506GAqAC7z3s.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 1216.0, 243.0, 1216.0, 243.0, 1230.0, 246.0, 1230.0, 246.0, 1233.0, 260.0, 1233.0, 260.0, 1230.0, 422.0, 1230.0, 422.0, 1216.0, 260.0, 1216.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" coords2="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 1216.0, 243.0, 1216.0, 243.0, 1230.0, 246.0, 1230.0, 246.0, 1233.0, 260.0, 1233.0, 260.0, 1230.0, 422.0, 1230.0, 422.0, 1216.0, 260.0, 1216.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_rceR506GAqAC7z4t_default" href="BPSequenceFlow_zceR506GAqAC7z4s.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 1142.0, 243.0, 1142.0, 243.0, 1156.0, 246.0, 1156.0, 246.0, 1159.0, 260.0, 1159.0, 260.0, 1156.0, 295.0, 1156.0, 295.0, 1142.0, 260.0, 1142.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" coords2="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 1142.0, 243.0, 1142.0, 243.0, 1156.0, 246.0, 1156.0, 246.0, 1159.0, 260.0, 1159.0, 260.0, 1156.0, 295.0, 1156.0, 295.0, 1142.0, 260.0, 1142.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_bF.R506GAqAC7z5F_default" href="BPSequenceFlow_zF_R506GAqAC7z5E.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 1072.0, 243.0, 1072.0, 243.0, 1086.0, 246.0, 1086.0, 246.0, 1089.0, 260.0, 1089.0, 260.0, 1086.0, 295.0, 1086.0, 295.0, 1072.0, 260.0, 1072.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" coords2="246.0, 575.0, 246.0, 578.0, 233.0, 578.0, 233.0, 592.0, 246.0, 592.0, 246.0, 1072.0, 243.0, 1072.0, 243.0, 1086.0, 246.0, 1086.0, 246.0, 1089.0, 260.0, 1089.0, 260.0, 1086.0, 295.0, 1086.0, 295.0, 1072.0, 260.0, 1072.0, 260.0, 592.0, 263.0, 592.0, 263.0, 578.0, 260.0, 578.0, 260.0, 575.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_EuhR506GAqAC7z5d_default" href="BPSequenceFlow_YuhR506GAqAC7z5c.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="738.0, 141.0, 738.0, 155.0, 756.0, 155.0, 756.0, 141.0" coords2="738.0, 141.0, 738.0, 155.0, 756.0, 155.0, 756.0, 141.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_B1gx506GAqAC7z64_default" href="BPSequenceFlow_u1gx506GAqAC7z63.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1355.0, 138.0, 1355.0, 141.0, 995.0, 141.0, 995.0, 155.0, 1355.0, 155.0, 1355.0, 339.0, 1352.0, 339.0, 1352.0, 353.0, 1355.0, 353.0, 1355.0, 356.0, 1364.0, 356.0, 1364.0, 323.0, 1369.0, 323.0, 1369.0, 155.0, 1372.0, 155.0, 1372.0, 141.0, 1369.0, 141.0, 1369.0, 138.0" coords2="1355.0, 138.0, 1355.0, 141.0, 995.0, 141.0, 995.0, 155.0, 1355.0, 155.0, 1355.0, 339.0, 1352.0, 339.0, 1352.0, 353.0, 1355.0, 353.0, 1355.0, 356.0, 1364.0, 356.0, 1364.0, 323.0, 1369.0, 323.0, 1369.0, 155.0, 1372.0, 155.0, 1372.0, 141.0, 1369.0, 141.0, 1369.0, 138.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Q6qx506GAqAC7z75_default" href="BPSequenceFlow_vaqx506GAqAC7z74.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1667.0, 339.0, 1667.0, 342.0, 1588.0, 342.0, 1588.0, 356.0, 1667.0, 356.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 600.0, 1681.0, 600.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 356.0, 1684.0, 356.0, 1684.0, 342.0, 1681.0, 342.0, 1681.0, 339.0" coords2="1667.0, 339.0, 1667.0, 342.0, 1588.0, 342.0, 1588.0, 356.0, 1667.0, 356.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 600.0, 1681.0, 600.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 356.0, 1684.0, 356.0, 1684.0, 342.0, 1681.0, 342.0, 1681.0, 339.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_0Kxx506GAqAC7z8Z_default" href="BPSequenceFlow_kKxx506GAqAC7z8Y.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1744.0, 682.0, 1744.0, 685.0, 1741.0, 685.0, 1741.0, 699.0, 1744.0, 699.0, 1744.0, 1150.0, 738.0, 1150.0, 738.0, 1164.0, 1744.0, 1164.0, 1744.0, 1167.0, 1758.0, 1167.0, 1758.0, 1164.0, 1761.0, 1164.0, 1761.0, 1150.0, 1758.0, 1150.0, 1758.0, 699.0, 1792.0, 699.0, 1792.0, 685.0, 1758.0, 685.0, 1758.0, 682.0" coords2="1744.0, 682.0, 1744.0, 685.0, 1741.0, 685.0, 1741.0, 699.0, 1744.0, 699.0, 1744.0, 1150.0, 738.0, 1150.0, 738.0, 1164.0, 1744.0, 1164.0, 1744.0, 1167.0, 1758.0, 1167.0, 1758.0, 1164.0, 1761.0, 1164.0, 1761.0, 1150.0, 1758.0, 1150.0, 1758.0, 699.0, 1792.0, 699.0, 1792.0, 685.0, 1758.0, 685.0, 1758.0, 682.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_CldJ506GAqAC70hI_default" href="BPSequenceFlow_sldJ506GAqAC70hH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2063.0, 580.0, 2063.0, 583.0, 2060.0, 583.0, 2060.0, 597.0, 2063.0, 597.0, 2063.0, 685.0, 2048.0, 685.0, 2048.0, 699.0, 2063.0, 699.0, 2063.0, 702.0, 2077.0, 702.0, 2077.0, 699.0, 2080.0, 699.0, 2080.0, 685.0, 2077.0, 685.0, 2077.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 2077.0, 583.0, 2077.0, 580.0" coords2="2063.0, 580.0, 2063.0, 583.0, 2060.0, 583.0, 2060.0, 597.0, 2063.0, 597.0, 2063.0, 685.0, 2048.0, 685.0, 2048.0, 699.0, 2063.0, 699.0, 2063.0, 702.0, 2077.0, 702.0, 2077.0, 699.0, 2080.0, 699.0, 2080.0, 685.0, 2077.0, 685.0, 2077.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 2077.0, 583.0, 2077.0, 580.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_ISLJ506GAqAC70hc_default" href="BPSequenceFlow_QSLJ506GAqAC70hb.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2475.0, 170.0, 2475.0, 173.0, 2472.0, 173.0, 2472.0, 187.0, 2475.0, 187.0, 2475.0, 578.0, 2397.0, 578.0, 2397.0, 592.0, 2475.0, 592.0, 2475.0, 595.0, 2489.0, 595.0, 2489.0, 592.0, 2492.0, 592.0, 2492.0, 578.0, 2489.0, 578.0, 2489.0, 187.0, 2593.0, 187.0, 2593.0, 173.0, 2489.0, 173.0, 2489.0, 170.0" coords2="2475.0, 170.0, 2475.0, 173.0, 2472.0, 173.0, 2472.0, 187.0, 2475.0, 187.0, 2475.0, 578.0, 2397.0, 578.0, 2397.0, 592.0, 2475.0, 592.0, 2475.0, 595.0, 2489.0, 595.0, 2489.0, 592.0, 2492.0, 592.0, 2492.0, 578.0, 2489.0, 578.0, 2489.0, 187.0, 2593.0, 187.0, 2593.0, 173.0, 2489.0, 173.0, 2489.0, 170.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_oTGZ506GAqAC71T._default" href="BPSequenceFlow_QTGZ506GAqAC71T9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1667.0, 580.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 833.0, 738.0, 833.0, 738.0, 847.0, 1667.0, 847.0, 1667.0, 850.0, 1681.0, 850.0, 1681.0, 847.0, 1684.0, 847.0, 1684.0, 833.0, 1681.0, 833.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 580.0" coords2="1667.0, 580.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 833.0, 738.0, 833.0, 738.0, 847.0, 1667.0, 847.0, 1667.0, 850.0, 1681.0, 850.0, 1681.0, 847.0, 1684.0, 847.0, 1684.0, 833.0, 1681.0, 833.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 580.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_pVc5506GAqAC71ip_default" href="BPSequenceFlow_RVc5506GAqAC71io.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1667.0, 580.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 893.0, 738.0, 893.0, 738.0, 907.0, 1667.0, 907.0, 1667.0, 910.0, 1681.0, 910.0, 1681.0, 907.0, 1684.0, 907.0, 1684.0, 893.0, 1681.0, 893.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 580.0" coords2="1667.0, 580.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 893.0, 738.0, 893.0, 738.0, 907.0, 1667.0, 907.0, 1667.0, 910.0, 1681.0, 910.0, 1681.0, 907.0, 1684.0, 907.0, 1684.0, 893.0, 1681.0, 893.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 580.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_y585506GAqAC71i9_default" href="BPSequenceFlow_i585506GAqAC71i8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1667.0, 580.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 953.0, 738.0, 953.0, 738.0, 967.0, 1667.0, 967.0, 1667.0, 970.0, 1681.0, 970.0, 1681.0, 967.0, 1684.0, 967.0, 1684.0, 953.0, 1681.0, 953.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 580.0" coords2="1667.0, 580.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 953.0, 738.0, 953.0, 738.0, 967.0, 1667.0, 967.0, 1667.0, 970.0, 1681.0, 970.0, 1681.0, 967.0, 1684.0, 967.0, 1684.0, 953.0, 1681.0, 953.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 580.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_0VC5506GAqAC71jR_default" href="BPSequenceFlow_kVC5506GAqAC71jQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1667.0, 580.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 1013.0, 738.0, 1013.0, 738.0, 1027.0, 1667.0, 1027.0, 1667.0, 1030.0, 1681.0, 1030.0, 1681.0, 1027.0, 1684.0, 1027.0, 1684.0, 1013.0, 1681.0, 1013.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 580.0" coords2="1667.0, 580.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 1013.0, 738.0, 1013.0, 738.0, 1027.0, 1667.0, 1027.0, 1667.0, 1030.0, 1681.0, 1030.0, 1681.0, 1027.0, 1684.0, 1027.0, 1684.0, 1013.0, 1681.0, 1013.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 580.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_vFi5506GAqAC71jl_default" href="BPSequenceFlow_3Fi5506GAqAC71jk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1667.0, 580.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 1072.0, 738.0, 1072.0, 738.0, 1086.0, 1667.0, 1086.0, 1667.0, 1089.0, 1681.0, 1089.0, 1681.0, 1086.0, 1684.0, 1086.0, 1684.0, 1072.0, 1681.0, 1072.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 580.0" coords2="1667.0, 580.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 1072.0, 738.0, 1072.0, 738.0, 1086.0, 1667.0, 1086.0, 1667.0, 1089.0, 1681.0, 1089.0, 1681.0, 1086.0, 1684.0, 1086.0, 1684.0, 1072.0, 1681.0, 1072.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 580.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_IgJ5506GAqAC71kV_default" href="BPSequenceFlow_QgJ5506GAqAC71kU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3531.0, 582.0, 3531.0, 596.0, 3575.0, 596.0, 3575.0, 582.0" coords2="3531.0, 582.0, 3531.0, 596.0, 3575.0, 596.0, 3575.0, 582.0" shape="poly" alt=":Message Flow" id="areadiagram_map__gXF506GAqAC71o0_default" href="BPMessageFlow_vgXF506GAqAC71oz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="738.0, 467.0, 738.0, 481.0, 872.0, 481.0, 872.0, 474.0, 881.0, 474.0, 881.0, 467.0" coords2="738.0, 467.0, 738.0, 481.0, 872.0, 481.0, 872.0, 474.0, 881.0, 474.0, 881.0, 467.0" shape="poly" alt=":Association" id="areadiagram_map_3XAAF06GAqAC72QD_default" href="BPAssociation_rXAAF06GAqAC72QC.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="895.0, 514.0, 895.0, 565.0, 909.0, 565.0, 909.0, 514.0" coords2="895.0, 514.0, 895.0, 565.0, 909.0, 565.0, 909.0, 514.0" shape="poly" alt=":Association" id="areadiagram_map_1uQAF06GAqAC72QV_default" href="BPAssociation_5uQAF06GAqAC72QU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1667.0, 390.0, 1667.0, 393.0, 738.0, 393.0, 738.0, 407.0, 1667.0, 407.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 600.0, 1681.0, 600.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 407.0, 1684.0, 407.0, 1684.0, 393.0, 1681.0, 393.0, 1681.0, 390.0" coords2="1667.0, 390.0, 1667.0, 393.0, 738.0, 393.0, 738.0, 407.0, 1667.0, 407.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 600.0, 1681.0, 600.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 407.0, 1684.0, 407.0, 1684.0, 393.0, 1681.0, 393.0, 1681.0, 390.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_00GAF06GAqAC72Q8_default" href="BPSequenceFlow_E0GAF06GAqAC72Q7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1667.0, 515.0, 1667.0, 518.0, 738.0, 518.0, 738.0, 532.0, 1667.0, 532.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 600.0, 1681.0, 600.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 532.0, 1684.0, 532.0, 1684.0, 518.0, 1681.0, 518.0, 1681.0, 515.0" coords2="1667.0, 515.0, 1667.0, 518.0, 738.0, 518.0, 738.0, 532.0, 1667.0, 532.0, 1667.0, 583.0, 1664.0, 583.0, 1664.0, 597.0, 1667.0, 597.0, 1667.0, 600.0, 1681.0, 600.0, 1681.0, 597.0, 2102.0, 597.0, 2102.0, 583.0, 1681.0, 583.0, 1681.0, 532.0, 1684.0, 532.0, 1684.0, 518.0, 1681.0, 518.0, 1681.0, 515.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_L1WAF06GAqAC72RU_default" href="BPSequenceFlow_T1WAF06GAqAC72RT.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="872, 474, 988, 514" coords2="872, 474, 988, 514" shape="rect" alt="These seem to be the same thing:Text Annotation" id="areadiagram_map_JnAAF06GAqAC72P8_default" href="BPTextAnnotation_JnAAF06GAqAC72P9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2593, 160, 2893, 200" coords2="2593, 160, 2893, 200" shape="rect" alt="Within 120 days of expiration complete Contractor Performance Assessment Record:Sub-Process" id="areadiagram_map_gs_J506GAqAC70nW_default" href="BPSubProcess_gs_J506GAqAC70nX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1792, 673, 2048, 713" coords2="1792, 673, 2048, 713" shape="rect" alt="Review Final Individual Subcontract Report and indicate acceptance or rejection in eSRS:Sub-Process" id="areadiagram_map_IO5J506GAqAC70gx_default" href="BPSubProcess_IO5J506GAqAC70gy.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1364, 323, 1588, 363" coords2="1364, 323, 1588, 363" shape="rect" alt="Confirm receipt of Signed COR Certification:Sub-Process" id="areadiagram_map_Uaqx506GAqAC7z7w_default" href="BPSubProcess_Uaqx506GAqAC7z7x.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="756, 128, 995, 168" coords2="756, 128, 995, 168" shape="rect" alt="Complete COR Certification of Final Report and requirements met:Sub-Process" id="areadiagram_map_86HR506GAqAC7z56_default" href="BPSubProcess_C6HR506GAqAC7z57.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="295, 1130, 335, 1170" coords2="295, 1130, 335, 1170" shape="rect" alt="As applicable:Gateway" id="areadiagram_map_1vkR506GAqAC7z3c_default" href="BPGateway_1vkR506GAqAC7z3d.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="422, 1137, 738, 1177" coords2="422, 1137, 738, 1177" shape="rect" alt="Submit Final Individual Subcontract Report:Sub-Process" id="areadiagram_map_.Lvh506GAqAC7z3M_default" href="BPSubProcess__Lvh506GAqAC7z3N.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="295, 1060, 335, 1100" coords2="295, 1060, 335, 1100" shape="rect" alt="As applicable:Gateway" id="areadiagram_map_Uvdh506GAqAC7z2q_default" href="BPGateway_Uvdh506GAqAC7z2r.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="422, 1060, 738, 1100" coords2="422, 1060, 738, 1100" shape="rect" alt="Submit Final Indirect Cost Rate Agreement:Sub-Process" id="areadiagram_map_SF1h506GAqAC7z2a_default" href="BPSubProcess_SF1h506GAqAC7z2b.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="772, 212, 1069, 252" coords2="772, 212, 1069, 252" shape="rect" alt="Review and recommend payment or disapproval of Completion and/or Final Invoice:Sub-Process" id="areadiagram_map_F8oh506GAqAC7z1I_default" href="BPSubProcess_F8oh506GAqAC7z1J.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="422, 1205, 738, 1245" coords2="422, 1205, 738, 1245" shape="rect" alt="Submit Completion and/or Final Invoice :Sub-Process" id="areadiagram_map_Y_eB506GAqAC7zz5_default" href="BPSubProcess_Y_eB506GAqAC7zz6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="86, 559, 233, 612" coords2="86, 559, 233, 612" shape="rect" alt="Send Expiration Letter to Contractor:Sub-Process" id="areadiagram_map_RL7e506GAqAC7zBF_default" href="BPSubProcess_xL7e506GAqAC7zBG.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2916, 571, 3216, 611" coords2="2916, 571, 3216, 611" shape="rect" alt="Document final contractor performance:Sub-Process" id="areadiagram_map_oakTR06GAqAC7xho_default" href="BPSubProcess_YakTR06GAqAC7xhp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3575, 571, 3875, 611" coords2="3575, 571, 3875, 611" shape="rect" alt="6 years after final invoice comply with Information and Retention Handling policies:Sub-Process" id="areadiagram_map_jp1jR06GAqAC7xeu_default" href="BPSubProcess_Tp1jR06GAqAC7xev.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3259, 571, 3531, 611" coords2="3259, 571, 3531, 611" shape="rect" alt="Change status to Administratively closed in FPDS:Sub-Process" id="areadiagram_map_2DGjR06GAqAC7xdc_default" href="BPSubProcess_2DGjR06GAqAC7xdd.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2102, 565, 2397, 605" coords2="2102, 565, 2397, 605" shape="rect" alt="Confirm completion and sign CO's Final Certification/Completion Statement:Sub-Process" id="areadiagram_map_0K3DR06GAqAC7xck_default" href="BPSubProcess_0K3DR06GAqAC7xcl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="422, 1002, 738, 1042" coords2="422, 1002, 738, 1042" shape="rect" alt="Complete and sign release form:Sub-Process" id="areadiagram_map_CnaDR06GAqAC7xbQ_default" href="BPSubProcess_CnaDR06GAqAC7xbR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="422, 942, 738, 982" coords2="422, 942, 738, 982" shape="rect" alt="Complete and sign assignment of refunds, rebates and credits, and other amounts:Sub-Process" id="areadiagram_map_aBcDR06GAqAC7xaw_default" href="BPSubProcess_aBcDR06GAqAC7xax.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1129, 565, 1408, 605" coords2="1129, 565, 1408, 605" shape="rect" alt="Complete field audit/desk audit and reconciliation:Sub-Process" id="areadiagram_map_Luf9R06GAqAC7xaE_default" href="BPSubProcess_Luf9R06GAqAC7xaF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="781, 565, 1076, 605" coords2="781, 565, 1076, 605" shape="rect" alt="Review and approve or reject Completion and/or Final invoice:Sub-Process" id="areadiagram_map_2J79R06GAqAC7xZc_default" href="BPSubProcess_2J79R06GAqAC7xZd.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="335, 505, 375, 545" coords2="335, 505, 375, 545" shape="rect" alt="as applicable to cost type contract:Gateway" id="areadiagram_map_clO9R06GAqAC7xYg_default" href="BPGateway_clO9R06GAqAC7xYh.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="422, 505, 738, 545" coords2="422, 505, 738, 545" shape="rect" alt="Obtain and review indirect cost rate agreement:Sub-Process" id="areadiagram_map_4_y9R06GAqAC7xYK_default" href="BPSubProcess_4_y9R06GAqAC7xYL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="422, 882, 738, 922" coords2="422, 882, 738, 922" shape="rect" alt="Complete and sign patent and copyright infringement report:Sub-Process" id="areadiagram_map__vM9R06GAqAC7xXi_default" href="BPSubProcess__vM9R06GAqAC7xXj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="422, 822, 738, 862" coords2="422, 822, 738, 862" shape="rect" alt="Complete and sign royalty statement and patent report:Sub-Process" id="areadiagram_map_R6vdR06GAqAC7xWh_default" href="BPSubProcess_R6vdR06GAqAC7xWi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="422, 442, 738, 482" coords2="422, 442, 738, 482" shape="rect" alt="Review and approve or reject completion invoice:Sub-Process" id="areadiagram_map_EjLdR06GAqAC7xVl_default" href="BPSubProcess_EjLdR06GAqAC7xVm.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 738, 3991, 1295" coords2="17, 738, 3991, 1295" shape="rect" alt="Contractor/Vendor:Lane" id="areadiagram_map_JG1dR06GAqAC7xVD_default" href="BPLane_JG1dR06GAqAC7xVE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="422, 380, 738, 420" coords2="422, 380, 738, 420" shape="rect" alt="Prepare and send notification of expiration of contract:Sub-Process" id="areadiagram_map_FnxdR06GAqAC7xUx_default" href="BPSubProcess_FnxdR06GAqAC7xUy.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3952, 581, 3972, 601" coords2="3952, 581, 3972, 601" shape="rect" alt=":End Event" id="areadiagram_map_a53NR06GAqAC7xHO_default" href="BPEndEvent_a53NR06GAqAC7xHP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="45, 628, 186, 646" coords2="45, 628, 186, 646" shape="rect" alt="Administration(TAB-A):Sub-Process" id="areadiagram_map_I53NR06GAqAC7xHK_sublevelflowitem1" href="BusinessProcessDiagram_9k_8tE6GAqAC77X6.html?shapeid=rTrjOk6GAqAC7zhg"/>
+<area imageId="diagram" coords="45, 576, 65, 596" coords2="45, 576, 65, 596" shape="rect" alt=":Start Event" id="areadiagram_map_I53NR06GAqAC7xHK_default" href="BPStartEvent_I53NR06GAqAC7xHL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 308, 3991, 738" coords2="17, 308, 3991, 738" shape="rect" alt="CO/CS:Lane" id="areadiagram_map_CQudR06GAqAC7xUU_default" href="BPLane_CQudR06GAqAC7xUV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="422, 128, 738, 168" coords2="422, 128, 738, 168" shape="rect" alt="Review Final Report and/or Final Deliverables:Sub-Process" id="areadiagram_map_T3KdR06GAqAC7xTo_default" href="BPSubProcess_T3KdR06GAqAC7xTp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 2, 3991, 308" coords2="17, 2, 3991, 308" shape="rect" alt="COR:Lane" id="areadiagram_map_A0fNR06GAqAC7xHb_default" href="BPLane_A0fNR06GAqAC7xHc.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 3992, 1296" coords2="2, 2, 3992, 1296" shape="rect" alt="Closeout:Pool" id="areadiagram_map_dUfNR06GAqAC7xHX_default" href="BPPool_dUfNR06GAqAC7xHY.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_FnxdR06GAqAC7xUy.html" class="ItemLink">Prepare and send notification of expiration of contract : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_A0fNR06GAqAC7xHc.html" class="ItemLink">COR : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_R6vdR06GAqAC7xWi.html" class="ItemLink">Complete and sign royalty statement and patent report : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_EjLdR06GAqAC7xVm.html" class="ItemLink">Review and approve or reject completion invoice : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_CQudR06GAqAC7xUV.html" class="ItemLink">CO/CS : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_4_y9R06GAqAC7xYL.html" class="ItemLink">Obtain and review indirect cost rate agreement : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess__vM9R06GAqAC7xXj.html" class="ItemLink">Complete and sign patent and copyright infringement report : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_JG1dR06GAqAC7xVE.html" class="ItemLink">Contractor/Vendor : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_T3KdR06GAqAC7xTp.html" class="ItemLink">Review Final Report and/or Final Deliverables : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_dUfNR06GAqAC7xHY.html" class="ItemLink">Closeout : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_aBcDR06GAqAC7xax.html" class="ItemLink">Complete and sign assignment of refunds, rebates and credits, and other amounts : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_clO9R06GAqAC7xYh.html" class="ItemLink">as applicable to cost type contract : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_CnaDR06GAqAC7xbR.html" class="ItemLink">Complete and sign release form : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP06</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_2J79R06GAqAC7xZd.html" class="ItemLink">Review and approve or reject Completion and/or Final invoice : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Luf9R06GAqAC7xaF.html" class="ItemLink">Complete field audit/desk audit and reconciliation : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP11</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Y_eB506GAqAC7zz6.html" class="ItemLink">Submit Completion and/or Final Invoice  : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP12</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_0K3DR06GAqAC7xcl.html" class="ItemLink">Confirm completion and sign CO's Final Certification/Completion Statement : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP14</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_SF1h506GAqAC7z2b.html" class="ItemLink">Submit Final Indirect Cost Rate Agreement : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP14</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_2DGjR06GAqAC7xdd.html" class="ItemLink">Change status to Administratively closed in FPDS : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP15</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_Uvdh506GAqAC7z2r.html" class="ItemLink">As applicable : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP15</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_F8oh506GAqAC7z1J.html" class="ItemLink">Review and recommend payment or disapproval of Completion and/or Final Invoice : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP17</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_C6HR506GAqAC7z57.html" class="ItemLink">Complete COR Certification of Final Report and requirements met : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP17</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess__Lvh506GAqAC7z3N.html" class="ItemLink">Submit Final Individual Subcontract Report : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP17</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_a53NR06GAqAC7xHP.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP18</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_1vkR506GAqAC7z3d.html" class="ItemLink">As applicable : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP20</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_gs_J506GAqAC70nX.html" class="ItemLink">Within 120 days of expiration complete Contractor Performance Assessment Record : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP20</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Tp1jR06GAqAC7xev.html" class="ItemLink">6 years after final invoice comply with Information and Retention Handling policies : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP23</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ArtifactTextAnnotation.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ArtifactTextAnnotation.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTextAnnotation_JnAAF06GAqAC72P9.html" class="ItemLink">Annotation4 : Text Annotation</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP29</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_YakTR06GAqAC7xhp.html" class="ItemLink">Document final contractor performance : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP32</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_I53NR06GAqAC7xHL.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP42</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_xL7e506GAqAC7zBG.html" class="ItemLink">Send Expiration Letter to Contractor : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP48</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_Uaqx506GAqAC7z7x.html" class="ItemLink">Confirm receipt of Signed COR Certification : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP52</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_IO5J506GAqAC70gy.html" class="ItemLink">Review Final Individual Subcontract Report and indicate acceptance or rejection in eSRS : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

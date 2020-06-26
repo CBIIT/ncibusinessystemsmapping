@@ -1,0 +1,376 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - Planning Documentation for Modification</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="BusinessProcessDiagram_9k_8tE6GAqAC77X6.html" class="PageParentTitle">Contract Post Award Phase : Pool</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_9k_8tE6GAqAC77X6.html" class="PageParentTitle">Planning Documentation for Modification : Sub-Process</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - Planning Documentation for Modification		</span>
+<a onclick="javascript: showVpLink('Office Of Acquisitions.vpp://diagram/6ai6nU6GAqAC76se', 'Planning Documentation for Modification\nOffice Of Acquisitions.vpp://diagram/6ai6nU6GAqAC76se', 'Planning Documentation for Modification', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|75.0|106.0|20.0|20.0|BPStartEvent_ZOi6nU6GAqAC76so.html|BPStartEvent_ZOi6nU6GAqAC76so.html|pOi6nU6GAqAC76sn" id="optionpOi6nU6GAqAC76sn">Unnamed Start Event : Start Event</option>
+<option value="shape|17.0|2.0|2033.0|373.0|BPLane_XUy6nU6GAqAC76s5.html|BPLane_XUy6nU6GAqAC76s5.html|XUy6nU6GAqAC76s4" id="optionXUy6nU6GAqAC76s4">COR : Lane</option>
+<option value="shape|2000.0|106.0|20.0|20.0|BPEndEvent_LOi6nU6GAqAC76ss.html|BPEndEvent_LOi6nU6GAqAC76ss.html|LOi6nU6GAqAC76sr" id="optionLOi6nU6GAqAC76sr">Unnamed End Event : End Event</option>
+<option value="shape|363.0|96.0|287.0|40.0|BPSubProcess_MsF6nU6GAqAC76t6.html|BPSubProcess_MsF6nU6GAqAC76t6.html|MsF6nU6GAqAC76t5" id="optionMsF6nU6GAqAC76t5">Prepare Acquisition Plan or Acquisition Request and submit to OA for contract modification  : Sub-Process</option>
+<option value="shape|2.0|2.0|2048.0|373.0|BPPool_FUy6nU6GAqAC76s1.html|BPPool_FUy6nU6GAqAC76s1.html|FUy6nU6GAqAC76s0" id="optionFUy6nU6GAqAC76s0">Planning Documentation for Modification : Pool</option>
+<option value="shape|733.0|96.0|425.0|40.0|BPSubProcess__awGnU6GAqAC76u0.html|BPSubProcess__awGnU6GAqAC76u0.html|_awGnU6GAqAC76uz" id="option_awGnU6GAqAC76uz">Prepare Status of Funds and progress document and submit to OA for contract modification  : Sub-Process</option>
+<option value="shape|745.0|151.0|40.0|40.0|BPGateway_9oqGnU6GAqAC767B.html|BPGateway_9oqGnU6GAqAC767B.html|9oqGnU6GAqAC767A" id="option9oqGnU6GAqAC767A">As applicable : Gateway</option>
+<option value="shape|840.0|151.0|312.0|40.0|BPSubProcess_svmGnU6GAqAC767x.html|BPSubProcess_svmGnU6GAqAC767x.html|svmGnU6GAqAC767w" id="optionsvmGnU6GAqAC767w">Prepare JOFOC/LSJ and submit to OA for contract modification  : Sub-Process</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Planning_Documentation_for_Modification.png" usemap="#diagram_map" class="Image" width="2054" height="379"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="95.0, 109.0, 95.0, 123.0, 363.0, 123.0, 363.0, 109.0" coords2="95.0, 109.0, 95.0, 123.0, 363.0, 123.0, 363.0, 109.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_AcF6nU6GAqAC76uA_default" href="BPSequenceFlow_PsF6nU6GAqAC76t_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="650.0, 109.0, 650.0, 123.0, 733.0, 123.0, 733.0, 109.0" coords2="650.0, 109.0, 650.0, 123.0, 733.0, 123.0, 733.0, 109.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_z6wGnU6GAqAC76u8_default" href="BPSequenceFlow_96wGnU6GAqAC76u7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="685.0, 106.0, 685.0, 109.0, 650.0, 109.0, 650.0, 123.0, 685.0, 123.0, 685.0, 163.0, 682.0, 163.0, 682.0, 177.0, 685.0, 177.0, 685.0, 180.0, 699.0, 180.0, 699.0, 177.0, 745.0, 177.0, 745.0, 163.0, 699.0, 163.0, 699.0, 123.0, 702.0, 123.0, 702.0, 109.0, 699.0, 109.0, 699.0, 106.0" coords2="685.0, 106.0, 685.0, 109.0, 650.0, 109.0, 650.0, 123.0, 685.0, 123.0, 685.0, 163.0, 682.0, 163.0, 682.0, 177.0, 685.0, 177.0, 685.0, 180.0, 699.0, 180.0, 699.0, 177.0, 745.0, 177.0, 745.0, 163.0, 699.0, 163.0, 699.0, 123.0, 702.0, 123.0, 702.0, 109.0, 699.0, 109.0, 699.0, 106.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_e2GGnU6GAqAC767d_default" href="BPSequenceFlow_O2GGnU6GAqAC767c.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="785.0, 164.0, 785.0, 178.0, 840.0, 178.0, 840.0, 164.0" coords2="785.0, 164.0, 785.0, 178.0, 840.0, 178.0, 840.0, 164.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_3vmGnU6GAqAC7675_default" href="BPSequenceFlow_7vmGnU6GAqAC7674.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1158.0, 109.0, 1158.0, 123.0, 2000.0, 123.0, 2000.0, 109.0" coords2="1158.0, 109.0, 1158.0, 123.0, 2000.0, 123.0, 2000.0, 109.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Y70mnU6GAqAC76.Y_default" href="BPSequenceFlow_o70mnU6GAqAC76_X.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1571.0, 106.0, 1571.0, 109.0, 1568.0, 109.0, 1568.0, 123.0, 1571.0, 123.0, 1571.0, 163.0, 1152.0, 163.0, 1152.0, 177.0, 1571.0, 177.0, 1571.0, 180.0, 1585.0, 180.0, 1585.0, 177.0, 1588.0, 177.0, 1588.0, 163.0, 1585.0, 163.0, 1585.0, 123.0, 2000.0, 123.0, 2000.0, 109.0, 1585.0, 109.0, 1585.0, 106.0" coords2="1571.0, 106.0, 1571.0, 109.0, 1568.0, 109.0, 1568.0, 123.0, 1571.0, 123.0, 1571.0, 163.0, 1152.0, 163.0, 1152.0, 177.0, 1571.0, 177.0, 1571.0, 180.0, 1585.0, 180.0, 1585.0, 177.0, 1588.0, 177.0, 1588.0, 163.0, 1585.0, 163.0, 1585.0, 123.0, 2000.0, 123.0, 2000.0, 109.0, 1585.0, 109.0, 1585.0, 106.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_qFsmnU6GAqAC76.s_default" href="BPSequenceFlow_yFsmnU6GAqAC76_r.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="840, 151, 1152, 191" coords2="840, 151, 1152, 191" shape="rect" alt="Prepare JOFOC/LSJ and submit to OA for contract modification :Sub-Process" id="areadiagram_map_svmGnU6GAqAC767w_default" href="BPSubProcess_svmGnU6GAqAC767x.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="745, 151, 785, 191" coords2="745, 151, 785, 191" shape="rect" alt="As applicable:Gateway" id="areadiagram_map_9oqGnU6GAqAC767A_default" href="BPGateway_9oqGnU6GAqAC767B.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="733, 96, 1158, 136" coords2="733, 96, 1158, 136" shape="rect" alt="Prepare Status of Funds and progress document and submit to OA for contract modification :Sub-Process" id="areadiagram_map__awGnU6GAqAC76uz_default" href="BPSubProcess__awGnU6GAqAC76u0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="363, 96, 650, 136" coords2="363, 96, 650, 136" shape="rect" alt="Prepare Acquisition Plan or Acquisition Request and submit to OA for contract modification :Sub-Process" id="areadiagram_map_MsF6nU6GAqAC76t5_default" href="BPSubProcess_MsF6nU6GAqAC76t6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="75, 106, 95, 126" coords2="75, 106, 95, 126" shape="rect" alt=":Start Event" id="areadiagram_map_pOi6nU6GAqAC76sn_default" href="BPStartEvent_ZOi6nU6GAqAC76so.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2000, 106, 2020, 126" coords2="2000, 106, 2020, 126" shape="rect" alt=":End Event" id="areadiagram_map_LOi6nU6GAqAC76sr_default" href="BPEndEvent_LOi6nU6GAqAC76ss.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 2, 2050, 375" coords2="17, 2, 2050, 375" shape="rect" alt="COR:Lane" id="areadiagram_map_XUy6nU6GAqAC76s4_default" href="BPLane_XUy6nU6GAqAC76s5.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 2050, 375" coords2="2, 2, 2050, 375" shape="rect" alt="Planning Documentation for Modification:Pool" id="areadiagram_map_FUy6nU6GAqAC76s0_default" href="BPPool_FUy6nU6GAqAC76s1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_ZOi6nU6GAqAC76so.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_XUy6nU6GAqAC76s5.html" class="ItemLink">COR : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_LOi6nU6GAqAC76ss.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_MsF6nU6GAqAC76t6.html" class="ItemLink">Prepare Acquisition Plan or Acquisition Request and submit to OA for contract modification  : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_FUy6nU6GAqAC76s1.html" class="ItemLink">Planning Documentation for Modification : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess__awGnU6GAqAC76u0.html" class="ItemLink">Prepare Status of Funds and progress document and submit to OA for contract modification  : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_9oqGnU6GAqAC767B.html" class="ItemLink">As applicable : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP09</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_svmGnU6GAqAC767x.html" class="ItemLink">Prepare JOFOC/LSJ and submit to OA for contract modification  : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>
