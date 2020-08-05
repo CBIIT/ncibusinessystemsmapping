@@ -1,0 +1,377 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - Issue Amendments to Solicitation as applicable </title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="BusinessProcessDiagram_gNIXkE6AU8ikRy1e.html" class="PageParentTitle">Soliciation : Pool</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_gNIXkE6AU8ikRy1e.html" class="PageParentTitle">CO/CS : Lane</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_gNIXkE6AU8ikRy1e.html" class="PageParentTitle">Issue Amendments to Solicitation as applicable  : Sub-Process</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - Issue Amendments to Solicitation as applicable 		</span>
+<a onclick="javascript: showVpLink('Office Of Acquisitions.vpp://diagram/jaLc2c6GAqAC78eI', 'Issue Amendments to Solicitation as applicable \nOffice Of Acquisitions.vpp://diagram/jaLc2c6GAqAC78eI', 'Issue Amendments to Solicitation as applicable ', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|55.0|166.0|20.0|20.0|BPStartEvent_3OLc2c6GAqAC78eU.html|BPStartEvent_3OLc2c6GAqAC78eU.html|3OLc2c6GAqAC78eT" id="option3OLc2c6GAqAC78eT">Unnamed Start Event : Start Event</option>
+<option value="shape|17.0|2.0|2066.0|343.0|BPLane_Ztbc2c6GAqAC78er.html|BPLane_Ztbc2c6GAqAC78er.html|Ztbc2c6GAqAC78eq" id="optionZtbc2c6GAqAC78eq">CO/CS : Lane</option>
+<option value="shape|2025.0|163.0|20.0|20.0|BPEndEvent_UuLc2c6GAqAC78eY.html|BPEndEvent_UuLc2c6GAqAC78eY.html|UuLc2c6GAqAC78eX" id="optionUuLc2c6GAqAC78eX">Unnamed End Event : End Event</option>
+<option value="shape|214.0|156.0|484.0|40.0|BPTask_t7w82c6GAqAC78fN.html|BPTask_t7w82c6GAqAC78fN.html|t7w82c6GAqAC78fM" id="optiont7w82c6GAqAC78fM">Create Solicitation Amendment with MS Word to address quetsions, extend the due date of proposals/quotes or to make other changes to the Solicitation Document : Task</option>
+<option value="shape|2.0|2.0|2081.0|343.0|BPPool_ytbc2c6GAqAC78en.html|BPPool_ytbc2c6GAqAC78en.html|ytbc2c6GAqAC78em" id="optionytbc2c6GAqAC78em">Issue Amendments to Solicitation as applicable  : Pool</option>
+<option value="shape|758.0|156.0|150.0|40.0|BPTask_wEm82c6GAqAC78fp.html|BPTask_wEm82c6GAqAC78fp.html|wEm82c6GAqAC78fo" id="optionwEm82c6GAqAC78fo">Save Solicitation Amendment as PDF : Task</option>
+<option value="shape|998.0|153.0|344.0|40.0|BPTask_GxB82c6GAqAC78gB.html|BPTask_GxB82c6GAqAC78gB.html|GxB82c6GAqAC78gA" id="optionGxB82c6GAqAC78gA">Publish the Solicitation Amendment to the application the Solicitation Document was published to in beta.sam.gov : Task</option>
+<option value="shape|1438.0|153.0|268.0|40.0|BPTask_f4782c6GAqAC78gh.html|BPTask_f4782c6GAqAC78gh.html|f4782c6GAqAC78gg" id="optionf4782c6GAqAC78gg">Save Solicitation Amendment in the Electric File is OASYS or FCAS : Task</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Issue_Amendments_to_Solicitation_as_applicable_.png" usemap="#diagram_map" class="Image" width="2243" height="349"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="75.0, 169.0, 75.0, 183.0, 214.0, 183.0, 214.0, 169.0" coords2="75.0, 169.0, 75.0, 183.0, 214.0, 183.0, 214.0, 169.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_2Hw82c6GAqAC78fT_default" href="BPSequenceFlow_6Hw82c6GAqAC78fS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="698.0, 169.0, 698.0, 183.0, 758.0, 183.0, 758.0, 169.0" coords2="698.0, 169.0, 698.0, 183.0, 758.0, 183.0, 758.0, 169.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_TEm82c6GAqAC78fx_default" href="BPSequenceFlow_dEm82c6GAqAC78fw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="908.0, 166.0, 908.0, 180.0, 998.0, 180.0, 998.0, 166.0" coords2="908.0, 166.0, 908.0, 180.0, 998.0, 180.0, 998.0, 166.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_IJB82c6GAqAC78gJ_default" href="BPSequenceFlow_AJB82c6GAqAC78gI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1342.0, 166.0, 1342.0, 180.0, 1438.0, 180.0, 1438.0, 166.0" coords2="1342.0, 166.0, 1342.0, 180.0, 1438.0, 180.0, 1438.0, 166.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_VE782c6GAqAC78gp_default" href="BPSequenceFlow_ZE782c6GAqAC78go.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1706.0, 169.0, 1706.0, 183.0, 2025.0, 183.0, 2025.0, 169.0" coords2="1706.0, 169.0, 1706.0, 183.0, 2025.0, 183.0, 2025.0, 169.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_7zIC2c6GAqAC78g5_default" href="BPSequenceFlow_rzIC2c6GAqAC78g4.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1438, 153, 1706, 193" coords2="1438, 153, 1706, 193" shape="rect" alt="Save Solicitation Amendment in the Electric File is OASYS or FCAS:Task" id="areadiagram_map_f4782c6GAqAC78gg_default" href="BPTask_f4782c6GAqAC78gh.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="998, 153, 1342, 193" coords2="998, 153, 1342, 193" shape="rect" alt="Publish the Solicitation Amendment to the application the Solicitation Document was published to in beta.sam.gov:Task" id="areadiagram_map_GxB82c6GAqAC78gA_default" href="BPTask_GxB82c6GAqAC78gB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="758, 156, 908, 196" coords2="758, 156, 908, 196" shape="rect" alt="Save Solicitation Amendment as PDF:Task" id="areadiagram_map_wEm82c6GAqAC78fo_default" href="BPTask_wEm82c6GAqAC78fp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="214, 156, 698, 196" coords2="214, 156, 698, 196" shape="rect" alt="Create Solicitation Amendment with MS Word to address quetsions, extend the due date of proposals/quotes or to make other changes to the Solicitation Document:Task" id="areadiagram_map_t7w82c6GAqAC78fM_default" href="BPTask_t7w82c6GAqAC78fN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="55, 219, 473, 237" coords2="55, 219, 473, 237" shape="rect" alt="Record and document Solicitation Correspondences and responses, if received:Sub-Process" id="areadiagram_map_3OLc2c6GAqAC78eT_sublevelflowitem1" href="BusinessProcessDiagram_gNIXkE6AU8ikRy1e.html?shapeid=u0VM2c6GAqAC78LK"/>
+<area imageId="diagram" coords="55, 166, 75, 186" coords2="55, 166, 75, 186" shape="rect" alt=":Start Event" id="areadiagram_map_3OLc2c6GAqAC78eT_default" href="BPStartEvent_3OLc2c6GAqAC78eU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2025, 216, 2244, 234" coords2="2025, 216, 2244, 234" shape="rect" alt="Submit Intent to propose as applicable:Task" id="areadiagram_map_UuLc2c6GAqAC78eX_sublevelflowitem1" href="BusinessProcessDiagram_gNIXkE6AU8ikRy1e.html?shapeid=utKPkE6AU8ikRzS3"/>
+<area imageId="diagram" coords="2025, 163, 2045, 183" coords2="2025, 163, 2045, 183" shape="rect" alt=":End Event" id="areadiagram_map_UuLc2c6GAqAC78eX_default" href="BPEndEvent_UuLc2c6GAqAC78eY.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 2, 2083, 345" coords2="17, 2, 2083, 345" shape="rect" alt="CO/CS:Lane" id="areadiagram_map_Ztbc2c6GAqAC78eq_default" href="BPLane_Ztbc2c6GAqAC78er.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 2083, 345" coords2="2, 2, 2083, 345" shape="rect" alt="Issue Amendments to Solicitation as applicable :Pool" id="areadiagram_map_ytbc2c6GAqAC78em_default" href="BPPool_ytbc2c6GAqAC78en.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_3OLc2c6GAqAC78eU.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_Ztbc2c6GAqAC78er.html" class="ItemLink">CO/CS : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_UuLc2c6GAqAC78eY.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_t7w82c6GAqAC78fN.html" class="ItemLink">Create Solicitation Amendment with MS Word to address quetsions, extend the due date of proposals/quotes or to make other changes to the Solicitation Document : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_ytbc2c6GAqAC78en.html" class="ItemLink">Issue Amendments to Solicitation as applicable  : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_wEm82c6GAqAC78fp.html" class="ItemLink">Save Solicitation Amendment as PDF : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_GxB82c6GAqAC78gB.html" class="ItemLink">Publish the Solicitation Amendment to the application the Solicitation Document was published to in beta.sam.gov : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP09</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_f4782c6GAqAC78gh.html" class="ItemLink">Save Solicitation Amendment in the Electric File is OASYS or FCAS : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>
