@@ -1,0 +1,637 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - Conduct Price or Cost Analysis</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html" class="PageParentTitle">Competitive Range/Source Selection : Pool</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html" class="PageParentTitle">CO/CS : Lane</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html" class="PageParentTitle">Conduct Price or Cost Analysis : Sub-Process</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - Conduct Price or Cost Analysis		</span>
+<a onclick="javascript: showVpLink('Office Of Acquisitions.vpp://diagram/cBROSC6GAqAC767a', 'Conduct Price or Cost Analysis\nOffice Of Acquisitions.vpp://diagram/cBROSC6GAqAC767a', 'Conduct Price or Cost Analysis', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|13.0|0.0|4069.0|383.0|BPLane_nFJOSC6GAqAC768G.html|BPLane_nFJOSC6GAqAC768G.html|nFJOSC6GAqAC768F" id="optionnFJOSC6GAqAC768F">CO/CS : Lane</option>
+<option value="shape|1817.0|185.0|36.0|36.0|BPGateway_WcYAqU6GAqAC70qw.html|BPGateway_WcYAqU6GAqAC70qw.html|sqeuSC6GAqAC77Y1" id="optionsqeuSC6GAqAC77Y1">As applicable : Gateway</option>
+<option value="shape|485.0|169.0|344.0|90.0|BPSubProcess_HtfXtE6GAqAC78AP.html|BPSubProcess_HtfXtE6GAqAC78AP.html|EqeuSC6GAqAC77Yy" id="optionEqeuSC6GAqAC77Yy">Conduct Proposal Analysis to evaluate data other than certified cost or pricing data, to determine cost reasonableness (Analytical, MS Word/Excel)  : Sub-Process</option>
+<option value="shape|2282.0|185.0|36.0|36.0|BPGateway_CVZ5xU6GAqAC75j0.html|BPGateway_CVZ5xU6GAqAC75j0.html|FKeuSC6GAqAC77Yd" id="optionFKeuSC6GAqAC77Yd"> As applicable : Gateway</option>
+<option value="shape|2747.0|187.0|36.0|36.0|BPGateway_WMz5xU6GAqAC75la.html|BPGateway_WMz5xU6GAqAC75la.html|LKeuSC6GAqAC77Yj" id="optionLKeuSC6GAqAC77Yj"> As applicable : Gateway</option>
+<option value="shape|3204.0|185.0|36.0|36.0|BPGateway_ToIFxU6GAqAC75nk.html|BPGateway_ToIFxU6GAqAC75nk.html|PKeuSC6GAqAC77Yp" id="optionPKeuSC6GAqAC77Yp"> As applicable : Gateway</option>
+<option value="shape|384.0|185.0|36.0|36.0|BPGateway_lO8FxU6GAqAC75pU.html|BPGateway_lO8FxU6GAqAC75pU.html|IqeuSC6GAqAC77Yv" id="optionIqeuSC6GAqAC77Yv">As applicable : Gateway</option>
+<option value="shape|55.0|194.0|18.0|18.0|BPStartEvent_6ZROSC6GAqAC7671.html|BPStartEvent_6ZROSC6GAqAC7671.html|yZROSC6GAqAC767j" id="optionyZROSC6GAqAC767j">Unnamed Start Event : Start Event</option>
+<option value="shape|3985.0|194.0|18.0|18.0|BPEndEvent_ZZROSC6GAqAC7675.html|BPEndEvent_ZZROSC6GAqAC7675.html|ZZROSC6GAqAC7674" id="optionZZROSC6GAqAC7674">Unnamed End Event : End Event</option>
+<option value="shape|139.0|174.0|192.0|57.0|BPTask_1d1OSC6GAqAC768v.html|BPTask_1d1OSC6GAqAC768v.html|1d1OSC6GAqAC768u" id="option1d1OSC6GAqAC768u">Review Business Proposal (ADOBE, MS Excel, Future state OASYS/FCAS)  : Task</option>
+<option value="shape|0.0|0.0|4084.0|383.0|BPPool_ZFJOSC6GAqAC768C.html|BPPool_ZFJOSC6GAqAC768C.html|ZFJOSC6GAqAC768B" id="optionZFJOSC6GAqAC768B">Conduct Price or Cost Analysis : Pool</option>
+<option value="shape|3674.0|178.0|256.0|52.0|BPTask_iGouSC6GAqAC77Vw.html|BPTask_iGouSC6GAqAC77Vw.html|iGouSC6GAqAC77Vv" id="optioniGouSC6GAqAC77Vv">Complete Proposal Analysis, Price Analysis, Cost Analysis, Cost Realism and Reasonableness (ADOBE, OASYS/FCAS) : Task</option>
+<option value="shape|895.0|185.0|36.0|36.0|BPGateway_hErgSS6AU80kYMsg.html|BPGateway_hErgSS6AU80kYMsg.html|hErgSS6AU80kYMsf" id="optionhErgSS6AU80kYMsf">As applicable : Gateway</option>
+<option value="shape|961.0|174.0|376.0|61.0|BPTask_B97gSS6AU80kYMs2.html|BPTask_B97gSS6AU80kYMs2.html|B97gSS6AU80kYMs1" id="optionB97gSS6AU80kYMs1">Conduct Price Analysis when Certified Cost or Pricing Data are not required; Compare the proposals received (Analytical, MS Excel, ADOBE,  Market research using various Web Sites, Publish Price Lists, Indexes, Confer with NCI SME) : Task</option>
+<option value="shape|1891.0|174.0|364.0|59.0|BPTask_eTSjeG6GAqAC7zke.html|BPTask_eTSjeG6GAqAC7zke.html|OTSjeG6GAqAC7zkd" id="optionOTSjeG6GAqAC7zkd">Prepare Request for Field Pricing Assistance (MS Word, ADOBE) : Task</option>
+<option value="shape|2360.0|171.0|357.0|62.0|BPTask_1aqjeG6GAqAC7zks.html|BPTask_1aqjeG6GAqAC7zks.html|VaqjeG6GAqAC7zkr" id="optionVaqjeG6GAqAC7zkr">Review Indirect Cost Agreement if cost type contract. If no agreement in place review indirect cost rate proposed in proposal (ADOBE, FCAS and future state OASYS) : Task</option>
+<option value="shape|2825.0|169.0|343.0|68.0|BPTask_TCWjeG6GAqAC7zk6.html|BPTask_TCWjeG6GAqAC7zk6.html|DCWjeG6GAqAC7zk5" id="optionDCWjeG6GAqAC7zk5">Review Business proposal for cost type contracts to confirm signed Certificate of Current Cost or Pricing Data was submitted for those above threshold (ADOBE, FCAS and future state OASYS) : Task</option>
+<option value="shape|1364.0|185.0|36.0|36.0|BPGateway_W3OQSS6AU80kYNGK.html|BPGateway_W3OQSS6AU80kYNGK.html|W3OQSS6AU80kYNGJ" id="optionW3OQSS6AU80kYNGJ">As applicable : Gateway</option>
+<option value="shape|3277.0|168.0|359.0|76.0|BPTask_3NBjeG6GAqAC7zlI.html|BPTask_3NBjeG6GAqAC7zlI.html|XNBjeG6GAqAC7zlH" id="optionXNBjeG6GAqAC7zlH">Conduct Cost Realism Analysis on Cost type proposals; Compare IGCE with individual cost elements proposed; and document (Analytical, MS Excel, ADOBE, Future state OASYS/FCAS)  : Task</option>
+<option value="shape|1425.0|171.0|353.0|63.0|BPTask_7OJQSS6AU80kYNHL.html|BPTask_7OJQSS6AU80kYNHL.html|7OJQSS6AU80kYNHK" id="option7OJQSS6AU80kYNHK">Conduct Cost Analysis to evaluate reasonableness of individual cost elements when Certified Cost or Pricing Data are required; Conduct comparison of proposals received (Analytical, MS Excel, ADOBE, Various parametric or cost estimating models, Future state OASYS/FCAS) : Task</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Conduct_Price_or_Cost_Analysis.png" usemap="#diagram_map" class="Image" width="4088" height="387"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="73.0, 196.0, 73.0, 210.0, 139.0, 210.0, 139.0, 196.0" coords2="73.0, 196.0, 73.0, 210.0, 139.0, 210.0, 139.0, 196.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_a91OSC6GAqAC7681_default" href="BPSequenceFlow_S91OSC6GAqAC7680.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1853.0, 193.0, 1853.0, 207.0, 1891.0, 207.0, 1891.0, 193.0" coords2="1853.0, 193.0, 1853.0, 207.0, 1891.0, 207.0, 1891.0, 193.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_aqeuSC6GAqAC77Y7_default" href="BPSequenceFlow_KvsAqU6GAqAC70rX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2318.0, 193.0, 2318.0, 207.0, 2360.0, 207.0, 2360.0, 193.0" coords2="2318.0, 193.0, 2318.0, 207.0, 2360.0, 207.0, 2360.0, 193.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_mqeuSC6GAqAC77Y._default" href="BPSequenceFlow_sat5xU6GAqAC75kr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2783.0, 198.0, 2783.0, 212.0, 2825.0, 212.0, 2825.0, 198.0" coords2="2783.0, 198.0, 2783.0, 212.0, 2825.0, 212.0, 2825.0, 198.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_2qeuSC6GAqAC77ZB_default" href="BPSequenceFlow_yp35xU6GAqAC75mZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3240.0, 193.0, 3240.0, 207.0, 3277.0, 207.0, 3277.0, 193.0" coords2="3240.0, 193.0, 3240.0, 207.0, 3277.0, 207.0, 3277.0, 193.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_eqeuSC6GAqAC77ZE_default" href="BPSequenceFlow_5UoFxU6GAqAC75nz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="420.0, 195.0, 420.0, 209.0, 485.0, 209.0, 485.0, 195.0" coords2="420.0, 195.0, 420.0, 209.0, 485.0, 209.0, 485.0, 195.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_hqeuSC6GAqAC77ZH_default" href="BPSequenceFlow_sriFxU6GAqAC75pp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1778.0, 193.0, 1778.0, 207.0, 1817.0, 207.0, 1817.0, 193.0" coords2="1778.0, 193.0, 1778.0, 207.0, 1817.0, 207.0, 1817.0, 193.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_auZuSC6GAqAC77Zx_default" href="BPSequenceFlow_KuZuSC6GAqAC77Zw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2255.0, 196.0, 2255.0, 210.0, 2282.0, 210.0, 2282.0, 196.0" coords2="2255.0, 196.0, 2255.0, 210.0, 2282.0, 210.0, 2282.0, 196.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_xDduSC6GAqAC77aZ_default" href="BPSequenceFlow_hDduSC6GAqAC77aY.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2717.0, 197.0, 2717.0, 211.0, 2747.0, 211.0, 2747.0, 197.0" coords2="2717.0, 197.0, 2717.0, 211.0, 2747.0, 211.0, 2747.0, 197.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_8fDuSC6GAqAC77ax_default" href="BPSequenceFlow_sfDuSC6GAqAC77aw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3168.0, 194.0, 3168.0, 208.0, 3204.0, 208.0, 3204.0, 194.0" coords2="3168.0, 194.0, 3168.0, 208.0, 3204.0, 208.0, 3204.0, 194.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_e0buSC6GAqAC77bT_default" href="BPSequenceFlow_u0buSC6GAqAC77bS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3636.0, 193.0, 3636.0, 207.0, 3674.0, 207.0, 3674.0, 193.0" coords2="3636.0, 193.0, 3636.0, 207.0, 3674.0, 207.0, 3674.0, 193.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_HPnuSC6GAqAC77bz_default" href="BPSequenceFlow_bPnuSC6GAqAC77by.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3930.0, 196.0, 3930.0, 210.0, 3985.0, 210.0, 3985.0, 196.0" coords2="3930.0, 196.0, 3930.0, 210.0, 3985.0, 210.0, 3985.0, 196.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_AX4eSC6GAqAC77cv_default" href="BPSequenceFlow_fn4eSC6GAqAC77cu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1829.0, 135.0, 1829.0, 138.0, 1826.0, 138.0, 1826.0, 152.0, 1829.0, 152.0, 1829.0, 185.0, 1843.0, 185.0, 1843.0, 152.0, 2253.0, 152.0, 2253.0, 196.0, 2250.0, 196.0, 2250.0, 210.0, 2253.0, 210.0, 2253.0, 213.0, 2267.0, 213.0, 2267.0, 210.0, 2282.0, 210.0, 2282.0, 196.0, 2267.0, 196.0, 2267.0, 152.0, 2270.0, 152.0, 2270.0, 138.0, 2267.0, 138.0, 2267.0, 135.0, 2253.0, 135.0, 2253.0, 138.0, 1843.0, 138.0, 1843.0, 135.0" coords2="1829.0, 135.0, 1829.0, 138.0, 1826.0, 138.0, 1826.0, 152.0, 1829.0, 152.0, 1829.0, 185.0, 1843.0, 185.0, 1843.0, 152.0, 2253.0, 152.0, 2253.0, 196.0, 2250.0, 196.0, 2250.0, 210.0, 2253.0, 210.0, 2253.0, 213.0, 2267.0, 213.0, 2267.0, 210.0, 2282.0, 210.0, 2282.0, 196.0, 2267.0, 196.0, 2267.0, 152.0, 2270.0, 152.0, 2270.0, 138.0, 2267.0, 138.0, 2267.0, 135.0, 2253.0, 135.0, 2253.0, 138.0, 1843.0, 138.0, 1843.0, 135.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_8kMeSC6GAqAC77dR_default" href="BPSequenceFlow_skMeSC6GAqAC77dQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2294.0, 134.0, 2294.0, 137.0, 2291.0, 137.0, 2291.0, 151.0, 2294.0, 151.0, 2294.0, 185.0, 2308.0, 185.0, 2308.0, 151.0, 2720.0, 151.0, 2720.0, 197.0, 2717.0, 197.0, 2717.0, 211.0, 2720.0, 211.0, 2720.0, 214.0, 2734.0, 214.0, 2734.0, 211.0, 2747.0, 211.0, 2747.0, 197.0, 2734.0, 197.0, 2734.0, 151.0, 2737.0, 151.0, 2737.0, 137.0, 2734.0, 137.0, 2734.0, 134.0, 2720.0, 134.0, 2720.0, 137.0, 2308.0, 137.0, 2308.0, 134.0" coords2="2294.0, 134.0, 2294.0, 137.0, 2291.0, 137.0, 2291.0, 151.0, 2294.0, 151.0, 2294.0, 185.0, 2308.0, 185.0, 2308.0, 151.0, 2720.0, 151.0, 2720.0, 197.0, 2717.0, 197.0, 2717.0, 211.0, 2720.0, 211.0, 2720.0, 214.0, 2734.0, 214.0, 2734.0, 211.0, 2747.0, 211.0, 2747.0, 197.0, 2734.0, 197.0, 2734.0, 151.0, 2737.0, 151.0, 2737.0, 137.0, 2734.0, 137.0, 2734.0, 134.0, 2720.0, 134.0, 2720.0, 137.0, 2308.0, 137.0, 2308.0, 134.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_b_ceSC6GAqAC77dp_default" href="BPSequenceFlow_L_ceSC6GAqAC77do.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2759.0, 134.0, 2759.0, 137.0, 2756.0, 137.0, 2756.0, 151.0, 2759.0, 151.0, 2759.0, 187.0, 2773.0, 187.0, 2773.0, 151.0, 3176.0, 151.0, 3176.0, 194.0, 3173.0, 194.0, 3173.0, 208.0, 3176.0, 208.0, 3176.0, 211.0, 3190.0, 211.0, 3190.0, 208.0, 3204.0, 208.0, 3204.0, 194.0, 3190.0, 194.0, 3190.0, 151.0, 3193.0, 151.0, 3193.0, 137.0, 3190.0, 137.0, 3190.0, 134.0, 3176.0, 134.0, 3176.0, 137.0, 2773.0, 137.0, 2773.0, 134.0" coords2="2759.0, 134.0, 2759.0, 137.0, 2756.0, 137.0, 2756.0, 151.0, 2759.0, 151.0, 2759.0, 187.0, 2773.0, 187.0, 2773.0, 151.0, 3176.0, 151.0, 3176.0, 194.0, 3173.0, 194.0, 3173.0, 208.0, 3176.0, 208.0, 3176.0, 211.0, 3190.0, 211.0, 3190.0, 208.0, 3204.0, 208.0, 3204.0, 194.0, 3190.0, 194.0, 3190.0, 151.0, 3193.0, 151.0, 3193.0, 137.0, 3190.0, 137.0, 3190.0, 134.0, 3176.0, 134.0, 3176.0, 137.0, 2773.0, 137.0, 2773.0, 134.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_PgyeSC6GAqAC77eB_default" href="BPSequenceFlow_3gyeSC6GAqAC77eA.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3215.0, 132.0, 3215.0, 135.0, 3212.0, 135.0, 3212.0, 149.0, 3215.0, 149.0, 3215.0, 185.0, 3229.0, 185.0, 3229.0, 149.0, 3636.0, 149.0, 3636.0, 194.0, 3633.0, 194.0, 3633.0, 208.0, 3636.0, 208.0, 3636.0, 211.0, 3650.0, 211.0, 3650.0, 208.0, 3674.0, 208.0, 3674.0, 194.0, 3650.0, 194.0, 3650.0, 149.0, 3653.0, 149.0, 3653.0, 135.0, 3650.0, 135.0, 3650.0, 132.0, 3636.0, 132.0, 3636.0, 135.0, 3229.0, 135.0, 3229.0, 132.0" coords2="3215.0, 132.0, 3215.0, 135.0, 3212.0, 135.0, 3212.0, 149.0, 3215.0, 149.0, 3215.0, 185.0, 3229.0, 185.0, 3229.0, 149.0, 3636.0, 149.0, 3636.0, 194.0, 3633.0, 194.0, 3633.0, 208.0, 3636.0, 208.0, 3636.0, 211.0, 3650.0, 211.0, 3650.0, 208.0, 3674.0, 208.0, 3674.0, 194.0, 3650.0, 194.0, 3650.0, 149.0, 3653.0, 149.0, 3653.0, 135.0, 3650.0, 135.0, 3650.0, 132.0, 3636.0, 132.0, 3636.0, 135.0, 3229.0, 135.0, 3229.0, 132.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_t7qeSC6GAqAC77eZ_default" href="BPSequenceFlow_17qeSC6GAqAC77eY.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="331.0, 196.0, 331.0, 210.0, 384.0, 210.0, 384.0, 196.0" coords2="331.0, 196.0, 331.0, 210.0, 384.0, 210.0, 384.0, 196.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_0krgSS6AU80kYMso_default" href="BPSequenceFlow_4krgSS6AU80kYMsn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="931.0, 196.0, 931.0, 210.0, 961.0, 210.0, 961.0, 196.0" coords2="931.0, 196.0, 931.0, 210.0, 961.0, 210.0, 961.0, 196.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_4D7gSS6AU80kYMs._default" href="BPSequenceFlow_wD7gSS6AU80kYMs9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="907.0, 139.0, 907.0, 142.0, 904.0, 142.0, 904.0, 156.0, 907.0, 156.0, 907.0, 185.0, 921.0, 185.0, 921.0, 156.0, 1339.0, 156.0, 1339.0, 196.0, 1336.0, 196.0, 1336.0, 210.0, 1339.0, 210.0, 1339.0, 213.0, 1353.0, 213.0, 1353.0, 210.0, 1364.0, 210.0, 1364.0, 196.0, 1353.0, 196.0, 1353.0, 156.0, 1356.0, 156.0, 1356.0, 142.0, 1353.0, 142.0, 1353.0, 139.0, 1339.0, 139.0, 1339.0, 142.0, 921.0, 142.0, 921.0, 139.0" coords2="907.0, 139.0, 907.0, 142.0, 904.0, 142.0, 904.0, 156.0, 907.0, 156.0, 907.0, 185.0, 921.0, 185.0, 921.0, 156.0, 1339.0, 156.0, 1339.0, 196.0, 1336.0, 196.0, 1336.0, 210.0, 1339.0, 210.0, 1339.0, 213.0, 1353.0, 213.0, 1353.0, 210.0, 1364.0, 210.0, 1364.0, 196.0, 1353.0, 196.0, 1353.0, 156.0, 1356.0, 156.0, 1356.0, 142.0, 1353.0, 142.0, 1353.0, 139.0, 1339.0, 139.0, 1339.0, 142.0, 921.0, 142.0, 921.0, 139.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_cj0QSS6AU80kYNFe_default" href="BPSequenceFlow_Mj0QSS6AU80kYNFd.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1337.0, 196.0, 1337.0, 210.0, 1364.0, 210.0, 1364.0, 196.0" coords2="1337.0, 196.0, 1337.0, 210.0, 1364.0, 210.0, 1364.0, 196.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_EPOQSS6AU80kYNGS_default" href="BPSequenceFlow_IPOQSS6AU80kYNGR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1400.0, 194.0, 1400.0, 208.0, 1425.0, 208.0, 1425.0, 194.0" coords2="1400.0, 194.0, 1400.0, 208.0, 1425.0, 208.0, 1425.0, 194.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_JuJQSS6AU80kYNHT_default" href="BPSequenceFlow_BuJQSS6AU80kYNHS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1376.0, 139.0, 1376.0, 142.0, 1373.0, 142.0, 1373.0, 156.0, 1376.0, 156.0, 1376.0, 185.0, 1390.0, 185.0, 1390.0, 156.0, 1779.0, 156.0, 1779.0, 192.0, 1776.0, 192.0, 1776.0, 206.0, 1779.0, 206.0, 1779.0, 209.0, 1793.0, 209.0, 1793.0, 206.0, 1817.0, 206.0, 1817.0, 192.0, 1793.0, 192.0, 1793.0, 156.0, 1796.0, 156.0, 1796.0, 142.0, 1793.0, 142.0, 1793.0, 139.0, 1779.0, 139.0, 1779.0, 142.0, 1390.0, 142.0, 1390.0, 139.0" coords2="1376.0, 139.0, 1376.0, 142.0, 1373.0, 142.0, 1373.0, 156.0, 1376.0, 156.0, 1376.0, 185.0, 1390.0, 185.0, 1390.0, 156.0, 1779.0, 156.0, 1779.0, 192.0, 1776.0, 192.0, 1776.0, 206.0, 1779.0, 206.0, 1779.0, 209.0, 1793.0, 209.0, 1793.0, 206.0, 1817.0, 206.0, 1817.0, 192.0, 1793.0, 192.0, 1793.0, 156.0, 1796.0, 156.0, 1796.0, 142.0, 1793.0, 142.0, 1793.0, 139.0, 1779.0, 139.0, 1779.0, 142.0, 1390.0, 142.0, 1390.0, 139.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_epPQSS6AU80kYNH__default" href="BPSequenceFlow_upPQSS6AU80kYNH_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="829.0, 195.0, 829.0, 209.0, 895.0, 209.0, 895.0, 195.0" coords2="829.0, 195.0, 829.0, 209.0, 895.0, 209.0, 895.0, 195.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_58NI6S6AU80kYHyR_default" href="BPSequenceFlow_J8NI6S6AU80kYHyQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="396.0, 139.0, 396.0, 142.0, 393.0, 142.0, 393.0, 156.0, 396.0, 156.0, 396.0, 185.0, 410.0, 185.0, 410.0, 156.0, 856.0, 156.0, 856.0, 196.0, 853.0, 196.0, 853.0, 210.0, 856.0, 210.0, 856.0, 213.0, 870.0, 213.0, 870.0, 210.0, 895.0, 210.0, 895.0, 196.0, 870.0, 196.0, 870.0, 156.0, 873.0, 156.0, 873.0, 142.0, 870.0, 142.0, 870.0, 139.0, 856.0, 139.0, 856.0, 142.0, 410.0, 142.0, 410.0, 139.0" coords2="396.0, 139.0, 396.0, 142.0, 393.0, 142.0, 393.0, 156.0, 396.0, 156.0, 396.0, 185.0, 410.0, 185.0, 410.0, 156.0, 856.0, 156.0, 856.0, 196.0, 853.0, 196.0, 853.0, 210.0, 856.0, 210.0, 856.0, 213.0, 870.0, 213.0, 870.0, 210.0, 895.0, 210.0, 895.0, 196.0, 870.0, 196.0, 870.0, 156.0, 873.0, 156.0, 873.0, 142.0, 870.0, 142.0, 870.0, 139.0, 856.0, 139.0, 856.0, 142.0, 410.0, 142.0, 410.0, 139.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_dytI6S6AU80kYH4d_default" href="BPSequenceFlow_NytI6S6AU80kYH4c.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3277, 168, 3636, 244" coords2="3277, 168, 3636, 244" shape="rect" alt="Conduct Cost Realism Analysis on Cost type proposals; Compare IGCE with individual cost elements proposed; and document (Analytical, MS Excel, ADOBE, Future state OASYS/FCAS) :Task" id="areadiagram_map_XNBjeG6GAqAC7zlH_default" href="BPTask_3NBjeG6GAqAC7zlI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2825, 169, 3168, 237" coords2="2825, 169, 3168, 237" shape="rect" alt="Review Business proposal for cost type contracts to confirm signed Certificate of Current Cost or Pricing Data was submitted for those above threshold (ADOBE, FCAS and future state OASYS):Task" id="areadiagram_map_DCWjeG6GAqAC7zk5_default" href="BPTask_TCWjeG6GAqAC7zk6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2360, 171, 2717, 233" coords2="2360, 171, 2717, 233" shape="rect" alt="Review Indirect Cost Agreement if cost type contract. If no agreement in place review indirect cost rate proposed in proposal (ADOBE, FCAS and future state OASYS):Task" id="areadiagram_map_VaqjeG6GAqAC7zkr_default" href="BPTask_1aqjeG6GAqAC7zks.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1891, 174, 2255, 233" coords2="1891, 174, 2255, 233" shape="rect" alt="Prepare Request for Field Pricing Assistance (MS Word, ADOBE):Task" id="areadiagram_map_OTSjeG6GAqAC7zkd_default" href="BPTask_eTSjeG6GAqAC7zke.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1425, 171, 1778, 234" coords2="1425, 171, 1778, 234" shape="rect" alt="Conduct Cost Analysis to evaluate reasonableness of individual cost elements when Certified Cost or Pricing Data are required; Conduct comparison of proposals received (Analytical, MS Excel, ADOBE, Various parametric or cost estimating models, Future state OASYS/FCAS):Task" id="areadiagram_map_7OJQSS6AU80kYNHK_default" href="BPTask_7OJQSS6AU80kYNHL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1364, 185, 1400, 221" coords2="1364, 185, 1400, 221" shape="rect" alt="As applicable:Gateway" id="areadiagram_map_W3OQSS6AU80kYNGJ_default" href="BPGateway_W3OQSS6AU80kYNGK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="961, 174, 1337, 235" coords2="961, 174, 1337, 235" shape="rect" alt="Conduct Price Analysis when Certified Cost or Pricing Data are not required; Compare the proposals received (Analytical, MS Excel, ADOBE,  Market research using various Web Sites, Publish Price Lists, Indexes, Confer with NCI SME):Task" id="areadiagram_map_B97gSS6AU80kYMs1_default" href="BPTask_B97gSS6AU80kYMs2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="895, 185, 931, 221" coords2="895, 185, 931, 221" shape="rect" alt="As applicable:Gateway" id="areadiagram_map_hErgSS6AU80kYMsf_default" href="BPGateway_hErgSS6AU80kYMsg.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1817, 185, 1853, 221" coords2="1817, 185, 1853, 221" shape="rect" alt="As applicable:Gateway" id="areadiagram_map_sqeuSC6GAqAC77Y1_default" href="BPGateway_WcYAqU6GAqAC70qw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="485, 169, 829, 259" coords2="485, 169, 829, 259" shape="rect" alt="Conduct Proposal Analysis to evaluate data other than certified cost or pricing data, to determine cost reasonableness (Analytical, MS Word/Excel) :Sub-Process" id="areadiagram_map_EqeuSC6GAqAC77Yy_default" href="BPSubProcess_HtfXtE6GAqAC78AP.html" onmouseover="storeReferenceAndSubdiagramInfos('diagram','485, 169, 829, 259',new Array(),new Array(),new Array(),new Array(),new Array(),new Array('BusinessProcessDiagram_CAVeSC6GAqAC77rx.html/Conduct Cost Realism Analysis on Cost type proposals and document/BusinessProcessDiagram'),new Array(),new Array(),new Array()),hideReferenceIcon(),showSubdiagramIcon('diagram', '485, 169, 829, 259'),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="384, 185, 420, 221" coords2="384, 185, 420, 221" shape="rect" alt="As applicable:Gateway" id="areadiagram_map_IqeuSC6GAqAC77Yv_default" href="BPGateway_lO8FxU6GAqAC75pU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3204, 185, 3240, 221" coords2="3204, 185, 3240, 221" shape="rect" alt=" As applicable:Gateway" id="areadiagram_map_PKeuSC6GAqAC77Yp_default" href="BPGateway_ToIFxU6GAqAC75nk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2747, 187, 2783, 223" coords2="2747, 187, 2783, 223" shape="rect" alt=" As applicable:Gateway" id="areadiagram_map_LKeuSC6GAqAC77Yj_default" href="BPGateway_WMz5xU6GAqAC75la.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2282, 185, 2318, 221" coords2="2282, 185, 2318, 221" shape="rect" alt=" As applicable:Gateway" id="areadiagram_map_FKeuSC6GAqAC77Yd_default" href="BPGateway_CVZ5xU6GAqAC75j0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3674, 178, 3930, 230" coords2="3674, 178, 3930, 230" shape="rect" alt="Complete Proposal Analysis, Price Analysis, Cost Analysis, Cost Realism and Reasonableness (ADOBE, OASYS/FCAS):Task" id="areadiagram_map_iGouSC6GAqAC77Vv_default" href="BPTask_iGouSC6GAqAC77Vw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="139, 174, 331, 231" coords2="139, 174, 331, 231" shape="rect" alt="Review Business Proposal (ADOBE, MS Excel, Future state OASYS/FCAS) :Task" id="areadiagram_map_1d1OSC6GAqAC768u_default" href="BPTask_1d1OSC6GAqAC768v.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3985, 242, 4071, 258" coords2="3985, 242, 4071, 258" shape="rect" alt="If applicable:Gateway" id="areadiagram_map_ZZROSC6GAqAC7674_sublevelflowitem1" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=VZe0KU6GAqAC78Cf"/>
+<area imageId="diagram" coords="3985, 194, 4003, 212" coords2="3985, 194, 4003, 212" shape="rect" alt=":End Event" id="areadiagram_map_ZZROSC6GAqAC7674_default" href="BPEndEvent_ZZROSC6GAqAC7675.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="54, 242, 1078, 258" coords2="54, 242, 1078, 258" shape="rect" alt="Review business proposal and proposed cost/price (ADOBE, OA Shared Drive, One Drive, MS TEAMS, OASYS/FCAS):Task" id="areadiagram_map_yZROSC6GAqAC767j_sublevelflowitem1" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=xXwT_O6AU8g4TbkB"/>
+<area imageId="diagram" coords="54, 258, 1078, 274" coords2="54, 258, 1078, 274" shape="rect" alt="Review Small Business Subcontracting Plan when applicable and request revisions by Offeror during clarifications or negotiations, as applicable (ADOBE, OA Shared Drive, One Drive, MS TEAMS, OASYS/FCAS):Task" id="areadiagram_map_yZROSC6GAqAC767j_sublevelflowitem2" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=FlET_O6AU8g4Tbkb"/>
+<area imageId="diagram" coords="55, 194, 73, 212" coords2="55, 194, 73, 212" shape="rect" alt=":Start Event" id="areadiagram_map_yZROSC6GAqAC767j_default" href="BPStartEvent_6ZROSC6GAqAC7671.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="13, 0, 4082, 383" coords2="13, 0, 4082, 383" shape="rect" alt="CO/CS:Lane" id="areadiagram_map_nFJOSC6GAqAC768F_default" href="BPLane_nFJOSC6GAqAC768G.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="0, 0, 4084, 383" coords2="0, 0, 4084, 383" shape="rect" alt="Conduct Price or Cost Analysis:Pool" id="areadiagram_map_ZFJOSC6GAqAC768B_default" href="BPPool_ZFJOSC6GAqAC768C.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_nFJOSC6GAqAC768G.html" class="ItemLink">CO/CS : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP28</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_WcYAqU6GAqAC70qw.html" class="ItemLink">As applicable : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP139</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_HtfXtE6GAqAC78AP.html" class="ItemLink">Conduct Proposal Analysis to evaluate data other than certified cost or pricing data, to determine cost reasonableness (Analytical, MS Word/Excel)  : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP147</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_CVZ5xU6GAqAC75j0.html" class="ItemLink"> As applicable : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP151</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_WMz5xU6GAqAC75la.html" class="ItemLink"> As applicable : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP156</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_ToIFxU6GAqAC75nk.html" class="ItemLink"> As applicable : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP160</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_lO8FxU6GAqAC75pU.html" class="ItemLink">As applicable : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP164</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_6ZROSC6GAqAC7671.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP165</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_ZZROSC6GAqAC7675.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP166</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_1d1OSC6GAqAC768v.html" class="ItemLink">Review Business Proposal (ADOBE, MS Excel, Future state OASYS/FCAS)  : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP166</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_ZFJOSC6GAqAC768C.html" class="ItemLink">Conduct Price or Cost Analysis : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP170</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_iGouSC6GAqAC77Vw.html" class="ItemLink">Complete Proposal Analysis, Price Analysis, Cost Analysis, Cost Realism and Reasonableness (ADOBE, OASYS/FCAS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP177</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_hErgSS6AU80kYMsg.html" class="ItemLink">As applicable : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP179</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_B97gSS6AU80kYMs2.html" class="ItemLink">Conduct Price Analysis when Certified Cost or Pricing Data are not required; Compare the proposals received (Analytical, MS Excel, ADOBE,  Market research using various Web Sites, Publish Price Lists, Indexes, Confer with NCI SME) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP180</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_eTSjeG6GAqAC7zke.html" class="ItemLink">Prepare Request for Field Pricing Assistance (MS Word, ADOBE) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP181</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_1aqjeG6GAqAC7zks.html" class="ItemLink">Review Indirect Cost Agreement if cost type contract. If no agreement in place review indirect cost rate proposed in proposal (ADOBE, FCAS and future state OASYS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP182</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_TCWjeG6GAqAC7zk6.html" class="ItemLink">Review Business proposal for cost type contracts to confirm signed Certificate of Current Cost or Pricing Data was submitted for those above threshold (ADOBE, FCAS and future state OASYS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP182</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_W3OQSS6AU80kYNGK.html" class="ItemLink">As applicable : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP183</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_3NBjeG6GAqAC7zlI.html" class="ItemLink">Conduct Cost Realism Analysis on Cost type proposals; Compare IGCE with individual cost elements proposed; and document (Analytical, MS Excel, ADOBE, Future state OASYS/FCAS)  : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP184</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_7OJQSS6AU80kYNHL.html" class="ItemLink">Conduct Cost Analysis to evaluate reasonableness of individual cost elements when Certified Cost or Pricing Data are required; Conduct comparison of proposals received (Analytical, MS Excel, ADOBE, Various parametric or cost estimating models, Future state OASYS/FCAS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

@@ -1,0 +1,773 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - Determination of Responsibility</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html" class="PageParentTitle">Competitive Range/Source Selection : Pool</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html" class="PageParentTitle">CO/CS : Lane</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html" class="PageParentTitle">Determination of Responsibility : Sub-Process</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - Determination of Responsibility		</span>
+<a onclick="javascript: showVpLink('Office Of Acquisitions.vpp://diagram/VfsRSC6GAqAC78z_', 'Determination of Responsibility\nOffice Of Acquisitions.vpp://diagram/VfsRSC6GAqAC78z_', 'Determination of Responsibility', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|11.0|0.0|4077.0|419.0|BPLane_P8CRSC6GAqAC780c.html|BPLane_P8CRSC6GAqAC780c.html|P8CRSC6GAqAC780b" id="optionP8CRSC6GAqAC780b">CO/CS : Lane</option>
+<option value="shape|559.0|122.0|263.0|34.0|BPTask_C7gsOS6AU80kYGZZ.html|BPTask_C7gsOS6AU80kYGZZ.html|C7gsOS6AU80kYGZY" id="optionC7gsOS6AU80kYGZY">Confirm necessary production, technical equipment, and personnel are available (ADOBE) : Task</option>
+<option value="shape|557.0|285.0|265.0|29.0|BPTask_m5xx_U6GAqAC77IF.html|BPTask_m5xx_U6GAqAC77IF.html|YeLH6S6AU80kYFch" id="optionYeLH6S6AU80kYFch">Confirm Adequate Resources (ADOBE, MS Excel, Web Search) : Task</option>
+<option value="shape|557.0|246.0|266.0|29.0|BPTask_NBvx_U6GAqAC77Ip.html|BPTask_NBvx_U6GAqAC77Ip.html|xuLH6S6AU80kYFcJ" id="optionxuLH6S6AU80kYFcJ">Request and Review Pre-Award Survey (if applicable) (MS Word, ADOBE) : Task</option>
+<option value="shape|2375.0|193.0|150.0|29.0|BPTask_rsnJ_U6GAqAC77K_.html|BPTask_rsnJ_U6GAqAC77K_.html|DuLH6S6AU80kYFcS" id="optionDuLH6S6AU80kYFcS">Confirm not in inverted domestic corporation (ADOBE, Web Search) : Task</option>
+<option value="shape|3548.0|193.0|150.0|29.0|BPTask_w_2p_U6GAqAC77MJ.html|BPTask_w_2p_U6GAqAC77MJ.html|NuLH6S6AU80kYFcP" id="optionNuLH6S6AU80kYFcP">Confirm not debarred (https://exclusions.oig.hhs.gov/) : Task</option>
+<option value="shape|3375.0|193.0|150.0|29.0|BPTask_lRZp_U6GAqAC77MZ.html|BPTask_lRZp_U6GAqAC77MZ.html|ruLH6S6AU80kYFcV" id="optionruLH6S6AU80kYFcV">Confirm not suspended or on the excluded parties list (beta.sam.gov) : Task</option>
+<option value="shape|559.0|83.0|264.0|29.0|BPTask_9yvp_U6GAqAC77NN.html|BPTask_9yvp_U6GAqAC77NN.html|QeLH6S6AU80kYFce" id="optionQeLH6S6AU80kYFce">Qualification Requirements (ADOBE, MS Excel, Web Search) : Task</option>
+<option value="shape|557.0|325.0|267.0|29.0|BPTask_k_0Z_U6GAqAC77N5.html|BPTask_k_0Z_U6GAqAC77N5.html|euLH6S6AU80kYFcG" id="optioneuLH6S6AU80kYFcG">Confirm Adequate Accounting System (as applicable) (ADOBE) : Task</option>
+<option value="shape|557.0|207.0|266.0|29.0|BPTask_IxqZ_U6GAqAC77OB.html|BPTask_IxqZ_U6GAqAC77OB.html|5uLH6S6AU80kYFcM" id="option5uLH6S6AU80kYFcM">Confirm no Organizational Conflicts of Interest (ADOBE) : Task</option>
+<option value="shape|43.0|202.0|14.0|14.0|BPStartEvent_YIcRSC6GAqAC780J.html|BPStartEvent_YIcRSC6GAqAC780J.html|YIcRSC6GAqAC780I" id="optionYIcRSC6GAqAC780I">Unnamed Start Event : Start Event</option>
+<option value="shape|4001.0|201.0|14.0|14.0|BPEndEvent_KIcRSC6GAqAC780N.html|BPEndEvent_KIcRSC6GAqAC780N.html|yIcRSC6GAqAC780M" id="optionyIcRSC6GAqAC780M">Unnamed End Event : End Event</option>
+<option value="shape|0.0|0.0|4089.0|419.0|BPPool_F8CRSC6GAqAC780Y.html|BPPool_F8CRSC6GAqAC780Y.html|F8CRSC6GAqAC780X" id="optionF8CRSC6GAqAC780X">Determination of Responsibility : Pool</option>
+<option value="shape|2744.0|192.0|224.0|34.0|BPTask_X6WJSC6GAqAC79Bm.html|BPTask_X6WJSC6GAqAC79Bm.html|X6WJSC6GAqAC79Bl" id="optionX6WJSC6GAqAC79Bl">Review FAR Report Certifications, confirm entity registration is active, and review Reps and Certs in beta.SAM.gov (beta.SAM.gov, ADOBE, OASYS/FCAS) : Task</option>
+<option value="shape|2559.0|193.0|150.0|32.0|BPTask_kdNJSC6GAqAC79CQ.html|BPTask_kdNJSC6GAqAC79CQ.html|kdNJSC6GAqAC79CP" id="optionkdNJSC6GAqAC79CP">Confirm completion of Section K Reps and Cert's (ADOBE, OASYS/FCAS) : Task</option>
+<option value="shape|559.0|167.0|265.0|29.0|BPTask_TAyaOS6AU80kYGwn.html|BPTask_TAyaOS6AU80kYGwn.html|TAyaOS6AU80kYGwm" id="optionTAyaOS6AU80kYGwm">Confirm no Affiliated Concerns (ADOBE. www.cpars.gov) : Task</option>
+<option value="shape|1074.0|193.0|147.0|29.0|BPTask_HypaOS6AU80kYGw_.html|BPTask_HypaOS6AU80kYGw_.html|HypaOS6AU80kYGw." id="optionHypaOS6AU80kYGw.">Confirm no Small Business Concerns (ADOBE, Email) : Task</option>
+<option value="shape|2043.0|186.0|298.0|45.0|BPTask_KlS0OS6AU80kYGXn.html|BPTask_KlS0OS6AU80kYGXn.html|ylS0OS6AU80kYGXm" id="optionylS0OS6AU80kYGXm">Confirm no ineligibility factors (e.g. Entities involved with activities that violate Arms Control treaties or agreements with United States) (ADOBE) : Task</option>
+<option value="shape|3728.0|189.0|234.0|40.0|BPTask_4X5MOS6AU80kYGYz.html|BPTask_4X5MOS6AU80kYGYz.html|4X5MOS6AU80kYGYy" id="option4X5MOS6AU80kYGYy">Review Federal Awardee Performance and Integrity Information System Record (FAPIIS) for Satisfactory Performance Record (cpars.gov, beta.SAM.gov) : Task</option>
+<option value="shape|1398.0|193.0|139.0|29.0|BPTask_UUDMOS6AU80kYGZB.html|BPTask_UUDMOS6AU80kYGZB.html|UUDMOS6AU80kYGZA" id="optionUUDMOS6AU80kYGZA">Certificate of Competency issued by the SBA (Email, Phone) : Task</option>
+<option value="shape|1311.0|193.0|29.0|29.0|BPGateway_htYSOS6AU80kYGfT.html|BPGateway_htYSOS6AU80kYGfT.html|htYSOS6AU80kYGfS" id="optionhtYSOS6AU80kYGfS">If concerns : Gateway</option>
+<option value="shape|546.0|48.0|289.0|325.0|BPSubProcess_A4AaOS6AU80kYGvx.html|BPSubProcess_A4AaOS6AU80kYGvx.html|A4AaOS6AU80kYGvw" id="optionA4AaOS6AU80kYGvw">Review information submitted in the Offeror's proposal, regarding responsibility matters, and request additional information as indicated (ADOBE, Email, Future state OASYS Vendor Portal) : Sub-Process</option>
+<option value="shape|1782.0|125.0|177.0|33.0|BPTask__Co7jS6AU80kYLmy.html|BPTask__Co7jS6AU80kYLmy.html|.Co7jS6AU80kYLmx" id="option.Co7jS6AU80kYLmx">Determine Subcontractor responsibility (www.cpars.gov, beta.SAM.gov) : Task</option>
+<option value="shape|1623.0|128.0|29.0|29.0|BPGateway_6IE7jS6AU80kYLnC.html|BPGateway_6IE7jS6AU80kYLnC.html|6IE7jS6AU80kYLnB" id="option6IE7jS6AU80kYLnB">Subcontractor Responsibility for substantial subcontracting? : Gateway</option>
+<option value="shape|911.0|193.0|29.0|29.0|BPGateway_FNP7jS6AU80kYMBY.html|BPGateway_FNP7jS6AU80kYMBY.html|FNP7jS6AU80kYMBX" id="optionFNP7jS6AU80kYMBX">Is Prime Offeror Small Business? : Gateway</option>
+<option value="shape|3125.0|193.0|231.0|29.0|BPTask_CTBnjS6AU80kYMG8.html|BPTask_CTBnjS6AU80kYMG8.html|CTBnjS6AU80kYMG7" id="optionCTBnjS6AU80kYMG7">Request additional information regarding Responsibility matters (Email, Future state OASYS Vendor Portal) : Task</option>
+<option value="shape|3031.0|193.0|29.0|29.0|BPGateway_jtpnjS6AU80kYMHO.html|BPGateway_jtpnjS6AU80kYMHO.html|jtpnjS6AU80kYMHN" id="optionjtpnjS6AU80kYMHN">Is additional information required? : Gateway</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Determination_of_Responsibility.png" usemap="#diagram_map" class="Image" width="4092" height="423"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="48.0, 201.0, 48.0, 202.0, 57.0, 202.0, 57.0, 215.0, 546.0, 215.0, 546.0, 201.0" coords2="48.0, 201.0, 48.0, 202.0, 57.0, 202.0, 57.0, 215.0, 546.0, 215.0, 546.0, 201.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_V.rxSC6GAqAC79BM_default" href="BPSequenceFlow_Z_rxSC6GAqAC79BL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3039.0, 150.0, 3039.0, 153.0, 3036.0, 153.0, 3036.0, 167.0, 3039.0, 167.0, 3039.0, 193.0, 3053.0, 193.0, 3053.0, 167.0, 3443.0, 167.0, 3443.0, 193.0, 3457.0, 193.0, 3457.0, 167.0, 3460.0, 167.0, 3460.0, 153.0, 3457.0, 153.0, 3457.0, 150.0, 3443.0, 150.0, 3443.0, 153.0, 3053.0, 153.0, 3053.0, 150.0" coords2="3039.0, 150.0, 3039.0, 153.0, 3036.0, 153.0, 3036.0, 167.0, 3039.0, 167.0, 3039.0, 193.0, 3053.0, 193.0, 3053.0, 167.0, 3443.0, 167.0, 3443.0, 193.0, 3457.0, 193.0, 3457.0, 167.0, 3460.0, 167.0, 3460.0, 153.0, 3457.0, 153.0, 3457.0, 150.0, 3443.0, 150.0, 3443.0, 153.0, 3053.0, 153.0, 3053.0, 150.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_kb4n6S6AU80kYFfM_default" href="BPSequenceFlow_4b4n6S6AU80kYFfL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1340.0, 200.0, 1340.0, 214.0, 1398.0, 214.0, 1398.0, 200.0" coords2="1340.0, 200.0, 1340.0, 214.0, 1398.0, 214.0, 1398.0, 200.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_1ykSOS6AU80kYGfr_default" href="BPSequenceFlow_lykSOS6AU80kYGfq.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1221.0, 199.0, 1221.0, 213.0, 1311.0, 213.0, 1311.0, 199.0" coords2="1221.0, 199.0, 1221.0, 213.0, 1311.0, 213.0, 1311.0, 199.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_AGHaOS6AU80kYGxt_default" href="BPSequenceFlow_f6HaOS6AU80kYGxs.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1629.0, 157.0, 1629.0, 200.0, 1626.0, 200.0, 1626.0, 214.0, 1629.0, 214.0, 1629.0, 217.0, 1643.0, 217.0, 1643.0, 214.0, 2043.0, 214.0, 2043.0, 200.0, 1643.0, 200.0, 1643.0, 157.0" coords2="1629.0, 157.0, 1629.0, 200.0, 1626.0, 200.0, 1626.0, 214.0, 1629.0, 214.0, 1629.0, 217.0, 1643.0, 217.0, 1643.0, 214.0, 2043.0, 214.0, 2043.0, 200.0, 1643.0, 200.0, 1643.0, 157.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_mFm7jS6AU80kYLn2_default" href="BPSequenceFlow_aFm7jS6AU80kYLn1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1652.0, 135.0, 1652.0, 149.0, 1782.0, 149.0, 1782.0, 135.0" coords2="1652.0, 135.0, 1652.0, 149.0, 1782.0, 149.0, 1782.0, 135.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_IX27jS6AU80kYLoS_default" href="BPSequenceFlow_QX27jS6AU80kYLoR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="940.0, 201.0, 940.0, 215.0, 1074.0, 215.0, 1074.0, 201.0" coords2="940.0, 201.0, 940.0, 215.0, 1074.0, 215.0, 1074.0, 201.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_5p8HjS6AU80kYMCM_default" href="BPSequenceFlow_pp8HjS6AU80kYMCL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="835.0, 200.0, 835.0, 214.0, 911.0, 214.0, 911.0, 200.0" coords2="835.0, 200.0, 835.0, 214.0, 911.0, 214.0, 911.0, 200.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_adiHjS6AU80kYMCo_default" href="BPSequenceFlow_KdiHjS6AU80kYMCn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="917.0, 131.0, 917.0, 134.0, 914.0, 134.0, 914.0, 148.0, 917.0, 148.0, 917.0, 193.0, 931.0, 193.0, 931.0, 148.0, 1623.0, 148.0, 1623.0, 134.0, 931.0, 134.0, 931.0, 131.0" coords2="917.0, 131.0, 917.0, 134.0, 914.0, 134.0, 914.0, 148.0, 917.0, 148.0, 917.0, 193.0, 931.0, 193.0, 931.0, 148.0, 1623.0, 148.0, 1623.0, 134.0, 931.0, 134.0, 931.0, 131.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_5.WHjS6AU80kYMDI_default" href="BPSequenceFlow_p_WHjS6AU80kYMDH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1629.0, 197.0, 1629.0, 200.0, 1626.0, 200.0, 1626.0, 214.0, 1629.0, 214.0, 1629.0, 240.0, 1331.0, 240.0, 1331.0, 222.0, 1317.0, 222.0, 1317.0, 240.0, 1314.0, 240.0, 1314.0, 254.0, 1317.0, 254.0, 1317.0, 257.0, 1331.0, 257.0, 1331.0, 254.0, 1629.0, 254.0, 1629.0, 257.0, 1643.0, 257.0, 1643.0, 254.0, 1646.0, 254.0, 1646.0, 240.0, 1643.0, 240.0, 1643.0, 214.0, 2043.0, 214.0, 2043.0, 200.0, 1643.0, 200.0, 1643.0, 197.0" coords2="1629.0, 197.0, 1629.0, 200.0, 1626.0, 200.0, 1626.0, 214.0, 1629.0, 214.0, 1629.0, 240.0, 1331.0, 240.0, 1331.0, 222.0, 1317.0, 222.0, 1317.0, 240.0, 1314.0, 240.0, 1314.0, 254.0, 1317.0, 254.0, 1317.0, 257.0, 1331.0, 257.0, 1331.0, 254.0, 1629.0, 254.0, 1629.0, 257.0, 1643.0, 257.0, 1643.0, 254.0, 1646.0, 254.0, 1646.0, 240.0, 1643.0, 240.0, 1643.0, 214.0, 2043.0, 214.0, 2043.0, 200.0, 1643.0, 200.0, 1643.0, 197.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_wknHjS6AU80kYMFA_default" href="BPSequenceFlow_gknHjS6AU80kYME_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1537.0, 200.0, 1537.0, 214.0, 2043.0, 214.0, 2043.0, 200.0" coords2="1537.0, 200.0, 1537.0, 214.0, 2043.0, 214.0, 2043.0, 200.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_AyInjS6AU80kYMFs_default" href="BPSequenceFlow_fSInjS6AU80kYMFr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2709.0, 202.0, 2709.0, 216.0, 2744.0, 216.0, 2744.0, 202.0" coords2="2709.0, 202.0, 2709.0, 216.0, 2744.0, 216.0, 2744.0, 202.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map__TBnjS6AU80kYMHE_default" href="BPSequenceFlow_3TBnjS6AU80kYMHD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3060.0, 202.0, 3060.0, 216.0, 3125.0, 216.0, 3125.0, 202.0" coords2="3060.0, 202.0, 3060.0, 216.0, 3125.0, 216.0, 3125.0, 202.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_GdznjS6AU80kYMIm_default" href="BPSequenceFlow_adznjS6AU80kYMIl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2341.0, 201.0, 2341.0, 215.0, 2375.0, 215.0, 2375.0, 201.0" coords2="2341.0, 201.0, 2341.0, 215.0, 2375.0, 215.0, 2375.0, 201.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_g473jS6AU80kYMLs_default" href="BPSequenceFlow_fY73jS6AU80kYMLr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2525.0, 202.0, 2525.0, 216.0, 2559.0, 216.0, 2559.0, 202.0" coords2="2525.0, 202.0, 2525.0, 216.0, 2559.0, 216.0, 2559.0, 202.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Cuv3jS6AU80kYMMI_default" href="BPSequenceFlow_suv3jS6AU80kYMMH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3356.0, 200.0, 3356.0, 214.0, 3375.0, 214.0, 3375.0, 200.0" coords2="3356.0, 200.0, 3356.0, 214.0, 3375.0, 214.0, 3375.0, 200.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_2jRPjS6AU80kYMPc_default" href="BPSequenceFlow_mjRPjS6AU80kYMPb.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3525.0, 202.0, 3525.0, 216.0, 3548.0, 216.0, 3548.0, 202.0" coords2="3525.0, 202.0, 3525.0, 216.0, 3548.0, 216.0, 3548.0, 202.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_m8lPjS6AU80kYMQI_default" href="BPSequenceFlow_68lPjS6AU80kYMQH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2968.0, 202.0, 2968.0, 216.0, 3031.0, 216.0, 3031.0, 202.0" coords2="2968.0, 202.0, 2968.0, 216.0, 3031.0, 216.0, 3031.0, 202.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_tY7PjS6AU80kYMQw_default" href="BPSequenceFlow_VY7PjS6AU80kYMQv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3698.0, 202.0, 3698.0, 216.0, 3728.0, 216.0, 3728.0, 202.0" coords2="3698.0, 202.0, 3698.0, 216.0, 3728.0, 216.0, 3728.0, 202.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_jOuvjS6AU80kYMR0_default" href="BPSequenceFlow_9OuvjS6AU80kYMRz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3962.0, 201.0, 3962.0, 215.0, 4001.0, 215.0, 4001.0, 201.0" coords2="3962.0, 201.0, 3962.0, 215.0, 4001.0, 215.0, 4001.0, 201.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_5k.vjS6AU80kYMSM_default" href="BPSequenceFlow_pk_vjS6AU80kYMSL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1983.0, 131.0, 1983.0, 134.0, 1959.0, 134.0, 1959.0, 148.0, 1983.0, 148.0, 1983.0, 200.0, 1980.0, 200.0, 1980.0, 214.0, 1983.0, 214.0, 1983.0, 217.0, 1997.0, 217.0, 1997.0, 214.0, 2043.0, 214.0, 2043.0, 200.0, 1997.0, 200.0, 1997.0, 148.0, 2000.0, 148.0, 2000.0, 134.0, 1997.0, 134.0, 1997.0, 131.0" coords2="1983.0, 131.0, 1983.0, 134.0, 1959.0, 134.0, 1959.0, 148.0, 1983.0, 148.0, 1983.0, 200.0, 1980.0, 200.0, 1980.0, 214.0, 1983.0, 214.0, 1983.0, 217.0, 1997.0, 217.0, 1997.0, 214.0, 2043.0, 214.0, 2043.0, 200.0, 1997.0, 200.0, 1997.0, 148.0, 2000.0, 148.0, 2000.0, 134.0, 1997.0, 134.0, 1997.0, 131.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_qTtvjS6AU80kYMS4_default" href="BPSequenceFlow_yTtvjS6AU80kYMS3.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3031, 193, 3060, 222" coords2="3031, 193, 3060, 222" shape="rect" alt="Is additional information required?:Gateway" id="areadiagram_map_jtpnjS6AU80kYMHN_default" href="BPGateway_jtpnjS6AU80kYMHO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3125, 193, 3356, 222" coords2="3125, 193, 3356, 222" shape="rect" alt="Request additional information regarding Responsibility matters (Email, Future state OASYS Vendor Portal):Task" id="areadiagram_map_CTBnjS6AU80kYMG7_default" href="BPTask_CTBnjS6AU80kYMG8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="911, 193, 940, 222" coords2="911, 193, 940, 222" shape="rect" alt="Is Prime Offeror Small Business?:Gateway" id="areadiagram_map_FNP7jS6AU80kYMBX_default" href="BPGateway_FNP7jS6AU80kYMBY.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1623, 128, 1652, 157" coords2="1623, 128, 1652, 157" shape="rect" alt="Subcontractor Responsibility for substantial subcontracting?:Gateway" id="areadiagram_map_6IE7jS6AU80kYLnB_default" href="BPGateway_6IE7jS6AU80kYLnC.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1782, 125, 1959, 158" coords2="1782, 125, 1959, 158" shape="rect" alt="Determine Subcontractor responsibility (www.cpars.gov, beta.SAM.gov):Task" id="areadiagram_map_.Co7jS6AU80kYLmx_default" href="BPTask__Co7jS6AU80kYLmy.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1074, 193, 1221, 222" coords2="1074, 193, 1221, 222" shape="rect" alt="Confirm no Small Business Concerns (ADOBE, Email):Task" id="areadiagram_map_HypaOS6AU80kYGw._default" href="BPTask_HypaOS6AU80kYGw_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="559, 167, 824, 196" coords2="559, 167, 824, 196" shape="rect" alt="Confirm no Affiliated Concerns (ADOBE. www.cpars.gov):Task" id="areadiagram_map_TAyaOS6AU80kYGwm_default" href="BPTask_TAyaOS6AU80kYGwn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2559, 193, 2709, 225" coords2="2559, 193, 2709, 225" shape="rect" alt="Confirm completion of Section K Reps and Cert's (ADOBE, OASYS/FCAS):Task" id="areadiagram_map_kdNJSC6GAqAC79CP_default" href="BPTask_kdNJSC6GAqAC79CQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="557, 325, 824, 354" coords2="557, 325, 824, 354" shape="rect" alt="Confirm Adequate Accounting System (as applicable) (ADOBE):Task" id="areadiagram_map_euLH6S6AU80kYFcG_default" href="BPTask_k_0Z_U6GAqAC77N5.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="557, 285, 822, 314" coords2="557, 285, 822, 314" shape="rect" alt="Confirm Adequate Resources (ADOBE, MS Excel, Web Search):Task" id="areadiagram_map_YeLH6S6AU80kYFch_default" href="BPTask_m5xx_U6GAqAC77IF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="557, 246, 823, 275" coords2="557, 246, 823, 275" shape="rect" alt="Request and Review Pre-Award Survey (if applicable) (MS Word, ADOBE):Task" id="areadiagram_map_xuLH6S6AU80kYFcJ_default" href="BPTask_NBvx_U6GAqAC77Ip.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="557, 207, 823, 236" coords2="557, 207, 823, 236" shape="rect" alt="Confirm no Organizational Conflicts of Interest (ADOBE):Task" id="areadiagram_map_5uLH6S6AU80kYFcM_default" href="BPTask_IxqZ_U6GAqAC77OB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="559, 122, 822, 156" coords2="559, 122, 822, 156" shape="rect" alt="Confirm necessary production, technical equipment, and personnel are available (ADOBE):Task" id="areadiagram_map_C7gsOS6AU80kYGZY_default" href="BPTask_C7gsOS6AU80kYGZZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="559, 83, 823, 112" coords2="559, 83, 823, 112" shape="rect" alt="Qualification Requirements (ADOBE, MS Excel, Web Search):Task" id="areadiagram_map_QeLH6S6AU80kYFce_default" href="BPTask_9yvp_U6GAqAC77NN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="546, 48, 835, 373" coords2="546, 48, 835, 373" shape="rect" alt="Review information submitted in the Offeror's proposal, regarding responsibility matters, and request additional information as indicated (ADOBE, Email, Future state OASYS Vendor Portal):Sub-Process" id="areadiagram_map_A4AaOS6AU80kYGvw_default" href="BPSubProcess_A4AaOS6AU80kYGvx.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1311, 193, 1340, 222" coords2="1311, 193, 1340, 222" shape="rect" alt="If concerns:Gateway" id="areadiagram_map_htYSOS6AU80kYGfS_default" href="BPGateway_htYSOS6AU80kYGfT.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1398, 193, 1537, 222" coords2="1398, 193, 1537, 222" shape="rect" alt="Certificate of Competency issued by the SBA (Email, Phone):Task" id="areadiagram_map_UUDMOS6AU80kYGZA_default" href="BPTask_UUDMOS6AU80kYGZB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3728, 189, 3962, 229" coords2="3728, 189, 3962, 229" shape="rect" alt="Review Federal Awardee Performance and Integrity Information System Record (FAPIIS) for Satisfactory Performance Record (cpars.gov, beta.SAM.gov):Task" id="areadiagram_map_4X5MOS6AU80kYGYy_default" href="BPTask_4X5MOS6AU80kYGYz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2043, 186, 2341, 231" coords2="2043, 186, 2341, 231" shape="rect" alt="Confirm no ineligibility factors (e.g. Entities involved with activities that violate Arms Control treaties or agreements with United States) (ADOBE):Task" id="areadiagram_map_ylS0OS6AU80kYGXm_default" href="BPTask_KlS0OS6AU80kYGXn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3375, 193, 3525, 222" coords2="3375, 193, 3525, 222" shape="rect" alt="Confirm not suspended or on the excluded parties list (beta.sam.gov):Task" id="areadiagram_map_ruLH6S6AU80kYFcV_default" href="BPTask_lRZp_U6GAqAC77MZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2375, 193, 2525, 222" coords2="2375, 193, 2525, 222" shape="rect" alt="Confirm not in inverted domestic corporation (ADOBE, Web Search):Task" id="areadiagram_map_DuLH6S6AU80kYFcS_default" href="BPTask_rsnJ_U6GAqAC77K_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3548, 193, 3698, 222" coords2="3548, 193, 3698, 222" shape="rect" alt="Confirm not debarred (https://exclusions.oig.hhs.gov/):Task" id="areadiagram_map_NuLH6S6AU80kYFcP_default" href="BPTask_w_2p_U6GAqAC77MJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2744, 192, 2968, 226" coords2="2744, 192, 2968, 226" shape="rect" alt="Review FAR Report Certifications, confirm entity registration is active, and review Reps and Certs in beta.SAM.gov (beta.SAM.gov, ADOBE, OASYS/FCAS):Task" id="areadiagram_map_X6WJSC6GAqAC79Bl_default" href="BPTask_X6WJSC6GAqAC79Bm.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="43, 240, 527, 253" coords2="43, 240, 527, 253" shape="rect" alt="CO reviews Source Selection Recommendation and writes the Source Selection Determination (MS Word/Excel, ADOBE) :Sub-Process" id="areadiagram_map_YIcRSC6GAqAC780I_sublevelflowitem1" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=fmL.SC6GAqAC776a"/>
+<area imageId="diagram" coords="43, 202, 57, 216" coords2="43, 202, 57, 216" shape="rect" alt=":Start Event" id="areadiagram_map_YIcRSC6GAqAC780I_default" href="BPStartEvent_YIcRSC6GAqAC780J.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="4000, 239, 4029, 252" coords2="4000, 239, 4029, 252" shape="rect" alt="Unnamed Intermediate Event:Intermediate Event" id="areadiagram_map_yIcRSC6GAqAC780M_sublevelflowitem1" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=WWQdJU6GAqAC728G"/>
+<area imageId="diagram" coords="4001, 201, 4015, 215" coords2="4001, 201, 4015, 215" shape="rect" alt=":End Event" id="areadiagram_map_yIcRSC6GAqAC780M_default" href="BPEndEvent_KIcRSC6GAqAC780N.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="11, 0, 4088, 419" coords2="11, 0, 4088, 419" shape="rect" alt="CO/CS:Lane" id="areadiagram_map_P8CRSC6GAqAC780b_default" href="BPLane_P8CRSC6GAqAC780c.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="0, 0, 4089, 419" coords2="0, 0, 4089, 419" shape="rect" alt="Determination of Responsibility:Pool" id="areadiagram_map_F8CRSC6GAqAC780X_default" href="BPPool_F8CRSC6GAqAC780Y.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_P8CRSC6GAqAC780c.html" class="ItemLink">CO/CS : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_C7gsOS6AU80kYGZZ.html" class="ItemLink">Confirm necessary production, technical equipment, and personnel are available (ADOBE) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP119</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_m5xx_U6GAqAC77IF.html" class="ItemLink">Confirm Adequate Resources (ADOBE, MS Excel, Web Search) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP122</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_NBvx_U6GAqAC77Ip.html" class="ItemLink">Request and Review Pre-Award Survey (if applicable) (MS Word, ADOBE) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP124</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_rsnJ_U6GAqAC77K_.html" class="ItemLink">Confirm not in inverted domestic corporation (ADOBE, Web Search) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP125</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_w_2p_U6GAqAC77MJ.html" class="ItemLink">Confirm not debarred (https://exclusions.oig.hhs.gov/) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP126</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_lRZp_U6GAqAC77MZ.html" class="ItemLink">Confirm not suspended or on the excluded parties list (beta.sam.gov) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP127</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_9yvp_U6GAqAC77NN.html" class="ItemLink">Qualification Requirements (ADOBE, MS Excel, Web Search) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP128</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_k_0Z_U6GAqAC77N5.html" class="ItemLink">Confirm Adequate Accounting System (as applicable) (ADOBE) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP129</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_IxqZ_U6GAqAC77OB.html" class="ItemLink">Confirm no Organizational Conflicts of Interest (ADOBE) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP130</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_YIcRSC6GAqAC780J.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP131</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_KIcRSC6GAqAC780N.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP132</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_F8CRSC6GAqAC780Y.html" class="ItemLink">Determination of Responsibility : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP134</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_X6WJSC6GAqAC79Bm.html" class="ItemLink">Review FAR Report Certifications, confirm entity registration is active, and review Reps and Certs in beta.SAM.gov (beta.SAM.gov, ADOBE, OASYS/FCAS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP136</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_kdNJSC6GAqAC79CQ.html" class="ItemLink">Confirm completion of Section K Reps and Cert's (ADOBE, OASYS/FCAS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP137</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_TAyaOS6AU80kYGwn.html" class="ItemLink">Confirm no Affiliated Concerns (ADOBE. www.cpars.gov) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP138</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_HypaOS6AU80kYGw_.html" class="ItemLink">Confirm no Small Business Concerns (ADOBE, Email) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP139</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_KlS0OS6AU80kYGXn.html" class="ItemLink">Confirm no ineligibility factors (e.g. Entities involved with activities that violate Arms Control treaties or agreements with United States) (ADOBE) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP141</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_4X5MOS6AU80kYGYz.html" class="ItemLink">Review Federal Awardee Performance and Integrity Information System Record (FAPIIS) for Satisfactory Performance Record (cpars.gov, beta.SAM.gov) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP142</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_UUDMOS6AU80kYGZB.html" class="ItemLink">Certificate of Competency issued by the SBA (Email, Phone) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP145</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_htYSOS6AU80kYGfT.html" class="ItemLink">If concerns : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP147</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitySubProcessColl.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitySubProcessColl.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPSubProcess_A4AaOS6AU80kYGvx.html" class="ItemLink">Review information submitted in the Offeror's proposal, regarding responsibility matters, and request additional information as indicated (ADOBE, Email, Future state OASYS Vendor Portal) : Sub-Process</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP150</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask__Co7jS6AU80kYLmy.html" class="ItemLink">Determine Subcontractor responsibility (www.cpars.gov, beta.SAM.gov) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP151</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_6IE7jS6AU80kYLnC.html" class="ItemLink">Subcontractor Responsibility for substantial subcontracting? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP156</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_FNP7jS6AU80kYMBY.html" class="ItemLink">Is Prime Offeror Small Business? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP162</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_CTBnjS6AU80kYMG8.html" class="ItemLink">Request additional information regarding Responsibility matters (Email, Future state OASYS Vendor Portal) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP163</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_jtpnjS6AU80kYMHO.html" class="ItemLink">Is additional information required? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

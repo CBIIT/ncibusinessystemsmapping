@@ -1,0 +1,674 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - Determine the competitive range, as applicable</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html" class="PageParentTitle">Competitive Range/Source Selection : Pool</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html" class="PageParentTitle">CO/CS : Lane</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html" class="PageParentTitle">Determine the competitive range and document, as applicable (Analytical, MS Word, ADOBE) : Sub-Process</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - Determine the competitive range, as applicable		</span>
+<a onclick="javascript: showVpLink('Office Of Acquisitions.vpp://diagram/SGLqSC6GAqAC73cv', 'Determine the competitive range, as applicable\nOffice Of Acquisitions.vpp://diagram/SGLqSC6GAqAC73cv', 'Determine the competitive range, as applicable', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|2206.0|31.0|142.0|33.0|BPTask_Ovl6SC6GAqAC73kU.html|BPTask_Ovl6SC6GAqAC73kU.html|Ovl6SC6GAqAC73kT" id="optionOvl6SC6GAqAC73kT">Review CRD (MS Word) : Task</option>
+<option value="shape|729.0|185.0|276.0|40.0|BPTask_6MjaSC6GAqAC73f8.html|BPTask_6MjaSC6GAqAC73f8.html|6MjaSC6GAqAC73f7" id="option6MjaSC6GAqAC73f7">Compare Technical Evaluation Report or Special Emphasis Meeting Minutes to Recommendation Document (Analytical, ADOBE)  : Task</option>
+<option value="shape|13.0|314.0|4035.0|133.0|BPLane_bBbqSC6GAqAC73dM.html|BPLane_bBbqSC6GAqAC73dM.html|bBbqSC6GAqAC73dL" id="optionbBbqSC6GAqAC73dL">Federal Program Manager : Lane</option>
+<option value="shape|2515.0|31.0|33.0|33.0|BPGateway_QgD6SC6GAqAC73lQ.html|BPGateway_QgD6SC6GAqAC73lQ.html|QgD6SC6GAqAC73lP" id="optionQgD6SC6GAqAC73lP">Questions? : Gateway</option>
+<option value="shape|1036.0|189.0|33.0|33.0|BPGateway_uDnaSC6GAqAC73gk.html|BPGateway_uDnaSC6GAqAC73gk.html|uDnaSC6GAqAC73gj" id="optionuDnaSC6GAqAC73gj">Questions? : Gateway</option>
+<option value="shape|13.0|97.0|4035.0|217.0|BPLane_ALlaSC6GAqAC73fK.html|BPLane_ALlaSC6GAqAC73fK.html|ALlaSC6GAqAC73fJ" id="optionALlaSC6GAqAC73fJ">CO/CS : Lane</option>
+<option value="shape|13.0|0.0|4035.0|97.0|BPLane_Sx26SC6GAqAC73jQ.html|BPLane_Sx26SC6GAqAC73jQ.html|Sx26SC6GAqAC73jP" id="optionSx26SC6GAqAC73jP">OA Team Lead : Lane</option>
+<option value="shape|0.0|0.0|4048.0|447.0|BPPool_RBbqSC6GAqAC73dI.html|BPPool_RBbqSC6GAqAC73dI.html|RBbqSC6GAqAC73dH" id="optionRBbqSC6GAqAC73dH">Determine the competitive range, as applicable : Pool</option>
+<option value="shape|1913.0|185.0|165.0|40.0|BPTask_GDk6SC6GAqAC73iK.html|BPTask_GDk6SC6GAqAC73iK.html|GDk6SC6GAqAC73iJ" id="optionGDk6SC6GAqAC73iJ">Complete Competitive Range Determination (CRD) (MS Word, ADOBE) : Task</option>
+<option value="shape|2883.0|31.0|117.0|33.0|BPTask_idWGSC6GAqAC73nO.html|BPTask_idWGSC6GAqAC73nO.html|idWGSC6GAqAC73nN" id="optionidWGSC6GAqAC73nN">Sign CRD (ADOBE) : Task</option>
+<option value="shape|2125.0|178.0|302.0|55.0|BPTask_aRK6SC6GAqAC73iy.html|BPTask_aRK6SC6GAqAC73iy.html|aRK6SC6GAqAC73ix" id="optionaRK6SC6GAqAC73ix">Submit all Required Reference Documents along with the CRD to OA TL for One Level Above CO approval (Email, OA Shared Drive, MS TEAMS, One Drive, Future state OASYS/FCAS) : Task</option>
+<option value="shape|462.0|363.0|207.0|33.0|BPTask_zSg6SC6GAqAC73hC.html|BPTask_zSg6SC6GAqAC73hC.html|zSg6SC6GAqAC73hB" id="optionzSg6SC6GAqAC73hB">Address Questions from C0/CS (Email, MS Word, ADOBE, Future state OASYS/FCAS) : Task</option>
+<option value="shape|2461.0|184.0|142.0|42.0|BPTask_B0r6SC6GAqAC73lu.html|BPTask_B0r6SC6GAqAC73lu.html|B0r6SC6GAqAC73lt" id="optionB0r6SC6GAqAC73lt">Address Questions and Clarifications from OA TL (MS Word, ADOBE, Email) : Task</option>
+<option value="shape|2634.0|31.0|158.0|33.0|BPTask_7uLfiS6AU80kYHp1.html|BPTask_7uLfiS6AU80kYHp1.html|7uLfiS6AU80kYHp0" id="option7uLfiS6AU80kYHp0">Document Review of CRD (Email, Future state OASYS/FCAS) : Task</option>
+<option value="shape|51.0|197.0|16.0|16.0|BPStartEvent_5eLqSC6GAqAC73c5.html|BPStartEvent_5eLqSC6GAqAC73c5.html|5eLqSC6GAqAC73c4" id="option5eLqSC6GAqAC73c4">Unnamed Start Event : Start Event</option>
+<option value="shape|434.0|185.0|264.0|40.0|BPTask_X7VaSC6GAqAC73fc.html|BPTask_X7VaSC6GAqAC73fc.html|X7VaSC6GAqAC73fb" id="optionX7VaSC6GAqAC73fb">Review Project Officer's Competitive Range Recommendation or Order of Merit Recommendation and file (ADOBE, OASYS/FCAS) : Task</option>
+<option value="shape|2853.0|189.0|177.0|33.0|BPTask_MwY3iS6AU80kYHiX.html|BPTask_MwY3iS6AU80kYHiX.html|MwY3iS6AU80kYHiW" id="optionMwY3iS6AU80kYHiW">File Signed CRD (OASYS/FCAS) : Task</option>
+<option value="shape|3136.0|197.0|16.0|16.0|BPEndEvent_PeLqSC6GAqAC73c9.html|BPEndEvent_PeLqSC6GAqAC73c9.html|PeLqSC6GAqAC73c8" id="optionPeLqSC6GAqAC73c8">Unnamed End Event : End Event</option>
+<option value="shape|1459.0|189.0|209.0|33.0|BPTask_Wdz3iS6AU80kYHj3.html|BPTask_Wdz3iS6AU80kYHj3.html|Wdz3iS6AU80kYHj2" id="optionWdz3iS6AU80kYHj2">Consider each Evaluation Factor identified in the RFP (Analytical, ADOBE) : Task</option>
+<option value="shape|1704.0|189.0|171.0|31.0|BPTask_RwRPiS6AU80kYHm_.html|BPTask_RwRPiS6AU80kYHm_.html|RwRPiS6AU80kYHm." id="optionRwRPiS6AU80kYHm.">Conduct Cost Realism Analysis (Analytical, MS Excel, ADOBE) : Task</option>
+<option value="shape|1131.0|177.0|286.0|57.0|BPTask_AdpPiS6AU80kYHnf.html|BPTask_AdpPiS6AU80kYHnf.html|AdpPiS6AU80kYHne" id="optionAdpPiS6AU80kYHne">Gather required information from the Concept Review (if applicable), Acquisition Plan, Small Business Office Review, and the RFP and Issuance Notices, TEP Report (ADOBE, OASYS/FCAS) : Task</option>
+<option value="shape|2678.0|189.0|70.0|33.0|BPTask_EuQ_iS6AU80kYHq1.html|BPTask_EuQ_iS6AU80kYHq1.html|EuQ_iS6AU80kYHq0" id="optionEuQ_iS6AU80kYHq0">Sign CRD (ADOBE) : Task</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Determine_the_competitive_range_as_applicable.png" usemap="#diagram_map" class="Image" width="4087" height="451"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="67.0, 198.0, 67.0, 212.0, 434.0, 212.0, 434.0, 198.0" coords2="67.0, 198.0, 67.0, 212.0, 434.0, 212.0, 434.0, 198.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_ijYaSC6GAqAC73eA_default" href="BPSequenceFlow_sjYaSC6GAqAC73d_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="698.0, 198.0, 698.0, 212.0, 729.0, 212.0, 729.0, 198.0" coords2="698.0, 198.0, 698.0, 212.0, 729.0, 212.0, 729.0, 198.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_YsjaSC6GAqAC73gE_default" href="BPSequenceFlow_QsjaSC6GAqAC73gD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1005.0, 198.0, 1005.0, 212.0, 1036.0, 212.0, 1036.0, 198.0" coords2="1005.0, 198.0, 1005.0, 212.0, 1036.0, 212.0, 1036.0, 198.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_8jnaSC6GAqAC73gs_default" href="BPSequenceFlow_0jnaSC6GAqAC73gr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1046.0, 222.0, 1046.0, 373.0, 669.0, 373.0, 669.0, 387.0, 1046.0, 387.0, 1046.0, 390.0, 1060.0, 390.0, 1060.0, 387.0, 1063.0, 387.0, 1063.0, 373.0, 1060.0, 373.0, 1060.0, 222.0" coords2="1046.0, 222.0, 1046.0, 373.0, 669.0, 373.0, 669.0, 387.0, 1046.0, 387.0, 1046.0, 390.0, 1060.0, 390.0, 1060.0, 387.0, 1063.0, 387.0, 1063.0, 373.0, 1060.0, 373.0, 1060.0, 222.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_Byg6SC6GAqAC73hK_default" href="BPSequenceFlow_Oyg6SC6GAqAC73hJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="559.0, 225.0, 559.0, 363.0, 573.0, 363.0, 573.0, 225.0" coords2="559.0, 225.0, 559.0, 363.0, 573.0, 363.0, 573.0, 225.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_tmY6SC6GAqAC73hi_default" href="BPSequenceFlow_1mY6SC6GAqAC73hh.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1875.0, 198.0, 1875.0, 212.0, 1913.0, 212.0, 1913.0, 198.0" coords2="1875.0, 198.0, 1875.0, 212.0, 1913.0, 212.0, 1913.0, 198.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_wjk6SC6GAqAC73iS_default" href="BPSequenceFlow__Dk6SC6GAqAC73iR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2078.0, 198.0, 2078.0, 212.0, 2125.0, 212.0, 2125.0, 198.0" coords2="2078.0, 198.0, 2078.0, 212.0, 2125.0, 212.0, 2125.0, 198.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_oxK6SC6GAqAC73i6_default" href="BPSequenceFlow_gxK6SC6GAqAC73i5.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2270.0, 64.0, 2270.0, 178.0, 2284.0, 178.0, 2284.0, 64.0" coords2="2270.0, 64.0, 2270.0, 178.0, 2284.0, 178.0, 2284.0, 64.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Efl6SC6GAqAC73kc_default" href="BPSequenceFlow_Ifl6SC6GAqAC73kb.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2348.0, 41.0, 2348.0, 55.0, 2515.0, 55.0, 2515.0, 41.0" coords2="2348.0, 41.0, 2348.0, 55.0, 2515.0, 55.0, 2515.0, 41.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_tgD6SC6GAqAC73lY_default" href="BPSequenceFlow_lgD6SC6GAqAC73lX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2525.0, 64.0, 2525.0, 184.0, 2539.0, 184.0, 2539.0, 64.0" coords2="2525.0, 64.0, 2525.0, 184.0, 2539.0, 184.0, 2539.0, 64.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_MMr6SC6GAqAC73l2_default" href="BPSequenceFlow_EMr6SC6GAqAC73l1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2427.0, 198.0, 2427.0, 212.0, 2461.0, 212.0, 2461.0, 198.0" coords2="2427.0, 198.0, 2427.0, 212.0, 2461.0, 212.0, 2461.0, 198.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_TgaGSC6GAqAC73mq_default" href="BPSequenceFlow_DgaGSC6GAqAC73mp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2819.0, 38.0, 2819.0, 41.0, 2816.0, 41.0, 2816.0, 55.0, 2819.0, 55.0, 2819.0, 198.0, 2748.0, 198.0, 2748.0, 212.0, 2819.0, 212.0, 2819.0, 215.0, 2833.0, 215.0, 2833.0, 212.0, 2836.0, 212.0, 2836.0, 198.0, 2833.0, 198.0, 2833.0, 55.0, 2883.0, 55.0, 2883.0, 41.0, 2833.0, 41.0, 2833.0, 38.0" coords2="2819.0, 38.0, 2819.0, 41.0, 2816.0, 41.0, 2816.0, 55.0, 2819.0, 55.0, 2819.0, 198.0, 2748.0, 198.0, 2748.0, 212.0, 2819.0, 212.0, 2819.0, 215.0, 2833.0, 215.0, 2833.0, 212.0, 2836.0, 212.0, 2836.0, 198.0, 2833.0, 198.0, 2833.0, 55.0, 2883.0, 55.0, 2883.0, 41.0, 2833.0, 41.0, 2833.0, 38.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_fdWGSC6GAqAC73nW_default" href="BPSequenceFlow_XdWGSC6GAqAC73nV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2935.0, 64.0, 2935.0, 189.0, 2949.0, 189.0, 2949.0, 64.0" coords2="2935.0, 64.0, 2935.0, 189.0, 2949.0, 189.0, 2949.0, 64.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_vwY3iS6AU80kYHif_default" href="BPSequenceFlow_nwY3iS6AU80kYHie.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1417.0, 197.0, 1417.0, 211.0, 1459.0, 211.0, 1459.0, 197.0" coords2="1417.0, 197.0, 1417.0, 211.0, 1459.0, 211.0, 1459.0, 197.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_g9z3iS6AU80kYHj__default" href="BPSequenceFlow_vdz3iS6AU80kYHj_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1668.0, 198.0, 1668.0, 212.0, 1704.0, 212.0, 1704.0, 198.0" coords2="1668.0, 198.0, 1668.0, 212.0, 1704.0, 212.0, 1704.0, 198.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_MIRPiS6AU80kYHnH_default" href="BPSequenceFlow_EIRPiS6AU80kYHnG.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1069.0, 198.0, 1069.0, 212.0, 1131.0, 212.0, 1131.0, 198.0" coords2="1069.0, 198.0, 1069.0, 212.0, 1131.0, 212.0, 1131.0, 198.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_tdpPiS6AU80kYHnn_default" href="BPSequenceFlow_ldpPiS6AU80kYHnm.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2548.0, 41.0, 2548.0, 55.0, 2634.0, 55.0, 2634.0, 41.0" coords2="2548.0, 41.0, 2548.0, 55.0, 2634.0, 55.0, 2634.0, 41.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_heLfiS6AU80kYHp9_default" href="BPSequenceFlow_eeLfiS6AU80kYHp8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2706.0, 64.0, 2706.0, 189.0, 2720.0, 189.0, 2720.0, 64.0" coords2="2706.0, 64.0, 2706.0, 189.0, 2720.0, 189.0, 2720.0, 64.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_TuQ_iS6AU80kYHq9_default" href="BPSequenceFlow_9uQ_iS6AU80kYHq8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3030.0, 198.0, 3030.0, 212.0, 3136.0, 212.0, 3136.0, 198.0" coords2="3030.0, 198.0, 3030.0, 212.0, 3136.0, 212.0, 3136.0, 198.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_UqC_iS6AU80kYHsF_default" href="BPSequenceFlow_kqC_iS6AU80kYHsE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2678, 189, 2748, 222" coords2="2678, 189, 2748, 222" shape="rect" alt="Sign CRD (ADOBE):Task" id="areadiagram_map_EuQ_iS6AU80kYHq0_default" href="BPTask_EuQ_iS6AU80kYHq1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2634, 31, 2792, 64" coords2="2634, 31, 2792, 64" shape="rect" alt="Document Review of CRD (Email, Future state OASYS/FCAS):Task" id="areadiagram_map_7uLfiS6AU80kYHp0_default" href="BPTask_7uLfiS6AU80kYHp1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1131, 177, 1417, 234" coords2="1131, 177, 1417, 234" shape="rect" alt="Gather required information from the Concept Review (if applicable), Acquisition Plan, Small Business Office Review, and the RFP and Issuance Notices, TEP Report (ADOBE, OASYS/FCAS):Task" id="areadiagram_map_AdpPiS6AU80kYHne_default" href="BPTask_AdpPiS6AU80kYHnf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1704, 189, 1875, 220" coords2="1704, 189, 1875, 220" shape="rect" alt="Conduct Cost Realism Analysis (Analytical, MS Excel, ADOBE):Task" id="areadiagram_map_RwRPiS6AU80kYHm._default" href="BPTask_RwRPiS6AU80kYHm_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1459, 189, 1668, 222" coords2="1459, 189, 1668, 222" shape="rect" alt="Consider each Evaluation Factor identified in the RFP (Analytical, ADOBE):Task" id="areadiagram_map_Wdz3iS6AU80kYHj2_default" href="BPTask_Wdz3iS6AU80kYHj3.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2853, 189, 3030, 222" coords2="2853, 189, 3030, 222" shape="rect" alt="File Signed CRD (OASYS/FCAS):Task" id="areadiagram_map_MwY3iS6AU80kYHiW_default" href="BPTask_MwY3iS6AU80kYHiX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2883, 31, 3000, 64" coords2="2883, 31, 3000, 64" shape="rect" alt="Sign CRD (ADOBE):Task" id="areadiagram_map_idWGSC6GAqAC73nN_default" href="BPTask_idWGSC6GAqAC73nO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2461, 184, 2603, 226" coords2="2461, 184, 2603, 226" shape="rect" alt="Address Questions and Clarifications from OA TL (MS Word, ADOBE, Email):Task" id="areadiagram_map_B0r6SC6GAqAC73lt_default" href="BPTask_B0r6SC6GAqAC73lu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2515, 31, 2548, 64" coords2="2515, 31, 2548, 64" shape="rect" alt="Questions?:Gateway" id="areadiagram_map_QgD6SC6GAqAC73lP_default" href="BPGateway_QgD6SC6GAqAC73lQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2206, 31, 2348, 64" coords2="2206, 31, 2348, 64" shape="rect" alt="Review CRD (MS Word):Task" id="areadiagram_map_Ovl6SC6GAqAC73kT_default" href="BPTask_Ovl6SC6GAqAC73kU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3135, 241, 4082, 256" coords2="3135, 241, 4082, 256" shape="rect" alt="Pre-award notice of exclusion from competitive range, as applicable (MS Word, ADOBE, Email):Task" id="areadiagram_map_PeLqSC6GAqAC73c8_sublevelflowitem1" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=ahQMUE6AU8ikR5.2"/>
+<area imageId="diagram" coords="3135, 256, 4082, 271" coords2="3135, 256, 4082, 271" shape="rect" alt="Review business proposal and proposed cost/price (ADOBE, OA Shared Drive, One Drive, MS TEAMS, OASYS/FCAS):Task" id="areadiagram_map_PeLqSC6GAqAC73c8_sublevelflowitem2" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=xXwT_O6AU8g4TbkB"/>
+<area imageId="diagram" coords="3135, 271, 4082, 286" coords2="3135, 271, 4082, 286" shape="rect" alt="Review Small Business Subcontracting Plan when applicable and request revisions by Offeror during clarifications or negotiations, as applicable (ADOBE, OA Shared Drive, One Drive, MS TEAMS, OASYS/FCAS):Task" id="areadiagram_map_PeLqSC6GAqAC73c8_sublevelflowitem3" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=FlET_O6AU8g4Tbkb"/>
+<area imageId="diagram" coords="3136, 197, 3152, 213" coords2="3136, 197, 3152, 213" shape="rect" alt=":End Event" id="areadiagram_map_PeLqSC6GAqAC73c8_default" href="BPEndEvent_PeLqSC6GAqAC73c9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="13, 0, 4048, 97" coords2="13, 0, 4048, 97" shape="rect" alt="OA Team Lead:Lane" id="areadiagram_map_Sx26SC6GAqAC73jP_default" href="BPLane_Sx26SC6GAqAC73jQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2125, 178, 2427, 233" coords2="2125, 178, 2427, 233" shape="rect" alt="Submit all Required Reference Documents along with the CRD to OA TL for One Level Above CO approval (Email, OA Shared Drive, MS TEAMS, One Drive, Future state OASYS/FCAS):Task" id="areadiagram_map_aRK6SC6GAqAC73ix_default" href="BPTask_aRK6SC6GAqAC73iy.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1913, 185, 2078, 225" coords2="1913, 185, 2078, 225" shape="rect" alt="Complete Competitive Range Determination (CRD) (MS Word, ADOBE):Task" id="areadiagram_map_GDk6SC6GAqAC73iJ_default" href="BPTask_GDk6SC6GAqAC73iK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="462, 363, 669, 396" coords2="462, 363, 669, 396" shape="rect" alt="Address Questions from C0/CS (Email, MS Word, ADOBE, Future state OASYS/FCAS):Task" id="areadiagram_map_zSg6SC6GAqAC73hB_default" href="BPTask_zSg6SC6GAqAC73hC.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1036, 189, 1069, 222" coords2="1036, 189, 1069, 222" shape="rect" alt="Questions?:Gateway" id="areadiagram_map_uDnaSC6GAqAC73gj_default" href="BPGateway_uDnaSC6GAqAC73gk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="729, 185, 1005, 225" coords2="729, 185, 1005, 225" shape="rect" alt="Compare Technical Evaluation Report or Special Emphasis Meeting Minutes to Recommendation Document (Analytical, ADOBE) :Task" id="areadiagram_map_6MjaSC6GAqAC73f7_default" href="BPTask_6MjaSC6GAqAC73f8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="434, 185, 698, 225" coords2="434, 185, 698, 225" shape="rect" alt="Review Project Officer's Competitive Range Recommendation or Order of Merit Recommendation and file (ADOBE, OASYS/FCAS):Task" id="areadiagram_map_X7VaSC6GAqAC73fb_default" href="BPTask_X7VaSC6GAqAC73fc.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="51, 241, 429, 256" coords2="51, 241, 429, 256" shape="rect" alt="Unnamed Intermediate Event:Intermediate Event" id="areadiagram_map_5eLqSC6GAqAC73c4_sublevelflowitem1" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=.9Gvs06GAqAC77gw"/>
+<area imageId="diagram" coords="51, 256, 429, 271" coords2="51, 256, 429, 271" shape="rect" alt="Review Peer/Technical Review Minutes (OA Shared Drive, MS TEAMS, One Drive):Task" id="areadiagram_map_5eLqSC6GAqAC73c4_sublevelflowitem2" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=T3qYKU6GAqAC77o2"/>
+<area imageId="diagram" coords="51, 197, 67, 213" coords2="51, 197, 67, 213" shape="rect" alt=":Start Event" id="areadiagram_map_5eLqSC6GAqAC73c4_default" href="BPStartEvent_5eLqSC6GAqAC73c5.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="13, 97, 4048, 314" coords2="13, 97, 4048, 314" shape="rect" alt="CO/CS:Lane" id="areadiagram_map_ALlaSC6GAqAC73fJ_default" href="BPLane_ALlaSC6GAqAC73fK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="13, 314, 4048, 447" coords2="13, 314, 4048, 447" shape="rect" alt="Federal Program Manager:Lane" id="areadiagram_map_bBbqSC6GAqAC73dL_default" href="BPLane_bBbqSC6GAqAC73dM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="0, 0, 4048, 447" coords2="0, 0, 4048, 447" shape="rect" alt="Determine the competitive range, as applicable:Pool" id="areadiagram_map_RBbqSC6GAqAC73dH_default" href="BPPool_RBbqSC6GAqAC73dI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Ovl6SC6GAqAC73kU.html" class="ItemLink">Review CRD (MS Word) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_6MjaSC6GAqAC73f8.html" class="ItemLink">Compare Technical Evaluation Report or Special Emphasis Meeting Minutes to Recommendation Document (Analytical, ADOBE)  : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_bBbqSC6GAqAC73dM.html" class="ItemLink">Federal Program Manager : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_QgD6SC6GAqAC73lQ.html" class="ItemLink">Questions? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_uDnaSC6GAqAC73gk.html" class="ItemLink">Questions? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_ALlaSC6GAqAC73fK.html" class="ItemLink">CO/CS : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_Sx26SC6GAqAC73jQ.html" class="ItemLink">OA Team Lead : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_RBbqSC6GAqAC73dI.html" class="ItemLink">Determine the competitive range, as applicable : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_GDk6SC6GAqAC73iK.html" class="ItemLink">Complete Competitive Range Determination (CRD) (MS Word, ADOBE) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP06</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_idWGSC6GAqAC73nO.html" class="ItemLink">Sign CRD (ADOBE) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_aRK6SC6GAqAC73iy.html" class="ItemLink">Submit all Required Reference Documents along with the CRD to OA TL for One Level Above CO approval (Email, OA Shared Drive, MS TEAMS, One Drive, Future state OASYS/FCAS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP08</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_zSg6SC6GAqAC73hC.html" class="ItemLink">Address Questions from C0/CS (Email, MS Word, ADOBE, Future state OASYS/FCAS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP10</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_B0r6SC6GAqAC73lu.html" class="ItemLink">Address Questions and Clarifications from OA TL (MS Word, ADOBE, Email) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP11</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_7uLfiS6AU80kYHp1.html" class="ItemLink">Document Review of CRD (Email, Future state OASYS/FCAS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP12</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_5eLqSC6GAqAC73c5.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP14</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_X7VaSC6GAqAC73fc.html" class="ItemLink">Review Project Officer's Competitive Range Recommendation or Order of Merit Recommendation and file (ADOBE, OASYS/FCAS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP16</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_MwY3iS6AU80kYHiX.html" class="ItemLink">File Signed CRD (OASYS/FCAS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP18</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_PeLqSC6GAqAC73c9.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP19</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Wdz3iS6AU80kYHj3.html" class="ItemLink">Consider each Evaluation Factor identified in the RFP (Analytical, ADOBE) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP23</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_RwRPiS6AU80kYHm_.html" class="ItemLink">Conduct Cost Realism Analysis (Analytical, MS Excel, ADOBE) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP25</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_AdpPiS6AU80kYHnf.html" class="ItemLink">Gather required information from the Concept Review (if applicable), Acquisition Plan, Small Business Office Review, and the RFP and Issuance Notices, TEP Report (ADOBE, OASYS/FCAS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP27</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_EuQ_iS6AU80kYHq1.html" class="ItemLink">Sign CRD (ADOBE) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

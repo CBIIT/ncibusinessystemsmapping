@@ -1,0 +1,547 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - CO reviews Source Selection Recommendation and writes the Source Selection Determination </title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html" class="PageParentTitle">Competitive Range/Source Selection : Pool</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html" class="PageParentTitle">CO/CS : Lane</a><span class="PageParentTitle">&nbsp;.&nbsp;</span><a href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html" class="PageParentTitle">CO reviews Source Selection Recommendation and writes the Source Selection Determination (MS Word/Excel, ADOBE)  : Sub-Process</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - CO reviews Source Selection Recommendation and writes the Source Selection Determination 		</span>
+<a onclick="javascript: showVpLink('Office Of Acquisitions.vpp://diagram/t_IBSC6GAqAC78S0', 'CO reviews Source Selection Recommendation and writes the Source Selection Determination \nOffice Of Acquisitions.vpp://diagram/t_IBSC6GAqAC78S0', 'CO reviews Source Selection Recommendation and writes the Source Selection Determination ', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|893.0|39.0|290.0|52.0|BPTask_vsPBSC6GAqAC78Wi.html|BPTask_vsPBSC6GAqAC78Wi.html|vsPBSC6GAqAC78Wh" id="optionvsPBSC6GAqAC78Wh">Review Source Selection Determination Package (MS Word, OA Shared Drive, One Drive, MS TEAMS, Future state OASYS/FCAS) : Task</option>
+<option value="shape|436.0|186.0|427.0|80.0|BPTask_7hhBSC6GAqAC78U6.html|BPTask_7hhBSC6GAqAC78U6.html|7hhBSC6GAqAC78U5" id="option7hhBSC6GAqAC78U5">Prepare Source Selection Determination Document include a summary, addressing the IGCE, Competitive Range Determination Summary of Negotiations, Weighed Guidelines for Profit, and POTQs; Address all Offeror's Technical Scores and Costs Proposed; Discuss other Evaluation Factors/Plans, and Cost Price Reasonableness (MS Word/Excel, ADOBE) : Task</option>
+<option value="shape|57.0|404.0|20.0|20.0|BPStartEvent_EooBSC6GAqAC78S_.html|BPStartEvent_EooBSC6GAqAC78S_.html|4ooBSC6GAqAC78S9" id="option4ooBSC6GAqAC78S9">Unnamed Start Event : Start Event</option>
+<option value="shape|18.0|322.0|1831.0|182.0|BPLane_wmYBSC6GAqAC78TR.html|BPLane_wmYBSC6GAqAC78TR.html|wmYBSC6GAqAC78TQ" id="optionwmYBSC6GAqAC78TQ">Federal Program Manager : Lane</option>
+<option value="shape|1296.0|45.0|40.0|40.0|BPGateway_MtghSC6GAqAC78XW.html|BPGateway_MtghSC6GAqAC78XW.html|MtghSC6GAqAC78XV" id="optionMtghSC6GAqAC78XV">Question or Clarifications? : Gateway</option>
+<option value="shape|891.0|200.0|293.0|52.0|BPTask_fADBSC6GAqAC78Vu.html|BPTask_fADBSC6GAqAC78Vu.html|fADBSC6GAqAC78Vt" id="optionfADBSC6GAqAC78Vt">Send Source Selection Determination Document for One Level Above CO review (Email, OA Shared Drive, One Drive, MS TEAMS, Future state OASYS/FCAS) : Task</option>
+<option value="shape|18.0|130.0|1831.0|192.0|BPLane_zW_BSC6GAqAC78Uq.html|BPLane_zW_BSC6GAqAC78Uq.html|zW.BSC6GAqAC78Up" id="optionzW.BSC6GAqAC78Up">CO/CS : Lane</option>
+<option value="shape|160.0|394.0|227.0|40.0|BPTask_b5cBSC6GAqAC78Tw.html|BPTask_b5cBSC6GAqAC78Tw.html|b5cBSC6GAqAC78Tv" id="optionb5cBSC6GAqAC78Tv">Complete COR recommendation for Source Selection (MS Word) : Task</option>
+<option value="shape|18.0|0.0|1831.0|130.0|BPLane_BMHBSC6GAqAC78WM.html|BPLane_BMHBSC6GAqAC78WM.html|BMHBSC6GAqAC78WL" id="optionBMHBSC6GAqAC78WL">OA Team Lead : Lane</option>
+<option value="shape|2.0|0.0|1847.0|505.0|BPPool_TGYBSC6GAqAC78TN.html|BPPool_TGYBSC6GAqAC78TN.html|TGYBSC6GAqAC78TM" id="optionTGYBSC6GAqAC78TM">CO reviews Source Selection Recommendation and writes the Source Selection Determination  : Pool</option>
+<option value="shape|585.0|394.0|129.0|40.0|BPTask_H8WBSC6GAqAC78UO.html|BPTask_H8WBSC6GAqAC78UO.html|H8WBSC6GAqAC78UN" id="optionH8WBSC6GAqAC78UN">Send to CO/CS (Email) : Task</option>
+<option value="shape|1420.0|45.0|222.0|40.0|BPTask_PwShSC6GAqAC78ZI.html|BPTask_PwShSC6GAqAC78ZI.html|PwShSC6GAqAC78ZH" id="optionPwShSC6GAqAC78ZH">Send Review Comments to CO/CS (Email) : Task</option>
+<option value="shape|1231.0|206.0|170.0|40.0|BPTask_Xy4hSC6GAqAC78X8.html|BPTask_Xy4hSC6GAqAC78X8.html|ny4hSC6GAqAC78X7" id="optionny4hSC6GAqAC78X7">Address questions and Clarifications (MS Word) : Task</option>
+<option value="shape|1456.0|206.0|150.0|40.0|BPTask_8NOhSC6GAqAC78Zu.html|BPTask_8NOhSC6GAqAC78Zu.html|8NOhSC6GAqAC78Zt" id="option8NOhSC6GAqAC78Zt">Document in File (OASYS/FCAS) : Task</option>
+<option value="shape|1805.0|216.0|20.0|20.0|BPEndEvent_aooBSC6GAqAC78TC.html|BPEndEvent_aooBSC6GAqAC78TC.html|aooBSC6GAqAC78TB" id="optionaooBSC6GAqAC78TB">Unnamed End Event : End Event</option>
+<option value="shape|139.0|198.0|271.0|57.0|BPTask_zUtk6S6AU80kYOZ7.html|BPTask_zUtk6S6AU80kYOZ7.html|zUtk6S6AU80kYOZ6" id="optionzUtk6S6AU80kYOZ6">Conduct a comparative assessment of Proposals against the Source Selection Criteria in the Solicitation (ADOBE, MS Excel)  : Task</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/CO_reviews_Source_Selection_Recommendation_and_writes_the_Source_Selection_Determination_.png" usemap="#diagram_map" class="Image" width="2009" height="509"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="77.0, 406.0, 77.0, 420.0, 160.0, 420.0, 160.0, 406.0" coords2="77.0, 406.0, 77.0, 420.0, 160.0, 420.0, 160.0, 406.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_.FcBSC6GAqAC78T2_default" href="BPSequenceFlow_2FcBSC6GAqAC78T1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="387.0, 407.0, 387.0, 421.0, 585.0, 421.0, 585.0, 407.0" coords2="387.0, 407.0, 387.0, 421.0, 585.0, 421.0, 585.0, 407.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_TCWBSC6GAqAC78UW_default" href="BPSequenceFlow_dCWBSC6GAqAC78UV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="640.0, 266.0, 640.0, 394.0, 654.0, 394.0, 654.0, 266.0" coords2="640.0, 266.0, 640.0, 394.0, 654.0, 394.0, 654.0, 266.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_xRhBSC6GAqAC78VC_default" href="BPSequenceFlow__RhBSC6GAqAC78VB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="863.0, 218.0, 863.0, 232.0, 891.0, 232.0, 891.0, 218.0" coords2="863.0, 218.0, 863.0, 232.0, 891.0, 232.0, 891.0, 218.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_1gDBSC6GAqAC78V2_default" href="BPSequenceFlow_5gDBSC6GAqAC78V1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1031.0, 91.0, 1031.0, 200.0, 1045.0, 200.0, 1045.0, 91.0" coords2="1031.0, 91.0, 1031.0, 200.0, 1045.0, 200.0, 1045.0, 91.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_FcPBSC6GAqAC78Wq_default" href="BPSequenceFlow_JcPBSC6GAqAC78Wp.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1183.0, 57.0, 1183.0, 71.0, 1296.0, 71.0, 1296.0, 57.0" coords2="1183.0, 57.0, 1183.0, 71.0, 1296.0, 71.0, 1296.0, 57.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_3tghSC6GAqAC78Xe_default" href="BPSequenceFlow_7tghSC6GAqAC78Xd.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1309.0, 85.0, 1309.0, 206.0, 1323.0, 206.0, 1323.0, 85.0" coords2="1309.0, 85.0, 1309.0, 206.0, 1323.0, 206.0, 1323.0, 85.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_ZK4hSC6GAqAC78YE_default" href="BPSequenceFlow_RK4hSC6GAqAC78YD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1184.0, 218.0, 1184.0, 232.0, 1231.0, 232.0, 1231.0, 218.0" coords2="1184.0, 218.0, 1184.0, 232.0, 1231.0, 232.0, 1231.0, 218.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_aF8hSC6GAqAC78Yk_default" href="BPSequenceFlow_KF8hSC6GAqAC78Yj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1336.0, 58.0, 1336.0, 72.0, 1420.0, 72.0, 1420.0, 58.0" coords2="1336.0, 58.0, 1336.0, 72.0, 1420.0, 72.0, 1420.0, 58.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_FIShSC6GAqAC78ZQ_default" href="BPSequenceFlow_xIShSC6GAqAC78ZP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1524.0, 85.0, 1524.0, 206.0, 1538.0, 206.0, 1538.0, 85.0" coords2="1524.0, 85.0, 1524.0, 206.0, 1538.0, 206.0, 1538.0, 85.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_rNOhSC6GAqAC78Z2_default" href="BPSequenceFlow_jNOhSC6GAqAC78Z1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1606.0, 218.0, 1606.0, 232.0, 1805.0, 232.0, 1805.0, 218.0" coords2="1606.0, 218.0, 1606.0, 232.0, 1805.0, 232.0, 1805.0, 218.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_SDJhSC6GAqAC78ai_default" href="BPSequenceFlow_CDJhSC6GAqAC78ah.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="59.0, 215.0, 59.0, 218.0, 56.0, 218.0, 56.0, 232.0, 59.0, 232.0, 59.0, 404.0, 73.0, 404.0, 73.0, 232.0, 139.0, 232.0, 139.0, 218.0, 73.0, 218.0, 73.0, 215.0" coords2="59.0, 215.0, 59.0, 218.0, 56.0, 218.0, 56.0, 232.0, 59.0, 232.0, 59.0, 404.0, 73.0, 404.0, 73.0, 232.0, 139.0, 232.0, 139.0, 218.0, 73.0, 218.0, 73.0, 215.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_tW9k6S6AU80kYOaN_default" href="BPSequenceFlow_1W9k6S6AU80kYOaM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="410.0, 219.0, 410.0, 233.0, 436.0, 233.0, 436.0, 219.0" coords2="410.0, 219.0, 410.0, 233.0, 436.0, 233.0, 436.0, 219.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_bgaU6S6AU80kYAJV_default" href="BPSequenceFlow_LgaU6S6AU80kYAJU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="139, 198, 410, 255" coords2="139, 198, 410, 255" shape="rect" alt="Conduct a comparative assessment of Proposals against the Source Selection Criteria in the Solicitation (ADOBE, MS Excel) :Task" id="areadiagram_map_zUtk6S6AU80kYOZ6_default" href="BPTask_zUtk6S6AU80kYOZ7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1456, 206, 1606, 246" coords2="1456, 206, 1606, 246" shape="rect" alt="Document in File (OASYS/FCAS):Task" id="areadiagram_map_8NOhSC6GAqAC78Zt_default" href="BPTask_8NOhSC6GAqAC78Zu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1420, 45, 1642, 85" coords2="1420, 45, 1642, 85" shape="rect" alt="Send Review Comments to CO/CS (Email):Task" id="areadiagram_map_PwShSC6GAqAC78ZH_default" href="BPTask_PwShSC6GAqAC78ZI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1231, 206, 1401, 246" coords2="1231, 206, 1401, 246" shape="rect" alt="Address questions and Clarifications (MS Word):Task" id="areadiagram_map_ny4hSC6GAqAC78X7_default" href="BPTask_Xy4hSC6GAqAC78X8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1296, 45, 1336, 85" coords2="1296, 45, 1336, 85" shape="rect" alt="Question or Clarifications?:Gateway" id="areadiagram_map_MtghSC6GAqAC78XV_default" href="BPGateway_MtghSC6GAqAC78XW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="893, 39, 1183, 91" coords2="893, 39, 1183, 91" shape="rect" alt="Review Source Selection Determination Package (MS Word, OA Shared Drive, One Drive, MS TEAMS, Future state OASYS/FCAS):Task" id="areadiagram_map_vsPBSC6GAqAC78Wh_default" href="BPTask_vsPBSC6GAqAC78Wi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1805, 269, 2005, 287" coords2="1805, 269, 2005, 287" shape="rect" alt="Determination of Responsibility:Sub-Process" id="areadiagram_map_aooBSC6GAqAC78TB_sublevelflowitem1" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=vhthSC6GAqAC78yW"/>
+<area imageId="diagram" coords="1805, 287, 2005, 305" coords2="1805, 287, 2005, 305" shape="rect" alt="if applicable:Gateway" id="areadiagram_map_aooBSC6GAqAC78TB_sublevelflowitem2" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=sFciKU6GAqAC79Pi"/>
+<area imageId="diagram" coords="1805, 216, 1825, 236" coords2="1805, 216, 1825, 236" shape="rect" alt=":End Event" id="areadiagram_map_aooBSC6GAqAC78TB_default" href="BPEndEvent_aooBSC6GAqAC78TC.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="18, 0, 1849, 130" coords2="18, 0, 1849, 130" shape="rect" alt="OA Team Lead:Lane" id="areadiagram_map_BMHBSC6GAqAC78WL_default" href="BPLane_BMHBSC6GAqAC78WM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="891, 200, 1184, 252" coords2="891, 200, 1184, 252" shape="rect" alt="Send Source Selection Determination Document for One Level Above CO review (Email, OA Shared Drive, One Drive, MS TEAMS, Future state OASYS/FCAS):Task" id="areadiagram_map_fADBSC6GAqAC78Vt_default" href="BPTask_fADBSC6GAqAC78Vu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="436, 186, 863, 266" coords2="436, 186, 863, 266" shape="rect" alt="Prepare Source Selection Determination Document include a summary, addressing the IGCE, Competitive Range Determination Summary of Negotiations, Weighed Guidelines for Profit, and POTQs; Address all Offeror's Technical Scores and Costs Proposed; Discuss other Evaluation Factors/Plans, and Cost Price Reasonableness (MS Word/Excel, ADOBE):Task" id="areadiagram_map_7hhBSC6GAqAC78U5_default" href="BPTask_7hhBSC6GAqAC78U6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="18, 130, 1849, 322" coords2="18, 130, 1849, 322" shape="rect" alt="CO/CS:Lane" id="areadiagram_map_zW.BSC6GAqAC78Up_default" href="BPLane_zW_BSC6GAqAC78Uq.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="585, 394, 714, 434" coords2="585, 394, 714, 434" shape="rect" alt="Send to CO/CS (Email):Task" id="areadiagram_map_H8WBSC6GAqAC78UN_default" href="BPTask_H8WBSC6GAqAC78UO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="160, 394, 387, 434" coords2="160, 394, 387, 434" shape="rect" alt="Complete COR recommendation for Source Selection (MS Word):Task" id="areadiagram_map_b5cBSC6GAqAC78Tv_default" href="BPTask_b5cBSC6GAqAC78Tw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="57, 456, 794, 474" coords2="57, 456, 794, 474" shape="rect" alt="Make source selection recommendation to CO and complete Final Project Officer's Technical Questionnaire (MS Word, ADOBE, Email):Task" id="areadiagram_map_4ooBSC6GAqAC78S9_sublevelflowitem1" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=vIX..U6GAqAC76zG"/>
+<area imageId="diagram" coords="57, 474, 794, 492" coords2="57, 474, 794, 492" shape="rect" alt="Summary of Negotiations with Cost/Price Spreadsheet (MS Word/Excel, ADOBE):Task" id="areadiagram_map_4ooBSC6GAqAC78S9_sublevelflowitem2" href="BusinessProcessDiagram_P8a0UE6AU8ikR59I.html?shapeid=dV5T_O6AU8g4Tbmk"/>
+<area imageId="diagram" coords="57, 404, 77, 424" coords2="57, 404, 77, 424" shape="rect" alt=":Start Event" id="areadiagram_map_4ooBSC6GAqAC78S9_default" href="BPStartEvent_EooBSC6GAqAC78S_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="18, 322, 1849, 504" coords2="18, 322, 1849, 504" shape="rect" alt="Federal Program Manager:Lane" id="areadiagram_map_wmYBSC6GAqAC78TQ_default" href="BPLane_wmYBSC6GAqAC78TR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 0, 1849, 505" coords2="2, 0, 1849, 505" shape="rect" alt="CO reviews Source Selection Recommendation and writes the Source Selection Determination :Pool" id="areadiagram_map_TGYBSC6GAqAC78TM_default" href="BPPool_TGYBSC6GAqAC78TN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_vsPBSC6GAqAC78Wi.html" class="ItemLink">Review Source Selection Determination Package (MS Word, OA Shared Drive, One Drive, MS TEAMS, Future state OASYS/FCAS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_7hhBSC6GAqAC78U6.html" class="ItemLink">Prepare Source Selection Determination Document include a summary, addressing the IGCE, Competitive Range Determination Summary of Negotiations, Weighed Guidelines for Profit, and POTQs; Address all Offeror's Technical Scores and Costs Proposed; Discuss other Evaluation Factors/Plans, and Cost Price Reasonableness (MS Word/Excel, ADOBE) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_EooBSC6GAqAC78S_.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_wmYBSC6GAqAC78TR.html" class="ItemLink">Federal Program Manager : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_MtghSC6GAqAC78XW.html" class="ItemLink">Question or Clarifications? : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_fADBSC6GAqAC78Vu.html" class="ItemLink">Send Source Selection Determination Document for One Level Above CO review (Email, OA Shared Drive, One Drive, MS TEAMS, Future state OASYS/FCAS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_zW_BSC6GAqAC78Uq.html" class="ItemLink">CO/CS : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_b5cBSC6GAqAC78Tw.html" class="ItemLink">Complete COR recommendation for Source Selection (MS Word) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_BMHBSC6GAqAC78WM.html" class="ItemLink">OA Team Lead : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_TGYBSC6GAqAC78TN.html" class="ItemLink">CO reviews Source Selection Recommendation and writes the Source Selection Determination  : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_H8WBSC6GAqAC78UO.html" class="ItemLink">Send to CO/CS (Email) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_PwShSC6GAqAC78ZI.html" class="ItemLink">Send Review Comments to CO/CS (Email) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Xy4hSC6GAqAC78X8.html" class="ItemLink">Address questions and Clarifications (MS Word) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_8NOhSC6GAqAC78Zu.html" class="ItemLink">Document in File (OASYS/FCAS) : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP08</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_aooBSC6GAqAC78TC.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP10</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_zUtk6S6AU80kYOZ7.html" class="ItemLink">Conduct a comparative assessment of Proposals against the Source Selection Criteria in the Solicitation (ADOBE, MS Excel)  : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>
