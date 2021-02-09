@@ -1,0 +1,919 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - User Support Business Process Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - User Support Business Process Diagram		</span>
+<a onclick="javascript: showVpLink('STRIDES.vpp://diagram/pvQh146AU8ikR2B1', 'User Support Business Process Diagram\nSTRIDES.vpp://diagram/pvQh146AU8ikR2B1', 'User Support Business Process Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|127.0|1121.0|150.0|40.0|BPTask_fs5J146AU8ikR2ho.html|BPTask_fs5J146AU8ikR2ho.html|fs5J146AU8ikR2hn" id="optionfs5J146AU8ikR2hn">Inform NCI HALO Support staff of solution : Task</option>
+<option value="shape|471.0|945.0|40.0|40.0|BPGateway_k4oJ146AU8ikR2gP.html|BPGateway_k4oJ146AU8ikR2gP.html|k4oJ146AU8ikR2gO" id="optionk4oJ146AU8ikR2gO">Is issue AWS configuration issues, HALO configuration issue : Gateway</option>
+<option value="shape|416.0|716.0|150.0|40.0|BPTask_53Tx146AU8ikR2fv.html|BPTask_53Tx146AU8ikR2fv.html|53Tx146AU8ikR2fu" id="option53Tx146AU8ikR2fu">Route to NCI HALO Support Team : Task</option>
+<option value="shape|741.0|483.0|101.0|40.0|BPTask_N3xx146AU8ikR2d7.html|BPTask_N3xx146AU8ikR2d7.html|N3xx146AU8ikR2d6" id="optionN3xx146AU8ikR2d6">Answer Question : Task</option>
+<option value="shape|107.0|69.0|20.0|20.0|BPStartEvent_I3QR146AU8ikR2MJ.html|BPStartEvent_I3QR146AU8ikR2MJ.html|I3QR146AU8ikR2MI" id="optionI3QR146AU8ikR2MI">Unnamed Start Event : Start Event</option>
+<option value="shape|17.0|2.0|2485.0|150.0|BPLane_q2Sh146AU8ikR2LM.html|BPLane_q2Sh146AU8ikR2LM.html|q2Sh146AU8ikR2LL" id="optionq2Sh146AU8ikR2LL">Requester : Lane</option>
+<option value="shape|142.0|945.0|120.0|40.0|BPTask_yLOJ146AU8ikR2hA.html|BPTask_yLOJ146AU8ikR2hA.html|yLOJ146AU8ikR2g_" id="optionyLOJ146AU8ikR2g_">Submit AWS Support Ticket : Task</option>
+<option value="shape|471.0|215.0|40.0|40.0|BPGateway_EE6R146AU8ikR2Og.html|BPGateway_EE6R146AU8ikR2Og.html|EE6R146AU8ikR2Of" id="optionEE6R146AU8ikR2Of">If the issue is HALO usage related, study or best practice or Queue related : Gateway</option>
+<option value="shape|221.0|57.0|191.0|40.0|BPTask_tnwR146AU8ikR2MV.html|BPTask_tnwR146AU8ikR2MV.html|tnwR146AU8ikR2MU" id="optiontnwR146AU8ikR2MU">NCI HALO User needs help. Gets in touch with their supper user : Task</option>
+<option value="shape|17.0|828.0|2485.0|238.0|BPLane_KRWh146AU8ikR2LW.html|BPLane_KRWh146AU8ikR2LW.html|KRWh146AU8ikR2LV" id="optionKRWh146AU8ikR2LV">NCI HALO Support Team : Lane</option>
+<option value="shape|1977.0|730.0|150.0|40.0|BPTask_Rip5146AU8ikR2qS.html|BPTask_Rip5146AU8ikR2qS.html|hip5146AU8ikR2qR" id="optionhip5146AU8ikR2qR">Inform Super User Ticket is closed : Task</option>
+<option value="shape|1154.0|483.0|110.0|40.0|BPTask_ETGp146AU8ikR2jE.html|BPTask_ETGp146AU8ikR2jE.html|ETGp146AU8ikR2jD" id="optionETGp146AU8ikR2jD">Determine Solution : Task</option>
+<option value="shape|957.0|215.0|141.0|40.0|BPTask_15LR146AU8ikR2PG.html|BPTask_15LR146AU8ikR2PG.html|15LR146AU8ikR2PF" id="option15LR146AU8ikR2PF">Assist User with there problem : Task</option>
+<option value="shape|17.0|152.0|2485.0|268.0|BPLane_eMVh146AU8ikR2Li.html|BPLane_eMVh146AU8ikR2Li.html|eMVh146AU8ikR2Lh" id="optioneMVh146AU8ikR2Lh">NCI HALO Super User : Lane</option>
+<option value="shape|1140.0|945.0|139.0|40.0|BPTask_1hEp146AU8ikR2iY.html|BPTask_1hEp146AU8ikR2iY.html|1hEp146AU8ikR2iX" id="option1hEp146AU8ikR2iX">Submit HALO Support Ticket : Task</option>
+<option value="shape|764.0|215.0|40.0|40.0|BPGateway_AqAx146AU8ikR2bT.html|BPGateway_AqAx146AU8ikR2bT.html|AqAx146AU8ikR2bS" id="optionAqAx146AU8ikR2bS">Needs Help from Indica : Gateway</option>
+<option value="shape|17.0|672.0|2485.0|156.0|BPLane_4hvh146AU8ikR2L9.html|BPLane_4hvh146AU8ikR2L9.html|4hvh146AU8ikR2L8" id="option4hvh146AU8ikR2L8">Service NOW : Lane</option>
+<option value="shape|2042.0|86.0|20.0|20.0|BPEndEvent_PH8F146AU8ikR2sW.html|BPEndEvent_PH8F146AU8ikR2sW.html|PH8F146AU8ikR2sV" id="optionPH8F146AU8ikR2sV">Unnamed End Event : End Event</option>
+<option value="shape|1422.0|483.0|40.0|40.0|BPGateway_AeAZ146AU8ikR2kQ.html|BPGateway_AeAZ146AU8ikR2kQ.html|AeAZ146AU8ikR2kP" id="optionAeAZ146AU8ikR2kP">Something NCI HALO TEAM should fix : Gateway</option>
+<option value="shape|17.0|420.0|2485.0|252.0|BPLane_b3qx146AU8ikR2c9.html|BPLane_b3qx146AU8ikR2c9.html|b3qx146AU8ikR2c8" id="optionb3qx146AU8ikR2c8">Indica : Lane</option>
+<option value="shape|17.0|1066.0|2485.0|150.0|BPLane_uWaJ146AU8ikR2gs.html|BPLane_uWaJ146AU8ikR2gs.html|uWaJ146AU8ikR2gr" id="optionuWaJ146AU8ikR2gr">AWS : Lane</option>
+<option value="shape|1244.0|225.0|20.0|20.0|BPEndEvent_8V8x146AU8ikR2cf.html|BPEndEvent_8V8x146AU8ikR2cf.html|cV8x146AU8ikR2ce" id="optioncV8x146AU8ikR2ce">Unnamed End Event : End Event</option>
+<option value="shape|1425.0|945.0|50.0|40.0|BPTask_NS2Z146AU8ikR2l2.html|BPTask_NS2Z146AU8ikR2l2.html|1S2Z146AU8ikR2l1" id="option1S2Z146AU8ikR2l1">Fix Issue : Task</option>
+<option value="shape|1602.0|483.0|206.0|40.0|BPTask_Cm0Z146AU8ikR2ku.html|BPTask_Cm0Z146AU8ikR2ku.html|Cm0Z146AU8ikR2kt" id="optionCm0Z146AU8ikR2kt">Log into HALO environment and fix issue : Task</option>
+<option value="shape|734.0|318.0|114.0|40.0|BPTask_b8Ox146AU8ikR2db.html|BPTask_b8Ox146AU8ikR2db.html|b8Ox146AU8ikR2da" id="optionb8Ox146AU8ikR2da">Ask Indica Support  : Task</option>
+<option value="shape|1580.0|945.0|276.0|40.0|BPTask_1T45146AU8ikR2oq.html|BPTask_1T45146AU8ikR2oq.html|1T45146AU8ikR2op" id="option1T45146AU8ikR2op">Write solution into Service Now.  Create best practice, cookbook or knowledge article : Task</option>
+<option value="shape|1377.0|586.0|147.0|40.0|BPTask_hhMZ146AU8ikR2lK.html|BPTask_hhMZ146AU8ikR2lK.html|hhMZ146AU8ikR2lJ" id="optionhhMZ146AU8ikR2lJ">Inform NCI HALO Support staff of solution : Task</option>
+<option value="shape|2014.0|945.0|76.0|40.0|BPTask_48R5146AU8ikR2py.html|BPTask_48R5146AU8ikR2py.html|48R5146AU8ikR2px" id="option48R5146AU8ikR2px">Close Ticket : Task</option>
+<option value="shape|444.0|317.0|94.0|40.0|BPTask_Cl1x146AU8ikR2fH.html|BPTask_Cl1x146AU8ikR2fH.html|Cl1x146AU8ikR2fG" id="optionCl1x146AU8ikR2fG">Submit Service Now Ticket : Task</option>
+<option value="shape|1642.0|586.0|152.0|40.0|BPTask_UZfZ146AU8ikR2n6.html|BPTask_UZfZ146AU8ikR2n6.html|UZfZ146AU8ikR2n5" id="optionUZfZ146AU8ikR2n5">Inform NCI HALO Support staff of solution : Task</option>
+<option value="shape|2318.0|245.0|170.0|40.0|BPTask_cED5146AU8ikR2qy.html|BPTask_cED5146AU8ikR2qy.html|cED5146AU8ikR2qx" id="optioncED5146AU8ikR2qx">disseminated information to super users : Task</option>
+<option value="shape|2032.0|245.0|40.0|40.0|BPGateway_3Ov5146AU8ikR2rm.html|BPGateway_3Ov5146AU8ikR2rm.html|3Ov5146AU8ikR2rl" id="option3Ov5146AU8ikR2rl">Does information need to disseminated to other super users : Gateway</option>
+<option value="shape|2001.0|166.0|103.0|40.0|BPTask_bKFF146AU8ikR2tg.html|BPTask_bKFF146AU8ikR2tg.html|bKFF146AU8ikR2tf" id="optionbKFF146AU8ikR2tf">Inform Requester : Task</option>
+<option value="shape|2.0|2.0|2500.0|1214.0|BPPool_qrUh146AU8ikR2K7.html|BPPool_qrUh146AU8ikR2K7.html|qrUh146AU8ikR2K6" id="optionqrUh146AU8ikR2K6">NCI HALO User Support   : Pool</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/User_Support_Business_Process_Diagram.png" usemap="#diagram_map" class="Image" width="2506" height="1220"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="127.0, 70.0, 127.0, 84.0, 221.0, 84.0, 221.0, 70.0" coords2="127.0, 70.0, 127.0, 84.0, 221.0, 84.0, 221.0, 70.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_kXwR146AU8ikR2Mb_default" href="BPSequenceFlow_oXwR146AU8ikR2Ma.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="484.0, 81.0, 484.0, 84.0, 412.0, 84.0, 412.0, 97.0, 402.0, 97.0, 402.0, 98.0, 484.0, 98.0, 484.0, 215.0, 498.0, 215.0, 498.0, 98.0, 501.0, 98.0, 501.0, 84.0, 498.0, 84.0, 498.0, 81.0" coords2="484.0, 81.0, 484.0, 84.0, 412.0, 84.0, 412.0, 97.0, 402.0, 97.0, 402.0, 98.0, 484.0, 98.0, 484.0, 215.0, 498.0, 215.0, 498.0, 98.0, 501.0, 98.0, 501.0, 84.0, 498.0, 84.0, 498.0, 81.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_pE6R146AU8ikR2Oo_default" href="BPSequenceFlow_RE6R146AU8ikR2On.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="511.0, 228.0, 511.0, 242.0, 764.0, 242.0, 764.0, 228.0" coords2="511.0, 228.0, 511.0, 242.0, 764.0, 242.0, 764.0, 228.0" shape="poly" alt="YES:Sequence Flow" id="areadiagram_map_oFLR146AU8ikR2PO_default" href="BPSequenceFlow_QFLR146AU8ikR2PN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="804.0, 227.0, 804.0, 241.0, 957.0, 241.0, 957.0, 227.0" coords2="804.0, 227.0, 804.0, 241.0, 957.0, 241.0, 957.0, 227.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map__F0x146AU8ikR2cL_default" href="BPSequenceFlow_vF0x146AU8ikR2cK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1098.0, 228.0, 1098.0, 242.0, 1244.0, 242.0, 1244.0, 228.0" coords2="1098.0, 228.0, 1098.0, 242.0, 1244.0, 242.0, 1244.0, 228.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_FV8x146AU8ikR2cl_default" href="BPSequenceFlow_pV8x146AU8ikR2ck.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="777.0, 255.0, 777.0, 318.0, 791.0, 318.0, 791.0, 255.0" coords2="777.0, 255.0, 777.0, 318.0, 791.0, 318.0, 791.0, 255.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_iCOx146AU8ikR2dj_default" href="BPSequenceFlow_sCOx146AU8ikR2di.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="778.0, 358.0, 778.0, 483.0, 792.0, 483.0, 792.0, 358.0" coords2="778.0, 358.0, 778.0, 483.0, 792.0, 483.0, 792.0, 358.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_IPxx146AU8ikR2eD_default" href="BPSequenceFlow_gPxx146AU8ikR2eC.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1021.0, 255.0, 1021.0, 496.0, 842.0, 496.0, 842.0, 510.0, 1021.0, 510.0, 1021.0, 513.0, 1035.0, 513.0, 1035.0, 510.0, 1038.0, 510.0, 1038.0, 496.0, 1035.0, 496.0, 1035.0, 255.0" coords2="1021.0, 255.0, 1021.0, 496.0, 842.0, 496.0, 842.0, 510.0, 1021.0, 510.0, 1021.0, 513.0, 1035.0, 513.0, 1035.0, 510.0, 1038.0, 510.0, 1038.0, 496.0, 1035.0, 496.0, 1035.0, 255.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Hk5x146AU8ikR2en_default" href="BPSequenceFlow_7k5x146AU8ikR2em.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="484.0, 255.0, 484.0, 317.0, 498.0, 317.0, 498.0, 255.0" coords2="484.0, 255.0, 484.0, 317.0, 498.0, 317.0, 498.0, 255.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_ll1x146AU8ikR2fP_default" href="BPSequenceFlow_Zl1x146AU8ikR2fO.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="484.0, 357.0, 484.0, 716.0, 498.0, 716.0, 498.0, 357.0" coords2="484.0, 357.0, 484.0, 716.0, 498.0, 716.0, 498.0, 357.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_gPTx146AU8ikR2f3_default" href="BPSequenceFlow_v3Tx146AU8ikR2f2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="484.0, 756.0, 484.0, 945.0, 498.0, 945.0, 498.0, 756.0" coords2="484.0, 756.0, 484.0, 945.0, 498.0, 945.0, 498.0, 756.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_R4oJ146AU8ikR2gX_default" href="BPSequenceFlow__4oJ146AU8ikR2gW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="262.0, 958.0, 262.0, 972.0, 471.0, 972.0, 471.0, 958.0" coords2="262.0, 958.0, 262.0, 972.0, 471.0, 972.0, 471.0, 958.0" shape="poly" alt="Issue with AWS :Sequence Flow" id="areadiagram_map_zLOJ146AU8ikR2hI_default" href="BPSequenceFlow_9LOJ146AU8ikR2hH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="188.0, 985.0, 188.0, 1121.0, 202.0, 1121.0, 202.0, 985.0" coords2="188.0, 985.0, 188.0, 1121.0, 202.0, 1121.0, 202.0, 985.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_mc5J146AU8ikR2hw_default" href="BPSequenceFlow_qc5J146AU8ikR2hv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="511.0, 956.0, 511.0, 970.0, 1140.0, 970.0, 1140.0, 956.0" coords2="511.0, 956.0, 511.0, 970.0, 1140.0, 970.0, 1140.0, 956.0" shape="poly" alt="HALO Issue:Sequence Flow" id="areadiagram_map_4REp146AU8ikR2ig_default" href="BPSequenceFlow_IREp146AU8ikR2if.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1202.0, 523.0, 1202.0, 945.0, 1216.0, 945.0, 1216.0, 523.0" coords2="1202.0, 523.0, 1202.0, 945.0, 1216.0, 945.0, 1216.0, 523.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_xTGp146AU8ikR2jM_default" href="BPSequenceFlow_BTGp146AU8ikR2jL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1264.0, 496.0, 1264.0, 510.0, 1422.0, 510.0, 1422.0, 496.0" coords2="1264.0, 496.0, 1264.0, 510.0, 1422.0, 510.0, 1422.0, 496.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_OeAZ146AU8ikR2kY_default" href="BPSequenceFlow_meAZ146AU8ikR2kX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1462.0, 496.0, 1462.0, 510.0, 1602.0, 510.0, 1602.0, 496.0" coords2="1462.0, 496.0, 1462.0, 510.0, 1602.0, 510.0, 1602.0, 496.0" shape="poly" alt="NO:Sequence Flow" id="areadiagram_map_Fm0Z146AU8ikR2k2_default" href="BPSequenceFlow_pm0Z146AU8ikR2k1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1435.0, 523.0, 1435.0, 586.0, 1449.0, 586.0, 1449.0, 523.0" coords2="1435.0, 523.0, 1435.0, 586.0, 1449.0, 586.0, 1449.0, 523.0" shape="poly" alt="YES:Sequence Flow" id="areadiagram_map_PhMZ146AU8ikR2lS_default" href="BPSequenceFlow_nhMZ146AU8ikR2lR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1443.0, 626.0, 1443.0, 945.0, 1457.0, 945.0, 1457.0, 626.0" coords2="1443.0, 626.0, 1443.0, 945.0, 1457.0, 945.0, 1457.0, 626.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Iy2Z146AU8ikR2l._default" href="BPSequenceFlow_gy2Z146AU8ikR2l9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1321.0, 955.0, 1321.0, 958.0, 1318.0, 958.0, 1318.0, 972.0, 1321.0, 972.0, 1321.0, 1022.0, 498.0, 1022.0, 498.0, 985.0, 484.0, 985.0, 484.0, 1022.0, 481.0, 1022.0, 481.0, 1036.0, 484.0, 1036.0, 484.0, 1039.0, 498.0, 1039.0, 498.0, 1036.0, 1321.0, 1036.0, 1321.0, 1039.0, 1335.0, 1039.0, 1335.0, 1036.0, 1338.0, 1036.0, 1338.0, 1022.0, 1335.0, 1022.0, 1335.0, 972.0, 1425.0, 972.0, 1425.0, 958.0, 1335.0, 958.0, 1335.0, 955.0" coords2="1321.0, 955.0, 1321.0, 958.0, 1318.0, 958.0, 1318.0, 972.0, 1321.0, 972.0, 1321.0, 1022.0, 498.0, 1022.0, 498.0, 985.0, 484.0, 985.0, 484.0, 1022.0, 481.0, 1022.0, 481.0, 1036.0, 484.0, 1036.0, 484.0, 1039.0, 498.0, 1039.0, 498.0, 1036.0, 1321.0, 1036.0, 1321.0, 1039.0, 1335.0, 1039.0, 1335.0, 1036.0, 1338.0, 1036.0, 1338.0, 1022.0, 1335.0, 1022.0, 1335.0, 972.0, 1425.0, 972.0, 1425.0, 958.0, 1335.0, 958.0, 1335.0, 955.0" shape="poly" alt="NCI Issue:Sequence Flow" id="areadiagram_map_Bp.Z146AU8ikR2mW_default" href="BPSequenceFlow_ep_Z146AU8ikR2mV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1443.0, 985.0, 1443.0, 1134.0, 277.0, 1134.0, 277.0, 1148.0, 1443.0, 1148.0, 1443.0, 1151.0, 1457.0, 1151.0, 1457.0, 1148.0, 1460.0, 1148.0, 1460.0, 1134.0, 1457.0, 1134.0, 1457.0, 985.0" coords2="1443.0, 985.0, 1443.0, 1134.0, 277.0, 1134.0, 277.0, 1148.0, 1443.0, 1148.0, 1443.0, 1151.0, 1457.0, 1151.0, 1457.0, 1148.0, 1460.0, 1148.0, 1460.0, 1134.0, 1457.0, 1134.0, 1457.0, 985.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_B.ZZ146AU8ikR2my_default" href="BPSequenceFlow___ZZ146AU8ikR2mx.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1698.0, 523.0, 1698.0, 586.0, 1712.0, 586.0, 1712.0, 523.0" coords2="1698.0, 523.0, 1698.0, 586.0, 1712.0, 586.0, 1712.0, 523.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_pZfZ146AU8ikR2oC_default" href="BPSequenceFlow_hZfZ146AU8ikR2oB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1475.0, 958.0, 1475.0, 972.0, 1580.0, 972.0, 1580.0, 958.0" coords2="1475.0, 958.0, 1475.0, 972.0, 1580.0, 972.0, 1580.0, 958.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_oz45146AU8ikR2oy_default" href="BPSequenceFlow_gz45146AU8ikR2ox.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1698.0, 626.0, 1698.0, 945.0, 1712.0, 945.0, 1712.0, 626.0" coords2="1698.0, 626.0, 1698.0, 945.0, 1712.0, 945.0, 1712.0, 626.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_mBE5146AU8ikR2pG_default" href="BPSequenceFlow_6BE5146AU8ikR2pF.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1856.0, 958.0, 1856.0, 972.0, 2014.0, 972.0, 2014.0, 958.0" coords2="1856.0, 958.0, 1856.0, 972.0, 2014.0, 972.0, 2014.0, 958.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_R8R5146AU8ikR2p6_default" href="BPSequenceFlow_e8R5146AU8ikR2p5.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2039.0, 770.0, 2039.0, 945.0, 2053.0, 945.0, 2053.0, 770.0" coords2="2039.0, 770.0, 2039.0, 945.0, 2053.0, 945.0, 2053.0, 770.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Xip5146AU8ikR2qa_default" href="BPSequenceFlow_bip5146AU8ikR2qZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2045.0, 285.0, 2045.0, 730.0, 2059.0, 730.0, 2059.0, 285.0" coords2="2045.0, 285.0, 2045.0, 730.0, 2059.0, 730.0, 2059.0, 285.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_yuv5146AU8ikR2ru_default" href="BPSequenceFlow_8uv5146AU8ikR2rt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2045.0, 206.0, 2045.0, 245.0, 2059.0, 245.0, 2059.0, 206.0" coords2="2045.0, 206.0, 2045.0, 245.0, 2059.0, 245.0, 2059.0, 206.0" shape="poly" alt="No:Sequence Flow" id="areadiagram_map_yn8F146AU8ikR2sc_default" href="BPSequenceFlow_8n8F146AU8ikR2sb.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2072.0, 258.0, 2072.0, 272.0, 2318.0, 272.0, 2318.0, 258.0" coords2="2072.0, 258.0, 2072.0, 272.0, 2318.0, 272.0, 2318.0, 258.0" shape="poly" alt="YES:Sequence Flow" id="areadiagram_map_VNCF146AU8ikR2su_default" href="BPSequenceFlow_FNCF146AU8ikR2st.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2378.0, 176.0, 2378.0, 179.0, 2104.0, 179.0, 2104.0, 193.0, 2378.0, 193.0, 2378.0, 245.0, 2392.0, 245.0, 2392.0, 193.0, 2395.0, 193.0, 2395.0, 179.0, 2392.0, 179.0, 2392.0, 176.0" coords2="2378.0, 176.0, 2378.0, 179.0, 2104.0, 179.0, 2104.0, 193.0, 2378.0, 193.0, 2378.0, 245.0, 2392.0, 245.0, 2392.0, 193.0, 2395.0, 193.0, 2395.0, 179.0, 2392.0, 179.0, 2392.0, 176.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_1n9F146AU8ikR2uC_default" href="BPSequenceFlow_ln9F146AU8ikR2uB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2045.0, 106.0, 2045.0, 166.0, 2059.0, 166.0, 2059.0, 106.0" coords2="2045.0, 106.0, 2045.0, 166.0, 2059.0, 166.0, 2059.0, 106.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_g6jF146AU8ikR2ua_default" href="BPSequenceFlow__ajF146AU8ikR2uZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2001, 166, 2104, 206" coords2="2001, 166, 2104, 206" shape="rect" alt="Inform Requester:Task" id="areadiagram_map_bKFF146AU8ikR2tf_default" href="BPTask_bKFF146AU8ikR2tg.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2042, 86, 2062, 106" coords2="2042, 86, 2062, 106" shape="rect" alt=":End Event" id="areadiagram_map_PH8F146AU8ikR2sV_default" href="BPEndEvent_PH8F146AU8ikR2sW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2032, 245, 2072, 285" coords2="2032, 245, 2072, 285" shape="rect" alt="Does information need to disseminated to other super users:Gateway" id="areadiagram_map_3Ov5146AU8ikR2rl_default" href="BPGateway_3Ov5146AU8ikR2rm.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2318, 245, 2488, 285" coords2="2318, 245, 2488, 285" shape="rect" alt="disseminated information to super users:Task" id="areadiagram_map_cED5146AU8ikR2qx_default" href="BPTask_cED5146AU8ikR2qy.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1977, 730, 2127, 770" coords2="1977, 730, 2127, 770" shape="rect" alt="Inform Super User Ticket is closed:Task" id="areadiagram_map_hip5146AU8ikR2qR_default" href="BPTask_Rip5146AU8ikR2qS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2014, 945, 2090, 985" coords2="2014, 945, 2090, 985" shape="rect" alt="Close Ticket:Task" id="areadiagram_map_48R5146AU8ikR2px_default" href="BPTask_48R5146AU8ikR2py.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1580, 945, 1856, 985" coords2="1580, 945, 1856, 985" shape="rect" alt="Write solution into Service Now.  Create best practice, cookbook or knowledge article:Task" id="areadiagram_map_1T45146AU8ikR2op_default" href="BPTask_1T45146AU8ikR2oq.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1642, 586, 1794, 626" coords2="1642, 586, 1794, 626" shape="rect" alt="Inform NCI HALO Support staff of solution:Task" id="areadiagram_map_UZfZ146AU8ikR2n5_default" href="BPTask_UZfZ146AU8ikR2n6.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1425, 945, 1475, 985" coords2="1425, 945, 1475, 985" shape="rect" alt="Fix Issue:Task" id="areadiagram_map_1S2Z146AU8ikR2l1_default" href="BPTask_NS2Z146AU8ikR2l2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1377, 586, 1524, 626" coords2="1377, 586, 1524, 626" shape="rect" alt="Inform NCI HALO Support staff of solution:Task" id="areadiagram_map_hhMZ146AU8ikR2lJ_default" href="BPTask_hhMZ146AU8ikR2lK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1602, 483, 1808, 523" coords2="1602, 483, 1808, 523" shape="rect" alt="Log into HALO environment and fix issue:Task" id="areadiagram_map_Cm0Z146AU8ikR2kt_default" href="BPTask_Cm0Z146AU8ikR2ku.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1422, 483, 1462, 523" coords2="1422, 483, 1462, 523" shape="rect" alt="Something NCI HALO TEAM should fix:Gateway" id="areadiagram_map_AeAZ146AU8ikR2kP_default" href="BPGateway_AeAZ146AU8ikR2kQ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1154, 483, 1264, 523" coords2="1154, 483, 1264, 523" shape="rect" alt="Determine Solution:Task" id="areadiagram_map_ETGp146AU8ikR2jD_default" href="BPTask_ETGp146AU8ikR2jE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1140, 945, 1279, 985" coords2="1140, 945, 1279, 985" shape="rect" alt="Submit HALO Support Ticket:Task" id="areadiagram_map_1hEp146AU8ikR2iX_default" href="BPTask_1hEp146AU8ikR2iY.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="127, 1121, 277, 1161" coords2="127, 1121, 277, 1161" shape="rect" alt="Inform NCI HALO Support staff of solution:Task" id="areadiagram_map_fs5J146AU8ikR2hn_default" href="BPTask_fs5J146AU8ikR2ho.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="142, 945, 262, 985" coords2="142, 945, 262, 985" shape="rect" alt="Submit AWS Support Ticket:Task" id="areadiagram_map_yLOJ146AU8ikR2g__default" href="BPTask_yLOJ146AU8ikR2hA.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 1066, 2502, 1216" coords2="17, 1066, 2502, 1216" shape="rect" alt="AWS:Lane" id="areadiagram_map_uWaJ146AU8ikR2gr_default" href="BPLane_uWaJ146AU8ikR2gs.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="471, 945, 511, 985" coords2="471, 945, 511, 985" shape="rect" alt="Is issue AWS configuration issues, HALO configuration issue:Gateway" id="areadiagram_map_k4oJ146AU8ikR2gO_default" href="BPGateway_k4oJ146AU8ikR2gP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="416, 716, 566, 756" coords2="416, 716, 566, 756" shape="rect" alt="Route to NCI HALO Support Team:Task" id="areadiagram_map_53Tx146AU8ikR2fu_default" href="BPTask_53Tx146AU8ikR2fv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="444, 317, 538, 357" coords2="444, 317, 538, 357" shape="rect" alt="Submit Service Now Ticket:Task" id="areadiagram_map_Cl1x146AU8ikR2fG_default" href="BPTask_Cl1x146AU8ikR2fH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="741, 483, 842, 523" coords2="741, 483, 842, 523" shape="rect" alt="Answer Question:Task" id="areadiagram_map_N3xx146AU8ikR2d6_default" href="BPTask_N3xx146AU8ikR2d7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="734, 318, 848, 358" coords2="734, 318, 848, 358" shape="rect" alt="Ask Indica Support :Task" id="areadiagram_map_b8Ox146AU8ikR2da_default" href="BPTask_b8Ox146AU8ikR2db.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 420, 2502, 672" coords2="17, 420, 2502, 672" shape="rect" alt="Indica:Lane" id="areadiagram_map_b3qx146AU8ikR2c8_default" href="BPLane_b3qx146AU8ikR2c9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1244, 225, 1264, 245" coords2="1244, 225, 1264, 245" shape="rect" alt=":End Event" id="areadiagram_map_cV8x146AU8ikR2ce_default" href="BPEndEvent_8V8x146AU8ikR2cf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="764, 215, 804, 255" coords2="764, 215, 804, 255" shape="rect" alt="Needs Help from Indica:Gateway" id="areadiagram_map_AqAx146AU8ikR2bS_default" href="BPGateway_AqAx146AU8ikR2bT.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="957, 215, 1098, 255" coords2="957, 215, 1098, 255" shape="rect" alt="Assist User with there problem:Task" id="areadiagram_map_15LR146AU8ikR2PF_default" href="BPTask_15LR146AU8ikR2PG.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="471, 215, 511, 255" coords2="471, 215, 511, 255" shape="rect" alt="If the issue is HALO usage related, study or best practice or Queue related:Gateway" id="areadiagram_map_EE6R146AU8ikR2Of_default" href="BPGateway_EE6R146AU8ikR2Og.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="221, 57, 412, 97" coords2="221, 57, 412, 97" shape="rect" alt="NCI HALO User needs help. Gets in touch with their supper user:Task" id="areadiagram_map_tnwR146AU8ikR2MU_default" href="BPTask_tnwR146AU8ikR2MV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="107, 69, 127, 89" coords2="107, 69, 127, 89" shape="rect" alt=":Start Event" id="areadiagram_map_I3QR146AU8ikR2MI_default" href="BPStartEvent_I3QR146AU8ikR2MJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 672, 2502, 828" coords2="17, 672, 2502, 828" shape="rect" alt="Service NOW:Lane" id="areadiagram_map_4hvh146AU8ikR2L8_default" href="BPLane_4hvh146AU8ikR2L9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 152, 2502, 420" coords2="17, 152, 2502, 420" shape="rect" alt="NCI HALO Super User:Lane" id="areadiagram_map_eMVh146AU8ikR2Lh_default" href="BPLane_eMVh146AU8ikR2Li.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 828, 2502, 1066" coords2="17, 828, 2502, 1066" shape="rect" alt="NCI HALO Support Team:Lane" id="areadiagram_map_KRWh146AU8ikR2LV_default" href="BPLane_KRWh146AU8ikR2LW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 2, 2502, 152" coords2="17, 2, 2502, 152" shape="rect" alt="Requester:Lane" id="areadiagram_map_q2Sh146AU8ikR2LL_default" href="BPLane_q2Sh146AU8ikR2LM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 2502, 1216" coords2="2, 2, 2502, 1216" shape="rect" alt="NCI HALO User Support  :Pool" id="areadiagram_map_qrUh146AU8ikR2K6_default" href="BPPool_qrUh146AU8ikR2K7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_fs5J146AU8ikR2ho.html" class="ItemLink">Inform NCI HALO Support staff of solution : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_k4oJ146AU8ikR2gP.html" class="ItemLink">Is issue AWS configuration issues, HALO configuration issue : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_53Tx146AU8ikR2fv.html" class="ItemLink">Route to NCI HALO Support Team : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_N3xx146AU8ikR2d7.html" class="ItemLink">Answer Question : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_I3QR146AU8ikR2MJ.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_q2Sh146AU8ikR2LM.html" class="ItemLink">Requester : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_yLOJ146AU8ikR2hA.html" class="ItemLink">Submit AWS Support Ticket : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_EE6R146AU8ikR2Og.html" class="ItemLink">If the issue is HALO usage related, study or best practice or Queue related : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_tnwR146AU8ikR2MV.html" class="ItemLink">NCI HALO User needs help. Gets in touch with their supper user : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_KRWh146AU8ikR2LW.html" class="ItemLink">NCI HALO Support Team : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Rip5146AU8ikR2qS.html" class="ItemLink">Inform Super User Ticket is closed : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_ETGp146AU8ikR2jE.html" class="ItemLink">Determine Solution : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_15LR146AU8ikR2PG.html" class="ItemLink">Assist User with there problem : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_eMVh146AU8ikR2Li.html" class="ItemLink">NCI HALO Super User : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_1hEp146AU8ikR2iY.html" class="ItemLink">Submit HALO Support Ticket : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_AqAx146AU8ikR2bT.html" class="ItemLink">Needs Help from Indica : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_4hvh146AU8ikR2L9.html" class="ItemLink">Service NOW : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP06</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_PH8F146AU8ikR2sW.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP06</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_AeAZ146AU8ikR2kQ.html" class="ItemLink">Something NCI HALO TEAM should fix : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP06</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_b3qx146AU8ikR2c9.html" class="ItemLink">Indica : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_uWaJ146AU8ikR2gs.html" class="ItemLink">AWS : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP07</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_8V8x146AU8ikR2cf.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP08</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_NS2Z146AU8ikR2l2.html" class="ItemLink">Fix Issue : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP08</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Cm0Z146AU8ikR2ku.html" class="ItemLink">Log into HALO environment and fix issue : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP09</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_b8Ox146AU8ikR2db.html" class="ItemLink">Ask Indica Support  : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP10</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_1T45146AU8ikR2oq.html" class="ItemLink">Write solution into Service Now.  Create best practice, cookbook or knowledge article : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP10</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_hhMZ146AU8ikR2lK.html" class="ItemLink">Inform NCI HALO Support staff of solution : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP12</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_48R5146AU8ikR2py.html" class="ItemLink">Close Ticket : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP12</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_Cl1x146AU8ikR2fH.html" class="ItemLink">Submit Service Now Ticket : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP13</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_UZfZ146AU8ikR2n6.html" class="ItemLink">Inform NCI HALO Support staff of solution : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP15</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_cED5146AU8ikR2qy.html" class="ItemLink">disseminated information to super users : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP16</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_3Ov5146AU8ikR2rm.html" class="ItemLink">Does information need to disseminated to other super users : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP19</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_bKFF146AU8ikR2tg.html" class="ItemLink">Inform Requester : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP19</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_qrUh146AU8ikR2K7.html" class="ItemLink">NCI HALO User Support   : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>

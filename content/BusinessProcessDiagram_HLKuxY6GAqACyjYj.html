@@ -1,0 +1,728 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Business Process Diagram - NCI HALO Onboarding Business Process Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Business Process Diagram - NCI HALO Onboarding Business Process Diagram		</span>
+<a onclick="javascript: showVpLink('STRIDES.vpp://diagram/HLKuxY6GAqACyjYj', 'NCI HALO Onboarding Business Process Diagram\nSTRIDES.vpp://diagram/HLKuxY6GAqACyjYj', 'NCI HALO Onboarding Business Process Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|662.0|59.0|247.0|48.0|BPTask_7w9BxY6GAqACyjnP.html|BPTask_7w9BxY6GAqACyjnP.html|7w9BxY6GAqACyjnO" id="option7w9BxY6GAqACyjnO">Follow Add user to NCI HALO SOP.  If user needs and Analysis give them a seat set up HALO workstation and add them to AD : Task</option>
+<option value="shape|363.0|350.0|150.0|40.0|BPTask_6Xs_xY6GAqACyjhN.html|BPTask_6Xs_xY6GAqACyjhN.html|6Xs.xY6GAqACyjhM" id="option6Xs.xY6GAqACyjhM">Ticket Routed NCI HALO Admin : Task</option>
+<option value="shape|111.0|226.0|20.0|20.0|BPStartEvent_5UxuxY6GAqACyjdP.html|BPStartEvent_5UxuxY6GAqACyjdP.html|pUxuxY6GAqACyjdO" id="optionpUxuxY6GAqACyjdO">Unnamed Start Event : Start Event</option>
+<option value="shape|2.0|2.0|2252.0|625.0|BPPool_YqauxY6GAqACyjdH.html|BPPool_YqauxY6GAqACyjdH.html|XKauxY6GAqACyjcU" id="optionXKauxY6GAqACyjcU">NCI HALO Onboarding Business Process Diagram : Pool</option>
+<option value="shape|245.0|202.0|405.0|68.0|BPTask_KvduxY6GAqACyjeK.html|BPTask_KvduxY6GAqACyjeK.html|CvduxY6GAqACyjeJ" id="optionCvduxY6GAqACyjeJ">Requester fills out request specifying:  First name ,Last name ,Email,Division,Lab/Branch/Facility,Division Approval Contact : Task</option>
+<option value="shape|17.0|157.0|2237.0|155.0|BPLane_9x5uxY6GAqACyjd0.html|BPLane_9x5uxY6GAqACyjd0.html|tx5uxY6GAqACyjdz" id="optiontx5uxY6GAqACyjdz">Requester : Lane</option>
+<option value="shape|322.0|512.0|215.0|54.0|BPTask_yMt_xY6GAqACyjjK.html|BPTask_yMt_xY6GAqACyjjK.html|yMt.xY6GAqACyjjJ" id="optionyMt.xY6GAqACyjjJ">Ask SuperUser if requester if they approve and if the user needs a  analysis seat : Task</option>
+<option value="shape|17.0|312.0|2237.0|160.0|BPLane_qPlexY6GAqACyjgn.html|BPLane_qPlexY6GAqACyjgn.html|qPlexY6GAqACyjgm" id="optionqPlexY6GAqACyjgm">Service Now : Lane</option>
+<option value="shape|642.0|517.0|40.0|40.0|BPGateway_6HP_xY6GAqACyjjq.html|BPGateway_6HP_xY6GAqACyjjq.html|6HP.xY6GAqACyjjp" id="option6HP.xY6GAqACyjjp">Approve : Gateway</option>
+<option value="shape|17.0|472.0|2237.0|155.0|BPLane_53O_xY6GAqACyjh3.html|BPLane_53O_xY6GAqACyjh3.html|53O.xY6GAqACyjh2" id="option53O.xY6GAqACyjh2">NCI HALO Admin : Lane</option>
+<option value="shape|2050.0|230.0|20.0|20.0|BPEndEvent_2OMxxY6GAqACyjvK.html|BPEndEvent_2OMxxY6GAqACyjvK.html|2OMxxY6GAqACyjvJ" id="option2OMxxY6GAqACyjvJ">Unnamed End Event : End Event</option>
+<option value="shape|17.0|2.0|2237.0|155.0|BPLane_9vlBxY6GAqACyjm7.html|BPLane_9vlBxY6GAqACyjm7.html|9vlBxY6GAqACyjm6" id="option9vlBxY6GAqACyjm6">NCI HALO Support Team : Lane</option>
+<option value="shape|717.0|352.0|134.0|40.0|BPTask_znYBxY6GAqACyjkg.html|BPTask_znYBxY6GAqACyjkg.html|znYBxY6GAqACyjkf" id="optionznYBxY6GAqACyjkf">Route To NCI HALO Support team : Task</option>
+<option value="shape|746.0|412.0|76.0|40.0|BPTask_klGBxY6GAqACyjlt.html|BPTask_klGBxY6GAqACyjlt.html|klGBxY6GAqACyjls" id="optionklGBxY6GAqACyjls">Close Ticket : Task</option>
+<option value="shape|889.0|422.0|20.0|20.0|BPEndEvent_r4eBxY6GAqACyjmd.html|BPEndEvent_r4eBxY6GAqACyjmd.html|r4eBxY6GAqACyjmc" id="optionr4eBxY6GAqACyjmc">Unnamed End Event : End Event</option>
+<option value="shape|909.0|508.0|199.0|49.0|BPTask_O66hxY6GAqACyjpN.html|BPTask_O66hxY6GAqACyjpN.html|O66hxY6GAqACyjpM" id="optionO66hxY6GAqACyjpM">Schedule meeting consultation with requester and NCI HALO support team memeber : Task</option>
+<option value="shape|940.0|362.0|125.0|40.0|BPTask_dqUhxY6GAqACyjn9.html|BPTask_dqUhxY6GAqACyjn9.html|dqUhxY6GAqACyjn8" id="optiondqUhxY6GAqACyjn8">Route NCI HALO Admin : Task</option>
+<option value="shape|2022.0|376.0|73.0|40.0|BPTask_3KKxxY6GAqACyjvm.html|BPTask_3KKxxY6GAqACyjvm.html|XKKxxY6GAqACyjvl" id="optionXKKxxY6GAqACyjvl">Close ticket : Task</option>
+<option value="shape|1189.0|512.0|395.0|40.0|BPTask_WswRxY6GAqACyjqv.html|BPTask_WswRxY6GAqACyjqv.html|WswRxY6GAqACyjqu" id="optionWswRxY6GAqACyjqu">Meet with requester and NCI HALO support team member and fill out:  Onboarding template and create diagram of there data flow : Task</option>
+<option value="shape|1571.0|73.0|40.0|40.0|BPGateway_6lJRxY6GAqACyjsE.html|BPGateway_6lJRxY6GAqACyjsE.html|alJRxY6GAqACyjsD" id="optionalJRxY6GAqACyjsD">Determine if Queue needs to modified : Gateway</option>
+<option value="shape|1681.0|73.0|85.0|40.0|BPTask_vPVRxY6GAqACyjsu.html|BPTask_vPVRxY6GAqACyjsu.html|PPVRxY6GAqACyjst" id="optionPPVRxY6GAqACyjst">Modify Queue : Task</option>
+<option value="shape|1983.0|512.0|150.0|40.0|BPTask__gIxxY6GAqACyjuq.html|BPTask__gIxxY6GAqACyjuq.html|.gIxxY6GAqACyjup" id="option.gIxxY6GAqACyjup">Inform requestor they can start using NCI HALO : Task</option>
+<option value="shape|1801.0|73.0|138.0|40.0|BPTask_yfdRxY6GAqACyjta.html|BPTask_yfdRxY6GAqACyjta.html|yfdRxY6GAqACyjtZ" id="optionyfdRxY6GAqACyjtZ">Migrate the requestors data following SOP : Task</option>
+<option value="shape|1304.0|362.0|127.0|40.0|BPTask_8QQpi46GAqAC7yMh.html|BPTask_8QQpi46GAqAC7yMh.html|8QQpi46GAqAC7yMg" id="option8QQpi46GAqAC7yMg">Route to NCI HALO support team : Task</option>
+<option value="shape|1292.0|77.0|150.0|40.0|BPTask_nGapi46GAqAC7yOD.html|BPTask_nGapi46GAqAC7yOD.html|HGapi46GAqAC7yOC" id="optionHGapi46GAqAC7yOC">Read Onboarding teamplate : Task</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/NCI_HALO_Onboarding_Business_Process_Diagram.png" usemap="#diagram_map" class="Image" width="2258" height="631"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="131.0, 227.0, 131.0, 241.0, 245.0, 241.0, 245.0, 227.0" coords2="131.0, 227.0, 131.0, 241.0, 245.0, 241.0, 245.0, 227.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_GfduxY6GAqACyjgI_default" href="BPSequenceFlow_yfduxY6GAqACyjgH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="424.0, 270.0, 424.0, 350.0, 438.0, 350.0, 438.0, 270.0" coords2="424.0, 270.0, 424.0, 350.0, 438.0, 350.0, 438.0, 270.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_XXs.xY6GAqACyjhV_default" href="BPSequenceFlow_bXs_xY6GAqACyjhU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="422.0, 390.0, 422.0, 512.0, 436.0, 512.0, 436.0, 390.0" coords2="422.0, 390.0, 422.0, 512.0, 436.0, 512.0, 436.0, 390.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_DMt.xY6GAqACyjjS_default" href="BPSequenceFlow_tMt_xY6GAqACyjjR.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="537.0, 530.0, 537.0, 544.0, 642.0, 544.0, 642.0, 530.0" coords2="537.0, 530.0, 537.0, 544.0, 642.0, 544.0, 642.0, 530.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_9HP.xY6GAqACyjjy_default" href="BPSequenceFlow_NHP_xY6GAqACyjjx.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="655.0, 362.0, 655.0, 365.0, 652.0, 365.0, 652.0, 379.0, 655.0, 379.0, 655.0, 517.0, 669.0, 517.0, 669.0, 379.0, 717.0, 379.0, 717.0, 365.0, 669.0, 365.0, 669.0, 362.0" coords2="655.0, 362.0, 655.0, 365.0, 652.0, 365.0, 652.0, 379.0, 655.0, 379.0, 655.0, 517.0, 669.0, 517.0, 669.0, 379.0, 717.0, 379.0, 717.0, 365.0, 669.0, 365.0, 669.0, 362.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_sXYBxY6GAqACyjko_default" href="BPSequenceFlow_kXYBxY6GAqACyjkn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="777.0, 452.0, 777.0, 530.0, 682.0, 530.0, 682.0, 544.0, 777.0, 544.0, 777.0, 547.0, 791.0, 547.0, 791.0, 544.0, 794.0, 544.0, 794.0, 530.0, 791.0, 530.0, 791.0, 452.0" coords2="777.0, 452.0, 777.0, 530.0, 682.0, 530.0, 682.0, 544.0, 777.0, 544.0, 777.0, 547.0, 791.0, 547.0, 791.0, 544.0, 794.0, 544.0, 794.0, 530.0, 791.0, 530.0, 791.0, 452.0" shape="poly" alt="NO:Sequence Flow" id="areadiagram_map_xlGBxY6GAqACyjl1_default" href="BPSequenceFlow__lGBxY6GAqACyjl0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="822.0, 425.0, 822.0, 439.0, 889.0, 439.0, 889.0, 425.0" coords2="822.0, 425.0, 822.0, 439.0, 889.0, 439.0, 889.0, 425.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_sEeBxY6GAqACyjmj_default" href="BPSequenceFlow_UEeBxY6GAqACyjmi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="777.0, 107.0, 777.0, 352.0, 791.0, 352.0, 791.0, 107.0" coords2="777.0, 107.0, 777.0, 352.0, 791.0, 352.0, 791.0, 107.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_cI9BxY6GAqACyjnX_default" href="BPSequenceFlow_0I9BxY6GAqACyjnW.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="995.0, 69.0, 995.0, 72.0, 909.0, 72.0, 909.0, 86.0, 995.0, 86.0, 995.0, 362.0, 1009.0, 362.0, 1009.0, 86.0, 1012.0, 86.0, 1012.0, 72.0, 1009.0, 72.0, 1009.0, 69.0" coords2="995.0, 69.0, 995.0, 72.0, 909.0, 72.0, 909.0, 86.0, 995.0, 86.0, 995.0, 362.0, 1009.0, 362.0, 1009.0, 86.0, 1012.0, 86.0, 1012.0, 72.0, 1009.0, 72.0, 1009.0, 69.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_YaUhxY6GAqACyjoF_default" href="BPSequenceFlow_QaUhxY6GAqACyjoE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="995.0, 402.0, 995.0, 508.0, 1009.0, 508.0, 1009.0, 402.0" coords2="995.0, 402.0, 995.0, 508.0, 1009.0, 508.0, 1009.0, 402.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_z66hxY6GAqACyjpV_default" href="BPSequenceFlow_D66hxY6GAqACyjpU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1108.0, 525.0, 1108.0, 539.0, 1189.0, 539.0, 1189.0, 525.0" coords2="1108.0, 525.0, 1108.0, 539.0, 1189.0, 539.0, 1189.0, 525.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_rswRxY6GAqACyjq3_default" href="BPSequenceFlow_jswRxY6GAqACyjq2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1611.0, 86.0, 1611.0, 100.0, 1681.0, 100.0, 1681.0, 86.0" coords2="1611.0, 86.0, 1611.0, 100.0, 1681.0, 100.0, 1681.0, 86.0" shape="poly" alt="Yes:Sequence Flow" id="areadiagram_map_6vVRxY6GAqACyjs2_default" href="BPSequenceFlow_yvVRxY6GAqACyjs1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1766.0, 86.0, 1766.0, 100.0, 1801.0, 100.0, 1801.0, 86.0" coords2="1766.0, 86.0, 1766.0, 100.0, 1801.0, 100.0, 1801.0, 86.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_1fdRxY6GAqACyjti_default" href="BPSequenceFlow_5fdRxY6GAqACyjth.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1584.0, 25.0, 1584.0, 28.0, 1581.0, 28.0, 1581.0, 42.0, 1584.0, 42.0, 1584.0, 73.0, 1598.0, 73.0, 1598.0, 42.0, 1863.0, 42.0, 1863.0, 73.0, 1877.0, 73.0, 1877.0, 42.0, 1880.0, 42.0, 1880.0, 28.0, 1877.0, 28.0, 1877.0, 25.0, 1863.0, 25.0, 1863.0, 28.0, 1598.0, 28.0, 1598.0, 25.0" coords2="1584.0, 25.0, 1584.0, 28.0, 1581.0, 28.0, 1581.0, 42.0, 1584.0, 42.0, 1584.0, 73.0, 1598.0, 73.0, 1598.0, 42.0, 1863.0, 42.0, 1863.0, 73.0, 1877.0, 73.0, 1877.0, 42.0, 1880.0, 42.0, 1880.0, 28.0, 1877.0, 28.0, 1877.0, 25.0, 1863.0, 25.0, 1863.0, 28.0, 1598.0, 28.0, 1598.0, 25.0" shape="poly" alt="NO:Sequence Flow" id="areadiagram_map_EZDRxY6GAqACyjt2_default" href="BPSequenceFlow_YZDRxY6GAqACyjt1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1863.0, 113.0, 1863.0, 525.0, 1860.0, 525.0, 1860.0, 539.0, 1863.0, 539.0, 1863.0, 542.0, 1877.0, 542.0, 1877.0, 539.0, 1983.0, 539.0, 1983.0, 525.0, 1877.0, 525.0, 1877.0, 113.0" coords2="1863.0, 113.0, 1863.0, 525.0, 1860.0, 525.0, 1860.0, 539.0, 1863.0, 539.0, 1863.0, 542.0, 1877.0, 542.0, 1877.0, 539.0, 1983.0, 539.0, 1983.0, 525.0, 1877.0, 525.0, 1877.0, 113.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_HgIxxY6GAqACyjuy_default" href="BPSequenceFlow_rgIxxY6GAqACyjux.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2053.0, 250.0, 2053.0, 376.0, 2067.0, 376.0, 2067.0, 250.0" coords2="2053.0, 250.0, 2053.0, 376.0, 2067.0, 376.0, 2067.0, 250.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_TOMxxY6GAqACyjvQ_default" href="BPSequenceFlow_9OMxxY6GAqACyjvP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2050.0, 416.0, 2050.0, 512.0, 2064.0, 512.0, 2064.0, 416.0" coords2="2050.0, 416.0, 2050.0, 512.0, 2064.0, 512.0, 2064.0, 416.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_KqKxxY6GAqACyjvu_default" href="BPSequenceFlow_iqKxxY6GAqACyjvt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1360.0, 402.0, 1360.0, 512.0, 1374.0, 512.0, 1374.0, 402.0" coords2="1360.0, 402.0, 1360.0, 512.0, 1374.0, 512.0, 1374.0, 402.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_XCYpi46GAqAC7yNA_default" href="BPSequenceFlow_HCYpi46GAqAC7yM_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1360.0, 117.0, 1360.0, 362.0, 1374.0, 362.0, 1374.0, 117.0" coords2="1360.0, 117.0, 1360.0, 362.0, 1374.0, 362.0, 1374.0, 117.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_Wmapi46GAqAC7yOL_default" href="BPSequenceFlow_amapi46GAqAC7yOK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1442.0, 86.0, 1442.0, 100.0, 1571.0, 100.0, 1571.0, 86.0" coords2="1442.0, 86.0, 1442.0, 100.0, 1571.0, 100.0, 1571.0, 86.0" shape="poly" alt=":Sequence Flow" id="areadiagram_map_.P2pi46GAqAC7yOj_default" href="BPSequenceFlow_uP2pi46GAqAC7yOi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1292, 77, 1442, 117" coords2="1292, 77, 1442, 117" shape="rect" alt="Read Onboarding teamplate:Task" id="areadiagram_map_HGapi46GAqAC7yOC_default" href="BPTask_nGapi46GAqAC7yOD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1304, 362, 1431, 402" coords2="1304, 362, 1431, 402" shape="rect" alt="Route to NCI HALO support team:Task" id="areadiagram_map_8QQpi46GAqAC7yMg_default" href="BPTask_8QQpi46GAqAC7yMh.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2022, 376, 2095, 416" coords2="2022, 376, 2095, 416" shape="rect" alt="Close ticket:Task" id="areadiagram_map_XKKxxY6GAqACyjvl_default" href="BPTask_3KKxxY6GAqACyjvm.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2050, 230, 2070, 250" coords2="2050, 230, 2070, 250" shape="rect" alt=":End Event" id="areadiagram_map_2OMxxY6GAqACyjvJ_default" href="BPEndEvent_2OMxxY6GAqACyjvK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1983, 512, 2133, 552" coords2="1983, 512, 2133, 552" shape="rect" alt="Inform requestor they can start using NCI HALO:Task" id="areadiagram_map_.gIxxY6GAqACyjup_default" href="BPTask__gIxxY6GAqACyjuq.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1801, 73, 1939, 113" coords2="1801, 73, 1939, 113" shape="rect" alt="Migrate the requestors data following SOP:Task" id="areadiagram_map_yfdRxY6GAqACyjtZ_default" href="BPTask_yfdRxY6GAqACyjta.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1681, 73, 1766, 113" coords2="1681, 73, 1766, 113" shape="rect" alt="Modify Queue:Task" id="areadiagram_map_PPVRxY6GAqACyjst_default" href="BPTask_vPVRxY6GAqACyjsu.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1571, 73, 1611, 113" coords2="1571, 73, 1611, 113" shape="rect" alt="Determine if Queue needs to modified:Gateway" id="areadiagram_map_alJRxY6GAqACyjsD_default" href="BPGateway_6lJRxY6GAqACyjsE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="1189, 512, 1584, 552" coords2="1189, 512, 1584, 552" shape="rect" alt="Meet with requester and NCI HALO support team member and fill out:  Onboarding template and create diagram of there data flow:Task" id="areadiagram_map_WswRxY6GAqACyjqu_default" href="BPTask_WswRxY6GAqACyjqv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="909, 508, 1108, 557" coords2="909, 508, 1108, 557" shape="rect" alt="Schedule meeting consultation with requester and NCI HALO support team memeber:Task" id="areadiagram_map_O66hxY6GAqACyjpM_default" href="BPTask_O66hxY6GAqACyjpN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="940, 362, 1065, 402" coords2="940, 362, 1065, 402" shape="rect" alt="Route NCI HALO Admin:Task" id="areadiagram_map_dqUhxY6GAqACyjn8_default" href="BPTask_dqUhxY6GAqACyjn9.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="662, 59, 909, 107" coords2="662, 59, 909, 107" shape="rect" alt="Follow Add user to NCI HALO SOP.  If user needs and Analysis give them a seat set up HALO workstation and add them to AD:Task" id="areadiagram_map_7w9BxY6GAqACyjnO_default" href="BPTask_7w9BxY6GAqACyjnP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 2, 2254, 157" coords2="17, 2, 2254, 157" shape="rect" alt="NCI HALO Support Team:Lane" id="areadiagram_map_9vlBxY6GAqACyjm6_default" href="BPLane_9vlBxY6GAqACyjm7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="889, 422, 909, 442" coords2="889, 422, 909, 442" shape="rect" alt=":End Event" id="areadiagram_map_r4eBxY6GAqACyjmc_default" href="BPEndEvent_r4eBxY6GAqACyjmd.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="746, 412, 822, 452" coords2="746, 412, 822, 452" shape="rect" alt="Close Ticket:Task" id="areadiagram_map_klGBxY6GAqACyjls_default" href="BPTask_klGBxY6GAqACyjlt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="717, 352, 851, 392" coords2="717, 352, 851, 392" shape="rect" alt="Route To NCI HALO Support team:Task" id="areadiagram_map_znYBxY6GAqACyjkf_default" href="BPTask_znYBxY6GAqACyjkg.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="642, 517, 682, 557" coords2="642, 517, 682, 557" shape="rect" alt="Approve:Gateway" id="areadiagram_map_6HP.xY6GAqACyjjp_default" href="BPGateway_6HP_xY6GAqACyjjq.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="322, 512, 537, 566" coords2="322, 512, 537, 566" shape="rect" alt="Ask SuperUser if requester if they approve and if the user needs a  analysis seat:Task" id="areadiagram_map_yMt.xY6GAqACyjjJ_default" href="BPTask_yMt_xY6GAqACyjjK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 472, 2254, 627" coords2="17, 472, 2254, 627" shape="rect" alt="NCI HALO Admin:Lane" id="areadiagram_map_53O.xY6GAqACyjh2_default" href="BPLane_53O_xY6GAqACyjh3.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="363, 350, 513, 390" coords2="363, 350, 513, 390" shape="rect" alt="Ticket Routed NCI HALO Admin:Task" id="areadiagram_map_6Xs.xY6GAqACyjhM_default" href="BPTask_6Xs_xY6GAqACyjhN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 312, 2254, 472" coords2="17, 312, 2254, 472" shape="rect" alt="Service Now:Lane" id="areadiagram_map_qPlexY6GAqACyjgm_default" href="BPLane_qPlexY6GAqACyjgn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="245, 202, 650, 270" coords2="245, 202, 650, 270" shape="rect" alt="Requester fills out request specifying:  First name ,Last name ,Email,Division,Lab/Branch/Facility,Division Approval Contact:Task" id="areadiagram_map_CvduxY6GAqACyjeJ_default" href="BPTask_KvduxY6GAqACyjeK.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="111, 226, 131, 246" coords2="111, 226, 131, 246" shape="rect" alt=":Start Event" id="areadiagram_map_pUxuxY6GAqACyjdO_default" href="BPStartEvent_5UxuxY6GAqACyjdP.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="17, 157, 2254, 312" coords2="17, 157, 2254, 312" shape="rect" alt="Requester:Lane" id="areadiagram_map_tx5uxY6GAqACyjdz_default" href="BPLane_9x5uxY6GAqACyjd0.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 2, 2254, 627" coords2="2, 2, 2254, 627" shape="rect" alt="NCI HALO Onboarding Business Process Diagram:Pool" id="areadiagram_map_XKauxY6GAqACyjcU_default" href="BPPool_YqauxY6GAqACyjdH.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="6" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="10%">
+<span class="TableHeaderText">ID</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="6" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_7w9BxY6GAqACyjnP.html" class="ItemLink">Follow Add user to NCI HALO SOP.  If user needs and Analysis give them a seat set up HALO workstation and add them to AD : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_6Xs_xY6GAqACyjhN.html" class="ItemLink">Ticket Routed NCI HALO Admin : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsStart.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsStart.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPStartEvent_5UxuxY6GAqACyjdP.html" class="ItemLink">N/A : Start Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP01</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlanePool.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlanePool.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPPool_YqauxY6GAqACyjdH.html" class="ItemLink">NCI HALO Onboarding Business Process Diagram : Pool</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_KvduxY6GAqACyjeK.html" class="ItemLink">Requester fills out request specifying:  First name ,Last name ,Email,Division,Lab/Branch/Facility,Division Approval Contact : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP02</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_9x5uxY6GAqACyjd0.html" class="ItemLink">Requester : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_yMt_xY6GAqACyjjK.html" class="ItemLink">Ask SuperUser if requester if they approve and if the user needs a  analysis seat : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP03</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_qPlexY6GAqACyjgn.html" class="ItemLink">Service Now : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_6HP_xY6GAqACyjjq.html" class="ItemLink">Approve : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP04</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_53O_xY6GAqACyjh3.html" class="ItemLink">NCI HALO Admin : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_2OMxxY6GAqACyjvK.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP05</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/SwimlaneLane.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/SwimlaneLane.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPLane_9vlBxY6GAqACyjm7.html" class="ItemLink">NCI HALO Support Team : Lane</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP08</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_znYBxY6GAqACyjkg.html" class="ItemLink">Route To NCI HALO Support team : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP10</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_klGBxY6GAqACyjlt.html" class="ItemLink">Close Ticket : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP11</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/EventsEnd.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/EventsEnd.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPEndEvent_r4eBxY6GAqACyjmd.html" class="ItemLink">N/A : End Event</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP12</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_O66hxY6GAqACyjpN.html" class="ItemLink">Schedule meeting consultation with requester and NCI HALO support team memeber : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP14</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_dqUhxY6GAqACyjn9.html" class="ItemLink">Route NCI HALO Admin : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP16</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_3KKxxY6GAqACyjvm.html" class="ItemLink">Close ticket : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP17</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_WswRxY6GAqACyjqv.html" class="ItemLink">Meet with requester and NCI HALO support team member and fill out:  Onboarding template and create diagram of there data flow : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP19</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/GatewayExDescMergeDataBased.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/GatewayExDescMergeDataBased.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPGateway_6lJRxY6GAqACyjsE.html" class="ItemLink">Determine if Queue needs to modified : Data-Based Exclusive Decision/Merge (XOR)</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP20</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_vPVRxY6GAqACyjsu.html" class="ItemLink">Modify Queue : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP21</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask__gIxxY6GAqACyjuq.html" class="ItemLink">Inform requestor they can start using NCI HALO : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP22</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_yfdRxY6GAqACyjta.html" class="ItemLink">Migrate the requestors data following SOP : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP23</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_8QQpi46GAqAC7yMh.html" class="ItemLink">Route to NCI HALO support team : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">BP26</span>			</td>
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/ActivitiesTask.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/ActivitiesTask.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="BPTask_nGapi46GAqAC7yOD.html" class="ItemLink">Read Onboarding teamplate : Task</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>
