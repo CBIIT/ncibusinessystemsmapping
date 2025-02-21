@@ -1,0 +1,660 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>ArchiMate Diagram - Capability Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Publishing Project	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="Model_xfnblfaAUhQOhyjs.html" class="PageParentTitle">Glossary : Model</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			ArchiMate Diagram - Capability Diagram		</span>
+<a onclick="javascript: showVpLink('Grants Management.vpp://diagram/_Zp7lfaAUhQOhykM', 'Capability Diagram\nGrants Management.vpp://diagram/_Zp7lfaAUhQOhykM', 'Capability Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|198.0|778.0|125.0|40.0|ArchiMateCapability_1czJVfaAUhQOhy3x.html|ArchiMateCapability_1czJVfaAUhQOhy3x.html|1czJVfaAUhQOhy3v" id="option1czJVfaAUhQOhy3v">Appeal Review : Capability</option>
+<option value="shape|39.0|778.0|125.0|40.0|ArchiMateCapability_pczJVfaAUhQOhy3s.html|ArchiMateCapability_pczJVfaAUhQOhy3s.html|pczJVfaAUhQOhy3q" id="optionpczJVfaAUhQOhy3q">Appeal Submission : Capability</option>
+<option value="shape|2.0|726.0|586.0|224.0|ArchiMateCapability__czJVfaAUhQOhy3n.html|ArchiMateCapability__czJVfaAUhQOhy3n.html|eczJVfaAUhQOhy3l" id="optioneczJVfaAUhQOhy3l">Appeals : Capability</option>
+<option value="shape|199.0|306.0|125.0|40.0|ArchiMateCapability_ua2RVfaAUhQOhy24.html|ArchiMateCapability_ua2RVfaAUhQOhy24.html|Oa2RVfaAUhQOhy22" id="optionOa2RVfaAUhQOhy22">Role Management : Capability</option>
+<option value="shape|358.0|306.0|125.0|40.0|ArchiMateCapability_zgwRVfaAUhQOhy2l.html|ArchiMateCapability_zgwRVfaAUhQOhy2l.html|TgwRVfaAUhQOhy2j" id="optionTgwRVfaAUhQOhy2j">Access Management : Capability</option>
+<option value="shape|40.0|366.0|125.0|40.0|ArchiMateCapability_BFSeVfaAUhQOhy1e.html|ArchiMateCapability_BFSeVfaAUhQOhy1e.html|BFSeVfaAUhQOhy1c" id="optionBFSeVfaAUhQOhy1c">Selfcare : Capability</option>
+<option value="shape|808.0|777.0|125.0|40.0|ArchiMateCapability_BBAeVfaAUhQOhy1P.html|ArchiMateCapability_BBAeVfaAUhQOhy1P.html|BBAeVfaAUhQOhy1N" id="optionBBAeVfaAUhQOhy1N">??????? : Capability</option>
+<option value="shape|649.0|777.0|125.0|40.0|ArchiMateCapability_WBAeVfaAUhQOhy1K.html|ArchiMateCapability_WBAeVfaAUhQOhy1K.html|WBAeVfaAUhQOhy1I" id="optionWBAeVfaAUhQOhy1I">????? : Capability</option>
+<option value="shape|612.0|725.0|586.0|224.0|ArchiMateCapability_KBAeVfaAUhQOhy1F.html|ArchiMateCapability_KBAeVfaAUhQOhy1F.html|yBAeVfaAUhQOhy1D" id="optionyBAeVfaAUhQOhy1D">Outcome Monitoring : Capability</option>
+<option value="shape|807.0|536.0|125.0|40.0|ArchiMateCapability_04vuVfaAUhQOhy06.html|ArchiMateCapability_04vuVfaAUhQOhy06.html|04vuVfaAUhQOhy04" id="option04vuVfaAUhQOhy04">???? : Capability</option>
+<option value="shape|648.0|536.0|125.0|40.0|ArchiMateCapability_Y4vuVfaAUhQOhy01.html|ArchiMateCapability_Y4vuVfaAUhQOhy01.html|o4vuVfaAUhQOhy0z" id="optiono4vuVfaAUhQOhy0z">??? : Capability</option>
+<option value="shape|611.0|484.0|586.0|224.0|ArchiMateCapability_A4vuVfaAUhQOhy0w.html|ArchiMateCapability_A4vuVfaAUhQOhy0w.html|A4vuVfaAUhQOhy0u" id="optionA4vuVfaAUhQOhy0u">Disbursement : Capability</option>
+<option value="shape|40.0|307.0|125.0|40.0|ArchiMateCapability__DJuVfaAUhQOhy0B.html|ArchiMateCapability__DJuVfaAUhQOhy0B.html|_DJuVfaAUhQOhyz_" id="option_DJuVfaAUhQOhyz_">Registration : Capability</option>
+<option value="shape|3.0|243.0|586.0|224.0|ArchiMateCapability_LDJuVfaAUhQOhyz8.html|ArchiMateCapability_LDJuVfaAUhQOhyz8.html|zDJuVfaAUhQOhyz6" id="optionzDJuVfaAUhQOhyz6">User Management : Capability</option>
+<option value="shape|612.0|2.0|586.0|224.0|ArchiMateCapability_TewuVfaAUhQOhyyz.html|ArchiMateCapability_TewuVfaAUhQOhyyz.html|jewuVfaAUhQOhyyx" id="optionjewuVfaAUhQOhyyx">Publishing : Capability</option>
+<option value="shape|649.0|307.0|125.0|40.0|ArchiMateCapability_iYCvlfaAUhQOhyu_.html|ArchiMateCapability_iYCvlfaAUhQOhyu_.html|iYCvlfaAUhQOhyu9" id="optioniYCvlfaAUhQOhyu9">Grantee Eligibility : Capability</option>
+<option value="shape|612.0|243.0|586.0|224.0|ArchiMateCapability_b8yOVfaAUhQOhyxE.html|ArchiMateCapability_b8yOVfaAUhQOhyxE.html|b8yOVfaAUhQOhyxC" id="optionb8yOVfaAUhQOhyxC">Submission : Capability</option>
+<option value="shape|199.0|54.0|125.0|40.0|ArchiMateCapability_nCJPlfaAUhQOhyrY.html|ArchiMateCapability_nCJPlfaAUhQOhyrY.html|nCJPlfaAUhQOhyrX" id="optionnCJPlfaAUhQOhyrX">Compliance Assessment : Capability</option>
+<option value="shape|40.0|54.0|125.0|40.0|ArchiMateCapability_ND4vlfaAUhQOhyuv.html|ArchiMateCapability_ND4vlfaAUhQOhyuv.html|ND4vlfaAUhQOhyuu" id="optionND4vlfaAUhQOhyuu">Grant Writing : Capability</option>
+<option value="shape|3.0|2.0|586.0|224.0|ArchiMateCapability_LmwOVfaAUhQOhywV.html|ArchiMateCapability_LmwOVfaAUhQOhywV.html|zmwOVfaAUhQOhywT" id="optionzmwOVfaAUhQOhywT">Preparation : Capability</option>
+<option value="shape|199.0|536.0|125.0|40.0|ArchiMateCapability_01JvlfaAUhQOhyvq.html|ArchiMateCapability_01JvlfaAUhQOhyvq.html|01JvlfaAUhQOhyvp" id="option01JvlfaAUhQOhyvp">Balance Score : Capability</option>
+<option value="shape|40.0|536.0|125.0|40.0|ArchiMateCapability_jAhvlfaAUhQOhyvf.html|ArchiMateCapability_jAhvlfaAUhQOhyvf.html|jAhvlfaAUhQOhyve" id="optionjAhvlfaAUhQOhyve">Peer-Review : Capability</option>
+<option value="shape|3.0|484.0|586.0|224.0|ArchiMateCapability_Q0qvlfaAUhQOhyvJ.html|ArchiMateCapability_Q0qvlfaAUhQOhyvJ.html|Q0qvlfaAUhQOhyvI" id="optionQ0qvlfaAUhQOhyvI">Review &amp; Commitment : Capability</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Capability_Diagram.png" usemap="#diagram_map" class="Image" width="1202" height="954"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="-7.0, 63.0, -7.0, 77.0, 3.0, 77.0, 3.0, 63.0" coords2="-7.0, 63.0, -7.0, 77.0, 3.0, 77.0, 3.0, 63.0" shape="poly" alt=":Composition" id="areadiagram_map_X0JOVfaAUhQOhyxj_default" href="ArchiMateComposition_90JOVfaAUhQOhyxi.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="-7.0, 65.0, -7.0, 79.0, 3.0, 79.0, 3.0, 65.0" coords2="-7.0, 65.0, -7.0, 79.0, 3.0, 79.0, 3.0, 65.0" shape="poly" alt=":Composition" id="areadiagram_map_y65OVfaAUhQOhyx3_default" href="ArchiMateComposition_c65OVfaAUhQOhyx2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="198, 778, 323, 818" coords2="198, 778, 323, 818" shape="rect" alt="Appeal Review:Capability" id="areadiagram_map_1czJVfaAUhQOhy3v_default" href="ArchiMateCapability_1czJVfaAUhQOhy3x.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="39, 778, 164, 818" coords2="39, 778, 164, 818" shape="rect" alt="Appeal Submission:Capability" id="areadiagram_map_pczJVfaAUhQOhy3q_default" href="ArchiMateCapability_pczJVfaAUhQOhy3s.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 726, 588, 950" coords2="2, 726, 588, 950" shape="rect" alt="Appeals:Capability" id="areadiagram_map_eczJVfaAUhQOhy3l_default" href="ArchiMateCapability__czJVfaAUhQOhy3n.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="199, 306, 324, 346" coords2="199, 306, 324, 346" shape="rect" alt="Role Management:Capability" id="areadiagram_map_Oa2RVfaAUhQOhy22_default" href="ArchiMateCapability_ua2RVfaAUhQOhy24.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="358, 306, 483, 346" coords2="358, 306, 483, 346" shape="rect" alt="Access Management:Capability" id="areadiagram_map_TgwRVfaAUhQOhy2j_default" href="ArchiMateCapability_zgwRVfaAUhQOhy2l.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="40, 366, 165, 406" coords2="40, 366, 165, 406" shape="rect" alt="Selfcare:Capability" id="areadiagram_map_BFSeVfaAUhQOhy1c_default" href="ArchiMateCapability_BFSeVfaAUhQOhy1e.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="808, 777, 933, 817" coords2="808, 777, 933, 817" shape="rect" alt="???????:Capability" id="areadiagram_map_BBAeVfaAUhQOhy1N_default" href="ArchiMateCapability_BBAeVfaAUhQOhy1P.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="649, 777, 774, 817" coords2="649, 777, 774, 817" shape="rect" alt="?????:Capability" id="areadiagram_map_WBAeVfaAUhQOhy1I_default" href="ArchiMateCapability_WBAeVfaAUhQOhy1K.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="612, 725, 1198, 949" coords2="612, 725, 1198, 949" shape="rect" alt="Outcome Monitoring:Capability" id="areadiagram_map_yBAeVfaAUhQOhy1D_default" href="ArchiMateCapability_KBAeVfaAUhQOhy1F.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="807, 536, 932, 576" coords2="807, 536, 932, 576" shape="rect" alt="????:Capability" id="areadiagram_map_04vuVfaAUhQOhy04_default" href="ArchiMateCapability_04vuVfaAUhQOhy06.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="648, 536, 773, 576" coords2="648, 536, 773, 576" shape="rect" alt="???:Capability" id="areadiagram_map_o4vuVfaAUhQOhy0z_default" href="ArchiMateCapability_Y4vuVfaAUhQOhy01.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="611, 484, 1197, 708" coords2="611, 484, 1197, 708" shape="rect" alt="Disbursement:Capability" id="areadiagram_map_A4vuVfaAUhQOhy0u_default" href="ArchiMateCapability_A4vuVfaAUhQOhy0w.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="40, 307, 165, 347" coords2="40, 307, 165, 347" shape="rect" alt="Registration:Capability" id="areadiagram_map__DJuVfaAUhQOhyz__default" href="ArchiMateCapability__DJuVfaAUhQOhy0B.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3, 243, 589, 467" coords2="3, 243, 589, 467" shape="rect" alt="User Management:Capability" id="areadiagram_map_zDJuVfaAUhQOhyz6_default" href="ArchiMateCapability_LDJuVfaAUhQOhyz8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="612, 2, 1198, 226" coords2="612, 2, 1198, 226" shape="rect" alt="Publishing:Capability" id="areadiagram_map_jewuVfaAUhQOhyyx_default" href="ArchiMateCapability_TewuVfaAUhQOhyyz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="649, 307, 774, 347" coords2="649, 307, 774, 347" shape="rect" alt="Grantee Eligibility:Capability" id="areadiagram_map_iYCvlfaAUhQOhyu9_default" href="ArchiMateCapability_iYCvlfaAUhQOhyu_.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="612, 243, 1198, 467" coords2="612, 243, 1198, 467" shape="rect" alt="Submission:Capability" id="areadiagram_map_b8yOVfaAUhQOhyxC_default" href="ArchiMateCapability_b8yOVfaAUhQOhyxE.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="199, 54, 324, 94" coords2="199, 54, 324, 94" shape="rect" alt="Compliance Assessment:Capability" id="areadiagram_map_nCJPlfaAUhQOhyrX_default" href="ArchiMateCapability_nCJPlfaAUhQOhyrY.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="40, 54, 165, 94" coords2="40, 54, 165, 94" shape="rect" alt="Grant Writing:Capability" id="areadiagram_map_ND4vlfaAUhQOhyuu_default" href="ArchiMateCapability_ND4vlfaAUhQOhyuv.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3, 2, 589, 226" coords2="3, 2, 589, 226" shape="rect" alt="Preparation:Capability" id="areadiagram_map_zmwOVfaAUhQOhywT_default" href="ArchiMateCapability_LmwOVfaAUhQOhywV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="199, 536, 324, 576" coords2="199, 536, 324, 576" shape="rect" alt="Balance Score:Capability" id="areadiagram_map_01JvlfaAUhQOhyvp_default" href="ArchiMateCapability_01JvlfaAUhQOhyvq.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="40, 536, 165, 576" coords2="40, 536, 165, 576" shape="rect" alt="Peer-Review:Capability" id="areadiagram_map_jAhvlfaAUhQOhyve_default" href="ArchiMateCapability_jAhvlfaAUhQOhyvf.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="3, 484, 589, 708" coords2="3, 484, 589, 708" shape="rect" alt="Review &amp; Commitment:Capability" id="areadiagram_map_Q0qvlfaAUhQOhyvI_default" href="ArchiMateCapability_Q0qvlfaAUhQOhyvJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_1czJVfaAUhQOhy3x.html" class="ItemLink">Appeal Review : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_pczJVfaAUhQOhy3s.html" class="ItemLink">Appeal Submission : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability__czJVfaAUhQOhy3n.html" class="ItemLink">Appeals : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_ua2RVfaAUhQOhy24.html" class="ItemLink">Role Management : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_zgwRVfaAUhQOhy2l.html" class="ItemLink">Access Management : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_BFSeVfaAUhQOhy1e.html" class="ItemLink">Selfcare : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_BBAeVfaAUhQOhy1P.html" class="ItemLink">??????? : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_WBAeVfaAUhQOhy1K.html" class="ItemLink">????? : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_KBAeVfaAUhQOhy1F.html" class="ItemLink">Outcome Monitoring : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_04vuVfaAUhQOhy06.html" class="ItemLink">???? : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_Y4vuVfaAUhQOhy01.html" class="ItemLink">??? : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_A4vuVfaAUhQOhy0w.html" class="ItemLink">Disbursement : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability__DJuVfaAUhQOhy0B.html" class="ItemLink">Registration : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_LDJuVfaAUhQOhyz8.html" class="ItemLink">User Management : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_TewuVfaAUhQOhyyz.html" class="ItemLink">Publishing : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_iYCvlfaAUhQOhyu_.html" class="ItemLink">Grantee Eligibility : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_b8yOVfaAUhQOhyxE.html" class="ItemLink">Submission : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_nCJPlfaAUhQOhyrY.html" class="ItemLink">Compliance Assessment : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_ND4vlfaAUhQOhyuv.html" class="ItemLink">Grant Writing : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_LmwOVfaAUhQOhywV.html" class="ItemLink">Preparation : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_01JvlfaAUhQOhyvq.html" class="ItemLink">Balance Score : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_jAhvlfaAUhQOhyvf.html" class="ItemLink">Peer-Review : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Capability.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Capability.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <a href="ArchiMateCapability_Q0qvlfaAUhQOhyvJ.html" class="ItemLink">Review &amp; Commitment : Capability</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<p>
+	</p>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+Viewpoint			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td colSpan="3">
+<span class="TableHeaderText">Capability Map Viewpoint</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Architecture Stakeholders</span>			</td>
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Business Managers, Enterprise Architects, Business Architects</span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Purpose</span>			</td>
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Designing, Deciding</span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Concerns</span>			</td>
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Architecture strategy and tactics, motivation</span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Scope</span>			</td>
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Multiple layer/Multiple aspect</span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<p>
+	</p>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Publishing Project	</div>
+</body>
+</html>
